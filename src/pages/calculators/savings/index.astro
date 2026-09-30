@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/common/Header.astro";
+import Footer from "../../../components/common/Footer.astro";
+---
+
+<BaseLayout title="예적금 계산기 | CozyMoney" description="예금과 적금의 예상 만기금액을 계산할 수 있습니다." canonical="https://cozymoney.kr/calculators/savings/">
+  <Header />
+  <main class="cm-container" py="8 md:12 lg:16">
+    <div max-w="5xl" mx="auto">
+      <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
+        <a href="/" hover="text-primary" no-underline>홈</a><span mx="2">/</span>
+        <a href="/calculators/" hover="text-primary" no-underline>계산기</a><span mx="2">/</span><span>예적금</span>
+      </nav>
+      <header mb="6 md:8">
+        <p m="0" text="sm" font="700" text-primary>저축 계산기</p>
+        <h1 m="0" mt="2" text="3xl md:4xl" font="800">예적금 계산기</h1>
+        <p m="0" mt="3" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">예금과 적금의 금액, 금리, 기간을 입력해 예상 만기금액을 확인하세요.</p>
+      </header>
+
+      <div grid="~ cols-1 lg:cols-2" gap="4 md:6" items-start>
+        <section class="cm-card" p="5 md:7">
+          <div grid="~ cols-2" gap="2" p="1" rounded="xl" bg="surface-subtle" dark="bg-dark-surface-subtle">
+            <button id="deposit-tab" type="button" rounded="lg" py="2.5" text="sm" font="700">예금</button>
+            <button id="installment-tab" type="button" rounded="lg" py="2.5" text="sm" font="700" text-text-muted dark="text-dark-text-muted">적금</button>
+          </div>
+
+          <form id="savings-form" mt="6">
+            <div id="deposit-field">
+              <label class="cm-label" for="principal">예치금액</label>
+              <input class="cm-input" id="principal" type="number" inputmode="numeric" min="1" step="100000" value="10000000" />
+            </div>
+            <div id="monthly-field" hidden>
+              <label class="cm-label" for="monthly">월 납입금액</label>
+              <input class="cm-input" id="monthly" type="number" inputmode="numeric" min="1" step="10000" value="300000" />
+            </div>
+            <div mt="5">
+              <label class="cm-label" for="rate">연이율</label>
+              <div relative><input class="cm-input" id="rate" type="number" inputmode="decimal" min="0" step="0.01" value="3.5" pr="12" /><span absolute right-4 top-1/2 translate-y="-1/2" text="sm" text-text-muted>%</span></div>
+            </div>
+            <div mt="5">
+              <label class="cm-label" for="months">저축기간</label>
+              <div relative><input class="cm-input" id="months" type="number" inputmode="numeric" min="1" value="12" pr="14" /><span absolute right-4 top-1/2 translate-y="-1/2" text="sm" text-text-muted>개월</span></div>
+            </div>
+            <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
+              <button type="submit" class="cm-button-primary" py="3.5">계산하기</button>
+              <button id="reset" type="button" class="cm-button-secondary" py="3.5">초기화</button>
+            </div>
+            <p id="error" hidden m="0" mt="4" rounded="xl" bg="danger-surface" px="4" py="3" text="sm" text-danger-text></p>
+          </form>
+        </section>
+
+        <section id="result" class="cm-card" p="5 md:7" lg:sticky lg:top="24">
+          <div flex="~" items-center justify-between mb="5">
+            <div><p m="0" text="xs" font="700" text-primary>RESULT</p><h2 m="0" mt="1" text="lg md:xl" font="750">예상 만기 결과</h2></div>
+            <button id="copy" type="button" class="cm-button-secondary" px="3" py="2" text="xs sm:sm">결과 복사</button>
+          </div>
+          <div rounded="2xl" bg="primary/10" p="5" dark="bg-[oklch(25%_0.04_250)]">
+            <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">세후 예상 만기금액</p>
+            <strong id="maturity" block mt="2" text="2xl md:3xl" font="800" text-primary>-</strong>
+          </div>
+          <div grid="~ cols-1 sm:cols-2" gap="3" mt="3">
+            <div class="cm-result"><p m="0" text="sm" text-text-muted>납입 원금</p><strong id="paid" block mt="2" text="lg">-</strong></div>
+            <div class="cm-result"><p m="0" text="sm" text-text-muted>세전 이자</p><strong id="interest" block mt="2" text="lg">-</strong></div>
+            <div class="cm-result sm:col-span-2"><p m="0" text="sm" text-text-muted>이자소득세(15.4% 가정)</p><strong id="tax" block mt="2" text="lg">-</strong></div>
+          </div>
+        </section>
+      </div>
+
+      <section mt="10 md:14"><h2 class="cm-section-title">계산 기준</h2><div class="cm-card" mt="4" p="5 md:6"><p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">예금은 한 번 예치한 금액을, 적금은 매월 납입하는 금액을 기준으로 예상 만기금액을 계산합니다. 세후 결과는 이자소득세 15.4%를 단순 적용한 참고값입니다.</p></div></section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { calculateSavings, formatWon, type SavingsType } from "../../../lib/calculators/savings";
+  const form=document.querySelector<HTMLFormElement>("#savings-form");
+  const depositTab=document.querySelector<HTMLButtonElement>("#deposit-tab");
+  const installmentTab=document.querySelector<HTMLButtonElement>("#installment-tab");
+  const depositField=document.querySelector<HTMLElement>("#deposit-field");
+  const monthlyField=document.querySelector<HTMLElement>("#monthly-field");
+  const principal=document.querySelector<HTMLInputElement>("#principal");
+  const monthly=document.querySelector<HTMLInputElement>("#monthly");
+  const rate=document.querySelector<HTMLInputElement>("#rate");
+  const months=document.querySelector<HTMLInputElement>("#months");
+  const maturity=document.querySelector<HTMLElement>("#maturity");
+  const paid=document.querySelector<HTMLElement>("#paid");
+  const interest=document.querySelector<HTMLElement>("#interest");
+  const tax=document.querySelector<HTMLElement>("#tax");
+  const error=document.querySelector<HTMLElement>("#error");
+  const reset=document.querySelector<HTMLButtonElement>("#reset");
+  const copy=document.querySelector<HTMLButtonElement>("#copy");
+  let type:SavingsType="deposit";
+
+  const setType=(next:SavingsType)=>{
+    type=next;
+    depositField!.hidden=type!=="deposit";
+    monthlyField!.hidden=type!=="installment";
+    depositTab!.className=type==="deposit"?"rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface":"rounded-lg py-2.5 text-sm font-700 text-text-muted";
+    installmentTab!.className=type==="installment"?"rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface":"rounded-lg py-2.5 text-sm font-700 text-text-muted";
+    render();
+  };
+  const render=()=>{
+    error!.hidden=true;
+    try{
+      const r=calculateSavings({type,principal:Number(principal!.value),monthlyDeposit:Number(monthly!.value),annualRate:Number(rate!.value),months:Number(months!.value)});
+      maturity!.textContent=formatWon(r.maturityAmount); paid!.textContent=formatWon(r.principal); interest!.textContent=formatWon(r.interestBeforeTax); tax!.textContent=formatWon(r.tax);
+    }catch(e){error!.textContent=e instanceof Error?e.message:"계산 중 오류가 발생했습니다.";error!.hidden=false;}
+  };
+  if(form&&depositTab&&installmentTab&&depositField&&monthlyField&&principal&&monthly&&rate&&months&&maturity&&paid&&interest&&tax&&error&&reset&&copy){
+    depositTab.addEventListener("click",()=>setType("deposit")); installmentTab.addEventListener("click",()=>setType("installment"));
+    form.addEventListener("submit",e=>{e.preventDefault();render();document.querySelector("#result")?.scrollIntoView({behavior:"smooth",block:"start"});});
+    reset.addEventListener("click",()=>{type="deposit";principal.value="10000000";monthly.value="300000";rate.value="3.5";months.value="12";setType("deposit");});
+    copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText([`유형: ${type==="deposit"?"예금":"적금"}`,`납입 원금: ${paid.textContent}`,`세전 이자: ${interest.textContent}`,`세금: ${tax.textContent}`,`세후 만기금액: ${maturity.textContent}`].join("\n"));copy.textContent="복사 완료";setTimeout(()=>copy.textContent="결과 복사",1000);}catch{copy.textContent="복사 실패";}});
+    render();
+  }
+</script>
