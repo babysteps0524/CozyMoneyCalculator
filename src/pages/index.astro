@@ -1,39 +1,64 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/common/Header.astro';
-import Footer from '../components/common/Footer.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+
+const popularCalculators = [
+  {
+    category: "금융",
+    title: "대출 계산기",
+    description: "월 상환금액과 총 이자를 빠르게 계산합니다.",
+    href: "/calculators/loan/",
+  },
+  {
+    category: "저축",
+    title: "예적금 계산기",
+    description: "예금과 적금의 예상 만기금액을 계산합니다.",
+    href: "/calculators/savings/",
+  },
+  {
+    category: "급여",
+    title: "연봉 계산기",
+    description: "연봉을 기준으로 예상 월급을 계산합니다.",
+    href: "/calculators/salary/",
+  },
+];
 ---
 
 <BaseLayout
   title="CozyMoney | 생활에 필요한 계산기"
-  description="대출, 예적금, 연봉, 월급, 시급 등 생활에 필요한 다양한 계산기를 쉽고 빠르게 이용해 보세요."
+  description="대출, 예적금, 연봉, 월급 등 생활에 필요한 계산기를 쉽고 빠르게 이용해 보세요."
   canonical="https://cozymoney.kr/"
 >
   <Header />
 
   <main>
-    <section
-      mx="auto"
-      max-w="6xl"
-      px="4 sm:6"
-      py="16 sm:24"
-    >
-      <div max-w="3xl">
+    <section class="cm-container" py="12 md:18 lg:24">
+      <div
+        rounded="3xl"
+        border="1"
+        border-border
+        bg="surface-muted"
+        p="6 md:10 lg:14"
+        dark="border-dark-border bg-dark-surface-muted"
+      >
         <p
           m="0"
-          mb="4"
+          mb="3"
           text="sm"
-          font="semibold"
-          text-gray="500"
+          font="700"
+          text-primary
         >
           생활 금융 계산기
         </p>
 
         <h1
           m="0"
-          text="3xl sm:4xl lg:5xl"
-          font="bold"
+          max-w="3xl"
+          text="3xl md:4xl lg:5xl"
+          font="800"
           tracking-tight
+          leading="tight"
         >
           필요한 계산을
           <br />
@@ -42,104 +67,134 @@ import Footer from '../components/common/Footer.astro';
 
         <p
           m="0"
-          mt="6"
+          mt="5"
           max-w="2xl"
-          text="base sm:lg"
-          leading-7
-          text-gray="600"
+          text="base md:lg"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
         >
-          대출, 예적금, 급여 등 일상에서 자주 필요한
-          계산기를 한곳에서 이용할 수 있습니다.
+          복잡한 숫자를 입력하고 계산 버튼을 누르면 필요한 결과를 한눈에 확인할 수 있습니다.
         </p>
-      </div>
-    </section>
-
-    <section
-      mx="auto"
-      max-w="6xl"
-      px="4 sm:6"
-      pb="16"
-    >
-      <div flex="~" items-center justify-between mb="6">
-        <h2 m="0" text="xl sm:2xl" font="bold">
-          인기 계산기
-        </h2>
 
         <a
           href="/calculators/"
-          text="sm"
-          font="medium"
-          text-gray="500"
-          hover="text-gray-900"
+          class="cm-button-primary"
+          mt="6"
+          px="5"
+          py="3"
+          text="sm md:base"
           no-underline
+        >
+          전체 계산기 보기
+        </a>
+      </div>
+    </section>
+
+    <section class="cm-container" pb="12 md:16 lg:20">
+      <div flex="~" items-end justify-between mb="5 md:6">
+        <div>
+          <p m="0" text="sm" font="700" text-primary>POPULAR</p>
+          <h2 class="cm-section-title" mt="1">인기 계산기</h2>
+        </div>
+
+        <a
+          href="/calculators/"
+          hidden
+          sm="inline-flex"
+          text="sm"
+          font="600"
+          text-text-muted
+          hover="text-primary"
+          active="opacity-60"
+          no-underline
+          dark="text-dark-text-muted"
         >
           전체 보기
         </a>
       </div>
 
-      <div
-        grid="~ cols-1 sm:cols-2 lg:cols-3"
-        gap="4"
-      >
-        <a
-          href="/calculators/loan/"
-          p="6"
-          rounded="2xl"
-          border="1"
-          border-gray="200"
-          bg="white"
-          hover="border-gray-400"
-          no-underline
-          transition="colors duration-100"
-        >
-          <h3 m="0" text="lg" font="bold" text-gray="900">
-            대출 계산기
-          </h3>
+      <div grid="~ cols-1 md:cols-2 lg:cols-3" gap="3 md:4">
+        {
+          popularCalculators.map((calculator) => (
+            <a
+              href={calculator.href}
+              class="cm-card-interactive"
+              p="5 md:6"
+              no-underline
+            >
+              <div flex="~" items-center justify-between gap="3">
+                <span
+                  rounded="full"
+                  bg="surface-subtle"
+                  px="2.5"
+                  py="1"
+                  text="xs"
+                  font="700"
+                  text-text-muted
+                  dark="bg-dark-surface-subtle text-dark-text-muted"
+                >
+                  {calculator.category}
+                </span>
+                <span text="text-subtle" dark="text-dark-text-subtle">→</span>
+              </div>
 
-          <p m="0" mt="2" text="sm" text-gray="500">
-            월 상환금액과 총 이자를 계산해 보세요.
-          </p>
-        </a>
+              <h3
+                m="0"
+                mt="5"
+                text="lg md:xl"
+                font="750"
+                text-text
+                dark="text-dark-text"
+              >
+                {calculator.title}
+              </h3>
 
-        <a
-          href="/calculators/savings/"
-          p="6"
-          rounded="2xl"
-          border="1"
-          border-gray="200"
-          bg="white"
-          hover="border-gray-400"
-          no-underline
-          transition="colors duration-100"
-        >
-          <h3 m="0" text="lg" font="bold" text-gray="900">
-            예적금 계산기
-          </h3>
+              <p
+                m="0"
+                mt="2"
+                text="sm"
+                leading="6"
+                text-text-muted
+                dark="text-dark-text-muted"
+              >
+                {calculator.description}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
 
-          <p m="0" mt="2" text="sm" text-gray="500">
-            예금과 적금의 예상 만기금액을 계산해 보세요.
-          </p>
-        </a>
+    <section class="cm-container" pb="16 md:20">
+      <div class="cm-card" p="5 md:7">
+        <div flex="~ col md:row" items-start md:items-center justify-between gap="4">
+          <div>
+            <h2 m="0" text="lg md:xl" font="750">계산 결과를 바로 확인하세요</h2>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="6"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              회원가입 없이 필요한 값만 입력하고 브라우저에서 계산할 수 있습니다.
+            </p>
+          </div>
 
-        <a
-          href="/calculators/salary/"
-          p="6"
-          rounded="2xl"
-          border="1"
-          border-gray="200"
-          bg="white"
-          hover="border-gray-400"
-          no-underline
-          transition="colors duration-100"
-        >
-          <h3 m="0" text="lg" font="bold" text-gray="900">
-            연봉 계산기
-          </h3>
-
-          <p m="0" mt="2" text="sm" text-gray="500">
-            연봉을 기준으로 예상 월급을 계산해 보세요.
-          </p>
-        </a>
+          <a
+            href="/calculators/"
+            class="cm-button-secondary"
+            px="4"
+            py="2.5"
+            text="sm"
+            no-underline
+            shrink-0
+          >
+            계산기 찾기
+          </a>
+        </div>
       </div>
     </section>
   </main>
