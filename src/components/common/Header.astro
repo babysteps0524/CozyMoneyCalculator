@@ -1,77 +1,12 @@
-<header
-  sticky
-  top-0
-  z="50"
-  border="b"
-  border-border
-  bg="surface/92"
-  backdrop-blur="md"
-  dark="border-dark-border bg-dark-surface/92"
->
+<header sticky top-0 z="50" border="b" border-border bg="surface/92" backdrop-blur="md" dark="border-dark-border bg-dark-surface/92">
   <div class="cm-container" h="16 md:18" flex="~" items-center justify-between>
-    <a
-      href="/"
-      flex="~"
-      items-center
-      gap="2"
-      text="lg md:xl"
-      font="800"
-      text-text
-      no-underline
-      dark="text-dark-text"
-      hover="opacity-80"
-      active="opacity-60"
-      transition="opacity duration-100"
-    >
-      <span
-        flex="~"
-        items-center
-        justify-center
-        w="8"
-        h="8"
-        rounded="xl"
-        bg="primary"
-        text="sm"
-        font="800"
-        text-white
-      >
-        C
-      </span>
+    <a href="/" flex="~" items-center gap="2" text="lg md:xl" font="800" text-text no-underline dark="text-dark-text" hover="opacity-80" active="opacity-60" transition="opacity duration-100">
+      <span flex="~" items-center justify-center w="8" h="8" rounded="xl" bg="primary" text="sm" font="800" text-white>C</span>
       CozyMoney
     </a>
-
-    <nav flex="~" items-center gap="2 md:6" text="sm" font="600">
-      <a
-        href="/calculators/"
-        rounded="lg"
-        px="3 md:4"
-        py="2"
-        text="text-muted"
-        no-underline
-        hover="bg-surface-subtle text-text dark:bg-dark-surface-subtle dark:text-dark-text"
-        active="bg-surface-subtle"
-        dark="text-dark-text-muted"
-        transition="colors duration-100"
-      >
-        계산기
-      </a>
-
-      <a
-        href="/guides/"
-        hidden
-        md="inline-flex"
-        rounded="lg"
-        px="4"
-        py="2"
-        text="text-muted"
-        no-underline
-        hover="bg-surface-subtle text-text dark:bg-dark-surface-subtle dark:text-dark-text"
-        active="bg-surface-subtle"
-        dark="text-dark-text-muted"
-        transition="colors duration-100"
-      >
-        계산 정보
-      </a>
+    <nav flex="~" items-center gap="1 md:2" text="sm" font="600">
+      <a href="/calculators/" rounded="lg" px="3" py="2" text="text-muted" no-underline hover="bg-surface-subtle text-text dark:bg-dark-surface-subtle dark:text-dark-text" active="bg-surface-subtle" dark="text-dark-text-muted" transition="colors duration-100">계산기</a>
+      <a href="/tools/" rounded="lg" px="3" py="2" text="text-muted" no-underline hover="bg-surface-subtle text-text dark:bg-dark-surface-subtle dark:text-dark-text" active="bg-surface-subtle" dark="text-dark-text-muted" transition="colors duration-100">생활도구</a>
     </nav>
   </div>
 </header>
