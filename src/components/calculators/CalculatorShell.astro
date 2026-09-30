@@ -60,7 +60,7 @@ const { kind, title, description } = Astro.props;
       rent:()=>field("deposit","보증금","10000000","number","원")+field("monthly","월세","700000","number","원")+field("rate","전월세 전환율","5.5","number","%"),
       brokerage:()=>field("price","거래금액","500000000","number","원")+field("rate","중개보수율","0.4","number","%"),
       leaseLoan:()=>field("deposit","임차보증금","200000000","number","원")+field("loanRate","대출비율","80","number","%")+field("rate","연이율","3.5","number","%"),
-      percentage:()=>field("base","기준값","100000","number","")+field("rate","퍼센트","15","number","%"),
+      percentage:()=>field("base","기준값","100000","number","")+field("rate","퍼센트","15","number","%"),monthlySalary:()=>field("annual","연봉","40000000","number","원")+field("bonus","연간 비과세·별도 금액","0","number","원"),hourlyWage:()=>field("monthly","월 급여","3333333","number","원")+field("hours","월 근로시간","209","number","시간"),
     };
     fields.innerHTML=(configs[kind]||configs.percentage)();
 
@@ -74,7 +74,7 @@ const { kind, title, description } = Astro.props;
         case "weekly":{const weeklyHoliday=n("hours")>=15?n("hourly")*Math.min(8,n("hours")):0;value=n("hourly")*n("hours")+weeklyHoliday; text=`입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.`;break;}
         case "vacation":{value=n("daily")*n("days");text="미사용 연차수당을 1일 통상임금 × 미사용 일수로 단순 계산했습니다.";break;}
         case "unemployment":{value=n("daily")*0.6*n("days");text="구직급여의 하한·상한과 개인별 수급요건을 모두 반영한 확정액이 아닌 단순 예상값입니다.";break;}
-        case "vat":{if($("type")?.value==="공급가액 → 부가세"){value=n("supply")*0.1;text=`부가세: ${won(value)} · 합계: ${won(n("supply")+value)}`;}else{const total=n("supply");value=total/11;text=`공급가액: ${won(total-value)} · 부가세: ${won(value)}`;}break;}
+        case "monthlySalary":{value=(n("annual")-n("bonus"))/12;text="연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 월 급여입니다.";break;}\n        case "hourlyWage":{value=n("hours")>0?n("monthly")/n("hours"):0;text="월 급여를 월 근로시간으로 나눈 단순 시급입니다.";break;}\n        case "vat":{if($("type")?.value==="공급가액 → 부가세"){value=n("supply")*0.1;text=`부가세: ${won(value)} · 합계: ${won(n("supply")+value)}`;}else{const total=n("supply");value=total/11;text=`공급가액: ${won(total-value)} · 부가세: ${won(value)}`;}break;}
         case "incomeTax":{const income=n("income");let tax=0;if(income<=14000000)tax=income*.06;else if(income<=50000000)tax=income*.15-1260000;else if(income<=88000000)tax=income*.24-5760000;else if(income<=150000000)tax=income*.35-15440000;else if(income<=300000000)tax=income*.38-19940000;else tax=income*.4-25940000;value=Math.max(0,tax);text="과세표준 구간별 세율을 단순 적용한 소득세 예상값입니다. 각종 공제와 세액공제는 반영하지 않았습니다.";break;}
         case "acquisition":{value=n("price")*n("rate")/100;text="입력한 취득가액과 세율만 적용한 취득세 단순 예상값입니다. 지방교육세·농어촌특별세 등 부가세목은 제외했습니다.";break;}
         case "property":{value=n("taxbase")*n("rate")/100;text="입력한 과세표준과 세율만 적용한 재산세 단순 예상값입니다.";break;}
@@ -85,7 +85,7 @@ const { kind, title, description } = Astro.props;
         case "leaseLoan":{const loan=n("deposit")*n("loanRate")/100;value=loan*n("rate")/100;text=`예상 대출금: ${won(loan)} · 1년 단순 이자: ${won(value)}`;break;}
         default:{value=n("base")*n("rate")/100;text=`기준값의 ${fmt(n("rate"),2)}% = ${won(value)}`;}
       }
-      out.textContent=kind==="dsr"||kind==="dti"||kind==="capitalGain"&&false?fmt(value,2)+"%":kind==="capitalGain"?won(value):kind==="compound"||kind==="severance"||kind==="weekly"||kind==="vacation"||kind==="unemployment"||kind==="vat"||kind==="incomeTax"||kind==="acquisition"||kind==="property"||kind==="carTax"||kind==="rent"||kind==="brokerage"||kind==="leaseLoan"||kind==="percentage"?won(value):fmt(value,2)+"%";
+      out.textContent=kind==="dsr"||kind==="dti"||kind==="capitalGain"&&false?fmt(value,2)+"%":kind==="capitalGain"?won(value):kind==="compound"||kind==="severance"||kind==="weekly"||kind==="vacation"||kind==="unemployment"||kind==="vat"||kind==="incomeTax"||kind==="acquisition"||kind==="property"||kind==="carTax"||kind==="rent"||kind==="brokerage"||kind==="leaseLoan"||kind==="percentage"||kind==="monthlySalary"||kind==="hourlyWage"?won(value):fmt(value,2)+"%";
       if(kind==="dsr"||kind==="dti")out.textContent=fmt(value,2)+"%";
       detail.textContent=text;
     };
