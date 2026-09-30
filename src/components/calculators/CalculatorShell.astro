@@ -67,11 +67,11 @@ const { kind, title, description } = Astro.props;
     const calc=()=>{
       let value=0, text="";
       switch(kind){
-        case "compound":{const p=n("principal"),r=n("rate")/100,y=n("years"),m=n("deposit"),final=p*(1+r)**y+m*((1+r)**y-1)/r;value=final;text=`원금과 추가납입을 연복리로 단순 계산한 결과입니다. 이자: ${won(final-p-m*y)}`;break;}
+        case "compound":{const p=n("principal"),r=n("rate")/100,y=n("years"),m=n("deposit"),final=r===0?p+m*y:p*(1+r)**y+m*((1+r)**y-1)/r;value=final;text=`원금과 추가납입을 연복리로 단순 계산한 결과입니다. 이자: ${won(final-p-m*y)}`;break;}
         case "dsr":{const income=n("income"),total=n("debt")+n("newdebt"),dsr=total/income*100;value=dsr;text=`현재 대출만 반영한 DSR: ${fmt(n("debt")/income*100,2)}%. 새 대출 포함: ${fmt(dsr,2)}%. 입력한 목표 기준: ${fmt(n("rate"),2)}%.`;break;}
         case "dti":{const income=n("income"),ratio=(n("mortgage")+n("other"))/income*100;value=ratio;text=`주택담보대출 원리금과 기타 대출 이자 합계를 연소득으로 나눈 단순 DTI입니다.`;break;}
         case "severance":{value=n("monthly")*n("years");text=`월 평균임금 × 근속연수로 단순 추정했습니다. 실제 퇴직금은 평균임금 산정기간과 계속근로기간 등에 따라 달라질 수 있습니다.`;break;}
-        case "weekly":{value=n("hourly")*n("hours")+(n("hours")/40)*n("hourly")*8; text=`입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.`;break;}
+        case "weekly":{const weeklyHoliday=n("hours")>=15?n("hourly")*Math.min(8,n("hours")):0;value=n("hourly")*n("hours")+weeklyHoliday; text=`입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.`;break;}
         case "vacation":{value=n("daily")*n("days");text="미사용 연차수당을 1일 통상임금 × 미사용 일수로 단순 계산했습니다.";break;}
         case "unemployment":{value=Math.min(n("daily")*0.6,132000)*n("days");text="구직급여의 하한·상한과 개인별 수급요건을 모두 반영한 확정액이 아닌 단순 예상값입니다.";break;}
         case "vat":{if($("type")?.value==="공급가액 → 부가세"){value=n("supply")*0.1;text=`부가세: ${won(value)} · 합계: ${won(n("supply")+value)}`;}else{const total=n("supply");value=total/11;text=`공급가액: ${won(total-value)} · 부가세: ${won(value)}`;}break;}
