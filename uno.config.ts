@@ -17,8 +17,8 @@ export default defineConfig({
   ],
 
   theme: {
-    fontFamily: {
-      sans: '"Pretendard Variable", Pretendard, system-ui, sans-serif',
+    font: {
+      family: '"Pretendard Variable", Pretendard, system-ui, sans-serif',
     },
 
     colors: {
