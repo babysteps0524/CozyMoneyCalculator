@@ -73,7 +73,7 @@ const { kind, title, description } = Astro.props;
         case "severance":{value=n("monthly")*n("years");text=`월 평균임금 × 근속연수로 단순 추정했습니다. 실제 퇴직금은 평균임금 산정기간과 계속근로기간 등에 따라 달라질 수 있습니다.`;break;}
         case "weekly":{const weeklyHoliday=n("hours")>=15?n("hourly")*Math.min(8,n("hours")):0;value=n("hourly")*n("hours")+weeklyHoliday; text=`입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.`;break;}
         case "vacation":{value=n("daily")*n("days");text="미사용 연차수당을 1일 통상임금 × 미사용 일수로 단순 계산했습니다.";break;}
-        case "unemployment":{value=Math.min(n("daily")*0.6,132000)*n("days");text="구직급여의 하한·상한과 개인별 수급요건을 모두 반영한 확정액이 아닌 단순 예상값입니다.";break;}
+        case "unemployment":{value=n("daily")*0.6*n("days");text="구직급여의 하한·상한과 개인별 수급요건을 모두 반영한 확정액이 아닌 단순 예상값입니다.";break;}
         case "vat":{if($("type")?.value==="공급가액 → 부가세"){value=n("supply")*0.1;text=`부가세: ${won(value)} · 합계: ${won(n("supply")+value)}`;}else{const total=n("supply");value=total/11;text=`공급가액: ${won(total-value)} · 부가세: ${won(value)}`;}break;}
         case "incomeTax":{const income=n("income");let tax=0;if(income<=14000000)tax=income*.06;else if(income<=50000000)tax=income*.15-1260000;else if(income<=88000000)tax=income*.24-5760000;else if(income<=150000000)tax=income*.35-15440000;else if(income<=300000000)tax=income*.38-19940000;else tax=income*.4-25940000;value=Math.max(0,tax);text="과세표준 구간별 세율을 단순 적용한 소득세 예상값입니다. 각종 공제와 세액공제는 반영하지 않았습니다.";break;}
         case "acquisition":{value=n("price")*n("rate")/100;text="입력한 취득가액과 세율만 적용한 취득세 단순 예상값입니다. 지방교육세·농어촌특별세 등 부가세목은 제외했습니다.";break;}
