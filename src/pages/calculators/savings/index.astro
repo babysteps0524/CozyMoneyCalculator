@@ -50,7 +50,7 @@ import Footer from "../../../components/common/Footer.astro";
           </form>
         </section>
 
-        <section id="result" class="cm-card" p="5 md:7" lg:sticky lg:top="24">
+        <section id="result" class="cm-card" p="5 md:7" lg="sticky top-24">
           <div flex="~" items-center justify-between mb="5">
             <div><p m="0" text="xs" font="700" text-primary>RESULT</p><h2 m="0" mt="1" text="lg md:xl" font="750">예상 만기 결과</h2></div>
             <button id="copy" type="button" class="cm-button-secondary" px="3" py="2" text="xs sm:sm">결과 복사</button>
@@ -62,7 +62,7 @@ import Footer from "../../../components/common/Footer.astro";
           <div grid="~ cols-1 sm:cols-2" gap="3" mt="3">
             <div class="cm-result"><p m="0" text="sm" text-text-muted>납입 원금</p><strong id="paid" block mt="2" text="lg">-</strong></div>
             <div class="cm-result"><p m="0" text="sm" text-text-muted>세전 이자</p><strong id="interest" block mt="2" text="lg">-</strong></div>
-            <div class="cm-result sm:col-span-2"><p m="0" text="sm" text-text-muted>이자소득세(15.4% 가정)</p><strong id="tax" block mt="2" text="lg">-</strong></div>
+            <div class="cm-result sm="col-span-2""><p m="0" text="sm" text-text-muted>이자소득세(15.4% 가정)</p><strong id="tax" block mt="2" text="lg">-</strong></div>
           </div>
         </section>
       </div>
