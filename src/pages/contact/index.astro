@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+---
+
+<BaseLayout title="문의하기 | CozyMoney" description="CozyMoney 서비스와 계산기, 생활도구에 대한 문의 방법을 안내합니다." canonical="https://cozymoney.kr/contact/">
+  <Header />
+  <main class="cm-container" py="10 md:14 lg:18">
+    <article max-w="3xl" mx="auto">
+      <header mb="8">
+        <p m="0" text="sm" font="700" text-primary>CONTACT</p>
+        <h1 m="0" mt="2" text="3xl md:4xl" font="800">문의하기</h1>
+        <p m="0" mt="4" leading="7" text-text-muted dark="text-dark-text-muted">
+          사이트 이용 중 오류를 발견했거나 계산기·생활도구에 대한 의견이 있다면 문의해 주세요.
+        </p>
+      </header>
+
+      <section class="cm-card" p="5 md:7">
+        <h2 m="0" text="xl" font="750">이메일 문의</h2>
+        <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
+          문의 내용을 가능한 한 구체적으로 작성해 주세요. 오류 문의라면 사용한 페이지, 입력 조건, 기대한 결과와 실제 결과를 함께 알려주시면 확인에 도움이 됩니다.
+        </p>
+        <a href="mailto:babysteps0524@gmail.com" mt="5" inline-flex items-center rounded="xl" bg-primary px="5" py="3" text="sm" font="700" text-white no-underline hover="opacity-90" active="opacity-70">
+          babysteps0524@gmail.com
+        </a>
+      </section>
+
+      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5" dark="border-dark-border dark:bg-dark-surface-muted">
+        <h2 m="0" text="sm" font="750">문의 시 개인정보 주의</h2>
+        <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+          주민등록번호, 계좌번호, 카드번호, 비밀번호 등 민감하거나 불필요한 개인정보를 이메일로 보내지 마세요.
+        </p>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
