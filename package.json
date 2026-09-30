@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check && tsc --noEmit",
+    "test": "bun test",
+    "verify": "bun run check && bun run test && bun run build"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
