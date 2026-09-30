@@ -1,0 +1,480 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/common/Header.astro';
+import Footer from '../../../components/common/Footer.astro';
+---
+
+<BaseLayout
+  title="대출 계산기 | CozyMoney"
+  description="대출금액과 금리, 대출기간을 입력하면 월 상환금액과 총 이자를 계산할 수 있습니다."
+  canonical="https://cozymoney.kr/calculators/loan/"
+>
+  <Header />
+
+  <main mx="auto" max-w="6xl" px="4 sm:6" py="8 sm:12">
+    <div max-w="3xl" mx="auto">
+      <nav mb="6" text="sm" text-gray="500">
+        <a href="/" text-gray="500" hover="text-gray-900" no-underline>
+          홈
+        </a>
+        <span mx="2">/</span>
+        <a
+          href="/calculators/"
+          text-gray="500"
+          hover="text-gray-900"
+          no-underline
+        >
+          계산기
+        </a>
+        <span mx="2">/</span>
+        <span text-gray="900">대출 계산기</span>
+      </nav>
+
+      <header mb="8">
+        <h1 m="0" text="2xl sm:3xl" font="bold" tracking-tight>
+          대출 계산기
+        </h1>
+
+        <p m="0" mt="3" text="sm sm:base" leading-7 text-gray="600">
+          대출금액과 금리, 대출기간을 입력하면 매월 상환해야 하는 금액과
+          총 이자를 계산할 수 있습니다.
+        </p>
+      </header>
+
+      <section
+        rounded="2xl"
+        border="1"
+        border-gray="200"
+        bg="white"
+        p="5 sm:7"
+        shadow="sm"
+      >
+        <form id="loan-form">
+          <div flex="~ col" gap="6">
+            <div>
+              <label
+                for="principal"
+                block
+                mb="2"
+                text="sm"
+                font="semibold"
+                text-gray="800"
+              >
+                대출금액
+              </label>
+
+              <div relative>
+                <input
+                  id="principal"
+                  name="principal"
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  step="100000"
+                  value="10000000"
+                  w="full"
+                  rounded="xl"
+                  border="1"
+                  border-gray="300"
+                  bg="white"
+                  px="4"
+                  py="3"
+                  text="base"
+                  outline="none"
+                  focus="border-gray-900"
+                />
+                <span
+                  absolute
+                  right-4
+                  top="1/2"
+                  translate-y="-1/2"
+                  text="sm"
+                  text-gray="500"
+                >
+                  원
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="annual-rate"
+                block
+                mb="2"
+                text="sm"
+                font="semibold"
+                text-gray="800"
+              >
+                연이율
+              </label>
+
+              <div relative>
+                <input
+                  id="annual-rate"
+                  name="annualRate"
+                  type="number"
+                  inputmode="decimal"
+                  min="0"
+                  step="0.01"
+                  value="4.5"
+                  w="full"
+                  rounded="xl"
+                  border="1"
+                  border-gray="300"
+                  bg="white"
+                  px="4"
+                  py="3"
+                  pr="12"
+                  text="base"
+                  outline="none"
+                  focus="border-gray-900"
+                />
+                <span
+                  absolute
+                  right-4
+                  top="1/2"
+                  translate-y="-1/2"
+                  text="sm"
+                  text-gray="500"
+                >
+                  %
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="loan-months"
+                block
+                mb="2"
+                text="sm"
+                font="semibold"
+                text-gray="800"
+              >
+                대출기간
+              </label>
+
+              <div relative>
+                <input
+                  id="loan-months"
+                  name="months"
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  step="1"
+                  value="36"
+                  w="full"
+                  rounded="xl"
+                  border="1"
+                  border-gray="300"
+                  bg="white"
+                  px="4"
+                  py="3"
+                  pr="12"
+                  text="base"
+                  outline="none"
+                  focus="border-gray-900"
+                />
+                <span
+                  absolute
+                  right-4
+                  top="1/2"
+                  translate-y="-1/2"
+                  text="sm"
+                  text-gray="500"
+                >
+                  개월
+                </span>
+              </div>
+            </div>
+
+            <div grid="~ cols-2" gap="3" mt="2">
+              <button
+                type="submit"
+                rounded="xl"
+                bg="gray-900"
+                px="4"
+                py="3"
+                text="sm"
+                font="semibold"
+                text-white
+                transition="colors duration-100"
+                hover="bg-gray-700"
+              >
+                계산하기
+              </button>
+
+              <button
+                id="reset-button"
+                type="button"
+                rounded="xl"
+                border="1"
+                border-gray="300"
+                bg="white"
+                px="4"
+                py="3"
+                text="sm"
+                font="semibold"
+                text-gray="700"
+                transition="colors duration-100"
+                hover="border-gray-500"
+              >
+                초기화
+              </button>
+            </div>
+
+            <p
+              id="error-message"
+              hidden
+              m="0"
+              rounded="xl"
+              bg="red-50"
+              px="4"
+              py="3"
+              text="sm"
+              text-red="700"
+            ></p>
+          </div>
+        </form>
+      </section>
+
+      <section
+        id="result-section"
+        mt="6"
+        rounded="2xl"
+        border="1"
+        border-gray="200"
+        bg="gray-50"
+        p="5 sm:7"
+      >
+        <div flex="~" items-center justify="between" mb="5">
+          <h2 m="0" text="lg" font="bold">
+            계산 결과
+          </h2>
+
+          <button
+            id="copy-button"
+            type="button"
+            rounded="lg"
+            border="1"
+            border-gray="300"
+            bg="white"
+            px="3"
+            py="2"
+            text="xs sm:sm"
+            text-gray="700"
+            transition="colors duration-100"
+            hover="border-gray-500"
+          >
+            결과 복사
+          </button>
+        </div>
+
+        <div grid="~ cols-1 sm:cols-3" gap="3">
+          <div rounded="xl" bg="white" p="4">
+            <p m="0" text="sm" text-gray="500">
+              월 상환금액
+            </p>
+            <strong
+              id="monthly-payment"
+              block
+              mt="2"
+              text="lg"
+              font="bold"
+              text-gray="900"
+            >
+              -
+            </strong>
+          </div>
+
+          <div rounded="xl" bg="white" p="4">
+            <p m="0" text="sm" text-gray="500">
+              총 상환금액
+            </p>
+            <strong
+              id="total-payment"
+              block
+              mt="2"
+              text="lg"
+              font="bold"
+              text-gray="900"
+            >
+              -
+            </strong>
+          </div>
+
+          <div rounded="xl" bg="white" p="4">
+            <p m="0" text="sm" text-gray="500">
+              총 이자
+            </p>
+            <strong
+              id="total-interest"
+              block
+              mt="2"
+              text="lg"
+              font="bold"
+              text-gray="900"
+            >
+              -
+            </strong>
+          </div>
+        </div>
+      </section>
+
+      <section mt="10">
+        <h2 m="0" text="xl" font="bold">
+          대출 계산 방법
+        </h2>
+
+        <p mt="4" text="sm" leading-7 text-gray="600">
+          이 계산기는 원리금균등상환 방식을 기준으로 월 상환금액을 계산합니다.
+          원리금균등상환은 대출기간 동안 매월 동일한 금액을 상환하는 방식입니다.
+        </p>
+
+        <div mt="5" rounded="xl" bg="gray-50" p="5">
+          <p m="0" text="sm" font="semibold" text-gray="800">
+            월 상환금액
+          </p>
+
+          <p m="0" mt="3" text="sm" leading-7 text-gray="600">
+            대출원금, 월이율, 대출기간을 이용해 계산합니다.
+          </p>
+        </div>
+      </section>
+
+      <section mt="10">
+        <h2 m="0" text="xl" font="bold">
+          이용 시 주의사항
+        </h2>
+
+        <ul
+          m="0"
+          mt="4"
+          pl="5"
+          flex="~ col"
+          gap="2"
+          text="sm"
+          leading-7
+          text-gray="600"
+        >
+          <li>실제 금융기관의 상환금액과 차이가 있을 수 있습니다.</li>
+          <li>대출 실행 시 적용되는 수수료와 기타 비용은 포함하지 않습니다.</li>
+          <li>실제 대출 상품의 조건은 금융기관의 상품 약관을 확인해야 합니다.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { calculateLoan, formatWon } from '../../../lib/calculators/loan';
+
+  const form = document.querySelector<HTMLFormElement>('#loan-form');
+  const principalInput =
+    document.querySelector<HTMLInputElement>('#principal');
+  const annualRateInput =
+    document.querySelector<HTMLInputElement>('#annual-rate');
+  const monthsInput =
+    document.querySelector<HTMLInputElement>('#loan-months');
+
+  const monthlyPaymentElement =
+    document.querySelector<HTMLElement>('#monthly-payment');
+  const totalPaymentElement =
+    document.querySelector<HTMLElement>('#total-payment');
+  const totalInterestElement =
+    document.querySelector<HTMLElement>('#total-interest');
+
+  const errorMessage =
+    document.querySelector<HTMLElement>('#error-message');
+
+  const resetButton =
+    document.querySelector<HTMLButtonElement>('#reset-button');
+
+  const copyButton =
+    document.querySelector<HTMLButtonElement>('#copy-button');
+
+  if (
+    form &&
+    principalInput &&
+    annualRateInput &&
+    monthsInput &&
+    monthlyPaymentElement &&
+    totalPaymentElement &&
+    totalInterestElement &&
+    errorMessage &&
+    resetButton &&
+    copyButton
+  ) {
+    const renderResult = () => {
+      errorMessage.hidden = true;
+      errorMessage.textContent = '';
+
+      try {
+        const result = calculateLoan({
+          principal: Number(principalInput.value),
+          annualRate: Number(annualRateInput.value),
+          months: Number(monthsInput.value),
+        });
+
+        monthlyPaymentElement.textContent =
+          formatWon(result.monthlyPayment);
+
+        totalPaymentElement.textContent =
+          formatWon(result.totalPayment);
+
+        totalInterestElement.textContent =
+          formatWon(result.totalInterest);
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : '계산 중 오류가 발생했습니다.';
+
+        errorMessage.textContent = message;
+        errorMessage.hidden = false;
+      }
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      renderResult();
+    });
+
+    resetButton.addEventListener('click', () => {
+      principalInput.value = '10000000';
+      annualRateInput.value = '4.5';
+      monthsInput.value = '36';
+
+      renderResult();
+    });
+
+    copyButton.addEventListener('click', async () => {
+      const text = [
+        `월 상환금액: ${monthlyPaymentElement.textContent}`,
+        `총 상환금액: ${totalPaymentElement.textContent}`,
+        `총 이자: ${totalInterestElement.textContent}`,
+      ].join('\n');
+
+      try {
+        await navigator.clipboard.writeText(text);
+
+        const originalText = copyButton.textContent;
+        copyButton.textContent = '복사 완료';
+
+        window.setTimeout(() => {
+          copyButton.textContent = originalText;
+        }, 1000);
+      } catch {
+        copyButton.textContent = '복사 실패';
+
+        window.setTimeout(() => {
+          copyButton.textContent = '결과 복사';
+        }, 1000);
+      }
+    });
+
+    renderResult();
+  }
+</script>
