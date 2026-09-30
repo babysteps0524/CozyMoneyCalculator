@@ -158,10 +158,18 @@ const { kind, title, description } = Astro.props;
       <div mt="5" pt="5" border="t" border-border dark="border-dark-border">
         <p m="0" text="sm" font="700">이용 안내</p>
         <ul m="0" mt="2" pl="5" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">
-          <li>입력값은 브라우저에서 계산합니다.</li>
-          <li>결과는 참고용으로 확인하세요.</li>
-          <li>필요한 경우 결과를 다시 계산해 보세요.</li>
+          <li>입력값과 생성 결과는 기본적으로 이 페이지의 브라우저에서 처리합니다.</li>
+          <li>도구 결과는 편의를 위한 참고용이며 결과를 보장하지 않습니다.</li>
+          <li>비밀번호 생성 결과처럼 민감할 수 있는 값은 다른 사람과 공유하지 마세요.</li>
+          <li>로또 번호와 랜덤 추첨 결과는 무작위 결과일 뿐 당첨이나 특정 결과를 보장하지 않습니다.</li>
         </ul>
+      </div>
+      <div mt="5" rounded="2xl" border="1" border-border bg="surface-muted" p="4" dark="border-dark-border dark:bg-dark-surface-muted">
+        <p m="0" text="xs" font="700" text-primary>개인정보 안내</p>
+        <p m="0" mt="2" text="xs sm" leading="6" text-text-muted dark="text-dark-text-muted">
+          주민등록번호, 계좌번호, 카드번호, 비밀번호 등 개인정보나 금융정보를 입력하지 마세요.
+          CozyMoney는 생활도구 이용에 불필요한 개인정보를 요구하지 않습니다.
+        </p>
       </div>
     </aside>
   </div>
