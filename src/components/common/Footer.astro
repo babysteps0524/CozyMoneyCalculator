@@ -1,48 +1,70 @@
-<footer border="t" border-gray="200" mt="16">
-  <div
-    mx="auto"
-    max-w="6xl"
-    px="4 sm:6"
-    py="8"
-    flex="~ col"
-    gap="4"
-    text="sm gray-500"
-  >
-    <div flex="~ wrap" gap="4">
+<footer
+  mt="16"
+  border="t"
+  border-border
+  dark="border-dark-border"
+>
+  <div class="cm-container" py="8 md:10" flex="~ col" gap="4" text="sm">
+    <nav flex="~ wrap" gap="2 md:4">
       <a
         href="/about/"
-        hover="text-gray-900"
+        rounded="lg"
+        px="2"
+        py="1"
+        text="text-muted"
+        hover="text-text"
+        active="opacity-60"
         no-underline
+        dark="text-dark-text-muted"
+        dark:hover="text-dark-text"
       >
         사이트 소개
       </a>
-
       <a
         href="/contact/"
-        hover="text-gray-900"
+        rounded="lg"
+        px="2"
+        py="1"
+        text="text-muted"
+        hover="text-text"
+        active="opacity-60"
         no-underline
+        dark="text-dark-text-muted"
+        dark:hover="text-dark-text"
       >
         문의
       </a>
-
       <a
         href="/privacy/"
-        hover="text-gray-900"
+        rounded="lg"
+        px="2"
+        py="1"
+        text="text-muted"
+        hover="text-text"
+        active="opacity-60"
         no-underline
+        dark="text-dark-text-muted"
+        dark:hover="text-dark-text"
       >
         개인정보처리방침
       </a>
-
       <a
         href="/terms/"
-        hover="text-gray-900"
+        rounded="lg"
+        px="2"
+        py="1"
+        text="text-muted"
+        hover="text-text"
+        active="opacity-60"
         no-underline
+        dark="text-dark-text-muted"
+        dark:hover="text-dark-text"
       >
         이용약관
       </a>
-    </div>
+    </nav>
 
-    <p m="0">
+    <p m="0" text="text-subtle" dark="text-dark-text-subtle">
       © {new Date().getFullYear()} CozyMoney. All rights reserved.
     </p>
   </div>
