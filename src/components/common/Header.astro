@@ -3,51 +3,74 @@
   top-0
   z="50"
   border="b"
-  border-gray="200"
-  bg="white/90"
+  border-border
+  bg="surface/92"
   backdrop-blur="md"
+  dark="border-dark-border bg-dark-surface/92"
 >
-  <div
-    mx="auto"
-    max-w="6xl"
-    px="4 sm:6"
-    h="16"
-    flex="~"
-    items-center
-    justify-between
-  >
+  <div class="cm-container" h="16 md:18" flex="~" items-center justify-between>
     <a
       href="/"
-      text="xl"
-      font="bold"
-      text-gray="900"
+      flex="~"
+      items-center
+      gap="2"
+      text="lg md:xl"
+      font="800"
+      text-text
       no-underline
+      dark="text-dark-text"
+      hover="opacity-80"
+      active="opacity-60"
+      transition="opacity duration-100"
     >
+      <span
+        flex="~"
+        items-center
+        justify-center
+        w="8"
+        h="8"
+        rounded="xl"
+        bg="primary"
+        text="sm"
+        font="800"
+        text-white
+      >
+        C
+      </span>
       CozyMoney
     </a>
 
-    <nav
-      hidden
-      sm="flex"
-      items-center
-      gap="6"
-      text="sm"
-      font="medium"
-    >
+    <nav flex="~" items-center gap="2 md:6" text="sm" font="600">
       <a
         href="/calculators/"
-        text-gray="600"
-        hover="text-gray-900"
+        rounded="lg"
+        px="3 md:4"
+        py="2"
+        text="text-muted"
         no-underline
+        hover="bg-surface-subtle text-text"
+        active="bg-surface-subtle"
+        dark="text-dark-text-muted"
+        dark:hover="bg-dark-surface-subtle text-dark-text"
+        transition="colors duration-100"
       >
         계산기
       </a>
 
       <a
         href="/guides/"
-        text-gray="600"
-        hover="text-gray-900"
+        hidden
+        md="inline-flex"
+        rounded="lg"
+        px="4"
+        py="2"
+        text="text-muted"
         no-underline
+        hover="bg-surface-subtle text-text"
+        active="bg-surface-subtle"
+        dark="text-dark-text-muted"
+        dark:hover="bg-dark-surface-subtle text-dark-text"
+        transition="colors duration-100"
       >
         계산 정보
       </a>
