@@ -25,7 +25,7 @@ import Footer from "../../../components/common/Footer.astro";
           </form>
         </section>
 
-        <section id="result" class="cm-card" p="5 md:7" lg:sticky lg:top="24">
+        <section id="result" class="cm-card" p="5 md:7" lg="sticky top-24">
           <div flex="~" items-center justify-between mb="5"><div><p m="0" text="xs" font="700" text-primary>RESULT</p><h2 m="0" mt="1" text="lg md:xl" font="750">계산 결과</h2></div><button id="copy" type="button" class="cm-button-secondary" px="3" py="2" text="xs sm:sm">결과 복사</button></div>
           <div rounded="2xl" bg="primary/10" p="5" dark="bg-[oklch(25%_0.04_250)]"><p m="0" text="sm" text-text-muted>예상 월 급여</p><strong id="monthly" block mt="2" text="2xl md:3xl" font="800" text-primary>-</strong></div>
           <div grid="~ cols-1 sm:cols-2" gap="3" mt="3"><div class="cm-result"><p m="0" text="sm" text-text-muted>예상 시급</p><strong id="hourly" block mt="2" text="lg">-</strong></div><div class="cm-result"><p m="0" text="sm" text-text-muted>8시간 기준 일급</p><strong id="daily" block mt="2" text="lg">-</strong></div></div>
