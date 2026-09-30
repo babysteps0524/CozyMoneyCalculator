@@ -1,70 +1,44 @@
-<footer
-  mt="16"
-  border="t"
-  border-border
-  dark="border-dark-border"
->
-  <div class="cm-container" py="8 md:10" flex="~ col" gap="4" text="sm">
-    <nav flex="~ wrap" gap="2 md:4">
-      <a
-        href="/about/"
-        rounded="lg"
-        px="2"
-        py="1"
-        text="text-muted"
-        hover="text-text dark:text-dark-text"
-        active="opacity-60"
-        no-underline
-        dark="text-dark-text-muted"
-      >
-        사이트 소개
-      </a>
-      <a
-        href="/contact/"
-        rounded="lg"
-        px="2"
-        py="1"
-        text="text-muted"
-        hover="text-text"
-        active="opacity-60"
-        no-underline
-        dark="text-dark-text-muted"
-        dark:hover="text-dark-text"
-      >
-        문의
-      </a>
-      <a
-        href="/privacy/"
-        rounded="lg"
-        px="2"
-        py="1"
-        text="text-muted"
-        hover="text-text"
-        active="opacity-60"
-        no-underline
-        dark="text-dark-text-muted"
-        dark:hover="text-dark-text"
-      >
-        개인정보처리방침
-      </a>
-      <a
-        href="/terms/"
-        rounded="lg"
-        px="2"
-        py="1"
-        text="text-muted"
-        hover="text-text"
-        active="opacity-60"
-        no-underline
-        dark="text-dark-text-muted"
-        dark:hover="text-dark-text"
-      >
-        이용약관
-      </a>
-    </nav>
-
-    <p m="0" text="text-subtle" dark="text-dark-text-subtle">
-      © {new Date().getFullYear()} CozyMoney. All rights reserved.
-    </p>
+<footer mt="16" border="t" border-border dark="border-dark-border">
+  <div class="cm-container" py="10 md:12" text="sm">
+    <div grid="~ cols-1 sm:cols-2 lg:cols-4" gap="8 md:10">
+      <div>
+        <a href="/" text="lg" font="800" text-text no-underline dark="text-dark-text">CozyMoney</a>
+        <p m="0" mt="3" leading="6" text-text-muted dark="text-dark-text-muted">
+          생활에 필요한 계산과 도구를 이해하기 쉽게 제공합니다.
+        </p>
+      </div>
+      <div>
+        <h2 m="0" text="sm" font="750">계산기</h2>
+        <nav flex="~ col" items-start gap="1" mt="3">
+          <a href="/calculators/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">전체 계산기</a>
+          <a href="/calculators/loan/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">대출 계산기</a>
+          <a href="/calculators/savings/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">예적금 계산기</a>
+        </nav>
+      </div>
+      <div>
+        <h2 m="0" text="sm" font="750">생활도구</h2>
+        <nav flex="~ col" items-start gap="1" mt="3">
+          <a href="/tools/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">전체 생활도구</a>
+          <a href="/tools/date/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">날짜 계산기</a>
+          <a href="/tools/unit/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">단위 변환기</a>
+        </nav>
+      </div>
+      <div>
+        <h2 m="0" text="sm" font="750">사이트 안내</h2>
+        <nav flex="~ col" items-start gap="1" mt="3">
+          <a href="/about/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">사이트 소개</a>
+          <a href="/contact/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">문의하기</a>
+          <a href="/privacy/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">개인정보처리방침</a>
+          <a href="/terms/" py="1" text="text-muted" no-underline hover="text-text dark:text-dark-text" dark="text-dark-text-muted">이용약관</a>
+        </nav>
+      </div>
+    </div>
+    <div mt="8" pt="6" border="t" border-border dark="border-dark-border">
+      <p m="0" leading="6" text="xs sm" text-text-subtle dark="text-dark-text-subtle">
+        CozyMoney의 계산 결과와 생활도구 결과는 입력값을 바탕으로 한 참고용 정보입니다.
+        금융·세금·노무·법률 등 중요한 의사결정에는 해당 기관 또는 전문가의 최신 안내를 함께 확인하세요.
+      </p>
+      <p m="0" mt="3" text="xs" text-text-subtle dark="text-dark-text-subtle">© {new Date().getFullYear()} CozyMoney. All rights reserved.</p>
+    </div>
   </div>
 </footer>
