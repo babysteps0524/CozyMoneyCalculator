@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/common/Header.astro";
+import Footer from "../../../components/common/Footer.astro";
+import CalculatorShell from "../../../components/calculators/CalculatorShell.astro";
+---
+<BaseLayout title="시급 계산기 | CozyMoney" description="월 급여와 월 근로시간을 기준으로 시급을 계산합니다." canonical="https://cozymoney.kr/calculators/hourly-wage/">
+  <Header />
+  <main class="cm-container" py="10 md:14 lg:18">
+    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted"><a href="/" no-underline hover="text-primary">홈</a><span mx="2">/</span><a href="/calculators/" no-underline hover="text-primary">계산기</a><span mx="2">/</span>급여·노동</nav>
+    <header max-w="3xl" mb="8"><p m="0" text="sm" font="700" text-primary>급여·노동</p><h1 m="0" mt="2" text="3xl md:4xl" font="800">시급 계산기</h1><p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">월 급여와 월 근로시간을 기준으로 시급을 계산합니다.</p></header>
+    <div max-w="4xl"><CalculatorShell kind="hourlyWage" title="시급 계산기" description="월 급여와 월 근로시간을 기준으로 시급을 계산합니다." /></div>
+  </main>
+  <Footer />
+</BaseLayout>
