@@ -28,7 +28,7 @@ import Footer from "../../components/common/Footer.astro";
           <ul m="0" mt="4" pl="5" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
             <li><strong>계산기·생활도구 입력값:</strong> 계산 결과를 제공하기 위해 브라우저에서 처리하며, 사이트가 별도 저장하는 방식으로 운영하지 않습니다.</li>
             <li><strong>문의 이메일:</strong> 문의에 답변하고 필요한 후속 조치를 하기 위해 이메일 주소와 문의 내용을 처리할 수 있습니다.</li>
-            <li><strong>서비스 이용 정보:</strong> 웹사이트 운영에 Google Analytics 등 분석 도구를 사용하는 경우 방문·이용 관련 정보가 해당 서비스로 전송될 수 있습니다.</li>
+            <li><strong>Google Analytics:</strong> 사이트 이용 현황을 분석하고 서비스 개선에 활용하기 위해 Google Analytics를 사용합니다. 방문·이용 정보, 대략적인 위치 정보, 브라우저 및 기기 정보, 세션 및 이벤트 정보 등이 수집·처리될 수 있으며, Google Analytics는 웹사이트 식별을 위해 쿠키 등의 식별자를 사용할 수 있습니다.</li>
           </ul>
         </section>
 
@@ -41,10 +41,11 @@ import Footer from "../../components/common/Footer.astro";
         </section>
 
         <section class="cm-card" p="5 md:7">
-          <h2 m="0" text="xl" font="750">4. 제3자 서비스 및 광고</h2>
+          <h2 m="0" text="xl" font="750">4. Google Analytics 및 Google AdSense</h2>
           <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
-            사이트에 Google AdSense 등 광고 서비스가 적용되는 경우 Google 및 제3자 광고 파트너가 광고 제공·측정과 관련하여 쿠키, 웹 비콘, IP 주소 등 기술을 사용할 수 있습니다.
-            광고 개인 최적화 여부와 쿠키 사용 방식은 이용자의 브라우저 및 Google 계정 설정 등에 따라 달라질 수 있습니다.
+            CozyMoney는 Google Analytics를 이용하여 방문자 수, 세션, 페이지 조회 및 이용 과정에서 발생하는 이벤트 등을 측정하고 서비스 이용 현황을 분석합니다. Google Analytics의 데이터 수집 및 처리에 관한 자세한 내용은 Google의 정책을 따릅니다.
+            CozyMoney는 Google AdSense를 이용하여 사이트에 광고를 표시합니다. Google 및 광고 파트너는 광고의 제공·측정·빈도 관리 등을 위해 쿠키, 웹 비콘, IP 주소 또는 기타 식별자를 사용할 수 있습니다.
+            제3자가 이용자의 브라우저에 쿠키를 저장하거나 읽고, 웹 비콘 또는 IP 주소 등을 이용해 광고 관련 정보를 수집할 수 있습니다.
           </p>
           <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
             Google 서비스가 적용된 사이트에서 Google이 정보를 사용하는 방법은
@@ -56,15 +57,25 @@ import Footer from "../../components/common/Footer.astro";
         </section>
 
         <section class="cm-card" p="5 md:7">
-          <h2 m="0" text="xl" font="750">5. 쿠키 및 유사 기술</h2>
+          <h2 m="0" text="xl" font="750">5. 쿠키 및 광고 개인 최적화</h2>
           <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
-            사이트 자체 기능에 필요한 범위를 제외하고, 광고·분석 서비스가 적용되면 해당 서비스가 쿠키 또는 유사 기술을 사용할 수 있습니다.
-            이용자는 브라우저 설정을 통해 쿠키를 차단하거나 삭제할 수 있으나 일부 기능이나 광고 서비스가 정상적으로 동작하지 않을 수 있습니다.
+            Google Analytics는 사이트 이용을 측정하기 위해 쿠키 등의 식별자를 사용할 수 있습니다. Google AdSense는 광고 제공 및 측정을 위해 광고 쿠키를 사용할 수 있습니다.
+            Google 및 제3자 광고 파트너가 이용자의 과거 사이트 방문 또는 다른 사이트 방문 정보를 바탕으로 광고를 제공할 수 있으며, 광고 개인 최적화 설정은 이용자의 설정에 따라 달라질 수 있습니다.
+            이용자는 Google의 광고 설정에서 맞춤 광고를 관리하거나 비개인화 광고를 선택할 수 있습니다. 또한 브라우저의 쿠키 설정을 통해 쿠키를 차단하거나 삭제할 수 있습니다.
+            쿠키를 차단하면 일부 사이트 기능이나 광고 서비스가 정상적으로 동작하지 않을 수 있습니다.
           </p>
         </section>
 
         <section class="cm-card" p="5 md:7">
-          <h2 m="0" text="xl" font="750">6. 정보주체의 권리</h2>
+          <h2 m="0" text="xl" font="750">6. 제3자 제공 및 처리</h2>
+          <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
+            CozyMoney는 Google Analytics 및 Google AdSense를 비롯한 Google 서비스를 이용하며, 해당 서비스의 운영 과정에서 Google 및 관련 서비스 제공자에게 서비스 이용 정보가 전송·처리될 수 있습니다.
+            전송 및 처리되는 정보의 범위는 각 서비스의 설정과 이용 환경에 따라 달라질 수 있습니다. CozyMoney는 계산기와 생활도구의 이용에 불필요한 주민등록번호, 계좌번호, 카드번호, 비밀번호 등의 개인정보를 Google Analytics 또는 Google AdSense에 전달하지 않습니다.
+          </p>
+        </section>
+
+        <section class="cm-card" p="5 md:7">
+          <h2 m="0" text="xl" font="750">7. 정보주체의 권리</h2>
           <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
             이용자는 관계 법령에서 정한 범위에 따라 자신의 개인정보에 대한 열람, 정정, 삭제, 처리정지 등을 요청할 수 있습니다.
             요청은 아래 문의처로 보내주시면 확인 후 관련 절차에 따라 처리합니다.
@@ -72,7 +83,7 @@ import Footer from "../../components/common/Footer.astro";
         </section>
 
         <section class="cm-card" p="5 md:7">
-          <h2 m="0" text="xl" font="750">7. 개인정보 보호 관련 문의</h2>
+          <h2 m="0" text="xl" font="750">8. 개인정보 보호 관련 문의</h2>
           <p m="0" mt="3" leading="7" text-text-muted dark="text-dark-text-muted">
             개인정보 처리와 관련한 문의 및 권리행사 요청은 이메일로 접수할 수 있습니다.
           </p>
