@@ -4,123 +4,38 @@ import Header from "../../components/common/Header.astro";
 import Footer from "../../components/common/Footer.astro";
 
 const categories = [
-  {
-    title: "금융",
-    description: "대출과 이자, 저축에 필요한 계산기",
-    items: [
-      {
-        title: "대출 계산기",
-        description: "월 상환금액과 총 이자를 계산합니다.",
-        href: "/calculators/loan/",
-      },
-      {
-        title: "예적금 계산기",
-        description: "예금과 적금의 예상 만기금액을 계산합니다.",
-        href: "/calculators/savings/",
-      },
-    ],
-  },
-  {
-    title: "급여",
-    description: "연봉과 월급을 확인하는 계산기",
-    items: [
-      {
-        title: "연봉 계산기",
-        description: "연봉을 기준으로 월 급여를 계산합니다.",
-        href: "/calculators/salary/",
-      },
-    ],
-  },
+  { title: "금융", description: "대출과 저축에 필요한 계산기", items: [
+    { title: "대출 계산기", description: "월 상환금액과 총 이자를 계산합니다.", href: "/calculators/loan/" },
+    { title: "예적금 계산기", description: "예금과 적금의 예상 만기금액을 계산합니다.", href: "/calculators/savings/" },
+  ]},
+  { title: "급여", description: "연봉과 급여를 확인하는 계산기", items: [
+    { title: "연봉 계산기", description: "연봉을 기준으로 월 급여와 시급을 계산합니다.", href: "/calculators/salary/" },
+  ]},
 ];
 ---
-
-<BaseLayout
-  title="계산기 | CozyMoney"
-  description="CozyMoney에서 제공하는 생활 금융 계산기를 확인해 보세요."
-  canonical="https://cozymoney.kr/calculators/"
->
+<BaseLayout title="계산기 | CozyMoney" description="CozyMoney에서 제공하는 생활 금융 계산기를 확인해 보세요." canonical="https://cozymoney.kr/calculators/">
   <Header />
-
   <main class="cm-container" py="10 md:14 lg:18">
     <header max-w="3xl" mb="8 md:10">
       <p m="0" text="sm" font="700" text-primary>CALCULATORS</p>
-      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
-        필요한 계산기를 찾아보세요
-      </h1>
-      <p
-        m="0"
-        mt="4"
-        text="base md:lg"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        자주 사용하는 계산기를 분야별로 정리했습니다. 모바일에서는 한 손으로 선택하기 쉽고, 넓은 화면에서는 여러 계산기를 한 번에 비교할 수 있도록 구성했습니다.
-      </p>
+      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>필요한 계산기를 찾아보세요</h1>
+      <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">자주 사용하는 계산기를 분야별로 정리했습니다.</p>
     </header>
-
     <div flex="~ col" gap="8 md:10">
-      {
-        categories.map((category) => (
-          <section>
-            <div flex="~ col sm:row" items-start sm:items-end justify-between gap="2" mb="4">
-              <div>
-                <h2 m="0" text="xl md:2xl" font="750">{category.title}</h2>
-                <p
-                  m="0"
-                  mt="1"
-                  text="sm"
-                  text-text-muted
-                  dark="text-dark-text-muted"
-                >
-                  {category.description}
-                </p>
-              </div>
-              <span text="xs" font="700" text-text-subtle dark="text-dark-text-subtle">
-                {category.items.length}개 계산기
-              </span>
-            </div>
-
-            <div grid="~ cols-1 md:cols-2 lg:cols-3" gap="3 md:4">
-              {
-                category.items.map((calculator) => (
-                  <a
-                    href={calculator.href}
-                    class="cm-card-interactive"
-                    p="5"
-                    no-underline
-                  >
-                    <div flex="~" items-center justify-between>
-                      <h3
-                        m="0"
-                        text="lg"
-                        font="750"
-                        text-text
-                        dark="text-dark-text"
-                      >
-                        {calculator.title}
-                      </h3>
-                      <span text="text-subtle" dark="text-dark-text-subtle">→</span>
-                    </div>
-                    <p
-                      m="0"
-                      mt="2"
-                      text="sm"
-                      leading="6"
-                      text-text-muted
-                      dark="text-dark-text-muted"
-                    >
-                      {calculator.description}
-                    </p>
-                  </a>
-                ))
-              }
-            </div>
-          </section>
-        ))
-      }
+      {categories.map((category) => (
+        <section>
+          <div mb="4"><h2 m="0" text="xl md:2xl" font="750">{category.title}</h2><p m="0" mt="1" text="sm" text-text-muted dark="text-dark-text-muted">{category.description}</p></div>
+          <div grid="~ cols-1 md:cols-2 lg:cols-3" gap="3 md:4">
+            {category.items.map((calculator) => (
+              <a href={calculator.href} class="cm-card-interactive" p="5" no-underline>
+                <div flex="~" items-center justify-between><h3 m="0" text="lg" font="750" text-text dark="text-dark-text">{calculator.title}</h3><span text="text-subtle">→</span></div>
+                <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">{calculator.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   </main>
-
   <Footer />
 </BaseLayout>
