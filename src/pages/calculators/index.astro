@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/common/Header.astro';
+import Footer from '../../components/common/Footer.astro';
+
+const calculators = [
+  {
+    title: '대출 계산기',
+    description: '대출 월 상환금액과 총 이자를 계산합니다.',
+    href: '/calculators/loan/',
+  },
+  {
+    title: '예적금 계산기',
+    description: '예금과 적금의 예상 만기금액을 계산합니다.',
+    href: '/calculators/savings/',
+  },
+  {
+    title: '연봉 계산기',
+    description: '연봉을 기준으로 월급을 계산합니다.',
+    href: '/calculators/salary/',
+  },
+];
+---
+
+<BaseLayout
+  title="계산기 | CozyMoney"
+  description="CozyMoney에서 제공하는 생활 금융 계산기를 확인해 보세요."
+  canonical="https://cozymoney.kr/calculators/"
+>
+  <Header />
+
+  <main
+    mx="auto"
+    max-w="6xl"
+    px="4 sm:6"
+    py="12 sm:16"
+  >
+    <header max-w="2xl" mb="10">
+      <h1 m="0" text="3xl" font="bold">
+        계산기
+      </h1>
+
+      <p
+        m="0"
+        mt="4"
+        text="base"
+        leading="7"
+        text-gray="600"
+      >
+        일상에서 자주 사용하는 금융과 생활 관련 계산기를
+        간편하게 이용해 보세요.
+      </p>
+    </header>
+
+    <div
+      grid="~ cols-1 sm:cols-2 lg:cols-3"
+      gap="4"
+    >
+      {
+        calculators.map((calculator) => (
+          <a
+            href={calculator.href}
+            p="6"
+            rounded="2xl"
+            border="1"
+            border-gray="200"
+            hover="border-gray-400"
+            no-underline
+            transition="colors duration-100"
+          >
+            <h2
+              m="0"
+              text="lg"
+              font="bold"
+              text-gray="900"
+            >
+              {calculator.title}
+            </h2>
+
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="6"
+              text-gray="500"
+            >
+              {calculator.description}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

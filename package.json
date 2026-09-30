@@ -12,9 +12,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.5"
+    "@astrojs/check": "^0.9.10",
+    "astro": "^7.3.5",
+    "typescript": "^6.0.0"
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@unocss/astro": "^66.10.5",
+    "@unocss/preset-attributify": "^66.10.5",
+    "@unocss/preset-icons": "^66.10.5",
+    "@unocss/preset-typography": "^66.10.5",
+    "@unocss/preset-wind4": "^66.10.5",
+    "unocss": "^66.10.5"
   }
 }
