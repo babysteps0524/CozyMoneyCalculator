@@ -56,16 +56,20 @@ import AdSlot from '../../../components/common/AdSlot.astro';
             <button
               id="deposit-tab"
               type="button"
+              aria-pressed="true"
               rounded="lg"
               py="2.5"
               text="sm"
               font="700"
+              bg="surface"
+              dark="bg-dark-surface"
             >
               예금
             </button>
             <button
               id="installment-tab"
               type="button"
+              aria-pressed="false"
               rounded="lg"
               py="2.5"
               text="sm"
@@ -306,14 +310,16 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     type = next;
     depositField!.hidden = type !== 'deposit';
     monthlyField!.hidden = type !== 'installment';
-    depositTab!.className =
-      type === 'deposit'
-        ? 'rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface'
-        : 'rounded-lg py-2.5 text-sm font-700 text-text-muted';
-    installmentTab!.className =
-      type === 'installment'
-        ? 'rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface'
-        : 'rounded-lg py-2.5 text-sm font-700 text-text-muted';
+    const depositActive = type === 'deposit';
+    depositTab!.setAttribute('aria-pressed', String(depositActive));
+    installmentTab!.setAttribute('aria-pressed', String(!depositActive));
+
+    depositTab!.className = depositActive
+      ? 'rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface'
+      : 'rounded-lg py-2.5 text-sm font-700 text-text-muted dark:text-dark-text-muted';
+    installmentTab!.className = !depositActive
+      ? 'rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface'
+      : 'rounded-lg py-2.5 text-sm font-700 text-text-muted dark:text-dark-text-muted';
     render();
   };
   const render = () => {
@@ -389,6 +395,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       }
     });
     bindNumberControls(form);
-    render();
+    setType(type);
   }
 </script>
