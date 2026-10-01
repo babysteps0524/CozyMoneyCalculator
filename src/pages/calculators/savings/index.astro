@@ -245,6 +245,25 @@ import AdSlot from '../../../components/common/AdSlot.astro';
                 </button>
               </div>
             </div>
+            <div mt="5">
+              <label class="cm-label" for="tax-mode">
+                이자소득세 적용
+              </label>
+              <select class="cm-input" id="tax-mode">
+                <option value="general">일반과세 (15.4% 가정)</option>
+                <option value="taxFree">비과세 가정 (0%)</option>
+              </select>
+              <p
+                m="0"
+                mt="2"
+                text="xs"
+                leading="5"
+                text-text-muted
+                dark="text-dark-text-muted"
+              >
+                비과세는 실제 가입자격을 판정하지 않고, 세금이 없다고 가정해 비교합니다.
+              </p>
+            </div>
             <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
               <button type="submit" class="cm-button-primary" py="3.5">
                 계산하기
@@ -335,7 +354,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
             </div>
             <div class="cm-result" sm="col-span-2">
               <p m="0" text="sm" text-text-muted>
-                이자소득세(15.4% 가정)
+                이자소득세
               </p>
               <strong id="tax" block mt="2" text="lg">
                 -
@@ -499,6 +518,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   const monthly = document.querySelector<HTMLInputElement>('#monthly');
   const rate = document.querySelector<HTMLInputElement>('#rate');
   const months = document.querySelector<HTMLInputElement>('#months');
+  const taxMode = document.querySelector<HTMLSelectElement>('#tax-mode');
   const maturity = document.querySelector<HTMLElement>('#maturity');
   const paid = document.querySelector<HTMLElement>('#paid');
   const interest = document.querySelector<HTMLElement>('#interest');
@@ -533,6 +553,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         monthlyDeposit: parseNumber(monthly!.value),
         annualRate: parseNumber(rate!.value),
         months: parseNumber(months!.value),
+        taxMode: taxMode!.value === 'taxFree' ? 'taxFree' : 'general',
       });
       maturity!.textContent = formatWon(r.maturityAmount);
       paid!.textContent = formatWon(r.principal);
@@ -554,6 +575,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     monthly &&
     rate &&
     months &&
+    taxMode &&
     maturity &&
     paid &&
     interest &&
@@ -574,6 +596,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       monthly.value = '300,000';
       rate.value = '3.5';
       months.value = '12';
+      taxMode.value = 'general';
       setType('deposit');
     });
     copy.addEventListener('click', async () => {
@@ -584,6 +607,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
             `납입 원금: ${paid.textContent}`,
             `세전 이자: ${interest.textContent}`,
             `세금: ${tax.textContent}`,
+            `과세방식: ${taxMode.value === 'taxFree' ? '비과세 가정' : '일반과세 15.4% 가정'}`,
             `세후 만기금액: ${maturity.textContent}`,
           ].join('\n'),
         );
