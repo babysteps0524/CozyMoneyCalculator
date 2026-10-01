@@ -31,8 +31,11 @@ const guidance: Record<string, { intro: string; steps: string[]; formula: string
 };
 
 const currentGuidance = guidance[kind] ?? {
-  how: '입력값을 바탕으로 계산 결과를 확인합니다.',
-  note: '계산 결과는 이해를 돕기 위한 참고용 값입니다.',
+  intro: '입력값을 바탕으로 계산 결과를 확인합니다.',
+  steps: ['입력값을 확인합니다.', '계산하기 버튼을 눌러 결과를 확인합니다.'],
+  formula: '입력값에 해당 계산기의 기본 산식을 적용합니다.',
+  basis: '계산 결과는 이해를 돕기 위한 참고용 값입니다.',
+  cautions: ['실제 금융·세금·노무 기준은 개인 조건과 적용 시점에 따라 달라질 수 있습니다.'],
 };
 ---
 
