@@ -56,16 +56,16 @@ import AdSlot from '../../../components/common/AdSlot.astro';
             <button
               id="deposit-tab"
               type="button"
+              role="tab"
               aria-pressed="true"
-              class="rounded-lg py-2.5 text-sm font-700 bg-primary text-white transition-colors duration-100"
             >
               예금
             </button>
             <button
               id="installment-tab"
               type="button"
+              role="tab"
               aria-pressed="false"
-              class="rounded-lg py-2.5 text-sm font-700 bg-transparent text-text-muted dark:text-dark-text-muted transition-colors duration-100 hover:bg-surface hover:text-text dark:hover:bg-dark-surface dark:hover:text-dark-text"
             >
               적금
             </button>
@@ -507,7 +507,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     installmentTab!.setAttribute('aria-pressed', String(!depositActive));
 
     const baseTabClass =
-      'rounded-lg py-2.5 text-sm font-700 transition-colors duration-100';
+      'cm-button rounded-lg py-2.5 text-sm font-700 transition-colors duration-100';
     const activeTabClass = 'bg-primary text-white hover:bg-primary';
     const inactiveTabClass =
       'bg-transparent text-text-muted dark:text-dark-text-muted hover:bg-surface hover:text-text dark:hover:bg-dark-surface dark:hover:text-dark-text';
