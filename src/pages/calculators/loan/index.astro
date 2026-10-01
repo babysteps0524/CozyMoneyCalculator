@@ -5,7 +5,7 @@ import Footer from '../../../components/common/Footer.astro';
 ---
 
 <BaseLayout
-  title="대출 계산기 | CozyMoney"
+  title="대출 계산기 | CozyMoney 코지머니"
   description="대출금액과 금리, 대출기간을 입력하면 월 상환금액과 총 이자를 계산할 수 있습니다."
   canonical="https://cozymoney.kr/calculators/loan/"
 >
@@ -89,12 +89,10 @@ import Footer from '../../../components/common/Footer.astro';
 
           <form id="loan-form">
             <div mb="5">
-              <label class="cm-label" for="repayment-type">상환방식</label>
-              <select
-                class="cm-input"
-                id="repayment-type"
-                name="repaymentType"
-              >
+              <label class="cm-label" for="repayment-type">
+                상환방식
+              </label>
+              <select class="cm-input" id="repayment-type" name="repaymentType">
                 <option value="equalPrincipalInterest">원리금균등상환</option>
                 <option value="equalPrincipal">원금균등상환</option>
                 <option value="maturity">만기일시상환</option>
@@ -106,10 +104,53 @@ import Footer from '../../../components/common/Footer.astro';
                 <label class="cm-label" for="principal">
                   대출금액
                 </label>
-                <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-                  <button type="button" data-step-direction="-1" aria-label="대출금액 감소" class="cm-step-button">−</button>
-                  <div relative><input class="cm-input" id="principal" name="principal" type="text" inputmode="numeric" value="10000000" data-number-input data-step="100000" data-min="1" data-decimal="false" pr="12" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span></div>
-                  <button type="button" data-step-direction="1" aria-label="대출금액 증가" class="cm-step-button">+</button>
+                <div
+                  grid="~ cols-[auto_minmax(0,1fr)_auto]"
+                  items-center
+                  gap="2"
+                >
+                  <button
+                    type="button"
+                    data-step-direction="-1"
+                    aria-label="대출금액 감소"
+                    class="cm-step-button"
+                  >
+                    −
+                  </button>
+                  <div relative>
+                    <input
+                      class="cm-input"
+                      id="principal"
+                      name="principal"
+                      type="text"
+                      inputmode="numeric"
+                      value="10000000"
+                      data-number-input
+                      data-step="100000"
+                      data-min="1"
+                      data-decimal="false"
+                      pr="12"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      원
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    data-step-direction="1"
+                    aria-label="대출금액 증가"
+                    class="cm-step-button"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
@@ -117,10 +158,53 @@ import Footer from '../../../components/common/Footer.astro';
                 <label class="cm-label" for="annual-rate">
                   연이율
                 </label>
-                <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-                  <button type="button" data-step-direction="-1" aria-label="연이율 감소" class="cm-step-button">−</button>
-                  <div relative><input class="cm-input" id="annual-rate" name="annualRate" type="text" inputmode="decimal" value="4.5" data-number-input data-step="0.1" data-min="0" data-decimal="true" pr="12" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span></div>
-                  <button type="button" data-step-direction="1" aria-label="연이율 증가" class="cm-step-button">+</button>
+                <div
+                  grid="~ cols-[auto_minmax(0,1fr)_auto]"
+                  items-center
+                  gap="2"
+                >
+                  <button
+                    type="button"
+                    data-step-direction="-1"
+                    aria-label="연이율 감소"
+                    class="cm-step-button"
+                  >
+                    −
+                  </button>
+                  <div relative>
+                    <input
+                      class="cm-input"
+                      id="annual-rate"
+                      name="annualRate"
+                      type="text"
+                      inputmode="decimal"
+                      value="4.5"
+                      data-number-input
+                      data-step="0.1"
+                      data-min="0"
+                      data-decimal="true"
+                      pr="12"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      %
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    data-step-direction="1"
+                    aria-label="연이율 증가"
+                    class="cm-step-button"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
@@ -128,48 +212,201 @@ import Footer from '../../../components/common/Footer.astro';
                 <label class="cm-label" for="loan-months">
                   대출기간
                 </label>
-                <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-                  <button type="button" data-step-direction="-1" aria-label="대출기간 감소" class="cm-step-button">−</button>
-                  <div relative><input class="cm-input" id="loan-months" name="months" type="text" inputmode="numeric" value="36" data-number-input data-step="1" data-min="1" data-decimal="false" pr="14" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">개월</span></div>
-                  <button type="button" data-step-direction="1" aria-label="대출기간 증가" class="cm-step-button">+</button>
+                <div
+                  grid="~ cols-[auto_minmax(0,1fr)_auto]"
+                  items-center
+                  gap="2"
+                >
+                  <button
+                    type="button"
+                    data-step-direction="-1"
+                    aria-label="대출기간 감소"
+                    class="cm-step-button"
+                  >
+                    −
+                  </button>
+                  <div relative>
+                    <input
+                      class="cm-input"
+                      id="loan-months"
+                      name="months"
+                      type="text"
+                      inputmode="numeric"
+                      value="36"
+                      data-number-input
+                      data-step="1"
+                      data-min="1"
+                      data-decimal="false"
+                      pr="14"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      개월
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    data-step-direction="1"
+                    aria-label="대출기간 증가"
+                    class="cm-step-button"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             </div>
 
-            <details mt="5" rounded="xl" border="1" border-border p="4" dark="border-dark-border">
-              <summary cursor-pointer font="700" text="sm">추가 조건</summary>
+            <details
+              mt="5"
+              rounded="xl"
+              border="1"
+              border-border
+              p="4"
+              dark="border-dark-border"
+            >
+              <summary cursor-pointer font="700" text="sm">
+                추가 조건
+              </summary>
               <div grid="~ cols-1 md:cols-3" gap="4" mt="4">
                 <div>
-                  <label class="cm-label" for="grace-months">거치기간</label>
+                  <label class="cm-label" for="grace-months">
+                    거치기간
+                  </label>
                   <div relative>
-                    <input class="cm-input" id="grace-months" type="text" inputmode="numeric" value="0" data-number-input data-step="1" data-min="0" data-decimal="false" pr="14" />
-                    <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">개월</span>
+                    <input
+                      class="cm-input"
+                      id="grace-months"
+                      type="text"
+                      inputmode="numeric"
+                      value="0"
+                      data-number-input
+                      data-step="1"
+                      data-min="0"
+                      data-decimal="false"
+                      pr="14"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      개월
+                    </span>
                   </div>
                 </div>
                 <div>
-                  <label class="cm-label" for="prepayment-month">중도상환 시점</label>
+                  <label class="cm-label" for="prepayment-month">
+                    중도상환 시점
+                  </label>
                   <div relative>
-                    <input class="cm-input" id="prepayment-month" type="text" inputmode="numeric" value="0" data-number-input data-step="1" data-min="0" data-decimal="false" pr="14" />
-                    <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">회차</span>
+                    <input
+                      class="cm-input"
+                      id="prepayment-month"
+                      type="text"
+                      inputmode="numeric"
+                      value="0"
+                      data-number-input
+                      data-step="1"
+                      data-min="0"
+                      data-decimal="false"
+                      pr="14"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      회차
+                    </span>
                   </div>
                 </div>
                 <div>
-                  <label class="cm-label" for="prepayment-amount">중도상환금액</label>
+                  <label class="cm-label" for="prepayment-amount">
+                    중도상환금액
+                  </label>
                   <div relative>
-                    <input class="cm-input" id="prepayment-amount" type="text" inputmode="numeric" value="0" data-number-input data-step="100000" data-min="0" data-decimal="false" pr="12" />
-                    <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+                    <input
+                      class="cm-input"
+                      id="prepayment-amount"
+                      type="text"
+                      inputmode="numeric"
+                      value="0"
+                      data-number-input
+                      data-step="100000"
+                      data-min="0"
+                      data-decimal="false"
+                      pr="12"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      원
+                    </span>
                   </div>
                 </div>
                 <div>
-                  <label class="cm-label" for="prepayment-fee-rate">중도상환수수료율</label>
+                  <label class="cm-label" for="prepayment-fee-rate">
+                    중도상환수수료율
+                  </label>
                   <div relative>
-                    <input class="cm-input" id="prepayment-fee-rate" type="text" inputmode="decimal" value="0" data-number-input data-step="0.1" data-min="0" data-decimal="true" pr="12" />
-                    <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span>
+                    <input
+                      class="cm-input"
+                      id="prepayment-fee-rate"
+                      type="text"
+                      inputmode="decimal"
+                      value="0"
+                      data-number-input
+                      data-step="0.1"
+                      data-min="0"
+                      data-decimal="true"
+                      pr="12"
+                    />
+                    <span
+                      absolute
+                      right-4
+                      top="[50%]"
+                      translate-y="[-50%]"
+                      text="sm"
+                      text-text-muted
+                      dark="text-dark-text-muted"
+                    >
+                      %
+                    </span>
                   </div>
                 </div>
               </div>
-              <p m="0" mt="3" text="xs" leading="6" text-text-muted dark="text-dark-text-muted">
-                거치기간에는 이자만 납부하는 단순 가정입니다. 중도상환은 입력한 회차의 정기상환 후 원금을 추가로 갚는 것으로 계산하며, 실제 금융기관의 약정과 다를 수 있습니다.
+              <p
+                m="0"
+                mt="3"
+                text="xs"
+                leading="6"
+                text-text-muted
+                dark="text-dark-text-muted"
+              >
+                거치기간에는 이자만 납부하는 단순 가정입니다. 중도상환은 입력한
+                회차의 정기상환 후 원금을 추가로 갚는 것으로 계산하며, 실제
+                금융기관의 약정과 다를 수 있습니다.
               </p>
             </details>
 
@@ -260,75 +497,215 @@ import Footer from '../../../components/common/Footer.astro';
 
           <div grid="~ cols-1 sm:cols-2 lg:cols-1" gap="3" mt="3">
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">첫 회차 상환액</p>
-              <strong id="first-payment" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                첫 회차 상환액
+              </p>
+              <strong id="first-payment" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-text-muted">마지막 회차 상환액</p>
-              <strong id="last-payment" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-text-muted">
+                마지막 회차 상환액
+              </p>
+              <strong id="last-payment" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">총 상환금액</p>
-              <strong id="total-payment" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                총 상환금액
+              </p>
+              <strong id="total-payment" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">총 이자</p>
-              <strong id="total-interest" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                총 이자
+              </p>
+              <strong id="total-interest" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">중도상환금액</p>
-              <strong id="total-prepayment" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                중도상환금액
+              </p>
+              <strong id="total-prepayment" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">중도상환수수료</p>
-              <strong id="total-prepayment-fee" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                중도상환수수료
+              </p>
+              <strong
+                id="total-prepayment-fee"
+                block
+                mt="2"
+                text="lg"
+                font="750"
+              >
+                -
+              </strong>
             </div>
           </div>
-          <button id="schedule-toggle" type="button" mt="4" class="cm-button-secondary" px="3" py="2" text="sm">
+          <button
+            id="schedule-toggle"
+            type="button"
+            mt="4"
+            class="cm-button-secondary"
+            px="3"
+            py="2"
+            text="sm"
+          >
             회차별 상환내역 보기
           </button>
         </section>
-      </div>        <section id="schedule-section" hidden mt="6" class="cm-card" p="5 md:7">
-          <div flex="~" items-center justify-between gap="3" mb="4">
-            <div>
-              <h2 m="0" text="lg" font="750">회차별 상환내역</h2>
-              <p m="0" mt="1" text="xs" text-text-muted dark="text-dark-text-muted">입력한 조건을 기준으로 한 단순 예상 상환표입니다.</p>
-            </div>
+      </div>
+      <section id="schedule-section" hidden mt="6" class="cm-card" p="5 md:7">
+        <div flex="~" items-center justify-between gap="3" mb="4">
+          <div>
+            <h2 m="0" text="lg" font="750">
+              회차별 상환내역
+            </h2>
+            <p
+              m="0"
+              mt="1"
+              text="xs"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              입력한 조건을 기준으로 한 단순 예상 상환표입니다.
+            </p>
           </div>
-          <div overflow-x-scroll overscroll-x="contain">
-            <table w="full" min-w="720px" text="xs sm:sm">
-              <thead>
-                <tr border-b="1" border-border dark="border-dark-border">
-                  <th p="2" text="left">회차</th>
-                  <th p="2" text="right">상환액</th>
-                  <th p="2" text="right">원금</th>
-                  <th p="2" text="right">이자</th>
-                  <th p="2" text="right">중도상환</th>
-                  <th p="2" text="right">잔액</th>
-                </tr>
-              </thead>
-              <tbody id="schedule-body"></tbody>
-            </table>
-          </div>
-        </section>
+        </div>
+        <div overflow-x-scroll overscroll-x="contain">
+          <table w="full" min-w="720px" text="xs sm:sm">
+            <thead>
+              <tr border-b="1" border-border dark="border-dark-border">
+                <th p="2" text="left">
+                  회차
+                </th>
+                <th p="2" text="right">
+                  상환액
+                </th>
+                <th p="2" text="right">
+                  원금
+                </th>
+                <th p="2" text="right">
+                  이자
+                </th>
+                <th p="2" text="right">
+                  중도상환
+                </th>
+                <th p="2" text="right">
+                  잔액
+                </th>
+              </tr>
+            </thead>
+            <tbody id="schedule-body"></tbody>
+          </table>
+        </div>
+      </section>
 
       <section mt="10 md:14">
         <h2 class="cm-section-title">대출 계산 방법</h2>
         <div grid="~ cols-1 lg:cols-3" gap="4" mt="4">
-          <div class="cm-card" p="5"><h3 m="0" font="750">원리금균등상환</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">원금과 이자를 합한 정기 상환액을 일정하게 계산합니다.</p></div>
-          <div class="cm-card" p="5"><h3 m="0" font="750">원금균등상환</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">매월 같은 원금을 갚고 남은 잔액에 대한 이자를 더해 상환액이 점차 줄어드는 방식입니다.</p></div>
-          <div class="cm-card" p="5"><h3 m="0" font="750">만기일시상환</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">대출기간 동안 이자를 납부하고 만기에 원금을 상환하는 방식입니다. 세 가지 방식은 각각 상환액 구성과 원금 상환 시점이 다릅니다.</p></div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">
+              원리금균등상환
+            </h3>
+            <p
+              m="0"
+              mt="3"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              원금과 이자를 합한 정기 상환액을 일정하게 계산합니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">
+              원금균등상환
+            </h3>
+            <p
+              m="0"
+              mt="3"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              매월 같은 원금을 갚고 남은 잔액에 대한 이자를 더해 상환액이 점차
+              줄어드는 방식입니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">
+              만기일시상환
+            </h3>
+            <p
+              m="0"
+              mt="3"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              대출기간 동안 이자를 납부하고 만기에 원금을 상환하는 방식입니다.
+              세 가지 방식은 각각 상환액 구성과 원금 상환 시점이 다릅니다.
+            </p>
+          </div>
         </div>
       </section>
-      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
-        <h2 m="0" font="750">공식 기준과 주의사항</h2>
-        <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-          <li>세 가지 상환방식은 원리금균등상환, 원금균등상환, 만기일시상환으로 구분해 계산합니다.</li>
-          <li>거치기간은 이자만 납부하는 단순 가정이며, 실제 상품의 거치 조건과 상환 방식은 약정서를 확인해야 합니다.</li>
-          <li>중도상환수수료는 사용자가 입력한 비율을 적용한 참고값이며 실제 금융기관의 면제·감면·부과 기준과 다를 수 있습니다.</li>
-          <li>실제 대출금리에는 우대금리, 가산금리, 변동금리 조건이 적용될 수 있습니다.</li>
-          <li>인지대, 보증료 등 중도상환수수료 외 부대비용은 계산하지 않습니다.</li>
-          <li>대출 가능금액과 승인 여부는 소득·부채·담보·신용 및 금융기관의 최신 심사기준에 따라 결정됩니다.</li>
+      <section
+        mt="6"
+        rounded="2xl"
+        border="1"
+        border-border
+        bg="surface-muted"
+        p="5 md:6"
+        dark="border-dark-border dark:bg-dark-surface-muted"
+      >
+        <h2 m="0" font="750">
+          공식 기준과 주의사항
+        </h2>
+        <ul
+          m="0"
+          mt="3"
+          pl="5"
+          text="sm"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          <li>
+            세 가지 상환방식은 원리금균등상환, 원금균등상환, 만기일시상환으로
+            구분해 계산합니다.
+          </li>
+          <li>
+            거치기간은 이자만 납부하는 단순 가정이며, 실제 상품의 거치 조건과
+            상환 방식은 약정서를 확인해야 합니다.
+          </li>
+          <li>
+            중도상환수수료는 사용자가 입력한 비율을 적용한 참고값이며 실제
+            금융기관의 면제·감면·부과 기준과 다를 수 있습니다.
+          </li>
+          <li>
+            실제 대출금리에는 우대금리, 가산금리, 변동금리 조건이 적용될 수
+            있습니다.
+          </li>
+          <li>
+            인지대, 보증료 등 중도상환수수료 외 부대비용은 계산하지 않습니다.
+          </li>
+          <li>
+            대출 가능금액과 승인 여부는 소득·부채·담보·신용 및 금융기관의 최신
+            심사기준에 따라 결정됩니다.
+          </li>
         </ul>
       </section>
 
@@ -357,7 +734,9 @@ import Footer from '../../../components/common/Footer.astro';
             입력값은 이 페이지의 브라우저에서 계산하며 계산기 자체가 별도
             저장하지 않습니다.
           </li>
-          <li>계산 결과는 선택한 상환방식과 입력조건을 기준으로 한 참고값입니다.</li>
+          <li>
+            계산 결과는 선택한 상환방식과 입력조건을 기준으로 한 참고값입니다.
+          </li>
           <li>
             실제 금융기관의 금리, 수수료, 상환 방식과 약정 조건을 반드시
             확인하세요.
@@ -376,38 +755,76 @@ import Footer from '../../../components/common/Footer.astro';
     formatWon,
     type LoanRepaymentType,
   } from '../../../lib/calculators/loan';
-  import { bindNumberControls, parseNumber } from '../../../lib/calculators/number-input';
+  import {
+    bindNumberControls,
+    parseNumber,
+  } from '../../../lib/calculators/number-input';
 
   const form = document.querySelector<HTMLFormElement>('#loan-form');
   const principalInput = document.querySelector<HTMLInputElement>('#principal');
-  const annualRateInput = document.querySelector<HTMLInputElement>('#annual-rate');
+  const annualRateInput =
+    document.querySelector<HTMLInputElement>('#annual-rate');
   const monthsInput = document.querySelector<HTMLInputElement>('#loan-months');
-  const repaymentTypeInput = document.querySelector<HTMLSelectElement>('#repayment-type');
-  const graceMonthsInput = document.querySelector<HTMLInputElement>('#grace-months');
-  const prepaymentMonthInput = document.querySelector<HTMLInputElement>('#prepayment-month');
-  const prepaymentAmountInput = document.querySelector<HTMLInputElement>('#prepayment-amount');
-  const prepaymentFeeRateInput = document.querySelector<HTMLInputElement>('#prepayment-fee-rate');
-  const monthlyPaymentElement = document.querySelector<HTMLElement>('#monthly-payment');
-  const firstPaymentElement = document.querySelector<HTMLElement>('#first-payment');
-  const lastPaymentElement = document.querySelector<HTMLElement>('#last-payment');
-  const totalPaymentElement = document.querySelector<HTMLElement>('#total-payment');
-  const totalInterestElement = document.querySelector<HTMLElement>('#total-interest');
-  const totalPrepaymentElement = document.querySelector<HTMLElement>('#total-prepayment');
-  const totalPrepaymentFeeElement = document.querySelector<HTMLElement>('#total-prepayment-fee');
+  const repaymentTypeInput =
+    document.querySelector<HTMLSelectElement>('#repayment-type');
+  const graceMonthsInput =
+    document.querySelector<HTMLInputElement>('#grace-months');
+  const prepaymentMonthInput =
+    document.querySelector<HTMLInputElement>('#prepayment-month');
+  const prepaymentAmountInput =
+    document.querySelector<HTMLInputElement>('#prepayment-amount');
+  const prepaymentFeeRateInput = document.querySelector<HTMLInputElement>(
+    '#prepayment-fee-rate',
+  );
+  const monthlyPaymentElement =
+    document.querySelector<HTMLElement>('#monthly-payment');
+  const firstPaymentElement =
+    document.querySelector<HTMLElement>('#first-payment');
+  const lastPaymentElement =
+    document.querySelector<HTMLElement>('#last-payment');
+  const totalPaymentElement =
+    document.querySelector<HTMLElement>('#total-payment');
+  const totalInterestElement =
+    document.querySelector<HTMLElement>('#total-interest');
+  const totalPrepaymentElement =
+    document.querySelector<HTMLElement>('#total-prepayment');
+  const totalPrepaymentFeeElement = document.querySelector<HTMLElement>(
+    '#total-prepayment-fee',
+  );
   const errorMessage = document.querySelector<HTMLElement>('#error-message');
-  const resetButton = document.querySelector<HTMLButtonElement>('#reset-button');
+  const resetButton =
+    document.querySelector<HTMLButtonElement>('#reset-button');
   const copyButton = document.querySelector<HTMLButtonElement>('#copy-button');
-  const scheduleToggle = document.querySelector<HTMLButtonElement>('#schedule-toggle');
-  const scheduleSection = document.querySelector<HTMLElement>('#schedule-section');
-  const scheduleBody = document.querySelector<HTMLTableSectionElement>('#schedule-body');
+  const scheduleToggle =
+    document.querySelector<HTMLButtonElement>('#schedule-toggle');
+  const scheduleSection =
+    document.querySelector<HTMLElement>('#schedule-section');
+  const scheduleBody =
+    document.querySelector<HTMLTableSectionElement>('#schedule-body');
 
   if (
-    form && principalInput && annualRateInput && monthsInput && repaymentTypeInput &&
-    graceMonthsInput && prepaymentMonthInput && prepaymentAmountInput &&
-    prepaymentFeeRateInput && monthlyPaymentElement && firstPaymentElement &&
-    lastPaymentElement && totalPaymentElement && totalInterestElement &&
-    totalPrepaymentElement && totalPrepaymentFeeElement && errorMessage &&
-    resetButton && copyButton && scheduleToggle && scheduleSection && scheduleBody
+    form &&
+    principalInput &&
+    annualRateInput &&
+    monthsInput &&
+    repaymentTypeInput &&
+    graceMonthsInput &&
+    prepaymentMonthInput &&
+    prepaymentAmountInput &&
+    prepaymentFeeRateInput &&
+    monthlyPaymentElement &&
+    firstPaymentElement &&
+    lastPaymentElement &&
+    totalPaymentElement &&
+    totalInterestElement &&
+    totalPrepaymentElement &&
+    totalPrepaymentFeeElement &&
+    errorMessage &&
+    resetButton &&
+    copyButton &&
+    scheduleToggle &&
+    scheduleSection &&
+    scheduleBody
   ) {
     const repaymentLabel = () => {
       const labels: Record<LoanRepaymentType, string> = {
@@ -418,8 +835,12 @@ import Footer from '../../../components/common/Footer.astro';
       return labels[repaymentTypeInput.value as LoanRepaymentType];
     };
 
-    const renderSchedule = (schedule: ReturnType<typeof calculateLoan>['schedule']) => {
-      scheduleBody.innerHTML = schedule.map((item) => `
+    const renderSchedule = (
+      schedule: ReturnType<typeof calculateLoan>['schedule'],
+    ) => {
+      scheduleBody.innerHTML = schedule
+        .map(
+          (item) => `
         <tr border-b="1" border-border dark="border-dark-border">
           <td p="2">${item.month}</td>
           <td p="2" text="right">${formatWon(item.payment + item.prepayment + item.prepaymentFee)}</td>
@@ -428,7 +849,9 @@ import Footer from '../../../components/common/Footer.astro';
           <td p="2" text="right">${formatWon(item.prepayment)}</td>
           <td p="2" text="right">${formatWon(item.remainingPrincipal)}</td>
         </tr>
-      `).join('');
+      `,
+        )
+        .join('');
     };
 
     const renderResult = () => {
@@ -453,13 +876,17 @@ import Footer from '../../../components/common/Footer.astro';
         totalPaymentElement.textContent = formatWon(result.totalPayment);
         totalInterestElement.textContent = formatWon(result.totalInterest);
         totalPrepaymentElement.textContent = formatWon(result.totalPrepayment);
-        totalPrepaymentFeeElement.textContent = formatWon(result.totalPrepaymentFee);
+        totalPrepaymentFeeElement.textContent = formatWon(
+          result.totalPrepaymentFee,
+        );
         scheduleToggle.textContent = '회차별 상환내역 보기';
         scheduleSection.hidden = true;
         renderSchedule(result.schedule);
       } catch (error) {
         errorMessage.textContent =
-          error instanceof Error ? error.message : '계산 중 오류가 발생했습니다.';
+          error instanceof Error
+            ? error.message
+            : '계산 중 오류가 발생했습니다.';
         errorMessage.hidden = false;
       }
     };
