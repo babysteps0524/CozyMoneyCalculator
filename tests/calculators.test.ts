@@ -16,6 +16,51 @@ describe("calculator calculations", () => {
     expect(result.totalInterest).toBeGreaterThan(0);
   });
 
+
+  test("loan supports equal principal repayment", () => {
+    const result = calculateLoan({
+      principal: 12_000_000,
+      annualRate: 6,
+      months: 12,
+      repaymentType: "equalPrincipal",
+    });
+
+    expect(result.schedule).toHaveLength(12);
+    expect(result.schedule[0].payment).toBeGreaterThan(result.schedule[11].payment);
+    expect(result.totalInterest).toBeGreaterThan(0);
+  });
+
+  test("loan supports maturity repayment and prepayment fee", () => {
+    const result = calculateLoan({
+      principal: 10_000_000,
+      annualRate: 6,
+      months: 12,
+      repaymentType: "maturity",
+      prepaymentMonth: 6,
+      prepaymentAmount: 2_000_000,
+      prepaymentFeeRate: 1,
+    });
+
+    expect(result.schedule).toHaveLength(12);
+    expect(result.totalPrepayment).toBe(2_000_000);
+    expect(result.totalPrepaymentFee).toBe(20_000);
+    expect(result.schedule[11].remainingPrincipal).toBe(8_000_000);
+  });
+
+  test("loan supports a grace period before repayment", () => {
+    const result = calculateLoan({
+      principal: 10_000_000,
+      annualRate: 6,
+      months: 12,
+      repaymentType: "equalPrincipalInterest",
+      graceMonths: 3,
+    });
+
+    expect(result.schedule[0].principalPayment).toBe(0);
+    expect(result.schedule[2].principalPayment).toBe(0);
+    expect(result.schedule[3].principalPayment).toBeGreaterThan(0);
+  });
+
   test("zero-rate loan divides principal evenly", () => {
     const result = calculateLoan({
       principal: 12_000_000,
