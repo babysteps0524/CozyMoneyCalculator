@@ -295,8 +295,8 @@ import Footer from '../../../components/common/Footer.astro';
               <p m="0" mt="1" text="xs" text-text-muted dark="text-dark-text-muted">입력한 조건을 기준으로 한 단순 예상 상환표입니다.</p>
             </div>
           </div>
-          <div overflow-x-auto>
-            <table w="full" text="xs sm:sm">
+          <div overflow-x-scroll overscroll-x="contain">
+            <table w="full" min-w="720px" text="xs sm:sm">
               <thead>
                 <tr border-b="1" border-border dark="border-dark-border">
                   <th p="2" text="left">회차</th>
