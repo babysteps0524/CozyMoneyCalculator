@@ -344,9 +344,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       renderResult();
-      document
-        .querySelector('#result-section')
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     resetButton.addEventListener('click', () => {
