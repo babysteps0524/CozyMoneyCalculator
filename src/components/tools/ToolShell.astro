@@ -1,4 +1,6 @@
 ---
+import AdSlot from '../common/AdSlot.astro';
+
 interface Props {
   kind:
     | 'lotto'
@@ -513,6 +515,8 @@ const { kind, title, description } = Astro.props;
       </div>
     </aside>
   </div>
+
+  <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL || ''} />
 </section>
 
 <script>
