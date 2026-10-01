@@ -114,7 +114,7 @@ const currentGuidance = guidance[kind] ?? {
       <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">{currentGuidance.basis}</p>
     </section>
   </div>
-  <section mt="4" rounded="2xl" border="1" border-danger/20 bg="danger-surface" p="5">
+  <section mt="4" rounded="2xl" border="1" border="danger/20" bg="danger-surface" p="5">
     <h3 m="0" text="sm" font="750">주의사항</h3>
     <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
       {currentGuidance.cautions.map((item) => <li>{item}</li>)}
