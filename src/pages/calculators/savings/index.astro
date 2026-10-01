@@ -506,8 +506,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     depositTab!.setAttribute('aria-pressed', String(depositActive));
     installmentTab!.setAttribute('aria-pressed', String(!depositActive));
 
-    const baseTabClass =
-      'cm-button rounded-lg py-2.5 text-sm font-700 transition-colors duration-100';
+    const baseTabClass = 'cm-button rounded-lg py-2.5 text-sm font-700';
     const activeTabClass = 'bg-primary text-white hover:bg-primary';
     const inactiveTabClass =
       'bg-transparent text-text-muted dark:text-dark-text-muted hover:bg-surface hover:text-text dark:hover:bg-dark-surface dark:hover:text-dark-text';
