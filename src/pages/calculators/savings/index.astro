@@ -219,20 +219,21 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
 
       <section mt="10 md:14">
-        <h2 class="cm-section-title">계산 기준</h2>
-        <div class="cm-card" mt="4" p="5 md:6">
-          <p
-            m="0"
-            text="sm md:base"
-            leading="7"
-            text-text-muted
-            dark="text-dark-text-muted"
-          >
-            예금은 한 번 예치한 금액을, 적금은 매월 납입하는 금액을 기준으로
-            예상 만기금액을 계산합니다. 세후 결과는 이자소득세 15.4%를 단순
-            적용한 참고값입니다.
-          </p>
+        <h2 class="cm-section-title">예적금 계산 방법</h2>
+        <div grid="~ cols-1 lg:cols-3" gap="4" mt="4">
+          <div class="cm-card" p="5"><h3 m="0" font="750">예금</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">예치한 원금에 연이율과 가입기간을 적용해 세전 이자를 계산합니다. 실제 상품의 이자 지급방식에 따라 결과가 달라질 수 있습니다.</p></div>
+          <div class="cm-card" p="5"><h3 m="0" font="750">적금</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">매월 납입한 금액이 납입시점에 따라 서로 다른 기간 동안 이자를 받는다고 가정합니다. 따라서 같은 연이율이라도 예금과 적금의 이자는 다릅니다.</p></div>
+          <div class="cm-card" p="5"><h3 m="0" font="750">세후 금액</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">현재 계산기는 세전 이자에 15.4%를 단순 적용해 세금을 표시합니다. 비과세·세금우대 상품이나 개인별 과세조건은 별도입니다.</p></div>
         </div>
+      </section>
+      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
+        <h2 m="0" font="750">공식 기준과 주의사항</h2>
+        <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+          <li>예금·적금의 실제 이자는 상품 약관에 정한 이율, 이자계산기간, 납입일 등을 기준으로 금융기관이 산정합니다.</li>
+          <li>우대금리 조건을 충족하지 못하면 실제 이율이 낮아질 수 있습니다.</li>
+          <li>중도해지 시 약정금리와 다른 중도해지 이율이 적용될 수 있습니다.</li>
+          <li>예금자보호 여부와 보호한도는 금융상품 가입 전 금융기관의 최신 안내를 확인하세요.</li>
+        </ul>
       </section>
 
       <section
