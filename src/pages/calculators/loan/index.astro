@@ -93,29 +93,10 @@ import Footer from '../../../components/common/Footer.astro';
                 <label class="cm-label" for="principal">
                   대출금액
                 </label>
-                <div relative>
-                  <input
-                    class="cm-input"
-                    id="principal"
-                    name="principal"
-                    type="number"
-                    inputmode="numeric"
-                    min="1"
-                    step="100000"
-                    value="10000000"
-                    pr="12"
-                  />
-                  <span
-                    absolute
-                    right-4
-                    top="[50%]"
-                    translate-y="[-50%]"
-                    text="sm"
-                    text-text-muted
-                    dark="text-dark-text-muted"
-                  >
-                    원
-                  </span>
+                <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+                  <button type="button" data-step-direction="-1" aria-label="대출금액 감소" class="cm-step-button">−</button>
+                  <div relative><input class="cm-input" id="principal" name="principal" type="text" inputmode="numeric" value="10000000" data-number-input data-step="100000" data-min="1" data-decimal="false" pr="12" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span></div>
+                  <button type="button" data-step-direction="1" aria-label="대출금액 증가" class="cm-step-button">+</button>
                 </div>
               </div>
 
@@ -123,29 +104,10 @@ import Footer from '../../../components/common/Footer.astro';
                 <label class="cm-label" for="annual-rate">
                   연이율
                 </label>
-                <div relative>
-                  <input
-                    class="cm-input"
-                    id="annual-rate"
-                    name="annualRate"
-                    type="number"
-                    inputmode="decimal"
-                    min="0"
-                    step="0.01"
-                    value="4.5"
-                    pr="12"
-                  />
-                  <span
-                    absolute
-                    right-4
-                    top="[50%]"
-                    translate-y="[-50%]"
-                    text="sm"
-                    text-text-muted
-                    dark="text-dark-text-muted"
-                  >
-                    %
-                  </span>
+                <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+                  <button type="button" data-step-direction="-1" aria-label="연이율 감소" class="cm-step-button">−</button>
+                  <div relative><input class="cm-input" id="annual-rate" name="annualRate" type="text" inputmode="decimal" value="4.5" data-number-input data-step="0.1" data-min="0" data-decimal="true" pr="12" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span></div>
+                  <button type="button" data-step-direction="1" aria-label="연이율 증가" class="cm-step-button">+</button>
                 </div>
               </div>
 
@@ -153,29 +115,10 @@ import Footer from '../../../components/common/Footer.astro';
                 <label class="cm-label" for="loan-months">
                   대출기간
                 </label>
-                <div relative>
-                  <input
-                    class="cm-input"
-                    id="loan-months"
-                    name="months"
-                    type="number"
-                    inputmode="numeric"
-                    min="1"
-                    step="1"
-                    value="36"
-                    pr="14"
-                  />
-                  <span
-                    absolute
-                    right-4
-                    top="[50%]"
-                    translate-y="[-50%]"
-                    text="sm"
-                    text-text-muted
-                    dark="text-dark-text-muted"
-                  >
-                    개월
-                  </span>
+                <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+                  <button type="button" data-step-direction="-1" aria-label="대출기간 감소" class="cm-step-button">−</button>
+                  <div relative><input class="cm-input" id="loan-months" name="months" type="text" inputmode="numeric" value="36" data-number-input data-step="1" data-min="1" data-decimal="false" pr="14" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">개월</span></div>
+                  <button type="button" data-step-direction="1" aria-label="대출기간 증가" class="cm-step-button">+</button>
                 </div>
               </div>
             </div>
@@ -364,6 +307,7 @@ import Footer from '../../../components/common/Footer.astro';
 
 <script>
   import { calculateLoan, formatWon } from '../../../lib/calculators/loan';
+  import { bindNumberControls, parseNumber } from '../../../lib/calculators/number-input';
 
   const form = document.querySelector<HTMLFormElement>('#loan-form');
   const principalInput = document.querySelector<HTMLInputElement>('#principal');
@@ -399,9 +343,9 @@ import Footer from '../../../components/common/Footer.astro';
 
       try {
         const result = calculateLoan({
-          principal: Number(principalInput.value),
-          annualRate: Number(annualRateInput.value),
-          months: Number(monthsInput.value),
+          principal: parseNumber(principalInput.value),
+          annualRate: parseNumber(annualRateInput.value),
+          months: parseNumber(monthsInput.value),
         });
 
         monthlyPaymentElement.textContent = formatWon(result.monthlyPayment);
@@ -453,6 +397,7 @@ import Footer from '../../../components/common/Footer.astro';
       }
     });
 
+    bindNumberControls(form);
     renderResult();
   }
 </script>
