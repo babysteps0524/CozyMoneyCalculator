@@ -232,39 +232,19 @@ import AdSlot from '../../../components/common/AdSlot.astro';
 
       <section mt="10 md:14">
         <h2 class="cm-section-title">대출 계산 방법</h2>
-        <div class="cm-card" mt="4" p="5 md:6">
-          <p
-            m="0"
-            text="sm md:base"
-            leading="7"
-            text-text-muted
-            dark="text-dark-text-muted"
-          >
-            원리금균등상환은 대출기간 동안 매월 같은 금액을 상환하는 방식입니다.
-            이 계산기는 연이율을 12개월로 나누어 월이율을 구한 뒤 대출기간을
-            반영합니다.
-          </p>
+        <div grid="~ cols-1 lg:cols-3" gap="4" mt="4">
+          <div class="cm-card" p="5"><h3 m="0" font="750">1. 원리금균등상환</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">매월 같은 금액을 납부하는 방식으로 계산합니다. 입력한 원금, 연이율, 기간을 월 단위로 환산해 월 상환액을 구합니다.</p></div>
+          <div class="cm-card" p="5"><h3 m="0" font="750">2. 계산 공식</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">월이율을 r, 상환횟수를 n, 대출원금을 P라고 하면 월 상환액은 P × r × (1+r)ⁿ ÷ ((1+r)ⁿ-1)입니다. 금리가 0%인 경우에는 원금을 상환횟수로 나눕니다.</p></div>
+          <div class="cm-card" p="5"><h3 m="0" font="750">3. 총 이자</h3><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">월 상환액에 전체 상환횟수를 곱한 뒤 대출원금을 빼서 단순 총 이자를 계산합니다.</p></div>
         </div>
       </section>
-
-      <section mt="8 md:10">
-        <h2 class="cm-section-title">이용 시 주의사항</h2>
-        <ul
-          m="0"
-          mt="4"
-          pl="5"
-          flex="~ col"
-          gap="2"
-          text="sm"
-          leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          <li>실제 금융기관의 상환금액과 차이가 있을 수 있습니다.</li>
-          <li>중도상환수수료, 인지세 등 별도 비용은 포함하지 않습니다.</li>
-          <li>
-            실제 대출 상품의 조건과 금리는 금융기관의 약관을 확인해야 합니다.
-          </li>
+      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
+        <h2 m="0" font="750">공식 기준과 주의사항</h2>
+        <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+          <li>이 계산기는 원리금균등상환을 가정한 수학적 계산이며 금융회사의 실제 상환스케줄과 다를 수 있습니다.</li>
+          <li>실제 대출금리에는 우대금리, 가산금리, 변동금리 조건이 적용될 수 있습니다.</li>
+          <li>인지대, 보증료, 중도상환수수료 등 부대비용은 계산하지 않습니다.</li>
+          <li>대출 가능금액과 승인 여부는 소득·부채·담보·신용 및 금융기관의 최신 심사기준에 따라 결정됩니다.</li>
         </ul>
       </section>
 
