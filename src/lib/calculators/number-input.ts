@@ -37,12 +37,16 @@ export function bindNumberInput(input: HTMLInputElement): void {
     input.value = formatNumberInputValue(input.value, allowDecimal);
 
     let digitCount = 0;
-    let caret = input.value.length;
-    for (let i = 0; i < input.value.length; i += 1) {
-      if (/\d/.test(input.value[i])) digitCount += 1;
-      if (digitCount >= digitsBeforeCaret) {
-        caret = i + 1;
-        break;
+    let caret = 0;
+
+    if (digitsBeforeCaret > 0) {
+      caret = input.value.length;
+      for (let i = 0; i < input.value.length; i += 1) {
+        if (/\d/.test(input.value[i])) digitCount += 1;
+        if (digitCount >= digitsBeforeCaret) {
+          caret = i + 1;
+          break;
+        }
       }
     }
 
@@ -75,11 +79,21 @@ export function bindNumberControls(root: ParentNode): void {
   root.querySelectorAll<HTMLInputElement>('input[data-number-input]').forEach((input) => {
     bindNumberInput(input);
 
-    const wrapper = input.parentElement;
-    const decrease = wrapper?.querySelector<HTMLButtonElement>('[data-step-direction="-1"]');
-    const increase = wrapper?.querySelector<HTMLButtonElement>('[data-step-direction="1"]');
+    const controls = input.parentElement?.parentElement;
+    const decrease = controls?.querySelector<HTMLButtonElement>(
+      '[data-step-direction="-1"]',
+    );
+    const increase = controls?.querySelector<HTMLButtonElement>(
+      '[data-step-direction="1"]',
+    );
 
-    decrease?.addEventListener('click', () => stepNumberInput(input, -1));
-    increase?.addEventListener('click', () => stepNumberInput(input, 1));
+    decrease?.addEventListener('click', () => {
+      stepNumberInput(input, -1);
+      input.focus();
+    });
+    increase?.addEventListener('click', () => {
+      stepNumberInput(input, 1);
+      input.focus();
+    });
   });
 }
