@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://cozymoney.kr/sitemap-index.xml
