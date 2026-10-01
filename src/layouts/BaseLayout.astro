@@ -27,11 +27,19 @@ const { title, description, canonical = 'https://cozymoney.kr/' } = Astro.props;
     <meta property="og:url" content={canonical} />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link
+      id="pretendard-preload"
       rel="preload"
       as="style"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <script is:inline>
+      const pretendard = document.getElementById('pretendard-preload');
+      if (pretendard) {
+        pretendard.addEventListener('load', () => {
+          pretendard.rel = 'stylesheet';
+        });
+      }
+    </script>
     <noscript>
       <link
         rel="stylesheet"
