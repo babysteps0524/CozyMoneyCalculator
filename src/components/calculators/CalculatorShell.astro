@@ -121,20 +121,41 @@ const { kind, title, description } = Astro.props;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
     const $ = (id: string) =>
       root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => Number($(id)?.value || 0);
+    const n = (id: string) => {
+      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
+      return Number(value.replace(/,/g, '') || 0);
+    };
     const fmt = (v: number, d = 0) =>
       Number.isFinite(v)
         ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
         : '-';
     const won = (v: number) => fmt(v) + '원';
+    const stepFor = (id: string, suffix: string) => {
+      if (id === 'rate') return ['compound', 'dsr', 'rent', 'brokerage', 'leaseLoan'].includes(kind) ? '0.1' : '1';
+      if (id === 'loanRate') return '1';
+      if (id === 'cc') return '100';
+      if (suffix === '원') return ['principal', 'price', 'sale', 'buy', 'taxbase', 'deposit', 'income', 'debt', 'newdebt', 'mortgage'].includes(id) ? '100000' : '10000';
+      return '1';
+    };
+    const isDecimal = (id: string) => id === 'rate' || id === 'loanRate';
     const field = (
       id: string,
       label: string,
       value: string,
       type = 'number',
       suffix = '',
-    ) =>
-      `<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" inputmode="${type === 'number' ? 'decimal' : undefined}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div></label>`;
+    ) => {
+      if (type !== 'number') {
+        return `<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div></label>`;
+      }
+      const step = stepFor(id, suffix);
+      const decimal = isDecimal(id);
+      return `<label><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button>
+        <div relative><input class="cm-input" id="${id}" type="text" inputmode="${decimal ? 'decimal' : 'numeric'}" value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="${decimal}" /></div>
+        <button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button>
+      </div></label>`;
+    };
     const select = (id: string, label: string, options: string[]) =>
       `<label><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map((x) => `<option value="${x}">${x}</option>`).join('')}</select></label>`;
 
@@ -216,6 +237,10 @@ const { kind, title, description } = Astro.props;
         field('hours', '월 근로시간', '209', 'number', '시간'),
     };
     fields.innerHTML = (configs[kind] || configs.percentage)();
+
+    import('../../../lib/calculators/number-input').then(({ bindNumberControls }) => {
+      bindNumberControls(fields);
+    });
 
     const calc = () => {
       let value = 0,
