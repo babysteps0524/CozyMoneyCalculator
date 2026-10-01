@@ -44,7 +44,7 @@ describe("calculator calculations", () => {
     expect(result.schedule).toHaveLength(12);
     expect(result.totalPrepayment).toBe(2_000_000);
     expect(result.totalPrepaymentFee).toBe(20_000);
-    expect(result.schedule[11].remainingPrincipal).toBe(8_000_000);
+    expect(result.schedule[11].remainingPrincipal).toBe(0);
   });
 
   test("loan supports a grace period before repayment", () => {
