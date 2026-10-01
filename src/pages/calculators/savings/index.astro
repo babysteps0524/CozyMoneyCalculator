@@ -57,14 +57,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
               id="deposit-tab"
               type="button"
               aria-pressed="true"
-              rounded="lg"
-              py="2.5"
-              text="sm"
-              font="700"
-              bg="primary"
-              text-white
-              transition="colors duration-100"
-              hover="bg-primary"
+              class="rounded-lg py-2.5 text-sm font-700 bg-primary text-white transition-colors duration-100"
             >
               예금
             </button>
@@ -72,17 +65,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
               id="installment-tab"
               type="button"
               aria-pressed="false"
-              rounded="lg"
-              py="2.5"
-              text="sm"
-              font="700"
-              bg="transparent"
-              text-text-muted
-              dark="text-dark-text-muted"
-              transition="colors duration-100"
-              hover="bg-surface"
-              hover="text-text"
-              dark="hover:bg-dark-surface hover:text-dark-text"
+              class="rounded-lg py-2.5 text-sm font-700 bg-transparent text-text-muted dark:text-dark-text-muted transition-colors duration-100 hover:bg-surface hover:text-text dark:hover:bg-dark-surface dark:hover:text-dark-text"
             >
               적금
             </button>
@@ -523,19 +506,16 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     depositTab!.setAttribute('aria-pressed', String(depositActive));
     installmentTab!.setAttribute('aria-pressed', String(!depositActive));
 
-    const updateTabState = (
-      tab: HTMLButtonElement,
-      active: boolean,
-    ) => {
-      tab.classList.toggle('bg-primary', active);
-      tab.classList.toggle('text-white', active);
-      tab.classList.toggle('bg-transparent', !active);
-      tab.classList.toggle('text-text-muted', !active);
-      tab.classList.toggle('dark:text-dark-text-muted', !active);
-    };
+    const baseTabClass =
+      'rounded-lg py-2.5 text-sm font-700 transition-colors duration-100';
+    const activeTabClass = 'bg-primary text-white hover:bg-primary';
+    const inactiveTabClass =
+      'bg-transparent text-text-muted dark:text-dark-text-muted hover:bg-surface hover:text-text dark:hover:bg-dark-surface dark:hover:text-dark-text';
 
-    updateTabState(depositTab!, depositActive);
-    updateTabState(installmentTab!, !depositActive);
+    depositTab!.className =
+      baseTabClass + ' ' + (depositActive ? activeTabClass : inactiveTabClass);
+    installmentTab!.className =
+      baseTabClass + ' ' + (!depositActive ? activeTabClass : inactiveTabClass);
     render();
   };
   const render = () => {
