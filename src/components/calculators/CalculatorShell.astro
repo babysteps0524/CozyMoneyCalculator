@@ -67,7 +67,7 @@ const currentGuidance = guidance[kind] ?? {
     rounded="2xl"
     bg="primary/10"
     p="5"
-    dark="bg-[oklch(25%_0.04_250)]"
+    dark="bg-dark-primary-surface"
   >
     <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
       계산 결과
@@ -96,21 +96,21 @@ const currentGuidance = guidance[kind] ?? {
 
   <div mt="8" grid="~ cols-1 lg:cols-2" gap="4">
     <section rounded="2xl" border="1" border-border bg="surface-muted" p="5" dark="border-dark-border dark:bg-dark-surface-muted">
-      <h3 m="0" text="sm" font="750">계산기 사용 목적</h3>
+      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">계산기 사용 목적</h3>
       <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">{currentGuidance.intro}</p>
     </section>
     <section rounded="2xl" border="1" border-border bg="surface-muted" p="5" dark="border-dark-border dark:bg-dark-surface-muted">
-      <h3 m="0" text="sm" font="750">계산 방법</h3>
+      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">계산 방법</h3>
       <ol m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
         {currentGuidance.steps.map((step) => <li>{step}</li>)}
       </ol>
     </section>
     <section rounded="2xl" border="1" border-border bg="surface-muted" p="5" dark="border-dark-border dark:bg-dark-surface-muted">
-      <h3 m="0" text="sm" font="750">계산 공식</h3>
+      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">계산 공식</h3>
       <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">{currentGuidance.formula}</p>
     </section>
     <section rounded="2xl" border="1" border-border bg="surface-muted" p="5" dark="border-dark-border dark:bg-dark-surface-muted">
-      <h3 m="0" text="sm" font="750">공식 기준</h3>
+      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">공식 기준</h3>
       <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">{currentGuidance.basis}</p>
     </section>
   </div>
