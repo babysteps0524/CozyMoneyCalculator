@@ -48,6 +48,12 @@ const { title, description, canonical = 'https://cozymoney.kr/' } = Astro.props;
     </noscript>
     <title>{title}</title>
     {import.meta.env.PUBLIC_ADSENSE_CLIENT && (
+      <meta
+        name="google-adsense-account"
+        content={import.meta.env.PUBLIC_ADSENSE_CLIENT}
+      />
+    )}
+    {import.meta.env.PUBLIC_ADSENSE_CLIENT && (
       <script
         async
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${import.meta.env.PUBLIC_ADSENSE_CLIENT}`}
