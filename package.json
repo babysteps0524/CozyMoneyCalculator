@@ -28,6 +28,8 @@
     "@unocss/preset-icons": "^66.10.5",
     "@unocss/preset-typography": "^66.10.5",
     "@unocss/preset-wind4": "^66.10.5",
+    "eslint": "^10.11.0",
+    "prettier": "^3.9.9",
     "unocss": "^66.10.5"
   }
 }

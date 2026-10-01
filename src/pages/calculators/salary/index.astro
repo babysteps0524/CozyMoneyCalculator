@@ -17,9 +17,9 @@ import Footer from "../../../components/common/Footer.astro";
           <p m="0" mt="1" text="sm" text-text-muted>세전 기준으로 계산합니다.</p>
           <form id="salary-form" mt="6">
             <label class="cm-label" for="annual">연봉</label>
-            <div relative><input class="cm-input" id="annual" type="number" inputmode="numeric" min="1" step="100000" value="40000000" pr="12" /><span absolute right-4 top-1/2 translate-y="-1/2" text="sm" text-text-muted>원</span></div>
+            <div relative><input class="cm-input" id="annual" type="number" inputmode="numeric" min="1" step="100000" value="40000000" pr="12" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted>원</span></div>
             <label class="cm-label" for="hours" mt="5">월 근로시간</label>
-            <div relative><input class="cm-input" id="hours" type="number" inputmode="decimal" min="1" step="1" value="209" pr="14" /><span absolute right-4 top-1/2 translate-y="-1/2" text="sm" text-text-muted>시간</span></div>
+            <div relative><input class="cm-input" id="hours" type="number" inputmode="decimal" min="1" step="1" value="209" pr="14" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted>시간</span></div>
             <div grid="~ cols-1 sm:cols-2" gap="3" mt="6"><button type="submit" class="cm-button-primary" py="3.5">계산하기</button><button id="reset" type="button" class="cm-button-secondary" py="3.5">초기화</button></div>
             <p id="error" hidden m="0" mt="4" rounded="xl" bg="danger-surface" px="4" py="3" text="sm" text-danger-text></p>
           </form>

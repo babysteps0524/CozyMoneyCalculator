@@ -49,7 +49,7 @@ const { kind, title, description } = Astro.props;
     const n=(id:string)=>Number($(id)?.value||0);
     const fmt=(v:number,d=0)=>Number.isFinite(v)?v.toLocaleString("ko-KR",{maximumFractionDigits:d}):"-";
     const won=(v:number)=>fmt(v)+"원";
-    const field=(id:string,label:string,value:string,type="number",suffix="")=>`<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" inputmode="${type==="number"?"decimal":undefined}" />${suffix?`<span absolute right-4 top-1/2 translate-y="-1/2" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>`:""}</div></label>`;
+    const field=(id:string,label:string,value:string,type="number",suffix="")=>`<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" inputmode="${type==="number"?"decimal":undefined}" />${suffix?`<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>`:""}</div></label>`;
     const select=(id:string,label:string,options:string[])=>`<label><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map(x=>`<option value="${x}">${x}</option>`).join("")}</select></label>`;
 
     const configs:Record<string,()=>string>={

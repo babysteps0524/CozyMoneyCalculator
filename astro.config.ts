@@ -5,4 +5,7 @@ export default defineConfig({
   integrations: [UnoCSS()],
   output: 'static',
   site: 'https://cozymoney.kr',
+
+  server: {
+    open: true,},
 });
