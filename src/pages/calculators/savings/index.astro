@@ -365,9 +365,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       render();
-      document
-        .querySelector('#result')
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     reset.addEventListener('click', () => {
       type = 'deposit';
