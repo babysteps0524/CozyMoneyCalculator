@@ -650,8 +650,7 @@ const currentGuidance = guidance[kind] ?? {
         ) +
         field('other', '기타 대출 연간 이자상환액', '3000000', 'number', '원'),
       severance: () =>
-        field('monthly', '월 평균임금', '3500000', 'number', '원') +
-        field('years', '근속연수', '5', 'number', '년') +
+        field('daily', '1일 평균임금', '116667', 'number', '원') +
         field('days', '계속근로일수', '1825', 'number', '일'),
       weekly: () =>
         field('hourly', '시급', '12000', 'number', '원') +
@@ -742,8 +741,8 @@ const currentGuidance = guidance[kind] ?? {
           break;
         }
         case 'severance': {
-          value = n('monthly') * n('years');
-          text = `월 평균임금 × 근속연수로 단순 추정했습니다. 실제 퇴직금은 평균임금 산정기간과 계속근로기간 등에 따라 달라질 수 있습니다.`;
+          value = n('daily') * 30 * n('days') / 365;
+          text = `1일 평균임금 × 30일 × 계속근로일수 ÷ 365 방식으로 단순 계산했습니다. 실제 평균임금은 퇴직 전 임금자료와 산정기간에 따라 확인해야 합니다.`;
           break;
         }
         case 'weekly': {
