@@ -1,4 +1,6 @@
 ---
+import AdSlot from '../common/AdSlot.astro';
+
 interface Props {
   kind: string;
   title: string;
@@ -60,6 +62,8 @@ const { kind, title, description } = Astro.props;
       초기화
     </button>
   </div>
+  <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
+
   <div
     mt="6"
     rounded="2xl"
