@@ -9,3 +9,9 @@ declare global {
     }
   }
 }
+
+interface ImportMetaEnv {
+  readonly PUBLIC_ADSENSE_CLIENT?: string;
+  readonly PUBLIC_ADSENSE_SLOT_CALCULATOR?: string;
+  readonly PUBLIC_ADSENSE_SLOT_TOOL?: string;
+}
