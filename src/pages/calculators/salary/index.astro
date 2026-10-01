@@ -54,52 +54,18 @@ import Footer from '../../../components/common/Footer.astro';
             <label class="cm-label" for="annual">
               연봉
             </label>
-            <div relative>
-              <input
-                class="cm-input"
-                id="annual"
-                type="number"
-                inputmode="numeric"
-                min="1"
-                step="100000"
-                value="40000000"
-                pr="12"
-              />
-              <span
-                absolute
-                right-4
-                top="[50%]"
-                translate-y="[-50%]"
-                text="sm"
-                text-text-muted
-              >
-                원
-              </span>
+            <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+              <button type="button" data-step-direction="-1" aria-label="연봉 감소" class="cm-step-button">−</button>
+              <div relative><input class="cm-input" id="annual" type="text" inputmode="numeric" value="40000000" data-number-input data-step="100000" data-min="1" data-decimal="false" pr="12" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted>원</span></div>
+              <button type="button" data-step-direction="1" aria-label="연봉 증가" class="cm-step-button">+</button>
             </div>
             <label class="cm-label" for="hours" mt="5">
               월 근로시간
             </label>
-            <div relative>
-              <input
-                class="cm-input"
-                id="hours"
-                type="number"
-                inputmode="decimal"
-                min="1"
-                step="1"
-                value="209"
-                pr="14"
-              />
-              <span
-                absolute
-                right-4
-                top="[50%]"
-                translate-y="[-50%]"
-                text="sm"
-                text-text-muted
-              >
-                시간
-              </span>
+            <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+              <button type="button" data-step-direction="-1" aria-label="월 근로시간 감소" class="cm-step-button">−</button>
+              <div relative><input class="cm-input" id="hours" type="text" inputmode="numeric" value="209" data-number-input data-step="1" data-min="1" data-decimal="false" pr="14" /><span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted>시간</span></div>
+              <button type="button" data-step-direction="1" aria-label="월 근로시간 증가" class="cm-step-button">+</button>
             </div>
             <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
               <button type="submit" class="cm-button-primary" py="3.5">
@@ -246,6 +212,7 @@ import Footer from '../../../components/common/Footer.astro';
 
 <script>
   import { calculateSalary, formatWon } from '../../../lib/calculators/salary';
+  import { bindNumberControls, parseNumber } from '../../../lib/calculators/number-input';
   const form = document.querySelector<HTMLFormElement>('#salary-form'),
     annual = document.querySelector<HTMLInputElement>('#annual'),
     hours = document.querySelector<HTMLInputElement>('#hours'),
@@ -259,8 +226,8 @@ import Footer from '../../../components/common/Footer.astro';
     error!.hidden = true;
     try {
       const r = calculateSalary({
-        annualSalary: Number(annual!.value),
-        monthlyHours: Number(hours!.value),
+        annualSalary: parseNumber(annual!.value),
+        monthlyHours: parseNumber(hours!.value),
       });
       monthly!.textContent = formatWon(r.monthlySalary);
       hourly!.textContent = formatWon(r.hourlyWage);
@@ -310,6 +277,7 @@ import Footer from '../../../components/common/Footer.astro';
         copy.textContent = '복사 실패';
       }
     });
+    bindNumberControls(form);
     render();
   }
 </script>
