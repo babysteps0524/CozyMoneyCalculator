@@ -243,7 +243,7 @@ const { kind, title, description } = Astro.props;
     };
     fields.innerHTML = (configs[kind] || configs.percentage)();
 
-    import('../../../lib/calculators/number-input').then(({ bindNumberControls }) => {
+    import('../../lib/calculators/number-input').then(({ bindNumberControls }) => {
       bindNumberControls(fields);
     });
 
