@@ -6,105 +6,394 @@ interface Props {
 }
 const { kind, title, description } = Astro.props;
 ---
+
 <section class="cm-card" data-calculator={kind} p="5 md:7">
   <div flex="~" items-start justify-between gap="4" mb="6">
     <div>
-      <p m="0" text="sm" font="700" text-primary>CALCULATOR</p>
-      <h2 m="0" mt="1" text="xl md:2xl" font="800">{title}</h2>
-      <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">{description}</p>
+      <p m="0" text="sm" font="700" text-primary>
+        CALCULATOR
+      </p>
+      <h2 m="0" mt="1" text="xl md:2xl" font="800">
+        {title}
+      </h2>
+      <p
+        m="0"
+        mt="2"
+        text="sm"
+        leading="6"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {description}
+      </p>
     </div>
   </div>
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4"></div>
-  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-[oklch(25%_0.04_250)]">
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
-    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
-    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  <div
+    id="result"
+    mt="5"
+    rounded="2xl"
+    bg="primary/10"
+    p="5"
+    dark="bg-[oklch(25%_0.04_250)]"
+  >
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+      계산 결과
+    </p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
+      -
+    </div>
+    <div
+      id="result-detail"
+      mt="3"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    ></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
-    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+    <button id="calculate" class="cm-button-primary" py="3">
+      계산하기
+    </button>
+    <button id="reset" class="cm-button-secondary" py="3">
+      초기화
+    </button>
   </div>
-  <div mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5" dark="border-dark-border dark:bg-dark-surface-muted">
-    <h3 m="0" text="sm" font="750">이용 전 확인</h3>
-    <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-      <li>입력값은 이 페이지의 브라우저에서 계산하며 계산기 자체가 입력값을 별도 저장하지 않습니다.</li>
-      <li>결과는 이해를 돕기 위한 참고용 계산값이며 실제 금융·세금·노무 기준과 다를 수 있습니다.</li>
-      <li>세율, 한도, 공제, 자격요건 등은 개인의 조건과 적용 시점에 따라 달라질 수 있습니다.</li>
-      <li>중요한 계약·신고·대출·세금·급여 결정 전에는 관계 기관 또는 전문가의 최신 기준을 확인하세요.</li>
+  <div
+    mt="6"
+    rounded="2xl"
+    border="1"
+    border-border
+    bg="surface-muted"
+    p="5"
+    dark="border-dark-border dark:bg-dark-surface-muted"
+  >
+    <h3 m="0" text="sm" font="750">
+      이용 전 확인
+    </h3>
+    <ul
+      m="0"
+      mt="3"
+      pl="5"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      <li>
+        입력값은 이 페이지의 브라우저에서 계산하며 계산기 자체가 입력값을 별도
+        저장하지 않습니다.
+      </li>
+      <li>
+        결과는 이해를 돕기 위한 참고용 계산값이며 실제 금융·세금·노무 기준과
+        다를 수 있습니다.
+      </li>
+      <li>
+        세율, 한도, 공제, 자격요건 등은 개인의 조건과 적용 시점에 따라 달라질 수
+        있습니다.
+      </li>
+      <li>
+        중요한 계약·신고·대출·세금·급여 결정 전에는 관계 기관 또는 전문가의 최신
+        기준을 확인하세요.
+      </li>
     </ul>
   </div>
-  <p m="0" mt="5" text="xs sm:sm" leading="6" text-text-subtle dark="text-dark-text-subtle">
-    CozyMoney는 계산 결과의 정확성이나 특정 금융상품·세금·노무 결과를 보장하지 않습니다.
+  <p
+    m="0"
+    mt="5"
+    text="xs sm:sm"
+    leading="6"
+    text-text-subtle
+    dark="text-dark-text-subtle"
+  >
+    CozyMoney는 계산 결과의 정확성이나 특정 금융상품·세금·노무 결과를 보장하지
+    않습니다.
   </p>
 </section>
 
 <script>
-  const root=document.querySelector<HTMLElement>("[data-calculator]");
-  if(root){
-    const kind=root.dataset.calculator!;
-    const fields=root.querySelector<HTMLElement>("#fields")!;
-    const out=root.querySelector<HTMLElement>("#result-value")!;
-    const detail=root.querySelector<HTMLElement>("#result-detail")!;
-    const $=(id:string)=>root.querySelector<HTMLInputElement|HTMLSelectElement>("#"+id);
-    const n=(id:string)=>Number($(id)?.value||0);
-    const fmt=(v:number,d=0)=>Number.isFinite(v)?v.toLocaleString("ko-KR",{maximumFractionDigits:d}):"-";
-    const won=(v:number)=>fmt(v)+"원";
-    const field=(id:string,label:string,value:string,type="number",suffix="")=>`<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" inputmode="${type==="number"?"decimal":undefined}" />${suffix?`<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>`:""}</div></label>`;
-    const select=(id:string,label:string,options:string[])=>`<label><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map(x=>`<option value="${x}">${x}</option>`).join("")}</select></label>`;
+  const root = document.querySelector<HTMLElement>('[data-calculator]');
+  if (root) {
+    const kind = root.dataset.calculator!;
+    const fields = root.querySelector<HTMLElement>('#fields')!;
+    const out = root.querySelector<HTMLElement>('#result-value')!;
+    const detail = root.querySelector<HTMLElement>('#result-detail')!;
+    const $ = (id: string) =>
+      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
+    const n = (id: string) => Number($(id)?.value || 0);
+    const fmt = (v: number, d = 0) =>
+      Number.isFinite(v)
+        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
+        : '-';
+    const won = (v: number) => fmt(v) + '원';
+    const field = (
+      id: string,
+      label: string,
+      value: string,
+      type = 'number',
+      suffix = '',
+    ) =>
+      `<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" inputmode="${type === 'number' ? 'decimal' : undefined}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div></label>`;
+    const select = (id: string, label: string, options: string[]) =>
+      `<label><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map((x) => `<option value="${x}">${x}</option>`).join('')}</select></label>`;
 
-    const configs:Record<string,()=>string>={
-      compound:()=>field("principal","초기금액","10000000","number","원")+field("rate","연이율","3.5","number","%")+field("years","기간","10","number","년")+field("deposit","정기 추가납입","0","number","원"),
-      dsr:()=>field("income","연소득","50000000","number","원")+field("debt","연간 원리금 상환액","12000000","number","원")+field("newdebt","새 대출 연간 상환액","6000000","number","원")+field("rate","목표 DSR","40","number","%"),
-      dti:()=>field("income","연소득","50000000","number","원")+field("mortgage","주택담보대출 연간 원리금","12000000","number","원")+field("other","기타 대출 연간 이자상환액","3000000","number","원"),
-      severance:()=>field("monthly","월 평균임금","3500000","number","원")+field("years","근속연수","5","number","년")+field("days","계속근로일수","1825","number","일"),
-      weekly:()=>field("hourly","시급","12000","number","원")+field("hours","주 소정근로시간","40","number","시간"),
-      vacation:()=>field("daily","1일 통상임금","100000","number","원")+field("days","미사용 연차","10","number","일"),
-      unemployment:()=>field("daily","1일 평균임금","120000","number","원")+field("days","예상 지급일수","180","number","일"),
-      vat:()=>field("supply","공급가액","1000000","number","원")+select("type","계산 방향",["공급가액 → 부가세","합계금액 → 공급가액"]),
-      incomeTax:()=>field("income","연간 과세소득","50000000","number","원"),
-      acquisition:()=>field("price","취득가액","500000000","number","원")+field("rate","취득세율","1.0","number","%"),
-      property:()=>field("taxbase","과세표준","300000000","number","원")+field("rate","재산세율","0.1","number","%"),
-      capitalGain:()=>field("sale","양도가액","700000000","number","원")+field("buy","취득가액","500000000","number","원")+field("cost","필요경비","10000000","number","원")+field("rate","가정 세율","20","number","%"),
-      carTax:()=>field("cc","배기량","1998","number","cc")+field("rate","가정 세율","200","number","원/cc"),
-      rent:()=>field("deposit","보증금","10000000","number","원")+field("monthly","월세","700000","number","원")+field("rate","전월세 전환율","5.5","number","%"),
-      brokerage:()=>field("price","거래금액","500000000","number","원")+field("rate","중개보수율","0.4","number","%"),
-      leaseLoan:()=>field("deposit","임차보증금","200000000","number","원")+field("loanRate","대출비율","80","number","%")+field("rate","연이율","3.5","number","%"),
-      percentage:()=>field("base","기준값","100000","number","")+field("rate","퍼센트","15","number","%"),monthlySalary:()=>field("annual","연봉","40000000","number","원")+field("bonus","연간 비과세·별도 금액","0","number","원"),hourlyWage:()=>field("monthly","월 급여","3333333","number","원")+field("hours","월 근로시간","209","number","시간"),
+    const configs: Record<string, () => string> = {
+      compound: () =>
+        field('principal', '초기금액', '10000000', 'number', '원') +
+        field('rate', '연이율', '3.5', 'number', '%') +
+        field('years', '기간', '10', 'number', '년') +
+        field('deposit', '정기 추가납입', '0', 'number', '원'),
+      dsr: () =>
+        field('income', '연소득', '50000000', 'number', '원') +
+        field('debt', '연간 원리금 상환액', '12000000', 'number', '원') +
+        field('newdebt', '새 대출 연간 상환액', '6000000', 'number', '원') +
+        field('rate', '목표 DSR', '40', 'number', '%'),
+      dti: () =>
+        field('income', '연소득', '50000000', 'number', '원') +
+        field(
+          'mortgage',
+          '주택담보대출 연간 원리금',
+          '12000000',
+          'number',
+          '원',
+        ) +
+        field('other', '기타 대출 연간 이자상환액', '3000000', 'number', '원'),
+      severance: () =>
+        field('monthly', '월 평균임금', '3500000', 'number', '원') +
+        field('years', '근속연수', '5', 'number', '년') +
+        field('days', '계속근로일수', '1825', 'number', '일'),
+      weekly: () =>
+        field('hourly', '시급', '12000', 'number', '원') +
+        field('hours', '주 소정근로시간', '40', 'number', '시간'),
+      vacation: () =>
+        field('daily', '1일 통상임금', '100000', 'number', '원') +
+        field('days', '미사용 연차', '10', 'number', '일'),
+      unemployment: () =>
+        field('daily', '1일 평균임금', '120000', 'number', '원') +
+        field('days', '예상 지급일수', '180', 'number', '일'),
+      vat: () =>
+        field('supply', '공급가액', '1000000', 'number', '원') +
+        select('type', '계산 방향', [
+          '공급가액 → 부가세',
+          '합계금액 → 공급가액',
+        ]),
+      incomeTax: () =>
+        field('income', '연간 과세소득', '50000000', 'number', '원'),
+      acquisition: () =>
+        field('price', '취득가액', '500000000', 'number', '원') +
+        field('rate', '취득세율', '1.0', 'number', '%'),
+      property: () =>
+        field('taxbase', '과세표준', '300000000', 'number', '원') +
+        field('rate', '재산세율', '0.1', 'number', '%'),
+      capitalGain: () =>
+        field('sale', '양도가액', '700000000', 'number', '원') +
+        field('buy', '취득가액', '500000000', 'number', '원') +
+        field('cost', '필요경비', '10000000', 'number', '원') +
+        field('rate', '가정 세율', '20', 'number', '%'),
+      carTax: () =>
+        field('cc', '배기량', '1998', 'number', 'cc') +
+        field('rate', '가정 세율', '200', 'number', '원/cc'),
+      rent: () =>
+        field('deposit', '보증금', '10000000', 'number', '원') +
+        field('monthly', '월세', '700000', 'number', '원') +
+        field('rate', '전월세 전환율', '5.5', 'number', '%'),
+      brokerage: () =>
+        field('price', '거래금액', '500000000', 'number', '원') +
+        field('rate', '중개보수율', '0.4', 'number', '%'),
+      leaseLoan: () =>
+        field('deposit', '임차보증금', '200000000', 'number', '원') +
+        field('loanRate', '대출비율', '80', 'number', '%') +
+        field('rate', '연이율', '3.5', 'number', '%'),
+      percentage: () =>
+        field('base', '기준값', '100000', 'number', '') +
+        field('rate', '퍼센트', '15', 'number', '%'),
+      monthlySalary: () =>
+        field('annual', '연봉', '40000000', 'number', '원') +
+        field('bonus', '연간 비과세·별도 금액', '0', 'number', '원'),
+      hourlyWage: () =>
+        field('monthly', '월 급여', '3333333', 'number', '원') +
+        field('hours', '월 근로시간', '209', 'number', '시간'),
     };
-    fields.innerHTML=(configs[kind]||configs.percentage)();
+    fields.innerHTML = (configs[kind] || configs.percentage)();
 
-    const calc=()=>{
-      let value=0, text="";
-      switch(kind){
-        case "compound":{const p=n("principal"),r=n("rate")/100,y=n("years"),m=n("deposit"),final=r===0?p+m*y:p*(1+r)**y+m*((1+r)**y-1)/r;value=final;text=`원금과 추가납입을 연복리로 단순 계산한 결과입니다. 이자: ${won(final-p-m*y)}`;break;}
-        case "dsr":{const income=n("income"),total=n("debt")+n("newdebt"),dsr=total/income*100;value=dsr;text=`현재 대출만 반영한 DSR: ${fmt(n("debt")/income*100,2)}%. 새 대출 포함: ${fmt(dsr,2)}%. 입력한 목표 기준: ${fmt(n("rate"),2)}%.`;break;}
-        case "dti":{const income=n("income"),ratio=(n("mortgage")+n("other"))/income*100;value=ratio;text=`주택담보대출 원리금과 기타 대출 이자 합계를 연소득으로 나눈 단순 DTI입니다.`;break;}
-        case "severance":{value=n("monthly")*n("years");text=`월 평균임금 × 근속연수로 단순 추정했습니다. 실제 퇴직금은 평균임금 산정기간과 계속근로기간 등에 따라 달라질 수 있습니다.`;break;}
-        case "weekly":{const weeklyHoliday=n("hours")>=15?n("hourly")*Math.min(8,n("hours")):0;value=n("hourly")*n("hours")+weeklyHoliday; text=`입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.`;break;}
-        case "vacation":{value=n("daily")*n("days");text="미사용 연차수당을 1일 통상임금 × 미사용 일수로 단순 계산했습니다.";break;}
-        case "unemployment":{value=n("daily")*0.6*n("days");text="구직급여의 하한·상한과 개인별 수급요건을 모두 반영한 확정액이 아닌 단순 예상값입니다.";break;}
-        case "monthlySalary":{value=(n("annual")-n("bonus"))/12;text="연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 월 급여입니다.";break;}
-        case "hourlyWage":{value=n("hours")>0?n("monthly")/n("hours"):0;text="월 급여를 월 근로시간으로 나눈 단순 시급입니다.";break;}
-        case "vat":{if($("type")?.value==="공급가액 → 부가세"){value=n("supply")*0.1;text=`부가세: ${won(value)} · 합계: ${won(n("supply")+value)}`;}else{const total=n("supply");value=total/11;text=`공급가액: ${won(total-value)} · 부가세: ${won(value)}`;}break;}
-        case "incomeTax":{const income=n("income");let tax=0;if(income<=14000000)tax=income*.06;else if(income<=50000000)tax=income*.15-1260000;else if(income<=88000000)tax=income*.24-5760000;else if(income<=150000000)tax=income*.35-15440000;else if(income<=300000000)tax=income*.38-19940000;else tax=income*.4-25940000;value=Math.max(0,tax);text="과세표준 구간별 세율을 단순 적용한 소득세 예상값입니다. 각종 공제와 세액공제는 반영하지 않았습니다.";break;}
-        case "acquisition":{value=n("price")*n("rate")/100;text="입력한 취득가액과 세율만 적용한 취득세 단순 예상값입니다. 지방교육세·농어촌특별세 등 부가세목은 제외했습니다.";break;}
-        case "property":{value=n("taxbase")*n("rate")/100;text="입력한 과세표준과 세율만 적용한 재산세 단순 예상값입니다.";break;}
-        case "capitalGain":{const gain=Math.max(0,n("sale")-n("buy")-n("cost"));value=gain*n("rate")/100;text=`양도차익: ${won(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;break;}
-        case "carTax":{value=n("cc")*n("rate");text="배기량 × 입력 세율로 계산한 단순 자동차세입니다. 실제 자동차세는 차종·차령·지방교육세 등에 따라 달라질 수 있습니다.";break;}
-        case "rent":{const annual=n("deposit")*n("rate")/100;value=n("monthly")*12+annual;text=`연간 월세: ${won(n("monthly")*12)} · 보증금 환산액: ${won(annual)} · 합계: ${won(value)}`;break;}
-        case "brokerage":{value=n("price")*n("rate")/100;text=`거래금액 × 입력 중개보수율입니다. 실제 법정 상한요율과 부가세 여부를 확인해야 합니다.`;break;}
-        case "leaseLoan":{const loan=n("deposit")*n("loanRate")/100;value=loan*n("rate")/100;text=`예상 대출금: ${won(loan)} · 1년 단순 이자: ${won(value)}`;break;}
-        default:{value=n("base")*n("rate")/100;text=`기준값의 ${fmt(n("rate"),2)}% = ${won(value)}`;}
+    const calc = () => {
+      let value = 0,
+        text = '';
+      switch (kind) {
+        case 'compound': {
+          const p = n('principal'),
+            r = n('rate') / 100,
+            y = n('years'),
+            m = n('deposit'),
+            final =
+              r === 0
+                ? p + m * y
+                : p * (1 + r) ** y + (m * ((1 + r) ** y - 1)) / r;
+          value = final;
+          text = `원금과 추가납입을 연복리로 단순 계산한 결과입니다. 이자: ${won(final - p - m * y)}`;
+          break;
+        }
+        case 'dsr': {
+          const income = n('income'),
+            total = n('debt') + n('newdebt'),
+            dsr = (total / income) * 100;
+          value = dsr;
+          text = `현재 대출만 반영한 DSR: ${fmt((n('debt') / income) * 100, 2)}%. 새 대출 포함: ${fmt(dsr, 2)}%. 입력한 목표 기준: ${fmt(n('rate'), 2)}%.`;
+          break;
+        }
+        case 'dti': {
+          const income = n('income'),
+            ratio = ((n('mortgage') + n('other')) / income) * 100;
+          value = ratio;
+          text = `주택담보대출 원리금과 기타 대출 이자 합계를 연소득으로 나눈 단순 DTI입니다.`;
+          break;
+        }
+        case 'severance': {
+          value = n('monthly') * n('years');
+          text = `월 평균임금 × 근속연수로 단순 추정했습니다. 실제 퇴직금은 평균임금 산정기간과 계속근로기간 등에 따라 달라질 수 있습니다.`;
+          break;
+        }
+        case 'weekly': {
+          const weeklyHoliday =
+            n('hours') >= 15 ? n('hourly') * Math.min(8, n('hours')) : 0;
+          value = n('hourly') * n('hours') + weeklyHoliday;
+          text = `입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.`;
+          break;
+        }
+        case 'vacation': {
+          value = n('daily') * n('days');
+          text =
+            '미사용 연차수당을 1일 통상임금 × 미사용 일수로 단순 계산했습니다.';
+          break;
+        }
+        case 'unemployment': {
+          value = n('daily') * 0.6 * n('days');
+          text =
+            '구직급여의 하한·상한과 개인별 수급요건을 모두 반영한 확정액이 아닌 단순 예상값입니다.';
+          break;
+        }
+        case 'monthlySalary': {
+          value = (n('annual') - n('bonus')) / 12;
+          text =
+            '연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 월 급여입니다.';
+          break;
+        }
+        case 'hourlyWage': {
+          value = n('hours') > 0 ? n('monthly') / n('hours') : 0;
+          text = '월 급여를 월 근로시간으로 나눈 단순 시급입니다.';
+          break;
+        }
+        case 'vat': {
+          if ($('type')?.value === '공급가액 → 부가세') {
+            value = n('supply') * 0.1;
+            text = `부가세: ${won(value)} · 합계: ${won(n('supply') + value)}`;
+          } else {
+            const total = n('supply');
+            value = total / 11;
+            text = `공급가액: ${won(total - value)} · 부가세: ${won(value)}`;
+          }
+          break;
+        }
+        case 'incomeTax': {
+          const income = n('income');
+          let tax = 0;
+          if (income <= 14000000) tax = income * 0.06;
+          else if (income <= 50000000) tax = income * 0.15 - 1260000;
+          else if (income <= 88000000) tax = income * 0.24 - 5760000;
+          else if (income <= 150000000) tax = income * 0.35 - 15440000;
+          else if (income <= 300000000) tax = income * 0.38 - 19940000;
+          else tax = income * 0.4 - 25940000;
+          value = Math.max(0, tax);
+          text =
+            '과세표준 구간별 세율을 단순 적용한 소득세 예상값입니다. 각종 공제와 세액공제는 반영하지 않았습니다.';
+          break;
+        }
+        case 'acquisition': {
+          value = (n('price') * n('rate')) / 100;
+          text =
+            '입력한 취득가액과 세율만 적용한 취득세 단순 예상값입니다. 지방교육세·농어촌특별세 등 부가세목은 제외했습니다.';
+          break;
+        }
+        case 'property': {
+          value = (n('taxbase') * n('rate')) / 100;
+          text = '입력한 과세표준과 세율만 적용한 재산세 단순 예상값입니다.';
+          break;
+        }
+        case 'capitalGain': {
+          const gain = Math.max(0, n('sale') - n('buy') - n('cost'));
+          value = (gain * n('rate')) / 100;
+          text = `양도차익: ${won(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
+          break;
+        }
+        case 'carTax': {
+          value = n('cc') * n('rate');
+          text =
+            '배기량 × 입력 세율로 계산한 단순 자동차세입니다. 실제 자동차세는 차종·차령·지방교육세 등에 따라 달라질 수 있습니다.';
+          break;
+        }
+        case 'rent': {
+          const annual = (n('deposit') * n('rate')) / 100;
+          value = n('monthly') * 12 + annual;
+          text = `연간 월세: ${won(n('monthly') * 12)} · 보증금 환산액: ${won(annual)} · 합계: ${won(value)}`;
+          break;
+        }
+        case 'brokerage': {
+          value = (n('price') * n('rate')) / 100;
+          text = `거래금액 × 입력 중개보수율입니다. 실제 법정 상한요율과 부가세 여부를 확인해야 합니다.`;
+          break;
+        }
+        case 'leaseLoan': {
+          const loan = (n('deposit') * n('loanRate')) / 100;
+          value = (loan * n('rate')) / 100;
+          text = `예상 대출금: ${won(loan)} · 1년 단순 이자: ${won(value)}`;
+          break;
+        }
+        default: {
+          value = (n('base') * n('rate')) / 100;
+          text = `기준값의 ${fmt(n('rate'), 2)}% = ${won(value)}`;
+        }
       }
-      out.textContent=kind==="dsr"||kind==="dti"||kind==="capitalGain"&&false?fmt(value,2)+"%":kind==="capitalGain"?won(value):kind==="compound"||kind==="severance"||kind==="weekly"||kind==="vacation"||kind==="unemployment"||kind==="vat"||kind==="incomeTax"||kind==="acquisition"||kind==="property"||kind==="carTax"||kind==="rent"||kind==="brokerage"||kind==="leaseLoan"||kind==="percentage"||kind==="monthlySalary"||kind==="hourlyWage"?won(value):fmt(value,2)+"%";
-      if(kind==="dsr"||kind==="dti")out.textContent=fmt(value,2)+"%";
-      detail.textContent=text;
+      out.textContent =
+        kind === 'dsr' || kind === 'dti' || (kind === 'capitalGain' && false)
+          ? fmt(value, 2) + '%'
+          : kind === 'capitalGain'
+            ? won(value)
+            : kind === 'compound' ||
+                kind === 'severance' ||
+                kind === 'weekly' ||
+                kind === 'vacation' ||
+                kind === 'unemployment' ||
+                kind === 'vat' ||
+                kind === 'incomeTax' ||
+                kind === 'acquisition' ||
+                kind === 'property' ||
+                kind === 'carTax' ||
+                kind === 'rent' ||
+                kind === 'brokerage' ||
+                kind === 'leaseLoan' ||
+                kind === 'percentage' ||
+                kind === 'monthlySalary' ||
+                kind === 'hourlyWage'
+              ? won(value)
+              : fmt(value, 2) + '%';
+      if (kind === 'dsr' || kind === 'dti')
+        out.textContent = fmt(value, 2) + '%';
+      detail.textContent = text;
     };
-    const reset=()=>{fields.querySelectorAll<HTMLInputElement>("input").forEach(i=>{if(i.id==="rate")i.value= i.id==="rate"&&kind==="compound"?"3.5":"1";});location.reload();};
-    root.querySelector("#calculate")?.addEventListener("click",calc);
-    root.querySelector("#reset")?.addEventListener("click",reset);
-    fields.addEventListener("input",()=>{if(kind==="unit"||kind==="percentage")calc();});
-    fields.addEventListener("change",calc);
+    const reset = () => {
+      fields.querySelectorAll<HTMLInputElement>('input').forEach((i) => {
+        if (i.id === 'rate')
+          i.value = i.id === 'rate' && kind === 'compound' ? '3.5' : '1';
+      });
+      location.reload();
+    };
+    root.querySelector('#calculate')?.addEventListener('click', calc);
+    root.querySelector('#reset')?.addEventListener('click', reset);
+    fields.addEventListener('input', () => {
+      if (kind === 'unit' || kind === 'percentage') calc();
+    });
+    fields.addEventListener('change', calc);
     calc();
   }
 </script>

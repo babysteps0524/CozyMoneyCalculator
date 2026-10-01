@@ -1,6 +1,15 @@
 ---
 interface Props {
-  kind: "lotto" | "random" | "picker" | "password" | "date" | "dday" | "age" | "unit" | "percent";
+  kind:
+    | 'lotto'
+    | 'random'
+    | 'picker'
+    | 'password'
+    | 'date'
+    | 'dday'
+    | 'age'
+    | 'unit'
+    | 'percent';
   title: string;
   description: string;
 }
@@ -11,164 +20,495 @@ const { kind, title, description } = Astro.props;
 <section class="cm-tool-shell" data-tool={kind}>
   <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
     <div class="cm-card p-5 md:p-7">
-      {kind === "lotto" && (
+      {kind === 'lotto' && (
         <div>
           <div flex="~ wrap" items-center justify-between gap="3" mb="5">
             <div>
-              <p m="0" text="sm" font="700" text-primary>RANDOM TOOL</p>
-              <h2 m="0" mt="1" text="xl md:2xl" font="800">로또 번호 생성</h2>
+              <p m="0" text="sm" font="700" text-primary>
+                RANDOM TOOL
+              </p>
+              <h2 m="0" mt="1" text="xl md:2xl" font="800">
+                로또 번호 생성
+              </h2>
             </div>
-            <select id="lotto-count" class="cm-input" w="auto" min-w="32" aria-label="게임 수">
-              <option value="1">1게임</option><option value="3">3게임</option><option value="5">5게임</option><option value="10">10게임</option>
+            <select
+              id="lotto-count"
+              class="cm-input"
+              w="auto"
+              min-w="32"
+              aria-label="게임 수"
+            >
+              <option value="1">1게임</option>
+              <option value="3">3게임</option>
+              <option value="5">5게임</option>
+              <option value="10">10게임</option>
             </select>
           </div>
           <div id="lotto-results" grid="~ cols-1 md:cols-2" gap="3"></div>
           <div flex="~ wrap" gap="2" mt="5">
-            <button id="lotto-generate" class="cm-button-primary" px="5" py="3">새 번호 생성</button>
-            <button id="lotto-copy" class="cm-button-secondary" px="5" py="3">결과 복사</button>
+            <button id="lotto-generate" class="cm-button-primary" px="5" py="3">
+              새 번호 생성
+            </button>
+            <button id="lotto-copy" class="cm-button-secondary" px="5" py="3">
+              결과 복사
+            </button>
           </div>
-          <p id="lotto-note" m="0" mt="4" text="sm" text-text-muted dark="text-dark-text-muted">무작위로 1~45에서 6개를 선택합니다. 당첨 확률을 높이는 기능은 아닙니다.</p>
+          <p
+            id="lotto-note"
+            m="0"
+            mt="4"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            무작위로 1~45에서 6개를 선택합니다. 당첨 확률을 높이는 기능은
+            아닙니다.
+          </p>
         </div>
       )}
 
-      {kind === "random" && (
+      {kind === 'random' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>RANDOM NUMBER</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">랜덤 숫자 생성기</h2>
+          <p m="0" text="sm" font="700" text-primary>
+            RANDOM NUMBER
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            랜덤 숫자 생성기
+          </h2>
           <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label><span class="cm-label">최솟값</span><input id="random-min" class="cm-input" type="number" value="1" /></label>
-            <label><span class="cm-label">최댓값</span><input id="random-max" class="cm-input" type="number" value="100" /></label>
+            <label>
+              <span class="cm-label">최솟값</span>
+              <input id="random-min" class="cm-input" type="number" value="1" />
+            </label>
+            <label>
+              <span class="cm-label">최댓값</span>
+              <input
+                id="random-max"
+                class="cm-input"
+                type="number"
+                value="100"
+              />
+            </label>
           </div>
-          <div id="random-result" mt="6" rounded="2xl" bg="surface-muted" p="6" text="center" dark="bg-dark-surface-subtle">
-            <span text="4xl md:5xl" font="800">-</span>
+          <div
+            id="random-result"
+            mt="6"
+            rounded="2xl"
+            bg="surface-muted"
+            p="6"
+            text="center"
+            dark="bg-dark-surface-subtle"
+          >
+            <span text="4xl md:5xl" font="800">
+              -
+            </span>
           </div>
-          <button id="random-generate" class="cm-button-primary" w="full" mt="4" py="3">랜덤 숫자 생성</button>
+          <button
+            id="random-generate"
+            class="cm-button-primary"
+            w="full"
+            mt="4"
+            py="3"
+          >
+            랜덤 숫자 생성
+          </button>
         </div>
       )}
 
-      {kind === "picker" && (
+      {kind === 'picker' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>RANDOM PICKER</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">랜덤 추첨기</h2>
-          <label block mt="6"><span class="cm-label">추첨할 항목</span><textarea id="picker-items" class="cm-input" rows="8" placeholder="한 줄에 하나씩 입력하세요.&#10;김철수&#10;이영희&#10;박민수"></textarea></label>
-          <div id="picker-result" mt="5" rounded="2xl" bg="surface-muted" p="6" text="center" dark="bg-dark-surface-subtle">
-            <span text="2xl" font="800">추첨 결과가 여기에 표시됩니다.</span>
+          <p m="0" text="sm" font="700" text-primary>
+            RANDOM PICKER
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            랜덤 추첨기
+          </h2>
+          <label block mt="6">
+            <span class="cm-label">추첨할 항목</span>
+            <textarea
+              id="picker-items"
+              class="cm-input"
+              rows="8"
+              placeholder="한 줄에 하나씩 입력하세요.&#10;김철수&#10;이영희&#10;박민수"
+            ></textarea>
+          </label>
+          <div
+            id="picker-result"
+            mt="5"
+            rounded="2xl"
+            bg="surface-muted"
+            p="6"
+            text="center"
+            dark="bg-dark-surface-subtle"
+          >
+            <span text="2xl" font="800">
+              추첨 결과가 여기에 표시됩니다.
+            </span>
           </div>
           <div grid="~ cols-2" gap="2" mt="4">
-            <button id="picker-draw" class="cm-button-primary" py="3">1명 추첨</button>
-            <button id="picker-copy" class="cm-button-secondary" py="3">결과 복사</button>
+            <button id="picker-draw" class="cm-button-primary" py="3">
+              1명 추첨
+            </button>
+            <button id="picker-copy" class="cm-button-secondary" py="3">
+              결과 복사
+            </button>
           </div>
         </div>
       )}
 
-      {kind === "password" && (
+      {kind === 'password' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>PASSWORD TOOL</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">비밀번호 생성기</h2>
+          <p m="0" text="sm" font="700" text-primary>
+            PASSWORD TOOL
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            비밀번호 생성기
+          </h2>
           <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label><span class="cm-label">길이</span><input id="password-length" class="cm-input" type="number" min="4" max="128" value="16" /></label>
+            <label>
+              <span class="cm-label">길이</span>
+              <input
+                id="password-length"
+                class="cm-input"
+                type="number"
+                min="4"
+                max="128"
+                value="16"
+              />
+            </label>
             <div>
               <span class="cm-label">문자 구성</span>
               <div flex="~ wrap" gap="3" text="sm">
-                <label flex="~" items-center gap="2"><input id="pw-upper" type="checkbox" checked /> 대문자</label>
-                <label flex="~" items-center gap="2"><input id="pw-lower" type="checkbox" checked /> 소문자</label>
-                <label flex="~" items-center gap="2"><input id="pw-number" type="checkbox" checked /> 숫자</label>
-                <label flex="~" items-center gap="2"><input id="pw-symbol" type="checkbox" checked /> 기호</label>
+                <label flex="~" items-center gap="2">
+                  <input id="pw-upper" type="checkbox" checked /> 대문자
+                </label>
+                <label flex="~" items-center gap="2">
+                  <input id="pw-lower" type="checkbox" checked /> 소문자
+                </label>
+                <label flex="~" items-center gap="2">
+                  <input id="pw-number" type="checkbox" checked /> 숫자
+                </label>
+                <label flex="~" items-center gap="2">
+                  <input id="pw-symbol" type="checkbox" checked /> 기호
+                </label>
               </div>
             </div>
           </div>
           <div flex="~" gap="2" mt="5">
-            <input id="password-result" class="cm-input" readonly value="" aria-label="생성된 비밀번호" />
-            <button id="password-copy" class="cm-button-secondary" px="4">복사</button>
+            <input
+              id="password-result"
+              class="cm-input"
+              readonly
+              value=""
+              aria-label="생성된 비밀번호"
+            />
+            <button id="password-copy" class="cm-button-secondary" px="4">
+              복사
+            </button>
           </div>
-          <button id="password-generate" class="cm-button-primary" w="full" mt="3" py="3">비밀번호 생성</button>
-          <p m="0" mt="4" text="sm" text-text-muted dark="text-dark-text-muted">민감한 비밀번호는 웹사이트에 입력한 뒤 저장하지 않는 것을 권장합니다.</p>
+          <button
+            id="password-generate"
+            class="cm-button-primary"
+            w="full"
+            mt="3"
+            py="3"
+          >
+            비밀번호 생성
+          </button>
+          <p m="0" mt="4" text="sm" text-text-muted dark="text-dark-text-muted">
+            민감한 비밀번호는 웹사이트에 입력한 뒤 저장하지 않는 것을
+            권장합니다.
+          </p>
         </div>
       )}
 
-      {kind === "date" && (
+      {kind === 'date' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>DATE CALCULATOR</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">날짜 계산기</h2>
+          <p m="0" text="sm" font="700" text-primary>
+            DATE CALCULATOR
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            날짜 계산기
+          </h2>
           <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label><span class="cm-label">시작일</span><input id="date-start" class="cm-input" type="date" /></label>
-            <label><span class="cm-label">종료일</span><input id="date-end" class="cm-input" type="date" /></label>
+            <label>
+              <span class="cm-label">시작일</span>
+              <input id="date-start" class="cm-input" type="date" />
+            </label>
+            <label>
+              <span class="cm-label">종료일</span>
+              <input id="date-end" class="cm-input" type="date" />
+            </label>
           </div>
-          <div id="date-result" mt="5" rounded="2xl" bg="surface-muted" p="5" dark="bg-dark-surface-subtle">두 날짜를 선택하면 차이를 계산합니다.</div>
-          <button id="date-calc" class="cm-button-primary" w="full" mt="4" py="3">계산하기</button>
+          <div
+            id="date-result"
+            mt="5"
+            rounded="2xl"
+            bg="surface-muted"
+            p="5"
+            dark="bg-dark-surface-subtle"
+          >
+            두 날짜를 선택하면 차이를 계산합니다.
+          </div>
+          <button
+            id="date-calc"
+            class="cm-button-primary"
+            w="full"
+            mt="4"
+            py="3"
+          >
+            계산하기
+          </button>
         </div>
       )}
 
-      {kind === "dday" && (
+      {kind === 'dday' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>D-DAY</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">D-Day 계산기</h2>
-          <label block mt="6"><span class="cm-label">목표 날짜</span><input id="dday-date" class="cm-input" type="date" /></label>
-          <label block mt="4"><span class="cm-label">목표 이름 (선택)</span><input id="dday-name" class="cm-input" placeholder="시험, 여행, 기념일 등" /></label>
-          <div id="dday-result" mt="5" rounded="2xl" bg="surface-muted" p="6" text="center" dark="bg-dark-surface-subtle">목표 날짜를 선택하세요.</div>
-          <button id="dday-calc" class="cm-button-primary" w="full" mt="4" py="3">D-Day 계산</button>
+          <p m="0" text="sm" font="700" text-primary>
+            D-DAY
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            D-Day 계산기
+          </h2>
+          <label block mt="6">
+            <span class="cm-label">목표 날짜</span>
+            <input id="dday-date" class="cm-input" type="date" />
+          </label>
+          <label block mt="4">
+            <span class="cm-label">목표 이름 (선택)</span>
+            <input
+              id="dday-name"
+              class="cm-input"
+              placeholder="시험, 여행, 기념일 등"
+            />
+          </label>
+          <div
+            id="dday-result"
+            mt="5"
+            rounded="2xl"
+            bg="surface-muted"
+            p="6"
+            text="center"
+            dark="bg-dark-surface-subtle"
+          >
+            목표 날짜를 선택하세요.
+          </div>
+          <button
+            id="dday-calc"
+            class="cm-button-primary"
+            w="full"
+            mt="4"
+            py="3"
+          >
+            D-Day 계산
+          </button>
         </div>
       )}
 
-      {kind === "age" && (
+      {kind === 'age' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>AGE CALCULATOR</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">나이 계산기</h2>
+          <p m="0" text="sm" font="700" text-primary>
+            AGE CALCULATOR
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            나이 계산기
+          </h2>
           <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label><span class="cm-label">생년월일</span><input id="age-birth" class="cm-input" type="date" /></label>
-            <label><span class="cm-label">기준일</span><input id="age-asof" class="cm-input" type="date" /></label>
+            <label>
+              <span class="cm-label">생년월일</span>
+              <input id="age-birth" class="cm-input" type="date" />
+            </label>
+            <label>
+              <span class="cm-label">기준일</span>
+              <input id="age-asof" class="cm-input" type="date" />
+            </label>
           </div>
-          <div id="age-result" mt="5" rounded="2xl" bg="surface-muted" p="5" dark="bg-dark-surface-subtle">생년월일을 입력하세요.</div>
-          <button id="age-calc" class="cm-button-primary" w="full" mt="4" py="3">나이 계산</button>
+          <div
+            id="age-result"
+            mt="5"
+            rounded="2xl"
+            bg="surface-muted"
+            p="5"
+            dark="bg-dark-surface-subtle"
+          >
+            생년월일을 입력하세요.
+          </div>
+          <button
+            id="age-calc"
+            class="cm-button-primary"
+            w="full"
+            mt="4"
+            py="3"
+          >
+            나이 계산
+          </button>
         </div>
       )}
 
-      {kind === "unit" && (
+      {kind === 'unit' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>UNIT CONVERTER</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">단위 변환기</h2>
+          <p m="0" text="sm" font="700" text-primary>
+            UNIT CONVERTER
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            단위 변환기
+          </h2>
           <div grid="~ cols-1 md:cols-3" gap="4" mt="6">
-            <label><span class="cm-label">분류</span><select id="unit-type" class="cm-input"><option value="length">길이</option><option value="weight">무게</option><option value="temperature">온도</option><option value="area">넓이</option><option value="data">데이터</option></select></label>
-            <label><span class="cm-label">값</span><input id="unit-value" class="cm-input" type="number" value="1" /></label>
-            <label><span class="cm-label">변환 방향</span><select id="unit-direction" class="cm-input"></select></label>
+            <label>
+              <span class="cm-label">분류</span>
+              <select id="unit-type" class="cm-input">
+                <option value="length">길이</option>
+                <option value="weight">무게</option>
+                <option value="temperature">온도</option>
+                <option value="area">넓이</option>
+                <option value="data">데이터</option>
+              </select>
+            </label>
+            <label>
+              <span class="cm-label">값</span>
+              <input id="unit-value" class="cm-input" type="number" value="1" />
+            </label>
+            <label>
+              <span class="cm-label">변환 방향</span>
+              <select id="unit-direction" class="cm-input"></select>
+            </label>
           </div>
-          <div id="unit-result" mt="5" rounded="2xl" bg="surface-muted" p="5" text="center" dark="bg-dark-surface-subtle">변환 결과</div>
+          <div
+            id="unit-result"
+            mt="5"
+            rounded="2xl"
+            bg="surface-muted"
+            p="5"
+            text="center"
+            dark="bg-dark-surface-subtle"
+          >
+            변환 결과
+          </div>
         </div>
       )}
 
-      {kind === "percent" && (
+      {kind === 'percent' && (
         <div>
-          <p m="0" text="sm" font="700" text-primary>PERCENT CALCULATOR</p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">퍼센트 계산기</h2>
-          <label block mt="6"><span class="cm-label">계산 종류</span><select id="percent-type" class="cm-input"><option value="of">A의 B%는 얼마인가요?</option><option value="change">A에서 B로 바뀌면 몇 % 변했나요?</option><option value="discount">A에서 B% 할인하면 얼마인가요?</option><option value="increase">A에 B%를 더하면 얼마인가요?</option></select></label>
+          <p m="0" text="sm" font="700" text-primary>
+            PERCENT CALCULATOR
+          </p>
+          <h2 m="0" mt="1" text="xl md:2xl" font="800">
+            퍼센트 계산기
+          </h2>
+          <label block mt="6">
+            <span class="cm-label">계산 종류</span>
+            <select id="percent-type" class="cm-input">
+              <option value="of">A의 B%는 얼마인가요?</option>
+              <option value="change">A에서 B로 바뀌면 몇 % 변했나요?</option>
+              <option value="discount">A에서 B% 할인하면 얼마인가요?</option>
+              <option value="increase">A에 B%를 더하면 얼마인가요?</option>
+            </select>
+          </label>
           <div grid="~ cols-1 md:cols-2" gap="4" mt="4">
-            <label><span class="cm-label">A</span><input id="percent-a" class="cm-input" type="number" value="100" /></label>
-            <label><span class="cm-label">B (%) 또는 값</span><input id="percent-b" class="cm-input" type="number" value="20" /></label>
+            <label>
+              <span class="cm-label">A</span>
+              <input
+                id="percent-a"
+                class="cm-input"
+                type="number"
+                value="100"
+              />
+            </label>
+            <label>
+              <span class="cm-label">B (%) 또는 값</span>
+              <input id="percent-b" class="cm-input" type="number" value="20" />
+            </label>
           </div>
-          <div id="percent-result" mt="5" rounded="2xl" bg="surface-muted" p="5" dark="bg-dark-surface-subtle">결과가 여기에 표시됩니다.</div>
-          <button id="percent-calc" class="cm-button-primary" w="full" mt="4" py="3">계산하기</button>
+          <div
+            id="percent-result"
+            mt="5"
+            rounded="2xl"
+            bg="surface-muted"
+            p="5"
+            dark="bg-dark-surface-subtle"
+          >
+            결과가 여기에 표시됩니다.
+          </div>
+          <button
+            id="percent-calc"
+            class="cm-button-primary"
+            w="full"
+            mt="4"
+            py="3"
+          >
+            계산하기
+          </button>
         </div>
       )}
     </div>
 
     <aside class="cm-card" p="5 md:p-6" h="fit">
-      <p m="0" text="sm" font="700" text-primary>ABOUT THIS TOOL</p>
-      <h2 m="0" mt="2" text="lg" font="750">{title}</h2>
-      <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">{description}</p>
+      <p m="0" text="sm" font="700" text-primary>
+        ABOUT THIS TOOL
+      </p>
+      <h2 m="0" mt="2" text="lg" font="750">
+        {title}
+      </h2>
+      <p
+        m="0"
+        mt="2"
+        text="sm"
+        leading="6"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {description}
+      </p>
       <div mt="5" pt="5" border="t" border-border dark="border-dark-border">
-        <p m="0" text="sm" font="700">이용 안내</p>
-        <ul m="0" mt="2" pl="5" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">
-          <li>입력값과 생성 결과는 기본적으로 이 페이지의 브라우저에서 처리합니다.</li>
+        <p m="0" text="sm" font="700">
+          이용 안내
+        </p>
+        <ul
+          m="0"
+          mt="2"
+          pl="5"
+          text="sm"
+          leading="6"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          <li>
+            입력값과 생성 결과는 기본적으로 이 페이지의 브라우저에서 처리합니다.
+          </li>
           <li>도구 결과는 편의를 위한 참고용이며 결과를 보장하지 않습니다.</li>
-          <li>비밀번호 생성 결과처럼 민감할 수 있는 값은 다른 사람과 공유하지 마세요.</li>
-          <li>로또 번호와 랜덤 추첨 결과는 무작위 결과일 뿐 당첨이나 특정 결과를 보장하지 않습니다.</li>
+          <li>
+            비밀번호 생성 결과처럼 민감할 수 있는 값은 다른 사람과 공유하지
+            마세요.
+          </li>
+          <li>
+            로또 번호와 랜덤 추첨 결과는 무작위 결과일 뿐 당첨이나 특정 결과를
+            보장하지 않습니다.
+          </li>
         </ul>
       </div>
-      <div mt="5" rounded="2xl" border="1" border-border bg="surface-muted" p="4" dark="border-dark-border dark:bg-dark-surface-muted">
-        <p m="0" text="xs" font="700" text-primary>개인정보 안내</p>
-        <p m="0" mt="2" text="xs sm" leading="6" text-text-muted dark="text-dark-text-muted">
-          주민등록번호, 계좌번호, 카드번호, 비밀번호 등 개인정보나 금융정보를 입력하지 마세요.
-          CozyMoney는 생활도구 이용에 불필요한 개인정보를 요구하지 않습니다.
+      <div
+        mt="5"
+        rounded="2xl"
+        border="1"
+        border-border
+        bg="surface-muted"
+        p="4"
+        dark="border-dark-border dark:bg-dark-surface-muted"
+      >
+        <p m="0" text="xs" font="700" text-primary>
+          개인정보 안내
+        </p>
+        <p
+          m="0"
+          mt="2"
+          text="xs sm"
+          leading="6"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          주민등록번호, 계좌번호, 카드번호, 비밀번호 등 개인정보나 금융정보를
+          입력하지 마세요. CozyMoney는 생활도구 이용에 불필요한 개인정보를
+          요구하지 않습니다.
         </p>
       </div>
     </aside>
@@ -176,14 +516,25 @@ const { kind, title, description } = Astro.props;
 </section>
 
 <script>
-  const root = document.querySelector<HTMLElement>("[data-tool]");
+  const root = document.querySelector<HTMLElement>('[data-tool]');
   if (root) {
     const kind = root.dataset.tool;
-    const $ = (id: string) => root.querySelector<HTMLElement>("#" + id);
-    const value = (id: string) => (($(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value ?? "").trim();
+    const $ = (id: string) => root.querySelector<HTMLElement>('#' + id);
+    const value = (id: string) =>
+      (
+        ($(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)
+          ?.value ?? ''
+      ).trim();
     const number = (id: string) => Number(value(id));
-    const format = (n: number, digits = 0) => Number.isFinite(n) ? n.toLocaleString("ko-KR", { maximumFractionDigits: digits }) : "-";
-    const copy = async (text: string) => { try { await navigator.clipboard.writeText(text); } catch {} };
+    const format = (n: number, digits = 0) =>
+      Number.isFinite(n)
+        ? n.toLocaleString('ko-KR', { maximumFractionDigits: digits })
+        : '-';
+    const copy = async (text: string) => {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {}
+    };
 
     const secureRandom = (max: number) => {
       if (max <= 0) return 0;
@@ -191,131 +542,340 @@ const { kind, title, description } = Astro.props;
       if (!cryptoObj?.getRandomValues) return Math.floor(Math.random() * max);
       const buf = new Uint32Array(1);
       const limit = Math.floor(0x100000000 / max) * max;
-      do { cryptoObj.getRandomValues(buf); } while (buf[0] >= limit);
+      do {
+        cryptoObj.getRandomValues(buf);
+      } while (buf[0] >= limit);
       return buf[0] % max;
     };
 
-    if (kind === "lotto") {
+    if (kind === 'lotto') {
       const render = () => {
-        const count = Number(value("lotto-count")) || 1;
-        const target = $("lotto-results");
+        const count = Number(value('lotto-count')) || 1;
+        const target = $('lotto-results');
         if (!target) return;
         target.innerHTML = Array.from({ length: count }, (_, i) => {
           const nums: number[] = [];
-          while (nums.length < 6) { const n = secureRandom(45) + 1; if (!nums.includes(n)) nums.push(n); }
-          nums.sort((a,b) => a-b);
-          const odd = nums.filter(n => n % 2).length;
-          return '<div class="cm-result"><div flex="~" items-center justify-between gap="2"><span text="xs" font="700" text-text-subtle dark="text-dark-text-subtle">'+(i+1)+'게임</span><span text="xs" text-text-muted dark="text-dark-text-muted">홀 '+odd+' · 짝 '+(6-odd)+' · 합 '+nums.reduce((a,b)=>a+b,0)+'</span></div><div flex="~" wrap gap="2" mt="3">'+nums.map(n=>'<span class="cm-number-ball">'+n+'</span>').join("")+'</div></div>';
-        }).join("");
+          while (nums.length < 6) {
+            const n = secureRandom(45) + 1;
+            if (!nums.includes(n)) nums.push(n);
+          }
+          nums.sort((a, b) => a - b);
+          const odd = nums.filter((n) => n % 2).length;
+          return (
+            '<div class="cm-result"><div flex="~" items-center justify-between gap="2"><span text="xs" font="700" text-text-subtle dark="text-dark-text-subtle">' +
+            (i + 1) +
+            '게임</span><span text="xs" text-text-muted dark="text-dark-text-muted">홀 ' +
+            odd +
+            ' · 짝 ' +
+            (6 - odd) +
+            ' · 합 ' +
+            nums.reduce((a, b) => a + b, 0) +
+            '</span></div><div flex="~" wrap gap="2" mt="3">' +
+            nums
+              .map((n) => '<span class="cm-number-ball">' + n + '</span>')
+              .join('') +
+            '</div></div>'
+          );
+        }).join('');
       };
-      $("lotto-generate")?.addEventListener("click", render);
-      $("lotto-count")?.addEventListener("change", render);
-      $("lotto-copy")?.addEventListener("click", () => {
-        const cards = Array.from(root.querySelectorAll(".cm-result"));
-        copy(cards.map((card,i) => (i+1)+"게임: "+Array.from(card.querySelectorAll(".cm-number-ball")).map(x=>x.textContent).join(", ")).join("\n"));
+      $('lotto-generate')?.addEventListener('click', render);
+      $('lotto-count')?.addEventListener('change', render);
+      $('lotto-copy')?.addEventListener('click', () => {
+        const cards = Array.from(root.querySelectorAll('.cm-result'));
+        copy(
+          cards
+            .map(
+              (card, i) =>
+                i +
+                1 +
+                '게임: ' +
+                Array.from(card.querySelectorAll('.cm-number-ball'))
+                  .map((x) => x.textContent)
+                  .join(', '),
+            )
+            .join('\n'),
+        );
       });
       render();
     }
 
-    if (kind === "random") {
+    if (kind === 'random') {
       const render = () => {
-        const min = Math.ceil(number("random-min")), max = Math.floor(number("random-max"));
-        const out = $("random-result");
+        const min = Math.ceil(number('random-min')),
+          max = Math.floor(number('random-max'));
+        const out = $('random-result');
         if (!out) return;
-        out.textContent = min <= max ? String(min + secureRandom(max - min + 1)) : "최솟값과 최댓값을 확인하세요.";
+        out.textContent =
+          min <= max
+            ? String(min + secureRandom(max - min + 1))
+            : '최솟값과 최댓값을 확인하세요.';
       };
-      $("random-generate")?.addEventListener("click", render); render();
+      $('random-generate')?.addEventListener('click', render);
+      render();
     }
 
-    if (kind === "picker") {
-      $("picker-draw")?.addEventListener("click", () => {
-        const items = value("picker-items").split(/\n/).map(x=>x.trim()).filter(Boolean);
-        const out = $("picker-result");
+    if (kind === 'picker') {
+      $('picker-draw')?.addEventListener('click', () => {
+        const items = value('picker-items')
+          .split(/\n/)
+          .map((x) => x.trim())
+          .filter(Boolean);
+        const out = $('picker-result');
         if (!out) return;
-        out.textContent = items.length ? items[secureRandom(items.length)] : "추첨할 항목을 입력하세요.";
+        out.textContent = items.length
+          ? items[secureRandom(items.length)]
+          : '추첨할 항목을 입력하세요.';
       });
-      $("picker-copy")?.addEventListener("click", () => copy(value("picker-result")));
+      $('picker-copy')?.addEventListener('click', () =>
+        copy(value('picker-result')),
+      );
     }
 
-    if (kind === "password") {
+    if (kind === 'password') {
       const generate = () => {
-        const len = Math.min(128, Math.max(4, Math.floor(number("password-length")) || 16));
+        const len = Math.min(
+          128,
+          Math.max(4, Math.floor(number('password-length')) || 16),
+        );
         const sets = [
-          value("pw-upper") === "" ? "" : "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-          value("pw-lower") === "" ? "" : "abcdefghijklmnopqrstuvwxyz",
-          value("pw-number") === "" ? "" : "0123456789",
-          value("pw-symbol") === "" ? "" : "!@#$%^&*()-_=+[]{}?",
+          value('pw-upper') === '' ? '' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+          value('pw-lower') === '' ? '' : 'abcdefghijklmnopqrstuvwxyz',
+          value('pw-number') === '' ? '' : '0123456789',
+          value('pw-symbol') === '' ? '' : '!@#$%^&*()-_=+[]{}?',
         ];
-        const enabled = [("pw-upper"),("pw-lower"),("pw-number"),("pw-symbol")].map(id => ($(id) as HTMLInputElement)?.checked ? sets[["pw-upper","pw-lower","pw-number","pw-symbol"].indexOf(id)] : "").filter(Boolean);
-        const out = $("password-result") as HTMLInputElement | null;
+        const enabled = ['pw-upper', 'pw-lower', 'pw-number', 'pw-symbol']
+          .map((id) =>
+            ($(id) as HTMLInputElement)?.checked
+              ? sets[
+                  ['pw-upper', 'pw-lower', 'pw-number', 'pw-symbol'].indexOf(id)
+                ]
+              : '',
+          )
+          .filter(Boolean);
+        const out = $('password-result') as HTMLInputElement | null;
         if (!out) return;
-        if (!enabled.length) { out.value = "문자 구성을 하나 이상 선택하세요."; return; }
-        let result = "";
-        const all = enabled.join("");
-        enabled.forEach(set => { result += set[secureRandom(set.length)]; });
+        if (!enabled.length) {
+          out.value = '문자 구성을 하나 이상 선택하세요.';
+          return;
+        }
+        let result = '';
+        const all = enabled.join('');
+        enabled.forEach((set) => {
+          result += set[secureRandom(set.length)];
+        });
         while (result.length < len) result += all[secureRandom(all.length)];
-        const chars = result.split("");\n        for (let i = chars.length - 1; i > 0; i--) { const j = secureRandom(i + 1); [chars[i], chars[j]] = [chars[j], chars[i]]; }\n        out.value = chars.join("");
+        const chars = result.split('');
+        for (let i = chars.length - 1; i > 0; i--) {
+          const j = secureRandom(i + 1);
+          [chars[i], chars[j]] = [chars[j], chars[i]];
+        }
+        out.value = chars.join('');
       };
-      $("password-generate")?.addEventListener("click", generate);
-      $("password-copy")?.addEventListener("click", () => copy(value("password-result")));
+      $('password-generate')?.addEventListener('click', generate);
+      $('password-copy')?.addEventListener('click', () =>
+        copy(value('password-result')),
+      );
       generate();
     }
 
-    if (kind === "date") {
-      $("date-calc")?.addEventListener("click", () => {
-        const a = new Date(value("date-start")+"T00:00:00"), b = new Date(value("date-end")+"T00:00:00");
-        const out = $("date-result");
-        if (!out || Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) { if(out) out.textContent="두 날짜를 모두 선택하세요."; return; }
-        const days = Math.round(Math.abs(b.getTime()-a.getTime())/86400000);
+    if (kind === 'date') {
+      $('date-calc')?.addEventListener('click', () => {
+        const a = new Date(value('date-start') + 'T00:00:00'),
+          b = new Date(value('date-end') + 'T00:00:00');
+        const out = $('date-result');
+        if (!out || Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) {
+          if (out) out.textContent = '두 날짜를 모두 선택하세요.';
+          return;
+        }
+        const days = Math.round(Math.abs(b.getTime() - a.getTime()) / 86400000);
         const inclusive = days + 1;
-        out.innerHTML = '<strong text="xl">'+format(days)+'일</strong><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">시작일과 종료일을 모두 포함하면 '+format(inclusive)+'일입니다.</p>';
+        out.innerHTML =
+          '<strong text="xl">' +
+          format(days) +
+          '일</strong><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">시작일과 종료일을 모두 포함하면 ' +
+          format(inclusive) +
+          '일입니다.</p>';
       });
     }
 
-    if (kind === "dday") {
-      const today = new Date(); today.setHours(0,0,0,0);
-      const input = $("dday-date") as HTMLInputElement | null; if (input) input.value = new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+    if (kind === 'dday') {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const input = $('dday-date') as HTMLInputElement | null;
+      if (input)
+        input.value = new Date(
+          Date.now() - new Date().getTimezoneOffset() * 60000,
+        )
+          .toISOString()
+          .slice(0, 10);
       const calc = () => {
-        const target = new Date(value("dday-date")+"T00:00:00"); const out=$("dday-result"); if(!out || Number.isNaN(target.getTime())) return;
-        const diff=Math.round((target.getTime()-today.getTime())/86400000);
-        const name=value("dday-name") || "목표 날짜";
-        out.innerHTML='<div text="sm" text-text-muted dark="text-dark-text-muted">'+name+'</div><div mt="1" text="4xl md:5xl" font="800">'+(diff>0?"D-"+diff:diff<0?"D+"+Math.abs(diff):"D-DAY")+'</div>';
+        const target = new Date(value('dday-date') + 'T00:00:00');
+        const out = $('dday-result');
+        if (!out || Number.isNaN(target.getTime())) return;
+        const diff = Math.round(
+          (target.getTime() - today.getTime()) / 86400000,
+        );
+        const name = value('dday-name') || '목표 날짜';
+        out.innerHTML =
+          '<div text="sm" text-text-muted dark="text-dark-text-muted">' +
+          name +
+          '</div><div mt="1" text="4xl md:5xl" font="800">' +
+          (diff > 0
+            ? 'D-' + diff
+            : diff < 0
+              ? 'D+' + Math.abs(diff)
+              : 'D-DAY') +
+          '</div>';
       };
-      $("dday-calc")?.addEventListener("click", calc); calc();
+      $('dday-calc')?.addEventListener('click', calc);
+      calc();
     }
 
-    if (kind === "age") {
-      const asof = $("age-asof") as HTMLInputElement | null; if(asof) asof.value=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
-      $("age-calc")?.addEventListener("click", () => {
-        const birth = new Date(value("age-birth")+"T00:00:00"), date = new Date(value("age-asof")+"T00:00:00"), out=$("age-result");
-        if(!out || Number.isNaN(birth.getTime()) || Number.isNaN(date.getTime()) || birth>date) { if(out) out.textContent="생년월일과 기준일을 확인하세요."; return; }
-        let years=date.getFullYear()-birth.getFullYear(), months=date.getMonth()-birth.getMonth(), days=date.getDate()-birth.getDate();
-        if(days<0){ months--; days += new Date(date.getFullYear(),date.getMonth(),0).getDate(); }
-        if(months<0){ years--; months+=12; }
-        out.innerHTML='<div text="2xl" font="800">'+years+'세</div><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">만 '+years+'년 '+months+'개월 '+days+'일입니다.</p>';
+    if (kind === 'age') {
+      const asof = $('age-asof') as HTMLInputElement | null;
+      if (asof)
+        asof.value = new Date(
+          Date.now() - new Date().getTimezoneOffset() * 60000,
+        )
+          .toISOString()
+          .slice(0, 10);
+      $('age-calc')?.addEventListener('click', () => {
+        const birth = new Date(value('age-birth') + 'T00:00:00'),
+          date = new Date(value('age-asof') + 'T00:00:00'),
+          out = $('age-result');
+        if (
+          !out ||
+          Number.isNaN(birth.getTime()) ||
+          Number.isNaN(date.getTime()) ||
+          birth > date
+        ) {
+          if (out) out.textContent = '생년월일과 기준일을 확인하세요.';
+          return;
+        }
+        let years = date.getFullYear() - birth.getFullYear(),
+          months = date.getMonth() - birth.getMonth(),
+          days = date.getDate() - birth.getDate();
+        if (days < 0) {
+          months--;
+          days += new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+        out.innerHTML =
+          '<div text="2xl" font="800">' +
+          years +
+          '세</div><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">만 ' +
+          years +
+          '년 ' +
+          months +
+          '개월 ' +
+          days +
+          '일입니다.</p>';
       });
     }
 
-    if (kind === "unit") {
-      const units: Record<string,{labels:string[], convert:(v:number,dir:string)=>number}> = {
-        length:{labels:["m → km","km → m","cm → m","m → cm"],convert:(v,d)=>d==="m → km"?v/1000:d==="km → m"?v*1000:d==="cm → m"?v/100:v*100},
-        weight:{labels:["kg → g","g → kg","kg → lb","lb → kg"],convert:(v,d)=>d==="kg → g"?v*1000:d==="g → kg"?v/1000:d==="kg → lb"?v*2.2046226218:v/2.2046226218},
-        temperature:{labels:["℃ → ℉","℉ → ℃"],convert:(v,d)=>d==="℃ → ℉"?v*9/5+32:(v-32)*5/9},
-        area:{labels:["㎡ → 평","평 → ㎡"],convert:(v,d)=>d==="㎡ → 평"?v/3.305785:v*3.305785},
-        data:{labels:["MB → GB","GB → MB","GB → TB","TB → GB"],convert:(v,d)=>d==="MB → GB"?v/1024:d==="GB → MB"?v*1024:d==="GB → TB"?v/1024:v*1024}
+    if (kind === 'unit') {
+      const units: Record<
+        string,
+        { labels: string[]; convert: (v: number, dir: string) => number }
+      > = {
+        length: {
+          labels: ['m → km', 'km → m', 'cm → m', 'm → cm'],
+          convert: (v, d) =>
+            d === 'm → km'
+              ? v / 1000
+              : d === 'km → m'
+                ? v * 1000
+                : d === 'cm → m'
+                  ? v / 100
+                  : v * 100,
+        },
+        weight: {
+          labels: ['kg → g', 'g → kg', 'kg → lb', 'lb → kg'],
+          convert: (v, d) =>
+            d === 'kg → g'
+              ? v * 1000
+              : d === 'g → kg'
+                ? v / 1000
+                : d === 'kg → lb'
+                  ? v * 2.2046226218
+                  : v / 2.2046226218,
+        },
+        temperature: {
+          labels: ['℃ → ℉', '℉ → ℃'],
+          convert: (v, d) =>
+            d === '℃ → ℉' ? (v * 9) / 5 + 32 : ((v - 32) * 5) / 9,
+        },
+        area: {
+          labels: ['㎡ → 평', '평 → ㎡'],
+          convert: (v, d) => (d === '㎡ → 평' ? v / 3.305785 : v * 3.305785),
+        },
+        data: {
+          labels: ['MB → GB', 'GB → MB', 'GB → TB', 'TB → GB'],
+          convert: (v, d) =>
+            d === 'MB → GB'
+              ? v / 1024
+              : d === 'GB → MB'
+                ? v * 1024
+                : d === 'GB → TB'
+                  ? v / 1024
+                  : v * 1024,
+        },
       };
       const update = () => {
-        const type=value("unit-type"), def=units[type]; const select=$("unit-direction") as HTMLSelectElement|null; if(!select) return;
-        select.innerHTML=def.labels.map(x=>'<option>'+x+'</option>').join("");
-        const out=$("unit-result"); if(out) out.textContent=format(def.convert(number("unit-value"),def.labels[0]),6);
+        const type = value('unit-type'),
+          def = units[type];
+        const select = $('unit-direction') as HTMLSelectElement | null;
+        if (!select) return;
+        select.innerHTML = def.labels
+          .map((x) => '<option>' + x + '</option>')
+          .join('');
+        const out = $('unit-result');
+        if (out)
+          out.textContent = format(
+            def.convert(number('unit-value'), def.labels[0]),
+            6,
+          );
       };
-      const calc=()=>{const type=value("unit-type"),def=units[type],dir=value("unit-direction"),out=$("unit-result");if(out) out.textContent=format(def.convert(number("unit-value"),dir),6);};
-      $("unit-type")?.addEventListener("change",()=>{update();calc();}); $("unit-direction")?.addEventListener("change",calc); $("unit-value")?.addEventListener("input",calc); update();
+      const calc = () => {
+        const type = value('unit-type'),
+          def = units[type],
+          dir = value('unit-direction'),
+          out = $('unit-result');
+        if (out)
+          out.textContent = format(def.convert(number('unit-value'), dir), 6);
+      };
+      $('unit-type')?.addEventListener('change', () => {
+        update();
+        calc();
+      });
+      $('unit-direction')?.addEventListener('change', calc);
+      $('unit-value')?.addEventListener('input', calc);
+      update();
     }
 
-    if (kind === "percent") {
-      const calc=()=>{const a=number("percent-a"),b=number("percent-b"),type=value("percent-type"),out=$("percent-result");if(!out)return;let text="";if(type==="of")text=format(a*b/100,2);if(type==="change")text=(a!==0?format((b-a)/a*100,2)+"% 변화":"계산할 수 없습니다.");if(type==="discount")text=format(a*(1-b/100),2);if(type==="increase")text=format(a*(1+b/100),2);out.textContent=text;};
-      $("percent-calc")?.addEventListener("click",calc); calc();
+    if (kind === 'percent') {
+      const calc = () => {
+        const a = number('percent-a'),
+          b = number('percent-b'),
+          type = value('percent-type'),
+          out = $('percent-result');
+        if (!out) return;
+        let text = '';
+        if (type === 'of') text = format((a * b) / 100, 2);
+        if (type === 'change')
+          text =
+            a !== 0
+              ? format(((b - a) / a) * 100, 2) + '% 변화'
+              : '계산할 수 없습니다.';
+        if (type === 'discount') text = format(a * (1 - b / 100), 2);
+        if (type === 'increase') text = format(a * (1 + b / 100), 2);
+        out.textContent = text;
+      };
+      $('percent-calc')?.addEventListener('click', calc);
+      calc();
     }
   }
 </script>

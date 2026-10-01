@@ -23,6 +23,7 @@
     "esbuild": true
   },
   "devDependencies": {
+    "@types/bun": "^1.4.2",
     "@unocss/astro": "^66.10.5",
     "@unocss/preset-attributify": "^66.10.5",
     "@unocss/preset-icons": "^66.10.5",
@@ -30,6 +31,7 @@
     "@unocss/preset-wind4": "^66.10.5",
     "eslint": "^10.11.0",
     "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.0",
     "unocss": "^66.10.5"
   }
 }

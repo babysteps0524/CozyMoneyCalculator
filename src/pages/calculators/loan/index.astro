@@ -1,7 +1,7 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import Header from "../../../components/common/Header.astro";
-import Footer from "../../../components/common/Footer.astro";
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/common/Header.astro';
+import Footer from '../../../components/common/Footer.astro';
 ---
 
 <BaseLayout
@@ -13,90 +13,274 @@ import Footer from "../../../components/common/Footer.astro";
 
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
-      <nav mb="5 md:6" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-        <a href="/" hover="text-primary" no-underline>홈</a>
+      <nav
+        mb="5 md:6"
+        text="xs sm:sm"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        <a href="/" hover="text-primary" no-underline>
+          홈
+        </a>
         <span mx="2">/</span>
-        <a href="/calculators/" hover="text-primary" no-underline>계산기</a>
+        <a href="/calculators/" hover="text-primary" no-underline>
+          계산기
+        </a>
         <span mx="2">/</span>
-        <span text-text dark="text-dark-text">대출</span>
+        <span text-text dark="text-dark-text">
+          대출
+        </span>
       </nav>
 
       <header mb="6 md:8">
-        <p m="0" text="sm" font="700" text-primary>금융 계산기</p>
-        <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>대출 계산기</h1>
-        <p m="0" mt="3" max-w="3xl" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-          대출금액, 연이율, 기간을 입력하면 원리금균등상환 기준의 월 상환금액과 총 이자를 확인할 수 있습니다.
+        <p m="0" text="sm" font="700" text-primary>
+          금융 계산기
+        </p>
+        <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
+          대출 계산기
+        </h1>
+        <p
+          m="0"
+          mt="3"
+          max-w="3xl"
+          text="sm md:base"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          대출금액, 연이율, 기간을 입력하면 원리금균등상환 기준의 월 상환금액과
+          총 이자를 확인할 수 있습니다.
         </p>
       </header>
 
-      <div grid="~ cols-1 lg:cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]" gap="4 md:6" items-start>
+      <div
+        grid="~ cols-1 lg:cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]"
+        gap="4 md:6"
+        items-start
+      >
         <section class="cm-card" p="5 md:7">
           <div flex="~" items-center justify-between mb="5">
             <div>
-              <h2 m="0" text="lg md:xl" font="750">입력 정보</h2>
-              <p m="0" mt="1" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">필요한 값만 입력하면 됩니다.</p>
+              <h2 m="0" text="lg md:xl" font="750">
+                입력 정보
+              </h2>
+              <p
+                m="0"
+                mt="1"
+                text="xs sm:sm"
+                text-text-muted
+                dark="text-dark-text-muted"
+              >
+                필요한 값만 입력하면 됩니다.
+              </p>
             </div>
-            <span rounded="full" bg="primary/10" px="2.5" py="1" text="xs" font="700" text-primary>원리금균등</span>
+            <span
+              rounded="full"
+              bg="primary/10"
+              px="2.5"
+              py="1"
+              text="xs"
+              font="700"
+              text-primary
+            >
+              원리금균등
+            </span>
           </div>
 
           <form id="loan-form">
             <div grid="~ cols-1 md:cols-2 lg:cols-1" gap="5">
               <div>
-                <label class="cm-label" for="principal">대출금액</label>
+                <label class="cm-label" for="principal">
+                  대출금액
+                </label>
                 <div relative>
-                  <input class="cm-input" id="principal" name="principal" type="number" inputmode="numeric" min="1" step="100000" value="10000000" pr="12" />
-                  <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+                  <input
+                    class="cm-input"
+                    id="principal"
+                    name="principal"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    step="100000"
+                    value="10000000"
+                    pr="12"
+                  />
+                  <span
+                    absolute
+                    right-4
+                    top="[50%]"
+                    translate-y="[-50%]"
+                    text="sm"
+                    text-text-muted
+                    dark="text-dark-text-muted"
+                  >
+                    원
+                  </span>
                 </div>
               </div>
 
               <div>
-                <label class="cm-label" for="annual-rate">연이율</label>
+                <label class="cm-label" for="annual-rate">
+                  연이율
+                </label>
                 <div relative>
-                  <input class="cm-input" id="annual-rate" name="annualRate" type="number" inputmode="decimal" min="0" step="0.01" value="4.5" pr="12" />
-                  <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span>
+                  <input
+                    class="cm-input"
+                    id="annual-rate"
+                    name="annualRate"
+                    type="number"
+                    inputmode="decimal"
+                    min="0"
+                    step="0.01"
+                    value="4.5"
+                    pr="12"
+                  />
+                  <span
+                    absolute
+                    right-4
+                    top="[50%]"
+                    translate-y="[-50%]"
+                    text="sm"
+                    text-text-muted
+                    dark="text-dark-text-muted"
+                  >
+                    %
+                  </span>
                 </div>
               </div>
 
               <div>
-                <label class="cm-label" for="loan-months">대출기간</label>
+                <label class="cm-label" for="loan-months">
+                  대출기간
+                </label>
                 <div relative>
-                  <input class="cm-input" id="loan-months" name="months" type="number" inputmode="numeric" min="1" step="1" value="36" pr="14" />
-                  <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">개월</span>
+                  <input
+                    class="cm-input"
+                    id="loan-months"
+                    name="months"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    step="1"
+                    value="36"
+                    pr="14"
+                  />
+                  <span
+                    absolute
+                    right-4
+                    top="[50%]"
+                    translate-y="[-50%]"
+                    text="sm"
+                    text-text-muted
+                    dark="text-dark-text-muted"
+                  >
+                    개월
+                  </span>
                 </div>
               </div>
             </div>
 
             <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
-              <button type="submit" class="cm-button-primary" px="4" py="3.5" text="sm md:base">계산하기</button>
-              <button id="reset-button" type="button" class="cm-button-secondary" px="4" py="3.5" text="sm md:base">초기화</button>
+              <button
+                type="submit"
+                class="cm-button-primary"
+                px="4"
+                py="3.5"
+                text="sm md:base"
+              >
+                계산하기
+              </button>
+              <button
+                id="reset-button"
+                type="button"
+                class="cm-button-secondary"
+                px="4"
+                py="3.5"
+                text="sm md:base"
+              >
+                초기화
+              </button>
             </div>
 
-            <p id="error-message" hidden m="0" mt="4" rounded="xl" bg="danger-surface" px="4" py="3" text="sm" text-danger-text></p>
+            <p
+              id="error-message"
+              hidden
+              m="0"
+              mt="4"
+              rounded="xl"
+              bg="danger-surface"
+              px="4"
+              py="3"
+              text="sm"
+              text-danger-text
+            ></p>
           </form>
         </section>
 
-        <section id="result-section" class="cm-card" p="5 md:7" lg="sticky top-24">
+        <section
+          id="result-section"
+          class="cm-card"
+          p="5 md:7"
+          lg="sticky top-24"
+        >
           <div flex="~" items-center justify-between mb="5">
             <div>
-              <p m="0" text="xs" font="700" text-primary>RESULT</p>
-              <h2 m="0" mt="1" text="lg md:xl" font="750">계산 결과</h2>
+              <p m="0" text="xs" font="700" text-primary>
+                RESULT
+              </p>
+              <h2 m="0" mt="1" text="lg md:xl" font="750">
+                계산 결과
+              </h2>
             </div>
-            <button id="copy-button" type="button" class="cm-button-secondary" px="3" py="2" text="xs sm:sm">결과 복사</button>
+            <button
+              id="copy-button"
+              type="button"
+              class="cm-button-secondary"
+              px="3"
+              py="2"
+              text="xs sm:sm"
+            >
+              결과 복사
+            </button>
           </div>
 
-          <div rounded="2xl" bg="primary/10" p="5" dark="bg-[oklch(25%_0.04_250)]">
-            <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">월 상환금액</p>
-            <strong id="monthly-payment" block mt="2" text="2xl md:3xl" font="800" text-primary>-</strong>
+          <div
+            rounded="2xl"
+            bg="primary/10"
+            p="5"
+            dark="bg-[oklch(25%_0.04_250)]"
+          >
+            <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+              월 상환금액
+            </p>
+            <strong
+              id="monthly-payment"
+              block
+              mt="2"
+              text="2xl md:3xl"
+              font="800"
+              text-primary
+            >
+              -
+            </strong>
           </div>
 
           <div grid="~ cols-1 sm:cols-2 lg:cols-1" gap="3" mt="3">
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">총 상환금액</p>
-              <strong id="total-payment" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                총 상환금액
+              </p>
+              <strong id="total-payment" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
             <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">총 이자</p>
-              <strong id="total-interest" block mt="2" text="lg" font="750">-</strong>
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+                총 이자
+              </p>
+              <strong id="total-interest" block mt="2" text="lg" font="750">
+                -
+              </strong>
             </div>
           </div>
         </section>
@@ -105,27 +289,71 @@ import Footer from "../../../components/common/Footer.astro";
       <section mt="10 md:14">
         <h2 class="cm-section-title">대출 계산 방법</h2>
         <div class="cm-card" mt="4" p="5 md:6">
-          <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            원리금균등상환은 대출기간 동안 매월 같은 금액을 상환하는 방식입니다. 이 계산기는 연이율을 12개월로 나누어 월이율을 구한 뒤 대출기간을 반영합니다.
+          <p
+            m="0"
+            text="sm md:base"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원리금균등상환은 대출기간 동안 매월 같은 금액을 상환하는 방식입니다.
+            이 계산기는 연이율을 12개월로 나누어 월이율을 구한 뒤 대출기간을
+            반영합니다.
           </p>
         </div>
       </section>
 
       <section mt="8 md:10">
         <h2 class="cm-section-title">이용 시 주의사항</h2>
-        <ul m="0" mt="4" pl="5" flex="~ col" gap="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+        <ul
+          m="0"
+          mt="4"
+          pl="5"
+          flex="~ col"
+          gap="2"
+          text="sm"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
           <li>실제 금융기관의 상환금액과 차이가 있을 수 있습니다.</li>
           <li>중도상환수수료, 인지세 등 별도 비용은 포함하지 않습니다.</li>
-          <li>실제 대출 상품의 조건과 금리는 금융기관의 약관을 확인해야 합니다.</li>
+          <li>
+            실제 대출 상품의 조건과 금리는 금융기관의 약관을 확인해야 합니다.
+          </li>
         </ul>
       </section>
 
-      <section mt="8 md:10" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
-        <h2 m="0" text="sm" font="750">공통 이용 안내</h2>
-        <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-          <li>입력값은 이 페이지의 브라우저에서 계산하며 계산기 자체가 별도 저장하지 않습니다.</li>
+      <section
+        mt="8 md:10"
+        rounded="2xl"
+        border="1"
+        border-border
+        bg="surface-muted"
+        p="5 md:6"
+        dark="border-dark-border dark:bg-dark-surface-muted"
+      >
+        <h2 m="0" text="sm" font="750">
+          공통 이용 안내
+        </h2>
+        <ul
+          m="0"
+          mt="3"
+          pl="5"
+          text="sm"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          <li>
+            입력값은 이 페이지의 브라우저에서 계산하며 계산기 자체가 별도
+            저장하지 않습니다.
+          </li>
           <li>계산 결과는 원리금균등상환을 기준으로 한 참고값입니다.</li>
-          <li>실제 금융기관의 금리, 수수료, 상환 방식과 약정 조건을 반드시 확인하세요.</li>
+          <li>
+            실제 금융기관의 금리, 수수료, 상환 방식과 약정 조건을 반드시
+            확인하세요.
+          </li>
         </ul>
       </section>
     </div>
@@ -135,23 +363,39 @@ import Footer from "../../../components/common/Footer.astro";
 </BaseLayout>
 
 <script>
-  import { calculateLoan, formatWon } from "../../../lib/calculators/loan";
+  import { calculateLoan, formatWon } from '../../../lib/calculators/loan';
 
-  const form = document.querySelector<HTMLFormElement>("#loan-form");
-  const principalInput = document.querySelector<HTMLInputElement>("#principal");
-  const annualRateInput = document.querySelector<HTMLInputElement>("#annual-rate");
-  const monthsInput = document.querySelector<HTMLInputElement>("#loan-months");
-  const monthlyPaymentElement = document.querySelector<HTMLElement>("#monthly-payment");
-  const totalPaymentElement = document.querySelector<HTMLElement>("#total-payment");
-  const totalInterestElement = document.querySelector<HTMLElement>("#total-interest");
-  const errorMessage = document.querySelector<HTMLElement>("#error-message");
-  const resetButton = document.querySelector<HTMLButtonElement>("#reset-button");
-  const copyButton = document.querySelector<HTMLButtonElement>("#copy-button");
+  const form = document.querySelector<HTMLFormElement>('#loan-form');
+  const principalInput = document.querySelector<HTMLInputElement>('#principal');
+  const annualRateInput =
+    document.querySelector<HTMLInputElement>('#annual-rate');
+  const monthsInput = document.querySelector<HTMLInputElement>('#loan-months');
+  const monthlyPaymentElement =
+    document.querySelector<HTMLElement>('#monthly-payment');
+  const totalPaymentElement =
+    document.querySelector<HTMLElement>('#total-payment');
+  const totalInterestElement =
+    document.querySelector<HTMLElement>('#total-interest');
+  const errorMessage = document.querySelector<HTMLElement>('#error-message');
+  const resetButton =
+    document.querySelector<HTMLButtonElement>('#reset-button');
+  const copyButton = document.querySelector<HTMLButtonElement>('#copy-button');
 
-  if (form && principalInput && annualRateInput && monthsInput && monthlyPaymentElement && totalPaymentElement && totalInterestElement && errorMessage && resetButton && copyButton) {
+  if (
+    form &&
+    principalInput &&
+    annualRateInput &&
+    monthsInput &&
+    monthlyPaymentElement &&
+    totalPaymentElement &&
+    totalInterestElement &&
+    errorMessage &&
+    resetButton &&
+    copyButton
+  ) {
     const renderResult = () => {
       errorMessage.hidden = true;
-      errorMessage.textContent = "";
+      errorMessage.textContent = '';
 
       try {
         const result = calculateLoan({
@@ -164,39 +408,48 @@ import Footer from "../../../components/common/Footer.astro";
         totalPaymentElement.textContent = formatWon(result.totalPayment);
         totalInterestElement.textContent = formatWon(result.totalInterest);
       } catch (error) {
-        errorMessage.textContent = error instanceof Error ? error.message : "계산 중 오류가 발생했습니다.";
+        errorMessage.textContent =
+          error instanceof Error
+            ? error.message
+            : '계산 중 오류가 발생했습니다.';
         errorMessage.hidden = false;
       }
     };
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       renderResult();
-      document.querySelector("#result-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .querySelector('#result-section')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    resetButton.addEventListener("click", () => {
-      principalInput.value = "10000000";
-      annualRateInput.value = "4.5";
-      monthsInput.value = "36";
+    resetButton.addEventListener('click', () => {
+      principalInput.value = '10000000';
+      annualRateInput.value = '4.5';
+      monthsInput.value = '36';
       renderResult();
     });
 
-    copyButton.addEventListener("click", async () => {
+    copyButton.addEventListener('click', async () => {
       const text = [
         `월 상환금액: ${monthlyPaymentElement.textContent}`,
         `총 상환금액: ${totalPaymentElement.textContent}`,
         `총 이자: ${totalInterestElement.textContent}`,
-      ].join("\n");
+      ].join('\n');
 
       try {
         await navigator.clipboard.writeText(text);
         const originalText = copyButton.textContent;
-        copyButton.textContent = "복사 완료";
-        window.setTimeout(() => { copyButton.textContent = originalText; }, 1000);
+        copyButton.textContent = '복사 완료';
+        window.setTimeout(() => {
+          copyButton.textContent = originalText;
+        }, 1000);
       } catch {
-        copyButton.textContent = "복사 실패";
-        window.setTimeout(() => { copyButton.textContent = "결과 복사"; }, 1000);
+        copyButton.textContent = '복사 실패';
+        window.setTimeout(() => {
+          copyButton.textContent = '결과 복사';
+        }, 1000);
       }
     });
 
