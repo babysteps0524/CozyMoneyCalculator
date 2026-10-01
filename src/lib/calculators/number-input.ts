@@ -87,13 +87,21 @@ export function bindNumberControls(root: ParentNode): void {
       '[data-step-direction="1"]',
     );
 
+    const prepareStep = (event: PointerEvent) => {
+      event.preventDefault();
+      if (document.activeElement === input) {
+        input.blur();
+      }
+    };
+
+    decrease?.addEventListener('pointerdown', prepareStep);
+    increase?.addEventListener('pointerdown', prepareStep);
+
     decrease?.addEventListener('click', () => {
       stepNumberInput(input, -1);
-      input.focus();
     });
     increase?.addEventListener('click', () => {
       stepNumberInput(input, 1);
-      input.focus();
     });
   });
 }
