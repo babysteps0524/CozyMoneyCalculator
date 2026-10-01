@@ -30,6 +30,7 @@ export default defineConfig({
       border: "oklch(89% 0.02 250)",
       "border-strong": "oklch(80% 0.025 250)",
       "danger-surface": "oklch(96% 0.025 25)",
+      "dark-primary-surface": "oklch(25% 0.04 250)",
       "danger-text": "oklch(48% 0.16 25)",
       "dark-danger-surface": "oklch(25% 0.04 25)",
       "dark-danger-text": "oklch(78% 0.12 25)",
