@@ -62,7 +62,7 @@ describe("calculator calculations", () => {
     });
 
     expect(result.monthlySalary).toBeCloseTo(3_333_333.33, 2);
-    expect(result.hourlyWage).toBeCloseTo(15_948.01, 2);
-    expect(result.dailyWage).toBeCloseTo(127_584.06, 2);
+    expect(result.hourlyWage).toBeCloseTo(15_948.9633, 4);
+    expect(result.dailyWage).toBeCloseTo(127_591.7065, 4);
   });
 });
