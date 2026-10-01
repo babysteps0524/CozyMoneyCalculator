@@ -100,6 +100,49 @@ describe("calculator calculations", () => {
     expect(result.maturityAmount).toBeGreaterThan(3_600_000);
   });
 
+  test("deposit uses simple annual interest and general tax", () => {
+    const result = calculateSavings({
+      type: "deposit",
+      principal: 10_000_000,
+      monthlyDeposit: 0,
+      annualRate: 3.5,
+      months: 12,
+    });
+
+    expect(result.interestBeforeTax).toBeCloseTo(350_000, 8);
+    expect(result.tax).toBeCloseTo(53_900, 8);
+    expect(result.maturityAmount).toBeCloseTo(10_296_100, 8);
+  });
+
+  test("installment calculates each monthly payment for its holding period", () => {
+    const result = calculateSavings({
+      type: "installment",
+      principal: 0,
+      monthlyDeposit: 300_000,
+      annualRate: 3.5,
+      months: 12,
+    });
+
+    expect(result.interestBeforeTax).toBeCloseTo(68_250, 8);
+    expect(result.tax).toBeCloseTo(10_510.5, 8);
+  });
+
+  test("savings supports a tax-free comparison assumption", () => {
+    const result = calculateSavings({
+      type: "deposit",
+      principal: 10_000_000,
+      monthlyDeposit: 0,
+      annualRate: 3.5,
+      months: 12,
+      taxMode: "taxFree",
+    });
+
+    expect(result.taxRate).toBe(0);
+    expect(result.tax).toBe(0);
+    expect(result.maturityAmount).toBeCloseTo(10_350_000, 8);
+  });
+
+
   test("salary converts annual salary to monthly and hourly values", () => {
     const result = calculateSalary({
       annualSalary: 40_000_000,
