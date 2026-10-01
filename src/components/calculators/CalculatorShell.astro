@@ -134,13 +134,36 @@ const { kind, title, description } = Astro.props;
     const won = (v: number) => fmt(v) + '원';
     const stepFor = (id: string, suffix: string) => {
       if (id === 'rate') {
-        return ['compound', 'dsr', 'rent', 'brokerage', 'leaseLoan', 'property', 'acquisition'].includes(kind) ? '0.1' : '1';
+        return [
+          'compound',
+          'dsr',
+          'rent',
+          'brokerage',
+          'leaseLoan',
+          'property',
+          'acquisition',
+        ].includes(kind)
+          ? '0.1'
+          : '1';
       }
       if (id === 'loanRate') return '1';
       if (id === 'cc') return '100';
       if (id === 'hourly') return '100';
       if (suffix === '원') {
-        return ['principal', 'price', 'sale', 'buy', 'taxbase', 'deposit', 'income', 'debt', 'newdebt', 'mortgage'].includes(id) ? '100000' : '10000';
+        return [
+          'principal',
+          'price',
+          'sale',
+          'buy',
+          'taxbase',
+          'deposit',
+          'income',
+          'debt',
+          'newdebt',
+          'mortgage',
+        ].includes(id)
+          ? '100000'
+          : '10000';
       }
       return '1';
     };

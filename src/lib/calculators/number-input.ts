@@ -89,9 +89,11 @@ export function bindNumberControls(root: ParentNode): void {
 
     decrease?.addEventListener('click', () => {
       stepNumberInput(input, -1);
+      input.focus();
     });
     increase?.addEventListener('click', () => {
       stepNumberInput(input, 1);
+      input.focus();
     });
   });
 }
