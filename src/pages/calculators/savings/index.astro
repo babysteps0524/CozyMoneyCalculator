@@ -61,8 +61,9 @@ import AdSlot from '../../../components/common/AdSlot.astro';
               py="2.5"
               text="sm"
               font="700"
-              bg="surface"
-              dark="bg-dark-surface"
+              bg="primary"
+              text-white
+              transition="colors duration-100"
             >
               예금
             </button>
@@ -76,6 +77,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
               font="700"
               text-text-muted
               dark="text-dark-text-muted"
+              transition="colors duration-100"
             >
               적금
             </button>
@@ -516,12 +518,13 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     depositTab!.setAttribute('aria-pressed', String(depositActive));
     installmentTab!.setAttribute('aria-pressed', String(!depositActive));
 
-    depositTab!.className = depositActive
-      ? 'rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface'
-      : 'rounded-lg py-2.5 text-sm font-700 text-text-muted dark:text-dark-text-muted';
-    installmentTab!.className = !depositActive
-      ? 'rounded-lg py-2.5 text-sm font-700 bg-surface dark:bg-dark-surface'
-      : 'rounded-lg py-2.5 text-sm font-700 text-text-muted dark:text-dark-text-muted';
+    const activeClass =
+      'rounded-lg py-2.5 text-sm font-700 bg-primary text-white transition-colors duration-100';
+    const inactiveClass =
+      'rounded-lg py-2.5 text-sm font-700 text-text-muted dark:text-dark-text-muted transition-colors duration-100 hover:bg-surface hover:text-text dark:hover:bg-dark-surface dark:hover:text-dark-text';
+
+    depositTab!.className = depositActive ? activeClass : inactiveClass;
+    installmentTab!.className = !depositActive ? activeClass : inactiveClass;
     render();
   };
   const render = () => {
