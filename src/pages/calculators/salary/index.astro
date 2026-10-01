@@ -265,7 +265,7 @@ import Footer from '../../../components/common/Footer.astro';
       try {
         await navigator.clipboard.writeText(
           [
-            `연봉: ${Number(annual.value).toLocaleString('ko-KR')}원`,
+            `연봉: ${parseNumber(annual.value).toLocaleString('ko-KR')}원`,
             `월 급여: ${monthly.textContent}`,
             `시급: ${hourly.textContent}`,
             `일급: ${daily.textContent}`,
