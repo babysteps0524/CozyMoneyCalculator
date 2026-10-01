@@ -176,14 +176,14 @@ const { kind, title, description } = Astro.props;
       suffix = '',
     ) => {
       if (type !== 'number') {
-        return `<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div></label>`;
+        return `<label><span class="cm-label">${label}</span><div relative><input class="cm-input" id="${id}" type="${type}" value="${value}" data-default-value="${value}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div></label>`;
       }
       const step = stepFor(id, suffix);
       const decimal = isDecimal(id);
       const paddingRight = suffix === '원' ? 'pr-12' : suffix ? 'pr-14' : '';
       return `<label><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button>
-        <div relative><input class="cm-input ${paddingRight}" id="${id}" type="text" inputmode="${decimal ? 'decimal' : 'numeric'}" value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="${decimal}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div>
+        <div relative><input class="cm-input ${paddingRight}" id="${id}" type="text" inputmode="${decimal ? 'decimal' : 'numeric'}" value="${value}" data-default-value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="${decimal}" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div>
         <button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button>
       </div></label>`;
     };
@@ -436,11 +436,17 @@ const { kind, title, description } = Astro.props;
       detail.textContent = text;
     };
     const reset = () => {
-      fields.querySelectorAll<HTMLInputElement>('input').forEach((i) => {
-        if (i.id === 'rate')
-          i.value = i.id === 'rate' && kind === 'compound' ? '3.5' : '1';
+      fields.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
+        const defaultValue = input.dataset.defaultValue;
+        if (defaultValue !== undefined) {
+          input.value = defaultValue;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
       });
-      location.reload();
+      fields.querySelectorAll<HTMLSelectElement>('select').forEach((select) => {
+        select.selectedIndex = 0;
+      });
+      calc();
     };
     root.querySelector('#calculate')?.addEventListener('click', calc);
     root.querySelector('#reset')?.addEventListener('click', reset);
