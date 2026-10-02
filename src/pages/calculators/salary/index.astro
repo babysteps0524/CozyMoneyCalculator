@@ -131,6 +131,17 @@ import AdSlot from '../../../components/common/AdSlot.astro';
 
           <div grid="~ cols-2" gap="3" mt="3">
             <div class="cm-result">
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">1일 8시간 기준 일급</p>
+              <strong id="daily-wage-8h" block mt="2" text="lg">-</strong>
+            </div>
+            <div class="cm-result">
+              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">예상 시급</p>
+              <strong id="hourly-wage" block mt="2" text="lg">-</strong>
+            </div>
+          </div>
+
+          <div grid="~ cols-2" gap="3" mt="3">
+            <div class="cm-result">
               <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">세전 월 급여</p>
               <strong id="monthly" block mt="2" text="lg">-</strong>
             </div>
@@ -214,6 +225,8 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   const takeHome = document.querySelector<HTMLElement>('#take-home');
   const monthly = document.querySelector<HTMLElement>('#monthly');
   const annualTakeHome = document.querySelector<HTMLElement>('#annual-take-home');
+  const dailyWage8h = document.querySelector<HTMLElement>('#daily-wage-8h');
+  const hourlyWage = document.querySelector<HTMLElement>('#hourly-wage');
   const pension = document.querySelector<HTMLElement>('#pension');
   const health = document.querySelector<HTMLElement>('#health');
   const care = document.querySelector<HTMLElement>('#care');
@@ -244,6 +257,11 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       takeHome!.textContent = fmt(result.monthlyTakeHome);
       monthly!.textContent = fmt(result.monthlyGross);
       annualTakeHome!.textContent = fmt(result.annualTakeHome);
+
+      const estimatedHourlyWage = result.monthlyGross / 209;
+      const estimatedDailyWage8h = estimatedHourlyWage * 8;
+      hourlyWage!.textContent = fmt(estimatedHourlyWage);
+      dailyWage8h!.textContent = fmt(estimatedDailyWage8h);
       pension!.textContent = fmt(result.nationalPension);
       health!.textContent = fmt(result.healthInsurance);
       care!.textContent = fmt(result.longTermCare);
