@@ -3,13 +3,12 @@
 
 <div id="legal-scrivener-calculator" class="cm-card overflow-hidden" data-calculator>
   <div bg="surface-muted dark:dark-surface" p="4 sm:6 md:7" border="0 b solid" border-border dark:border-dark-border>
-  <div flex="~ col" gap="6">
     <div>
       <div grid="~ cols-2" gap="2" p="1" rounded="xl" bg="surface-subtle dark:dark-surface-subtle" border="1 solid" border-border dark:border-dark-border>
         <button type="button" data-property="house" aria-pressed="true" class="cm-button-primary" p="3" text="sm" sm="text-base">주택</button>
         <button type="button" data-property="building" aria-pressed="false" class="cm-button-secondary" p="3" text="sm" sm="text-base">그 외 건물</button>
       </div>
-      <p m="0" mt="3" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">
+      <p m="0" mt="3" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
         등기 대상 부동산의 종류를 선택하면 인지세 비과세 기준을 반영합니다.
       </p>
     </div>
@@ -33,43 +32,43 @@
         <span id="legal-stated-help" text="xs" leading="5" text-text-subtle dark="text-dark-text-subtle">인지세 계산 기준 계약서 금액</span>
       </label>
     </div>
+  </div>
 
-    </div>
+  <div p="4 sm:6 md:7">
+    <div class="cm-divider" mb="5 sm:6" />
 
-    <div class="cm-divider" my="5 sm:6" />
-
-    <div>
+    <section aria-labelledby="legal-fee-title">
       <div flex="~ items-start sm:items-center justify-between" gap="3">
-        <div>
-          <h2 m="0" text="lg" font="750">등기 보수 항목</h2>
+        <div min-w="0">
+          <h2 id="legal-fee-title" m="0" text="lg" font="750">등기 보수 항목</h2>
           <p m="0" mt="1" text="xs sm:sm" leading="5 sm:6" text-text-muted dark="text-dark-text-muted">여러 등기를 한 번에 계산할 수 있습니다.</p>
         </div>
-        <button id="legal-add-fee" type="button" class="cm-button-secondary" p="2.5 3" text="sm" whitespace-nowrap>+ 항목 추가</button>
+        <button id="legal-add-fee" type="button" class="cm-button-secondary" p="2.5 3" text="sm" whitespace-nowrap shrink-0>+ 항목 추가</button>
       </div>
       <div id="legal-fee-list" mt="3" flex="~ col" gap="2.5"></div>
-    </div>
+    </section>
 
     <div grid="~ cols-1 sm:cols-2" gap="2 sm:3" mt="5">
       <label class="cm-option" p="3" rounded="xl" border="1 solid" border-border dark:border-dark-border bg="surface dark:dark-surface">
         <input id="legal-public-costs" type="checkbox" checked />
-        <span>공공비용(인지·증지) 포함</span>
+        <span text="sm" font="600">공공비용(인지·증지) 포함</span>
       </label>
       <label class="cm-option" p="3" rounded="xl" border="1 solid" border-border dark:border-dark-border bg="surface dark:dark-surface">
         <input id="legal-vat" type="checkbox" checked />
-        <span>부가가치세 10% 포함</span>
+        <span text="sm" font="600">부가가치세 10% 포함</span>
       </label>
     </div>
 
-    <div flex="~ flex-col-reverse sm:flex-row" gap="2" justify-end" mt="5">
-      <button id="legal-reset" type="button" class="cm-button-secondary" p="3">초기화</button>
-      <button id="legal-copy" type="button" class="cm-button-primary" p="3">결과 복사</button>
+    <div flex="~ flex-col-reverse sm:flex-row" gap="2" justify-end mt="5">
+      <button id="legal-reset" type="button" class="cm-button-secondary" p="3" w="full sm:auto">초기화</button>
+      <button id="legal-copy" type="button" class="cm-button-primary" p="3" w="full sm:auto">결과 복사</button>
     </div>
 
-    <div id="legal-toast" role="status" aria-live="polite" text="xs sm:sm" text-primary min-h="5" text-align="right" />
+    <div id="legal-toast" role="status" aria-live="polite" text="xs sm:sm" text-primary min-h="5" text-align="right"></div>
 
-    <section id="legal-result" class="cm-surface" mt="1" p="4 sm:5" aria-live="polite">
+    <section id="legal-result" class="cm-surface" mt="1" p="4 sm:5" aria-live="polite" aria-labelledby="legal-result-title">
       <div flex="~ items-start sm:items-center justify-between" gap="3">
-        <h2 m="0" text="lg" font="750">계산 결과</h2>
+        <h2 id="legal-result-title" m="0" text="lg" font="750">계산 결과</h2>
         <strong id="legal-total" text="xl sm:2xl md:3xl" font="800" text-primary whitespace-nowrap>0원</strong>
       </div>
       <div id="legal-lines" mt="4" flex="~ col" gap="2" text="sm" leading="6"></div>
@@ -220,7 +219,7 @@
 
       items.forEach((item, index) => {
         const row = document.createElement('div');
-        row.className = 'cm-surface p-3 sm:p-4';
+        row.className = 'cm-surface p-3 sm:p-4 rounded-xl border border-border dark:border-dark-border';
 
         const wrap = document.createElement('div');
         wrap.className = 'grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-2 sm:gap-3 items-end';
