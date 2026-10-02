@@ -4,6 +4,7 @@ import { calculateSavings } from "../src/lib/calculators/savings";
 import { calculateSalary } from "../src/lib/calculators/salary";
 import { calculatePropertyTax } from "../src/lib/calculators/property";
 import { calculateDti } from "../src/lib/calculators/dti";
+import { calculateHourlyWage } from "../src/lib/calculators/hourlyWage";
 import {
   calculateBrokerage,
   getHousingRate,
@@ -314,4 +315,79 @@ describe("calculator calculations", () => {
     expect(presale.rate).toBe(0.4);
     expect(presale.brokerageFee).toBe(920_000);
   });
+  test("hourly wage supports weekly holiday, overtime, tax and probation", () => {
+    const result = calculateHourlyWage({
+      payType: "hourly",
+      amount: 12_000,
+      dailyHours: 8,
+      weeklyDays: 5,
+      monthlyDays: 22,
+      weeklyOvertimeHours: 2,
+      monthlyOvertimeHours: 4,
+      weeklyHolidayIncluded: true,
+      taxType: "insurance",
+      probation: false,
+    });
+
+    expect(result.hourlyWage).toBe(12_000);
+    expect(result.dailyWage).toBe(96_000);
+    expect(result.weeklyWage).toBe(480_000);
+    expect(result.weeklyHolidayPay).toBeGreaterThan(0);
+    expect(result.weeklyOvertimePay).toBeGreaterThan(0);
+    expect(result.monthlyOvertimePay).toBe(72_000);
+    expect(result.grossMonthlyWage).toBeGreaterThan(result.monthlyBaseWage);
+    expect(result.tax).toBeCloseTo(result.grossMonthlyWage * 0.097174, 6);
+    expect(result.netMonthlyWage).toBeLessThan(result.grossMonthlyWage);
+  });
+
+  test("hourly wage supports daily, weekly, monthly and annual pay inputs", () => {
+    const daily = calculateHourlyWage({
+      payType: "daily",
+      amount: 100_000,
+      dailyHours: 8,
+      weeklyDays: 5,
+      monthlyDays: 22,
+      weeklyOvertimeHours: 0,
+      monthlyOvertimeHours: 0,
+      weeklyHolidayIncluded: false,
+      taxType: "none",
+      probation: false,
+    });
+    const weekly = calculateHourlyWage({
+      ...dailyInput(),
+      payType: "weekly",
+      amount: 500_000,
+    });
+    const monthly = calculateHourlyWage({
+      ...dailyInput(),
+      payType: "monthly",
+      amount: 2_000_000,
+    });
+    const annual = calculateHourlyWage({
+      ...dailyInput(),
+      payType: "annual",
+      amount: 24_000_000,
+    });
+
+    expect(daily.hourlyWage).toBe(12_500);
+    expect(weekly.hourlyWage).toBe(12_500);
+    expect(monthly.monthlyBaseWage).toBe(2_000_000);
+    expect(annual.monthlyBaseWage).toBe(2_000_000);
+  });
+
+  function dailyInput() {
+    return {
+      payType: "hourly" as const,
+      amount: 12_000,
+      dailyHours: 8,
+      weeklyDays: 5,
+      monthlyDays: 22,
+      weeklyOvertimeHours: 0,
+      monthlyOvertimeHours: 0,
+      weeklyHolidayIncluded: false,
+      taxType: "none" as const,
+      probation: false,
+    };
+  }
+
 });
