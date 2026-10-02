@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { calculateLoan } from "../src/lib/calculators/loan";
 import { calculateSavings } from "../src/lib/calculators/savings";
 import { calculateSalary } from "../src/lib/calculators/salary";
+import { calculatePropertyTax } from "../src/lib/calculators/property";
 
 describe("calculator calculations", () => {
   test("loan calculates equal principal and interest payments", () => {
