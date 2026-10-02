@@ -136,7 +136,7 @@ export function calculatePropertyTax(input: PropertyTaxInput): PropertyTaxResult
   if (input.taxBurdenCap && assets.some((asset) => asset.capApplied)) {
     result.notes.push('입력한 전년도 재산세를 기준으로 세부담상한이 적용된 항목이 있습니다.');
   }
-  if (assets.some((asset) => asset.urbanArea)) {
+  if (input.assets.some((asset) => asset.urbanArea)) {
     result.notes.push('도시지역으로 선택한 주택에는 재산세 과세표준의 0.14% 도시지역분을 더했습니다.');
   }
   result.notes.push('지방교육세는 재산세 납부세액의 20%로 계산했습니다.');
