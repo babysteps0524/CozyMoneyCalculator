@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { calculateLoan } from "../src/lib/calculators/loan";
 import { calculateSavings } from "../src/lib/calculators/savings";
 import { calculateSalary } from "../src/lib/calculators/salary";
+import { calculatePropertyTax } from "../src/lib/calculators/property";
 
 describe("calculator calculations", () => {
   test("loan calculates equal principal and interest payments", () => {
@@ -109,5 +110,59 @@ describe("calculator calculations", () => {
     expect(result.monthlySalary).toBeCloseTo(3_333_333.33, 2);
     expect(result.hourlyWage).toBeCloseTo(15_948.9633, 4);
     expect(result.dailyWage).toBeCloseTo(127_591.7065, 4);
+  });
+
+  test("property tax applies 2026 one-household-one-home rules", () => {
+    const result = calculatePropertyTax({
+      year: 2026,
+      oneHouseholdOneHome: true,
+      taxBurdenCap: false,
+      assets: [
+        {
+          id: "1",
+          assessedValue: 500_000_000,
+          ownershipShare: 100,
+          urbanArea: true,
+          previousPropertyTax: 0,
+          previousUrbanAreaTax: 0,
+        },
+      ],
+    });
+
+    expect(result.assets[0].taxableBase).toBe(220_000_000);
+    expect(result.assets[0].propertyTax).toBe(260_000);
+    expect(result.assets[0].urbanAreaTax).toBe(308_000);
+    expect(result.assets[0].localEducationTax).toBe(52_000);
+    expect(result.total).toBe(620_000);
+  });
+
+  test("property tax supports multiple homes and ownership share", () => {
+    const result = calculatePropertyTax({
+      year: 2026,
+      oneHouseholdOneHome: false,
+      taxBurdenCap: false,
+      assets: [
+        {
+          id: "1",
+          assessedValue: 300_000_000,
+          ownershipShare: 100,
+          urbanArea: false,
+          previousPropertyTax: 0,
+          previousUrbanAreaTax: 0,
+        },
+        {
+          id: "2",
+          assessedValue: 400_000_000,
+          ownershipShare: 50,
+          urbanArea: false,
+          previousPropertyTax: 0,
+          previousUrbanAreaTax: 0,
+        },
+      ],
+    });
+
+    expect(result.assets).toHaveLength(2);
+    expect(result.assets[1].taxableBase).toBe(120_000_000);
+    expect(result.propertyTax).toBeGreaterThan(0);
   });
 });

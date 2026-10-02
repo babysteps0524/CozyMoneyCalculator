@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import PropertyTaxCalculator from '../../../components/calculators/PropertyTaxCalculator.astro';
 ---
 
 <BaseLayout
@@ -37,15 +37,11 @@ import CalculatorShell from '../../../components/calculators/CalculatorShell.ast
         text-text-muted
         dark="text-dark-text-muted"
       >
-        과세표준과 가정 세율을 기준으로 재산세를 계산합니다.
+        공시가격과 주택 보유 조건을 반영해 재산세와 도시지역분, 지방교육세를 함께 계산합니다.
       </p>
     </header>
     <div max-w="4xl">
-      <CalculatorShell
-        kind="property"
-        title="재산세 계산기"
-        description="과세표준과 가정 세율을 기준으로 재산세를 계산합니다."
-      />
+      <PropertyTaxCalculator />
     </div>
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
