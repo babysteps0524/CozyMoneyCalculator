@@ -66,6 +66,7 @@ describe("calculator calculations", () => {
       principal: 12_000_000,
       annualRate: 0,
       months: 12,
+      method: "compound",
     });
 
     expect(result.monthlyPayment).toBe(1_000_000);
@@ -79,6 +80,7 @@ describe("calculator calculations", () => {
       monthlyDeposit: 0,
       annualRate: 3.5,
       months: 12,
+      method: "compound",
     });
 
     expect(result.principal).toBe(10_000_000);
