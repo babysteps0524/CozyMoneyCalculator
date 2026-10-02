@@ -671,6 +671,13 @@
       });
 
     root
+      .querySelector<HTMLButtonElement>('#legal-calculate')
+      ?.addEventListener('click', () => {
+        calculate();
+        showToast('계산되었습니다.');
+      });
+
+    root
       .querySelector<HTMLButtonElement>('#legal-reset')
       ?.addEventListener('click', () => {
         property = 'house';
