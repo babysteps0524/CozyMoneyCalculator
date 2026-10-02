@@ -1,8 +1,4 @@
 ---
-import { calculatePropertyTax } from '../../lib/calculators/property';
-import { bindNumberControls } from '../../lib/calculators/number-input';
-
-const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
 ---
 
 <section class="cm-card" data-property-tax p="5 md:7">
@@ -142,6 +138,10 @@ const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
 </section>
 
 <script>
+  import { calculatePropertyTax } from '../../lib/calculators/property';
+  import { bindNumberControls } from '../../lib/calculators/number-input';
+
+  const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
   const root = document.querySelector<HTMLElement>('[data-property-tax]');
 
   if (root) {
