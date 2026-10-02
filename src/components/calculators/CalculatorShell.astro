@@ -1,6 +1,5 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
-import { calculateHourlyWage, type HourlyPayType, type HourlyTaxType } from '../../lib/calculators/hourlyWage';
 
 interface Props {
   kind: string;
@@ -556,6 +555,7 @@ const currentGuidance = guidance[kind] ?? {
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { calculateDti, type DtiRepaymentMethod } from '../../lib/calculators/dti';
+  import { calculateHourlyWage, type HourlyPayType, type HourlyTaxType } from '../../lib/calculators/hourlyWage';
 
   const root = document.querySelector<HTMLElement>('[data-calculator]');
   if (root) {
