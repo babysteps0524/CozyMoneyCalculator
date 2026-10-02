@@ -106,17 +106,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
               </div>
             </div>
 
-            <label class="cm-label" for="hours" mt="5">월 근로시간</label>
-            <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-              <button type="button" data-step-direction="-1" aria-label="월 근로시간 감소" class="cm-step-button">−</button>
-              <div relative>
-                <input class="cm-input" id="hours" type="text" inputmode="numeric" value="209"
-                  data-number-input data-step="1" data-min="1" data-decimal="false" pr="14" />
-                <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">시간</span>
-              </div>
-              <button type="button" data-step-direction="1" aria-label="월 근로시간 증가" class="cm-step-button">+</button>
-            </div>
-
             <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
               <button type="submit" class="cm-button-primary" py="3.5">계산하기</button>
               <button id="reset" type="button" class="cm-button-secondary" py="3.5">초기화</button>
@@ -161,16 +150,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
             <div flex="~" justify-between gap="3" mt="3" pt="3" border-t="1" border-border font="750" dark="border-dark-border"><span>공제액 합계</span><strong id="total-deductions">-</strong></div>
           </div>
 
-          <div grid="~ cols-1 sm:cols-2" gap="3" mt="3">
-            <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">예상 시급</p>
-              <strong id="hourly" block mt="2" text="lg">-</strong>
-            </div>
-            <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">8시간 기준 일급</p>
-              <strong id="daily" block mt="2" text="lg">-</strong>
-            </div>
-          </div>
         </section>
       </div>
 
@@ -232,7 +211,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   const taxFree = document.querySelector<HTMLInputElement>('#tax-free');
   const dependents = document.querySelector<HTMLInputElement>('#dependents');
   const children = document.querySelector<HTMLInputElement>('#children');
-  const hours = document.querySelector<HTMLInputElement>('#hours');
   const takeHome = document.querySelector<HTMLElement>('#take-home');
   const monthly = document.querySelector<HTMLElement>('#monthly');
   const annualTakeHome = document.querySelector<HTMLElement>('#annual-take-home');
@@ -243,8 +221,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   const incomeTax = document.querySelector<HTMLElement>('#income-tax');
   const localTax = document.querySelector<HTMLElement>('#local-tax');
   const totalDeductions = document.querySelector<HTMLElement>('#total-deductions');
-  const hourly = document.querySelector<HTMLElement>('#hourly');
-  const daily = document.querySelector<HTMLElement>('#daily');
   const error = document.querySelector<HTMLElement>('#error');
   const reset = document.querySelector<HTMLButtonElement>('#reset');
   const copy = document.querySelector<HTMLButtonElement>('#copy');
@@ -253,7 +229,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   const fmt = (value: number) => formatWon(value);
 
   const render = () => {
-    if (!salary || !taxFree || !dependents || !children || !hours) return;
+    if (!salary || !taxFree || !dependents || !children) return;
     error!.hidden = true;
     try {
       const result = calculateSalary({
@@ -263,7 +239,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         taxFreeMonthly: parseNumber(taxFree.value),
         dependents: parseNumber(dependents.value),
         children8To20: parseNumber(children.value),
-        monthlyHours: parseNumber(hours.value),
       });
 
       takeHome!.textContent = fmt(result.monthlyTakeHome);
@@ -276,8 +251,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       incomeTax!.textContent = fmt(result.incomeTax);
       localTax!.textContent = fmt(result.localIncomeTax);
       totalDeductions!.textContent = fmt(result.totalDeductions);
-      hourly!.textContent = fmt(result.hourlyWage);
-      daily!.textContent = fmt(result.dailyWage);
     } catch (e) {
       error!.textContent = e instanceof Error ? e.message : '계산 중 오류가 발생했습니다.';
       error!.hidden = false;
@@ -313,7 +286,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     });
   };
 
-  if (form && salary && taxFree && dependents && children && hours && reset && copy) {
+  if (form && salary && taxFree && dependents && children && reset && copy) {
     document.querySelectorAll<HTMLInputElement>('input[name="salaryType"]').forEach((input) => {
       input.addEventListener('change', () => {
         syncSalaryType();
@@ -355,7 +328,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       taxFree.value = '200,000';
       dependents.value = '1';
       children.value = '0';
-      hours.value = '209';
       setSelectedStyles();
       render();
     });
@@ -366,7 +338,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         `월 실수령액: ${takeHome?.textContent}`,
         `세전 월 급여: ${monthly?.textContent}`,
         `공제액 합계: ${totalDeductions?.textContent}`,
-        `예상 시급: ${hourly?.textContent}`,
       ].join('\n');
       try {
         await navigator.clipboard.writeText(text);
