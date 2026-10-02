@@ -52,19 +52,19 @@ const guidance: Record<
   },
   dti: {
     intro:
-      'DTI는 연소득 대비 주택담보대출 원리금과 기타 대출 이자상환액의 비율을 단순 계산합니다.',
+      '연소득과 주택담보대출 조건, 기타 대출 조건을 입력하면 연간 상환액을 계산해 DTI를 확인합니다.',
     steps: [
-      '연소득을 입력합니다.',
-      '주택담보대출 원리금과 기타 대출 이자를 합산합니다.',
-      '합산액을 연소득으로 나눕니다.',
+      '연소득과 주택담보대출 금액·금리·기간·상환방식을 입력합니다.',
+      '주택담보대출의 연간 원금·이자 상환액과 기타 대출의 연간 이자를 계산합니다.',
+      '두 금액을 합산해 연소득으로 나누고 DTI와 목표 DTI 대비 여유액을 확인합니다.',
     ],
     formula:
       'DTI(%) = (주택담보대출 연간 원리금 + 기타 대출 연간 이자) ÷ 연소득 × 100.',
     basis:
-      '실제 적용 범위와 산정방법은 대출상품과 당시 금융 규정에 따라 달라질 수 있습니다.',
+      'DTI의 기본 구조를 적용한 참고용 계산입니다. 실제 금융기관은 대출 종류, 소득 인정범위, 상환방식과 당시 규정에 따라 산정방법을 달리 적용할 수 있습니다.',
     cautions: [
-      '금융기관의 실제 DTI 산정과 동일하지 않습니다.',
-      '소득·부채 인정범위는 최신 금융기관 기준을 확인해야 합니다.',
+      '이 계산기는 입력한 대출조건으로 연간 상환액을 추정한 참고용 계산이며 실제 금융기관 심사값과 다를 수 있습니다.',
+      '목표 DTI는 사용자가 비교하기 위한 기준값이며 실제 대출 가능 여부나 법정 한도를 의미하지 않습니다.',
     ],
   },
   severance: {
@@ -641,14 +641,17 @@ const currentGuidance = guidance[kind] ?? {
         field('rate', '목표 DSR', '40', 'number', '%'),
       dti: () =>
         field('income', '연소득', '50000000', 'number', '원') +
-        field(
-          'mortgage',
-          '주택담보대출 연간 원리금',
-          '12000000',
-          'number',
-          '원',
-        ) +
-        field('other', '기타 대출 연간 이자상환액', '3000000', 'number', '원'),
+        field('mortgageAmount', '주택담보대출 금액', '300000000', 'number', '원') +
+        field('mortgageRate', '주택담보대출 금리', '4.0', 'number', '%') +
+        field('mortgageYears', '주택담보대출 기간', '30', 'number', '년') +
+        select('mortgageMethod', '주택담보대출 상환방식', [
+          '원리금균등',
+          '원금균등',
+          '만기일시',
+        ]) +
+        field('otherDebt', '기타 대출 금액', '50000000', 'number', '원') +
+        field('otherRate', '기타 대출 금리', '5.0', 'number', '%') +
+        field('rate', '목표 DTI', '40', 'number', '%'),
       severance: () =>
         field('monthly', '월 평균임금', '3500000', 'number', '원') +
         field('years', '근속연수', '5', 'number', '년') +
@@ -735,10 +738,52 @@ const currentGuidance = guidance[kind] ?? {
           break;
         }
         case 'dti': {
-          const income = n('income'),
-            ratio = ((n('mortgage') + n('other')) / income) * 100;
+          const income = n('income');
+          const principal = n('mortgageAmount');
+          const annualRate = n('mortgageRate') / 100;
+          const months = Math.max(1, Math.round(n('mortgageYears') * 12));
+          const monthlyRate = annualRate / 12;
+          let annualMortgagePayment = 0;
+
+          if (principal > 0 && income > 0) {
+            if ($('mortgageMethod')?.value === '원리금균등') {
+              const monthlyPayment =
+                monthlyRate === 0
+                  ? principal / months
+                  : (principal * monthlyRate) /
+                    (1 - (1 + monthlyRate) ** -months);
+              annualMortgagePayment = monthlyPayment * Math.min(12, months);
+            } else if ($('mortgageMethod')?.value === '원금균등') {
+              const monthsToCount = Math.min(12, months);
+              const monthlyPrincipal = principal / months;
+              for (let month = 0; month < monthsToCount; month += 1) {
+                const remaining = principal - monthlyPrincipal * month;
+                annualMortgagePayment +=
+                  monthlyPrincipal + remaining * monthlyRate;
+              }
+            } else {
+              annualMortgagePayment =
+                principal * monthlyRate * Math.min(12, months);
+            }
+          }
+
+          const annualOtherInterest =
+            n('otherDebt') * (n('otherRate') / 100);
+          const annualDebtService =
+            annualMortgagePayment + annualOtherInterest;
+          const ratio = income > 0 ? (annualDebtService / income) * 100 : 0;
+          const target = n('rate');
+          const targetAnnualDebtService = (income * target) / 100;
+          const headroom = targetAnnualDebtService - annualDebtService;
           value = ratio;
-          text = `주택담보대출 원리금과 기타 대출 이자 합계를 연소득으로 나눈 단순 DTI입니다.`;
+
+          const method = $('mortgageMethod')?.value ?? '원리금균등';
+          const status =
+            ratio <= target
+              ? `목표 DTI ${fmt(target, 2)}% 이내`
+              : `목표 DTI ${fmt(target, 2)}% 초과`;
+          text =
+            `주택담보대출 연간 원리금: ${won(annualMortgagePayment)} · 기타 대출 연간 이자: ${won(annualOtherInterest)} · 연간 상환부담: ${won(annualDebtService)} · 상환방식: ${method} · ${status} · 목표 DTI 기준 연간 여유액: ${won(headroom)}`;
           break;
         }
         case 'severance': {
