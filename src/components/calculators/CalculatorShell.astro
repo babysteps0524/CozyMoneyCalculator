@@ -807,9 +807,12 @@ const currentGuidance = guidance[kind] ?? {
           break;
         }
         case 'monthlySalary': {
-          value = (n('annual') - n('bonus')) / 12;
+          const monthlySalary = (n('annual') - n('bonus')) / 12;
+          const dailyWage = monthlySalary / 21.75;
+          const dailyWage8Hours = dailyWage;
+          value = monthlySalary;
           text =
-            '연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 월 급여입니다.';
+            `세전 월 급여: ${won(monthlySalary)} · 1일 8시간 기준 일급: ${won(dailyWage8Hours)} · 연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 계산입니다.`;
           break;
         }
         case 'hourlyWage': {
