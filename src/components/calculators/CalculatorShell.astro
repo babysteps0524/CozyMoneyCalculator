@@ -552,6 +552,7 @@ const currentGuidance = guidance[kind] ?? {
 
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { calculateDti, type DtiRepaymentMethod } from '../../lib/calculators/dti';
 
   const root = document.querySelector<HTMLElement>('[data-calculator]');
   if (root) {
@@ -738,52 +739,29 @@ const currentGuidance = guidance[kind] ?? {
           break;
         }
         case 'dti': {
-          const income = n('income');
-          const principal = n('mortgageAmount');
-          const annualRate = n('mortgageRate') / 100;
-          const months = Math.max(1, Math.round(n('mortgageYears') * 12));
-          const monthlyRate = annualRate / 12;
-          let annualMortgagePayment = 0;
+          const methodMap: Record<string, DtiRepaymentMethod> = {
+            원리금균등: 'equalPayment',
+            원금균등: 'equalPrincipal',
+            만기일시: 'maturity',
+          };
+          const methodLabel = $('mortgageMethod')?.value ?? '원리금균등';
+          const result = calculateDti({
+            annualIncome: n('income'),
+            mortgageAmount: n('mortgageAmount'),
+            mortgageRate: n('mortgageRate'),
+            mortgageYears: n('mortgageYears'),
+            mortgageMethod: methodMap[methodLabel] ?? 'equalPayment',
+            otherDebtAmount: n('otherDebt'),
+            otherDebtRate: n('otherRate'),
+            targetDti: n('rate'),
+          });
 
-          if (principal > 0 && income > 0) {
-            if ($('mortgageMethod')?.value === '원리금균등') {
-              const monthlyPayment =
-                monthlyRate === 0
-                  ? principal / months
-                  : (principal * monthlyRate) /
-                    (1 - (1 + monthlyRate) ** -months);
-              annualMortgagePayment = monthlyPayment * Math.min(12, months);
-            } else if ($('mortgageMethod')?.value === '원금균등') {
-              const monthsToCount = Math.min(12, months);
-              const monthlyPrincipal = principal / months;
-              for (let month = 0; month < monthsToCount; month += 1) {
-                const remaining = principal - monthlyPrincipal * month;
-                annualMortgagePayment +=
-                  monthlyPrincipal + remaining * monthlyRate;
-              }
-            } else {
-              annualMortgagePayment =
-                principal * monthlyRate * Math.min(12, months);
-            }
-          }
-
-          const annualOtherInterest =
-            n('otherDebt') * (n('otherRate') / 100);
-          const annualDebtService =
-            annualMortgagePayment + annualOtherInterest;
-          const ratio = income > 0 ? (annualDebtService / income) * 100 : 0;
-          const target = n('rate');
-          const targetAnnualDebtService = (income * target) / 100;
-          const headroom = targetAnnualDebtService - annualDebtService;
-          value = ratio;
-
-          const method = $('mortgageMethod')?.value ?? '원리금균등';
-          const status =
-            ratio <= target
-              ? `목표 DTI ${fmt(target, 2)}% 이내`
-              : `목표 DTI ${fmt(target, 2)}% 초과`;
+          value = result.dti;
+          const status = result.withinTarget
+            ? `목표 DTI ${fmt(n('rate'), 2)}% 이내`
+            : `목표 DTI ${fmt(n('rate'), 2)}% 초과`;
           text =
-            `주택담보대출 연간 원리금: ${won(annualMortgagePayment)} · 기타 대출 연간 이자: ${won(annualOtherInterest)} · 연간 상환부담: ${won(annualDebtService)} · 상환방식: ${method} · ${status} · 목표 DTI 기준 연간 여유액: ${won(headroom)}`;
+            `주택담보대출 연간 원리금: ${won(result.annualMortgagePayment)} · 기타 대출 연간 이자: ${won(result.annualOtherInterest)} · 연간 상환부담: ${won(result.annualDebtService)} · 상환방식: ${methodLabel} · ${status} · 목표 DTI 기준 연간 여유액: ${won(result.headroom)}`;
           break;
         }
         case 'severance': {
