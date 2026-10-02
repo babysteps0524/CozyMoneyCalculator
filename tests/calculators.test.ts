@@ -107,15 +107,42 @@ describe("calculator calculations", () => {
     expect(result.maturityAmount).toBeGreaterThan(3_600_000);
   });
 
-  test("salary converts annual salary to monthly and hourly values", () => {
+  test("salary converts annual salary and estimates take-home pay", () => {
     const result = calculateSalary({
-      annualSalary: 40_000_000,
+      salary: 40_000_000,
+      salaryType: "annual",
+      retirementType: "separate",
+      taxFreeMonthly: 200_000,
+      dependents: 1,
+      children8To20: 0,
       monthlyHours: 209,
     });
 
-    expect(result.monthlySalary).toBeCloseTo(3_333_333.33, 2);
+    expect(result.monthlyGross).toBeCloseTo(3_333_333.33, 2);
+    expect(result.monthlyTakeHome).toBeGreaterThan(2_000_000);
+    expect(result.monthlyTakeHome).toBeLessThan(result.monthlyGross);
+    expect(result.totalDeductions).toBeGreaterThan(0);
     expect(result.hourlyWage).toBeCloseTo(15_948.9633, 4);
     expect(result.dailyWage).toBeCloseTo(127_591.7065, 4);
+  });
+
+  test("salary supports monthly input, retirement inclusion, tax-free pay and dependents", () => {
+    const result = calculateSalary({
+      salary: 3_333_333,
+      salaryType: "monthly",
+      retirementType: "included",
+      taxFreeMonthly: 200_000,
+      dependents: 4,
+      children8To20: 2,
+      monthlyHours: 209,
+    });
+
+    expect(result.monthlyGross).toBe(3_333_333);
+    expect(result.annualSalary).toBe(43_333_329);
+    expect(result.taxableMonthly).toBe(3_133_333);
+    expect(result.monthlyTakeHome).toBeGreaterThan(2_000_000);
+    expect(result.incomeTax).toBeGreaterThanOrEqual(0);
+    expect(result.localIncomeTax).toBeCloseTo(result.incomeTax * 0.1, 6);
   });
 
   test("property tax applies 2026 one-household-one-home rules", () => {
