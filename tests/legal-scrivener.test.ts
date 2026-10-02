@@ -53,3 +53,5 @@ describe('legal scrivener fee calculator', () => {
     expect(result.baseFee).toBe(740_000);
     expect(result.total).toBe(908_000);
   });
+
+});
