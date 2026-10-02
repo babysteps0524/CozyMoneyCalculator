@@ -8,7 +8,6 @@ export interface SalaryInput {
   taxFreeMonthly: number;
   dependents: number;
   children8To20: number;
-  monthlyHours: number;
 }
 
 export interface SalaryResult {
@@ -23,8 +22,6 @@ export interface SalaryResult {
   localIncomeTax: number;
   totalDeductions: number;
   monthlyTakeHome: number;
-  hourlyWage: number;
-  dailyWage: number;
   annualTakeHome: number;
 }
 
@@ -60,8 +57,6 @@ function progressiveIncomeTax(taxBase: number): number {
  */
 export function calculateSalary(input: SalaryInput): SalaryResult {
   if (input.salary <= 0) throw new Error("연봉 또는 월급은 0보다 커야 합니다.");
-  if (input.monthlyHours <= 0) throw new Error("월 근로시간은 0보다 커야 합니다.");
-
   const salary = Math.max(0, input.salary);
   const annualSalary =
     input.salaryType === "annual"
@@ -139,8 +134,6 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
     localIncomeTax,
     totalDeductions,
     monthlyTakeHome,
-    hourlyWage: monthlyGross / input.monthlyHours,
-    dailyWage: (monthlyGross / input.monthlyHours) * 8,
     annualTakeHome: monthlyTakeHome * 12,
   };
 }
