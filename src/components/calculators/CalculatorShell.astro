@@ -591,6 +591,7 @@ const currentGuidance = guidance[kind] ?? {
       if (id === 'loanRate') return '1';
       if (id === 'cc') return '100';
       if (id === 'hourly') return '100';
+      if (kind === 'hourlyWage' && id === 'amount') return '100';
       if (suffix === '원') {
         return [
           'principal',
@@ -724,7 +725,7 @@ const currentGuidance = guidance[kind] ?? {
         field('monthlyOvertimeHours', '월 연장 근무시간', '0', 'number', '시간') +
         select('weeklyHoliday', '주휴수당', ['포함', '미포함']) +
         select('taxType', '세금', ['미적용', '4대보험 9.7%', '소득세 3.3%']) +
-        select('probation', '수습', ['미적용', '적용']),
+        select('probation', '수습', ['미적용 · 전액 지급', '적용 · 예상 급여액 10% 차감']),
     };
     fields.innerHTML = (configs[kind] || configs.percentage)();
 
@@ -834,7 +835,7 @@ const currentGuidance = guidance[kind] ?? {
             monthlyOvertimeHours: n('monthlyOvertimeHours'),
             weeklyHolidayIncluded: $('weeklyHoliday')?.value === '포함',
             taxType: taxTypeMap[$('taxType')?.value ?? '미적용'] ?? 'none',
-            probation: $('probation')?.value === '적용',
+            probation: ($('probation')?.value ?? '').startsWith('적용'),
           });
 
           value = result.netMonthlyWage;
