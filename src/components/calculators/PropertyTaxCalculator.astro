@@ -2,9 +2,6 @@
 import { calculatePropertyTax } from '../../lib/calculators/property';
 import { bindNumberControls } from '../../lib/calculators/number-input';
 
-const money = (value: number) =>
-  Math.round(value).toLocaleString('ko-KR') + '원';
-
 const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
 ---
 
@@ -92,8 +89,7 @@ const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
     hidden
     mt="4"
     rounded="xl"
-    border="1"
-    border-danger/20
+    border="1 danger/20"
     bg-danger-surface
     p="4"
     text="sm"
