@@ -59,7 +59,7 @@ export function calculateHourlyWage(input: HourlyWageInput): HourlyWageResult {
       hourlyWage = amount;
       dailyWage = hourlyWage * dailyHours;
       weeklyWage = dailyWage * weeklyDays;
-      monthlyBaseWage = weeklyWage * WEEKS_PER_MONTH;
+      monthlyBaseWage = dailyWage * monthlyDays;
       break;
     case "daily":
       dailyWage = amount;
