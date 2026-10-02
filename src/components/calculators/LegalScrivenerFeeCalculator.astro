@@ -16,18 +16,26 @@
     <div grid="~ cols-1 md:cols-2" gap="3 sm:4" mt="5">
       <label flex="~ col" gap="2" class="cm-field">
         <span text="sm" font="700">과세표준</span>
-        <div relative>
-          <input id="legal-taxable-base" inputmode="numeric" autocomplete="off" placeholder="예: 400,000,000" value="400000000" class="cm-input" pr="14" aria-describedby="legal-taxable-help" />
-          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">원</span>
+        <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items="center" gap="2">
+          <button type="button" id="legal-taxable-decrease" class="cm-step-button" aria-label="과세표준 100만원 감소" title="100만원 감소">−</button>
+          <div relative>
+            <input id="legal-taxable-base" inputmode="numeric" autocomplete="off" placeholder="예: 400,000,000" value="400000000" class="cm-input" pr="14" aria-describedby="legal-taxable-help" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">원</span>
+          </div>
+          <button type="button" id="legal-taxable-increase" class="cm-step-button" aria-label="과세표준 100만원 증가" title="100만원 증가">+</button>
         </div>
         <span id="legal-taxable-help" text="xs" leading="5" text-text-subtle dark="text-dark-text-subtle">법무사 기본보수 계산 기준</span>
       </label>
 
       <label flex="~ col" gap="2" class="cm-field">
         <span text="sm" font="700">기재금액</span>
-        <div relative>
-          <input id="legal-stated-amount" inputmode="numeric" autocomplete="off" placeholder="예: 600,000,000" value="600000000" class="cm-input" pr="14" aria-describedby="legal-stated-help" />
-          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">원</span>
+        <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items="center" gap="2">
+          <button type="button" id="legal-stated-decrease" class="cm-step-button" aria-label="기재금액 100만원 감소" title="100만원 감소">−</button>
+          <div relative>
+            <input id="legal-stated-amount" inputmode="numeric" autocomplete="off" placeholder="예: 600,000,000" value="600000000" class="cm-input" pr="14" aria-describedby="legal-stated-help" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">원</span>
+          </div>
+          <button type="button" id="legal-stated-increase" class="cm-step-button" aria-label="기재금액 100만원 증가" title="100만원 증가">+</button>
         </div>
         <span id="legal-stated-help" text="xs" leading="5" text-text-subtle dark="text-dark-text-subtle">인지세 계산 기준 계약서 금액</span>
       </label>
@@ -59,9 +67,12 @@
       </label>
     </div>
 
-    <div flex="~ flex-col-reverse sm:flex-row" gap="2" justify-end mt="5">
-      <button id="legal-reset" type="button" class="cm-button-secondary" p="3" w="full sm:auto">초기화</button>
-      <button id="legal-copy" type="button" class="cm-button-primary" p="3" w="full sm:auto">결과 복사</button>
+    <div flex="~ flex-col gap-2" mt="5">
+      <button id="legal-calculate" type="button" class="cm-button-primary" p="3.5" w="full" text="base sm:lg" font="750">계산하기</button>
+      <div flex="~ flex-col-reverse sm:flex-row" gap="2" justify-end>
+        <button id="legal-reset" type="button" class="cm-button-secondary" p="3" w="full sm:auto">초기화</button>
+        <button id="legal-copy" type="button" class="cm-button-secondary" p="3" w="full sm:auto">결과 복사</button>
+      </div>
     </div>
 
     <div id="legal-toast" role="status" aria-live="polite" text="xs sm:sm" text-primary min-h="5" text-align="right"></div>
@@ -246,7 +257,6 @@
         select.addEventListener('change', () => {
           const target = items.find((entry) => entry.id === item.id);
           if (target) target.type = select.value as FeeType;
-          calculate();
         });
 
         label.append(title, select);
@@ -259,13 +269,17 @@
         remove.addEventListener('click', () => {
           items = items.filter((entry) => entry.id !== item.id);
           renderItems();
-          calculate();
         });
 
         wrap.append(label, remove);
         row.appendChild(wrap);
         feeList.appendChild(row);
       });
+    };
+
+    const setAmount = (input: HTMLInputElement, delta: number) => {
+      const next = Math.max(0, numberValue(input) + delta);
+      input.value = next > 0 ? new Intl.NumberFormat('ko-KR').format(next) : '';
     };
 
     const calculate = () => {
@@ -336,13 +350,25 @@
     [taxableInput, statedInput].forEach((input) => {
       input.addEventListener('input', () => {
         formatInput(input);
-        calculate();
       });
       formatInput(input);
     });
 
-    publicCostsInput.addEventListener('change', calculate);
-    vatInput.addEventListener('change', calculate);
+    const bindStepper = (
+      input: HTMLInputElement,
+      decreaseId: string,
+      increaseId: string,
+    ) => {
+      root.querySelector<HTMLButtonElement>(decreaseId)?.addEventListener('click', () => {
+        setAmount(input, -1_000_000);
+      });
+      root.querySelector<HTMLButtonElement>(increaseId)?.addEventListener('click', () => {
+        setAmount(input, 1_000_000);
+      });
+    };
+
+    bindStepper(taxableInput, '#legal-taxable-decrease', '#legal-taxable-increase');
+    bindStepper(statedInput, '#legal-stated-decrease', '#legal-stated-increase');
 
     root.querySelector<HTMLButtonElement>('#legal-add-fee')?.addEventListener('click', () => {
       items.push({ id: String(nextId), type: 'ownership' });
