@@ -16,7 +16,6 @@ describe("calculator calculations", () => {
     expect(result.totalInterest).toBeGreaterThan(0);
   });
 
-
   test("loan supports equal principal repayment", () => {
     const result = calculateLoan({
       principal: 12_000_000,
@@ -66,7 +65,6 @@ describe("calculator calculations", () => {
       principal: 12_000_000,
       annualRate: 0,
       months: 12,
-      method: "compound",
     });
 
     expect(result.monthlyPayment).toBe(1_000_000);
