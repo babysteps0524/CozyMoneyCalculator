@@ -3,12 +3,11 @@ export type InterestMethod = "simple" | "compound";
 
 export interface SavingsInput {
   type: SavingsType;
-  method: InterestMethod;
   principal: number;
   monthlyDeposit: number;
   annualRate: number;
   months: number;
-  method: InterestMethod;
+  method?: InterestMethod;
 }
 
 export interface SavingsResult {
@@ -24,6 +23,7 @@ export function calculateSavings({
   monthlyDeposit,
   annualRate,
   months,
+  method = "compound",
 }: SavingsInput): SavingsResult {
   if (months <= 0) {
     throw new Error("저축기간은 1개월 이상이어야 합니다.");
