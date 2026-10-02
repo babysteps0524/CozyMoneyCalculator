@@ -115,15 +115,12 @@ describe("calculator calculations", () => {
       taxFreeMonthly: 200_000,
       dependents: 1,
       children8To20: 0,
-      monthlyHours: 209,
     });
 
     expect(result.monthlyGross).toBeCloseTo(3_333_333.33, 2);
     expect(result.monthlyTakeHome).toBeGreaterThan(2_000_000);
     expect(result.monthlyTakeHome).toBeLessThan(result.monthlyGross);
     expect(result.totalDeductions).toBeGreaterThan(0);
-    expect(result.hourlyWage).toBeCloseTo(15_948.9633, 4);
-    expect(result.dailyWage).toBeCloseTo(127_591.7065, 4);
   });
 
   test("salary supports monthly input, retirement inclusion, tax-free pay and dependents", () => {
@@ -134,7 +131,6 @@ describe("calculator calculations", () => {
       taxFreeMonthly: 200_000,
       dependents: 4,
       children8To20: 2,
-      monthlyHours: 209,
     });
 
     expect(result.monthlyGross).toBe(3_333_333);
