@@ -1,11 +1,14 @@
 export type SavingsType = "deposit" | "installment";
+export type InterestMethod = "simple" | "compound";
 
 export interface SavingsInput {
   type: SavingsType;
+  method: InterestMethod;
   principal: number;
   monthlyDeposit: number;
   annualRate: number;
   months: number;
+  method: InterestMethod;
 }
 
 export interface SavingsResult {
@@ -42,7 +45,17 @@ export function calculateSavings({
 
   let maturityBeforeTax: number;
 
-  if (type === "deposit") {
+  if (method === "simple") {
+    const simpleInterest =
+      type === "deposit"
+        ? principal * (annualRate / 100) * (months / 12)
+        : monthlyDeposit *
+          (annualRate / 100 / 12) *
+          (months * (months + 1)) / 2;
+
+    const paidPrincipal = type === "deposit" ? principal : monthlyDeposit * months;
+    maturityBeforeTax = paidPrincipal + simpleInterest;
+  } else if (type === "deposit") {
     maturityBeforeTax =
       monthlyRate === 0
         ? principal
