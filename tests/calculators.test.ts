@@ -3,6 +3,7 @@ import { calculateLoan } from "../src/lib/calculators/loan";
 import { calculateSavings } from "../src/lib/calculators/savings";
 import { calculateSalary } from "../src/lib/calculators/salary";
 import { calculatePropertyTax } from "../src/lib/calculators/property";
+import { calculateDti } from "../src/lib/calculators/dti";
 import {
   calculateBrokerage,
   getHousingRate,
@@ -169,6 +170,54 @@ describe("calculator calculations", () => {
     expect(result.assets).toHaveLength(2);
     expect(result.assets[1].taxableBase).toBe(120_000_000);
     expect(result.propertyTax).toBeGreaterThan(0);
+  });
+
+  test("DTI calculates annual mortgage payment and target headroom", () => {
+    const result = calculateDti({
+      annualIncome: 50_000_000,
+      mortgageAmount: 300_000_000,
+      mortgageRate: 4,
+      mortgageYears: 30,
+      mortgageMethod: "equalPayment",
+      otherDebtAmount: 50_000_000,
+      otherDebtRate: 5,
+      targetDti: 40,
+    });
+
+    expect(result.annualMortgagePayment).toBeGreaterThan(17_000_000);
+    expect(result.annualOtherInterest).toBe(2_500_000);
+    expect(result.dti).toBeGreaterThan(35);
+    expect(result.dti).toBeLessThan(40);
+    expect(result.withinTarget).toBe(true);
+    expect(result.headroom).toBeGreaterThan(0);
+  });
+
+  test("DTI supports equal-principal and maturity repayment methods", () => {
+    const equalPrincipal = calculateDti({
+      annualIncome: 60_000_000,
+      mortgageAmount: 240_000_000,
+      mortgageRate: 6,
+      mortgageYears: 20,
+      mortgageMethod: "equalPrincipal",
+      otherDebtAmount: 0,
+      otherDebtRate: 0,
+      targetDti: 40,
+    });
+    const maturity = calculateDti({
+      annualIncome: 60_000_000,
+      mortgageAmount: 240_000_000,
+      mortgageRate: 6,
+      mortgageYears: 20,
+      mortgageMethod: "maturity",
+      otherDebtAmount: 0,
+      otherDebtRate: 0,
+      targetDti: 40,
+    });
+
+    expect(equalPrincipal.annualMortgagePayment).toBeGreaterThan(
+      maturity.annualMortgagePayment,
+    );
+    expect(maturity.annualMortgagePayment).toBe(14_400_000);
   });
 
   test("brokerage uses housing sale rate and statutory cap", () => {
