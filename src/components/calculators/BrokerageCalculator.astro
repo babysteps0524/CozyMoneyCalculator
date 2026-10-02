@@ -240,9 +240,9 @@
 
       resultValue.textContent = won(result.total);
       resultDetail.innerHTML = [
-        `기준 거래금액: <strong>${won(result.brokerageBase === 0 ? amount : result.brokerageBase / (result.rate / 100 || 1))}</strong>`,
+        `기준 거래금액: <strong>${won(result.transactionAmount)}</strong>`,
         `적용 상한요율: <strong>${result.rate.toFixed(2)}%</strong>`,
-        `중개보수: <strong>${won(result.brokerageBase)}</strong>`,
+        `중개보수: <strong>${won(result.brokerageFee)}</strong>`,
         `부가가치세: <strong>${won(result.vat)}</strong>`,
         result.capped ? '한도액이 적용되어 계산금액이 제한되었습니다.' : '',
         result.explanation,
