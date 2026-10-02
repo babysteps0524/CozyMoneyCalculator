@@ -153,8 +153,14 @@ import AdSlot from '../../../components/common/AdSlot.astro';
             <fieldset m="0" border="0" p="0">
               <legend class="cm-label" mb="3">이자 계산 방식</legend>
               <div grid="~ cols-2" gap="2" rounded="xl" bg="surface-subtle" p="1" dark="bg-dark-surface-subtle">
-                <button id="simple-tab" type="button" role="tab" aria-pressed="false" h="10" w="full" rounded="lg" bg="transparent" text-text-muted hover="bg-surface hover:text-text" dark="text-dark-text-muted dark:hover:bg-dark-surface dark:hover:text-dark-text">단리</button>
-                <button id="compound-tab" type="button" role="tab" aria-pressed="true" h="10" w="full" rounded="lg" bg="primary" text-white hover="bg-primary-hover" active="bg-primary-active">복리</button>
+                <button id="simple-tab" type="button" role="tab" aria-pressed="false" h="10" w="full" p="0" rounded="lg" text="sm" font="700" outline="none" focus-visible="ring-2 ring-primary ring-offset-2" dark="focus-visible:ring-offset-dark-surface">
+                  <span id="simple-tab-active" hidden flex="~" h="full" w="full" items-center justify-center rounded="lg" bg="primary" text-white>단리</span>
+                  <span id="simple-tab-inactive" flex="~" h="full" w="full" items-center justify-center rounded="lg" bg="transparent" text-text-muted hover="bg-surface hover:text-text" dark="text-dark-text-muted dark:hover:bg-dark-surface dark:hover:text-dark-text">단리</span>
+                </button>
+                <button id="compound-tab" type="button" role="tab" aria-pressed="true" h="10" w="full" p="0" rounded="lg" text="sm" font="700" outline="none" focus-visible="ring-2 ring-primary ring-offset-2" dark="focus-visible:ring-offset-dark-surface">
+                  <span id="compound-tab-active" flex="~" h="full" w="full" items-center justify-center rounded="lg" bg="primary" text-white hover="bg-primary-hover" active="bg-primary-active">복리</span>
+                  <span id="compound-tab-inactive" hidden flex="~" h="full" w="full" items-center justify-center rounded="lg" bg="transparent" text-text-muted hover="bg-surface hover:text-text" dark="text-dark-text-muted dark:hover:bg-dark-surface dark:hover:text-dark-text">복리</span>
+                </button>
               </div>
               <p id="interest-method-help" m="0" mt="2" text="xs" leading="5" text-text-muted dark="text-dark-text-muted">
                 이자가 원금과 누적 이자에 다시 붙는 방식으로 계산합니다.
@@ -581,6 +587,10 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     document.querySelector<HTMLElement>('#installment-tab-inactive');
   const simpleTab = document.querySelector<HTMLButtonElement>('#simple-tab');
   const compoundTab = document.querySelector<HTMLButtonElement>('#compound-tab');
+  const simpleTabActive = document.querySelector<HTMLElement>('#simple-tab-active');
+  const simpleTabInactive = document.querySelector<HTMLElement>('#simple-tab-inactive');
+  const compoundTabActive = document.querySelector<HTMLElement>('#compound-tab-active');
+  const compoundTabInactive = document.querySelector<HTMLElement>('#compound-tab-inactive');
   const interestMethodHelp = document.querySelector<HTMLElement>('#interest-method-help');
   const depositField = document.querySelector<HTMLElement>('#deposit-field');
   const monthlyField = document.querySelector<HTMLElement>('#monthly-field');
@@ -603,8 +613,10 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     const isSimple = next === 'simple';
     simpleTab!.setAttribute('aria-pressed', String(isSimple));
     compoundTab!.setAttribute('aria-pressed', String(!isSimple));
-    simpleTab!.hidden = !isSimple;
-    compoundTab!.hidden = isSimple;
+    simpleTabActive!.hidden = !isSimple;
+    simpleTabInactive!.hidden = isSimple;
+    compoundTabActive!.hidden = isSimple;
+    compoundTabInactive!.hidden = !isSimple;
     interestMethodHelp!.textContent = isSimple
       ? '원금에 대해서만 이자를 계산하는 방식입니다.'
       : '이자가 원금과 누적 이자에 다시 붙는 방식으로 계산합니다.';
@@ -652,6 +664,10 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     installmentTab &&
     simpleTab &&
     compoundTab &&
+    simpleTabActive &&
+    simpleTabInactive &&
+    compoundTabActive &&
+    compoundTabInactive &&
     interestMethodHelp &&
     depositTabActive &&
     depositTabInactive &&
