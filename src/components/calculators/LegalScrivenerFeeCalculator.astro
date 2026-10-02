@@ -1,79 +1,82 @@
 ---
 ---
 
-<div id="legal-scrivener-calculator" class="cm-card" p="4 sm:6 md:7" data-calculator>
+<div id="legal-scrivener-calculator" class="cm-card overflow-hidden" data-calculator>
+  <div bg="surface-muted dark:dark-surface" p="4 sm:6 md:7" border="0 b solid" border-border dark:border-dark-border>
   <div flex="~ col" gap="6">
     <div>
-      <div flex="~ wrap" gap="2">
-        <button type="button" data-property="house" aria-pressed="true" class="cm-button">주택</button>
-        <button type="button" data-property="building" aria-pressed="false" class="cm-button-secondary">그 외 건물</button>
+      <div grid="~ cols-2" gap="2" p="1" rounded="xl" bg="surface-subtle dark:dark-surface-subtle" border="1 solid" border-border dark:border-dark-border>
+        <button type="button" data-property="house" aria-pressed="true" class="cm-button-primary" p="3" text="sm" sm="text-base">주택</button>
+        <button type="button" data-property="building" aria-pressed="false" class="cm-button-secondary" p="3" text="sm" sm="text-base">그 외 건물</button>
       </div>
       <p m="0" mt="3" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">
         등기 대상 부동산의 종류를 선택하면 인지세 비과세 기준을 반영합니다.
       </p>
     </div>
 
-    <div grid="~ cols-1 md:cols-2" gap="4">
-      <label flex="~ col" gap="2">
+    <div grid="~ cols-1 md:cols-2" gap="3 sm:4" mt="5">
+      <label flex="~ col" gap="2" class="cm-field">
         <span text="sm" font="700">과세표준</span>
         <div relative>
-          <input id="legal-taxable-base" inputmode="numeric" autocomplete="off" placeholder="예: 400,000,000" value="400000000" class="cm-input" pr="14" />
+          <input id="legal-taxable-base" inputmode="numeric" autocomplete="off" placeholder="예: 400,000,000" value="400000000" class="cm-input" pr="14" aria-describedby="legal-taxable-help" />
           <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">원</span>
         </div>
-        <span text="xs" text-text-subtle dark="text-dark-text-subtle">법무사 기본보수 계산에 사용하는 금액</span>
+        <span id="legal-taxable-help" text="xs" leading="5" text-text-subtle dark="text-dark-text-subtle">법무사 기본보수 계산 기준</span>
       </label>
 
-      <label flex="~ col" gap="2">
+      <label flex="~ col" gap="2" class="cm-field">
         <span text="sm" font="700">기재금액</span>
         <div relative>
-          <input id="legal-stated-amount" inputmode="numeric" autocomplete="off" placeholder="예: 600,000,000" value="600000000" class="cm-input" pr="14" />
+          <input id="legal-stated-amount" inputmode="numeric" autocomplete="off" placeholder="예: 600,000,000" value="600000000" class="cm-input" pr="14" aria-describedby="legal-stated-help" />
           <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">원</span>
         </div>
-        <span text="xs" text-text-subtle dark="text-dark-text-subtle">인지세 계산에 사용하는 계약서 금액</span>
+        <span id="legal-stated-help" text="xs" leading="5" text-text-subtle dark="text-dark-text-subtle">인지세 계산 기준 계약서 금액</span>
       </label>
     </div>
 
-    <div class="cm-divider" />
-
-    <div>
-      <div flex="~ items-center justify-between" gap="3">
-        <div>
-          <h2 m="0" text="lg" font="750">보수 계산 항목</h2>
-          <p m="0" mt="1" text="sm" text-text-muted dark="text-dark-text-muted">소유권 이전과 근저당 설정처럼 여러 등기를 한 번에 계산할 수 있습니다.</p>
-        </div>
-        <button id="legal-add-fee" type="button" class="cm-button-secondary" whitespace-nowrap>+ 항목 추가</button>
-      </div>
-      <div id="legal-fee-list" mt="4" flex="~ col" gap="3"></div>
     </div>
 
-    <div grid="~ cols-1 sm:cols-2" gap="3">
-      <label class="cm-option">
+    <div class="cm-divider" my="5 sm:6" />
+
+    <div>
+      <div flex="~ items-start sm:items-center justify-between" gap="3">
+        <div>
+          <h2 m="0" text="lg" font="750">등기 보수 항목</h2>
+          <p m="0" mt="1" text="xs sm:sm" leading="5 sm:6" text-text-muted dark="text-dark-text-muted">여러 등기를 한 번에 계산할 수 있습니다.</p>
+        </div>
+        <button id="legal-add-fee" type="button" class="cm-button-secondary" p="2.5 3" text="sm" whitespace-nowrap>+ 항목 추가</button>
+      </div>
+      <div id="legal-fee-list" mt="3" flex="~ col" gap="2.5"></div>
+    </div>
+
+    <div grid="~ cols-1 sm:cols-2" gap="2 sm:3" mt="5">
+      <label class="cm-option" p="3" rounded="xl" border="1 solid" border-border dark:border-dark-border bg="surface dark:dark-surface">
         <input id="legal-public-costs" type="checkbox" checked />
         <span>공공비용(인지·증지) 포함</span>
       </label>
-      <label class="cm-option">
+      <label class="cm-option" p="3" rounded="xl" border="1 solid" border-border dark:border-dark-border bg="surface dark:dark-surface">
         <input id="legal-vat" type="checkbox" checked />
         <span>부가가치세 10% 포함</span>
       </label>
     </div>
 
-    <div flex="~ flex-col sm:flex-row" gap="2" justify-end>
-      <button id="legal-reset" type="button" class="cm-button-secondary">초기화</button>
-      <button id="legal-copy" type="button" class="cm-button">결과 복사</button>
+    <div flex="~ flex-col-reverse sm:flex-row" gap="2" justify-end" mt="5">
+      <button id="legal-reset" type="button" class="cm-button-secondary" p="3">초기화</button>
+      <button id="legal-copy" type="button" class="cm-button-primary" p="3">결과 복사</button>
     </div>
 
-    <div id="legal-toast" role="status" aria-live="polite" text="sm" text-primary min-h="5"></div>
+    <div id="legal-toast" role="status" aria-live="polite" text="xs sm:sm" text-primary min-h="5" text-align="right" />
 
-    <section id="legal-result" class="cm-surface" p="4 sm:5" aria-live="polite">
-      <div flex="~ items-center justify-between" gap="3">
+    <section id="legal-result" class="cm-surface" mt="1" p="4 sm:5" aria-live="polite">
+      <div flex="~ items-start sm:items-center justify-between" gap="3">
         <h2 m="0" text="lg" font="750">계산 결과</h2>
-        <strong id="legal-total" text="xl md:2xl" font="800">0원</strong>
+        <strong id="legal-total" text="xl sm:2xl md:3xl" font="800" text-primary whitespace-nowrap>0원</strong>
       </div>
-      <div id="legal-lines" mt="4" flex="~ col" gap="2" text="sm"></div>
-      <p id="legal-explanation" m="0" mt="4" pt="4" border="0 t solid" border-text-subtle dark="border-dark-text-subtle" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted"></p>
+      <div id="legal-lines" mt="4" flex="~ col" gap="2" text="sm" leading="6"></div>
+      <p id="legal-explanation" m="0" mt="4" pt="4" border="0 t solid" border-border dark="border-dark-border" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted"></p>
     </section>
 
-    <div class="cm-divider" />
+    <div class="cm-divider" my="5 sm:6" />
 
     <section>
       <h2 m="0" text="lg" font="750">계산 기준</h2>
@@ -220,10 +223,10 @@
         row.className = 'cm-surface p-3 sm:p-4';
 
         const wrap = document.createElement('div');
-        wrap.className = 'grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 items-end';
+        wrap.className = 'grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-2 sm:gap-3 items-end';
 
         const label = document.createElement('label');
-        label.className = 'flex flex-col gap-2';
+        label.className = 'flex flex-col gap-2 min-w-0';
 
         const title = document.createElement('span');
         title.className = 'text-xs font-700';
@@ -251,7 +254,7 @@
 
         const remove = document.createElement('button');
         remove.type = 'button';
-        remove.className = 'cm-button-secondary';
+        remove.className = 'cm-button-secondary px-4 py-3';
         remove.textContent = '삭제';
         remove.disabled = items.length === 1;
         remove.addEventListener('click', () => {
@@ -287,7 +290,7 @@
 
       feeLines.forEach((line) => {
         const row = document.createElement('div');
-        row.className = 'flex items-center justify-between gap-4';
+        row.className = 'flex items-center justify-between gap-3';
         const label = document.createElement('span');
         label.textContent = line.label;
         const value = document.createElement('strong');
@@ -305,7 +308,7 @@
 
       summary.forEach(([labelText, value]) => {
         const row = document.createElement('div');
-        row.className = 'flex items-center justify-between gap-4';
+        row.className = 'flex items-center justify-between gap-3';
         const label = document.createElement('span');
         label.textContent = String(labelText);
         const valueEl = document.createElement('span');
@@ -325,7 +328,7 @@
         root.querySelectorAll<HTMLButtonElement>('[data-property]').forEach((candidate) => {
           const active = candidate.dataset.property === property;
           candidate.setAttribute('aria-pressed', String(active));
-          candidate.className = active ? 'cm-button' : 'cm-button-secondary';
+          candidate.className = active ? 'cm-button-primary p-3 text-sm sm:text-base' : 'cm-button-secondary p-3 text-sm sm:text-base';
         });
         calculate();
       });
@@ -361,7 +364,7 @@
       root.querySelectorAll<HTMLButtonElement>('[data-property]').forEach((button) => {
         const active = button.dataset.property === property;
         button.setAttribute('aria-pressed', String(active));
-        button.className = active ? 'cm-button' : 'cm-button-secondary';
+        button.className = active ? 'cm-button-primary p-3 text-sm sm:text-base' : 'cm-button-secondary p-3 text-sm sm:text-base';
       });
 
       renderItems();
