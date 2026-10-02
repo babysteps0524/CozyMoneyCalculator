@@ -150,6 +150,16 @@ import AdSlot from '../../../components/common/AdSlot.astro';
           </div>
 
           <form id="savings-form" mt="6">
+            <fieldset m="0" border="0" p="0">
+              <legend class="cm-label" mb="3">이자 계산 방식</legend>
+              <div grid="~ cols-2" gap="2" rounded="xl" bg="surface-subtle" p="1" dark="bg-dark-surface-subtle">
+                <button id="simple-tab" type="button" role="tab" aria-pressed="false" h="10" w="full" rounded="lg" bg="transparent" text-text-muted hover="bg-surface hover:text-text" dark="text-dark-text-muted dark:hover:bg-dark-surface dark:hover:text-dark-text">단리</button>
+                <button id="compound-tab" type="button" role="tab" aria-pressed="true" h="10" w="full" rounded="lg" bg="primary" text-white hover="bg-primary-hover" active="bg-primary-active">복리</button>
+              </div>
+              <p id="interest-method-help" m="0" mt="2" text="xs" leading="5" text-text-muted dark="text-dark-text-muted">
+                이자가 원금과 누적 이자에 다시 붙는 방식으로 계산합니다.
+              </p>
+            </fieldset>
             <div id="deposit-field">
               <label class="cm-label" for="principal">
                 예치금액
@@ -569,6 +579,9 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     document.querySelector<HTMLElement>('#installment-tab-active');
   const installmentTabInactive =
     document.querySelector<HTMLElement>('#installment-tab-inactive');
+  const simpleTab = document.querySelector<HTMLButtonElement>('#simple-tab');
+  const compoundTab = document.querySelector<HTMLButtonElement>('#compound-tab');
+  const interestMethodHelp = document.querySelector<HTMLElement>('#interest-method-help');
   const depositField = document.querySelector<HTMLElement>('#deposit-field');
   const monthlyField = document.querySelector<HTMLElement>('#monthly-field');
   const principal = document.querySelector<HTMLInputElement>('#principal');
@@ -583,6 +596,20 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   const reset = document.querySelector<HTMLButtonElement>('#reset');
   const copy = document.querySelector<HTMLButtonElement>('#copy');
   let type: SavingsType = 'deposit';
+  let interestMethod: 'simple' | 'compound' = 'compound';
+
+  const setInterestMethod = (next: 'simple' | 'compound') => {
+    interestMethod = next;
+    const isSimple = next === 'simple';
+    simpleTab!.setAttribute('aria-pressed', String(isSimple));
+    compoundTab!.setAttribute('aria-pressed', String(!isSimple));
+    simpleTab!.hidden = !isSimple;
+    compoundTab!.hidden = isSimple;
+    interestMethodHelp!.textContent = isSimple
+      ? '원금에 대해서만 이자를 계산하는 방식입니다.'
+      : '이자가 원금과 누적 이자에 다시 붙는 방식으로 계산합니다.';
+    render();
+  };
 
   const setType = (next: SavingsType) => {
     type = next;
@@ -603,6 +630,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     try {
       const r = calculateSavings({
         type,
+        method: interestMethod,
         principal: parseNumber(principal!.value),
         monthlyDeposit: parseNumber(monthly!.value),
         annualRate: parseNumber(rate!.value),
@@ -622,6 +650,9 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     form &&
     depositTab &&
     installmentTab &&
+    simpleTab &&
+    compoundTab &&
+    interestMethodHelp &&
     depositTabActive &&
     depositTabInactive &&
     installmentTabActive &&
@@ -642,6 +673,8 @@ import AdSlot from '../../../components/common/AdSlot.astro';
   ) {
     depositTab.addEventListener('click', () => setType('deposit'));
     installmentTab.addEventListener('click', () => setType('installment'));
+    simpleTab.addEventListener('click', () => setInterestMethod('simple'));
+    compoundTab.addEventListener('click', () => setInterestMethod('compound'));
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       render();
@@ -652,6 +685,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       monthly.value = '300,000';
       rate.value = '3.5';
       months.value = '12';
+      interestMethod = 'compound';
       setType('deposit');
     });
     copy.addEventListener('click', async () => {
@@ -673,5 +707,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     });
     bindNumberControls(form);
     setType(type);
+    setInterestMethod(interestMethod);
   }
 </script>
