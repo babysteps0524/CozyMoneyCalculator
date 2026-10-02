@@ -3,6 +3,11 @@ import { calculateLoan } from "../src/lib/calculators/loan";
 import { calculateSavings } from "../src/lib/calculators/savings";
 import { calculateSalary } from "../src/lib/calculators/salary";
 import { calculatePropertyTax } from "../src/lib/calculators/property";
+import {
+  calculateBrokerage,
+  getHousingRate,
+  getMonthlyLeaseAmount,
+} from "../src/lib/calculators/brokerage";
 
 describe("calculator calculations", () => {
   test("loan calculates equal principal and interest payments", () => {
@@ -164,5 +169,77 @@ describe("calculator calculations", () => {
     expect(result.assets).toHaveLength(2);
     expect(result.assets[1].taxableBase).toBe(120_000_000);
     expect(result.propertyTax).toBeGreaterThan(0);
+  });
+
+  test("brokerage uses housing sale rate and statutory cap", () => {
+    expect(getHousingRate("sale", 40_000_000)).toEqual({
+      rate: 0.6,
+      cap: 250_000,
+    });
+
+    const result = calculateBrokerage({
+      transaction: "sale",
+      property: "house",
+      amount: 40_000_000,
+      vatRate: 10,
+    });
+
+    expect(result.transactionAmount).toBe(40_000_000);
+    expect(result.brokerageFee).toBe(240_000);
+    expect(result.vat).toBe(24_000);
+    expect(result.total).toBe(264_000);
+    expect(result.capped).toBe(false);
+  });
+
+  test("brokerage applies the 800000 won cap for the 50m to 200m sale range", () => {
+    const result = calculateBrokerage({
+      transaction: "sale",
+      property: "house",
+      amount: 150_000_000,
+      vatRate: 10,
+    });
+
+    expect(result.brokerageFee).toBe(750_000);
+    expect(result.capped).toBe(false);
+  });
+
+  test("brokerage converts monthly rent transaction amount", () => {
+    expect(getMonthlyLeaseAmount(10_000_000, 300_000)).toBe(31_000_000);
+    expect(getMonthlyLeaseAmount(30_000_000, 300_000)).toBe(60_000_000);
+
+    const result = calculateBrokerage({
+      transaction: "monthly",
+      property: "house",
+      amount: 31_000_000,
+      vatRate: 10,
+    });
+
+    expect(result.rate).toBe(0.5);
+    expect(result.brokerageFee).toBe(155_000);
+  });
+
+  test("brokerage supports officetel and presale rules", () => {
+    const officetel = calculateBrokerage({
+      transaction: "sale",
+      property: "officetel",
+      amount: 300_000_000,
+      officetelEligible: true,
+      vatRate: 0,
+    });
+
+    const presale = calculateBrokerage({
+      transaction: "sale",
+      property: "presale",
+      amount: 0,
+      paidAmount: 200_000_000,
+      premium: 30_000_000,
+      vatRate: 0,
+    });
+
+    expect(officetel.rate).toBe(0.5);
+    expect(officetel.brokerageFee).toBe(1_500_000);
+    expect(presale.transactionAmount).toBe(230_000_000);
+    expect(presale.rate).toBe(0.4);
+    expect(presale.brokerageFee).toBe(920_000);
   });
 });
