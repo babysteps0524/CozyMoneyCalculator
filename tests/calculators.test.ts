@@ -205,7 +205,7 @@ describe("calculator calculations", () => {
 
   test("brokerage converts monthly rent transaction amount", () => {
     expect(getMonthlyLeaseAmount(10_000_000, 300_000)).toBe(31_000_000);
-    expect(getMonthlyLeaseAmount(30_000_000, 300_000)).toBe(51_000_000);
+    expect(getMonthlyLeaseAmount(30_000_000, 300_000)).toBe(60_000_000);
 
     const result = calculateBrokerage({
       transaction: "monthly",
