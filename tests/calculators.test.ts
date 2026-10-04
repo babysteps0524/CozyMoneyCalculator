@@ -5,6 +5,7 @@ import { calculateSalary } from "../src/lib/calculators/salary";
 import { calculatePropertyTax } from "../src/lib/calculators/property";
 import { calculateDti } from "../src/lib/calculators/dti";
 import { calculateHourlyWage } from "../src/lib/calculators/hourlyWage";
+import { calculateSeverance, getSeverancePeriod } from "../src/lib/calculators/severance";
 import {
   calculateBrokerage,
   getHousingRate,
@@ -315,6 +316,92 @@ describe("calculator calculations", () => {
     expect(presale.rate).toBe(0.4);
     expect(presale.brokerageFee).toBe(920_000);
   });
+
+  test("severance calculates the statutory formula from the previous three months", () => {
+    const period = getSeverancePeriod("2026-10-01");
+
+    expect(period.start).toBe("2026-07-01");
+    expect(period.end).toBe("2026-09-30");
+    expect(period.days).toBe(92);
+
+    const result = calculateSeverance({
+      startDate: "2021-10-01",
+      retirementDate: "2026-10-01",
+      monthlyWages: [3_000_000, 3_000_000, 3_000_000],
+      annualBonus: 1_200_000,
+      annualLeaveAllowance: 400_000,
+      weeklyHours: 40,
+    });
+
+    expect(result.serviceDays).toBe(1826);
+    expect(result.threeMonthWages).toBe(9_000_000);
+    expect(result.bonusIncluded).toBe(300_000);
+    expect(result.leaveAllowanceIncluded).toBe(100_000);
+    expect(result.averageWageAmount).toBe(9_400_000);
+    expect(result.averageDailyWage).toBeCloseTo(102_173.913, 3);
+    expect(result.appliedBasis).toBe("average");
+    expect(result.severancePay).toBeCloseTo(15_337_190.26, 2);
+    expect(result.eligible).toBe(true);
+  });
+
+  test("severance uses ordinary daily wage when it is higher", () => {
+    const result = calculateSeverance({
+      startDate: "2024-01-01",
+      retirementDate: "2026-10-01",
+      monthlyWages: [2_000_000, 2_000_000, 2_000_000],
+      annualBonus: 0,
+      annualLeaveAllowance: 0,
+      ordinaryDailyWage: 100_000,
+      weeklyHours: 40,
+    });
+
+    expect(result.averageDailyWage).toBeCloseTo(65_217.391, 3);
+    expect(result.appliedDailyWage).toBe(100_000);
+    expect(result.appliedBasis).toBe("ordinary");
+    expect(result.severancePay).toBeGreaterThan(10_000_000);
+  });
+
+  test("severance checks one-year and weekly-hours eligibility", () => {
+    const shortService = calculateSeverance({
+      startDate: "2026-01-01",
+      retirementDate: "2026-12-31",
+      monthlyWages: [2_000_000, 2_000_000, 2_000_000],
+      annualBonus: 0,
+      annualLeaveAllowance: 0,
+      weeklyHours: 40,
+    });
+    const shortHours = calculateSeverance({
+      startDate: "2024-01-01",
+      retirementDate: "2026-10-01",
+      monthlyWages: [2_000_000, 2_000_000, 2_000_000],
+      annualBonus: 0,
+      annualLeaveAllowance: 0,
+      weeklyHours: 14,
+    });
+
+    expect(shortService.eligible).toBe(false);
+    expect(shortService.severancePay).toBe(0);
+    expect(shortHours.eligible).toBe(false);
+    expect(shortHours.severancePay).toBe(0);
+  });
+
+  test("severance excludes configured average-wage days and wages", () => {
+    const result = calculateSeverance({
+      startDate: "2024-01-01",
+      retirementDate: "2026-10-01",
+      monthlyWages: [3_000_000, 3_000_000, 3_000_000],
+      annualBonus: 0,
+      annualLeaveAllowance: 0,
+      weeklyHours: 40,
+      excludedAverageWageDays: 10,
+      excludedAverageWageAmount: 300_000,
+    });
+
+    expect(result.averageWagePeriodDays).toBe(92);
+    expect(result.averageWageAmount).toBe(8_700_000);
+    expect(result.averageDailyWage).toBeCloseTo(106_097.5609, 3);
+  });
+
   test("hourly wage supports weekly holiday, overtime, tax and probation", () => {
     const result = calculateHourlyWage({
       payType: "hourly",
