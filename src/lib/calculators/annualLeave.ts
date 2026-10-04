@@ -65,10 +65,6 @@ function annualDaysForServiceYears(years: number): number {
   return Math.min(25, 15 + Math.floor((years - 1) / 2));
 }
 
-function fiscalYearEnd(year: number): Date {
-  return new Date(year, 11, 31);
-}
-
 function calculateHireDateLeave(start: Date, end: Date): { leaveDays: number; proratedFirstYearDays: number } {
   const months = completedMonths(start, end);
   if (daysBetween(start, end) < 365) {
