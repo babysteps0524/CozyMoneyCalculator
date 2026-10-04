@@ -82,17 +82,21 @@ function calculateHireDateLeave(start: Date, end: Date): { leaveDays: number; pr
 function calculateFiscalYearLeave(start: Date, end: Date): { leaveDays: number; proratedFirstYearDays: number } {
   if (end < start) return { leaveDays: 0, proratedFirstYearDays: 0 };
 
-  const firstYearEnd = fiscalYearEnd(start.getFullYear());
-  if (end <= firstYearEnd) {
+  const firstGrantDate = new Date(start.getFullYear() + 1, 0, 1);
+  const firstElevenMonthDate = addMonths(start, 11);
+
+  if (end < firstGrantDate) {
     return {
       leaveDays: Math.min(11, completedMonths(start, end)),
       proratedFirstYearDays: 0,
     };
   }
 
-  const firstYearDays = daysBetween(start, new Date(start.getFullYear() + 1, 0, 1));
+  const monthlyAccrualEnd = end < firstElevenMonthDate ? end : firstElevenMonthDate;
+  const monthlyAccrualDays = Math.min(11, completedMonths(start, monthlyAccrualEnd));
+  const firstYearDays = daysBetween(start, firstGrantDate);
   const prorated = Math.min(15, (firstYearDays / 365) * 15);
-  let total = Math.min(11, completedMonths(start, firstYearEnd));
+  let total = monthlyAccrualDays;
 
   total += prorated;
 
