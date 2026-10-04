@@ -492,13 +492,13 @@ describe("calculator calculations", () => {
       annualBonus: 1_200_000,
     });
 
-    expect(result.leaveDays).toBe(17);
-    expect(result.unusedDays).toBe(12);
+    expect(result.leaveDays).toBe(16);
+    expect(result.unusedDays).toBe(11);
     expect(result.monthlyHours).toBeCloseTo(208.5714, 2);
     expect(result.monthlyOrdinaryWage).toBe(3_300_000);
     expect(result.hourlyOrdinaryWage).toBeCloseTo(15_821.9178, 2);
     expect(result.dailyOrdinaryWage).toBeCloseTo(126_575.3425, 2);
-    expect(result.allowance).toBeCloseTo(1_518_904.1096, 2);
+    expect(result.allowance).toBeCloseTo(1_392_328.7671, 2);
   });
 
   test("annual leave allowance supports fiscal-year first-year prorating", () => {
