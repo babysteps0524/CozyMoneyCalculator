@@ -75,25 +75,16 @@ function daysInclusive(start: Date, end: Date): number {
 }
 
 function monthSegments(start: Date, end: Date): Array<{ start: Date; end: Date; days: number }> {
-  const segments: Array<{ start: Date; end: Date; days: number }> = [];
-  let cursor = new Date(start);
-
-  while (cursor.getTime() <= end.getTime() && segments.length < 3) {
-    const nextMonth = new Date(
-      Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1),
-    );
-    const segmentEnd = new Date(
-      Math.min(end.getTime(), nextMonth.getTime() - DAY_MS),
-    );
-    segments.push({
-      start: new Date(cursor),
+  return [0, 1, 2].map((offset) => {
+    const segmentStart = addMonths(start, offset);
+    const nextStart = addMonths(start, offset + 1);
+    const segmentEnd = new Date(Math.min(end.getTime(), nextStart.getTime() - DAY_MS));
+    return {
+      start: segmentStart,
       end: segmentEnd,
-      days: daysInclusive(cursor, segmentEnd),
-    });
-    cursor = nextMonth;
-  }
-
-  return segments;
+      days: daysInclusive(segmentStart, segmentEnd),
+    };
+  });
 }
 
 export function getSeverancePeriod(retirementDate: string): {
@@ -104,7 +95,7 @@ export function getSeverancePeriod(retirementDate: string): {
 } {
   const retirement = utcDate(retirementDate);
   const end = new Date(retirement.getTime() - DAY_MS);
-  const start = addMonths(end, -3);
+  const start = addMonths(retirement, -3);
   const segments = monthSegments(start, end);
 
   return {
