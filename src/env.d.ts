@@ -8,6 +8,7 @@ declare global {
       'translate-y'?: string;
       duration?: string;
       whitespace?: string;
+      right?: string;
     }
   }
 }
