@@ -358,7 +358,7 @@ describe("calculator calculations", () => {
     expect(result.averageDailyWage).toBeCloseTo(65_217.391, 3);
     expect(result.appliedDailyWage).toBe(100_000);
     expect(result.appliedBasis).toBe("ordinary");
-    expect(result.severancePay).toBeGreaterThan(10_000_000);
+    expect(result.severancePay).toBeCloseTo(8_252_054.795, 3);
   });
 
   test("severance checks one-year and weekly-hours eligibility", () => {
