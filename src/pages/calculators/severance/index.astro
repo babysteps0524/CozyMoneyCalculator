@@ -2,64 +2,77 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import SeveranceCalculator from '../../../components/calculators/SeveranceCalculator.astro';
 ---
 
 <BaseLayout
   title="퇴직금 계산기 | CozyMoney 코지머니"
-  description="월 평균임금과 근속기간을 기준으로 퇴직금을 단순 추정합니다."
+  description="입사일·퇴직일과 퇴직 전 3개월 임금, 상여금·연차수당, 통상임금을 반영해 예상 퇴직금을 계산합니다."
   canonical="https://cozymoney.kr/calculators/severance/"
 >
   <Header />
   <main class="cm-container" py="10 md:14 lg:18">
-    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-      <a href="/" no-underline hover="text-primary">
-        홈
-      </a>
+    <nav mb="5" text="xs sm:sm" text-text-muted dark:text-dark-text-muted>
+      <a href="/" no-underline hover:text-primary>홈</a>
       <span mx="2">/</span>
-      <a href="/calculators/" no-underline hover="text-primary">
-        계산기
-      </a>
+      <a href="/calculators/" no-underline hover:text-primary>계산기</a>
       <span mx="2">/</span>급여·노동
     </nav>
     <header max-w="3xl" mb="8">
-      <p m="0" text="sm" font="700" text-primary>
-        급여·노동
-      </p>
-      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
-        퇴직금 계산기
-      </h1>
-      <p
-        m="0"
-        mt="4"
-        text="base md:lg"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        월 평균임금과 근속기간을 기준으로 퇴직금을 단순 추정합니다.
+      <p m="0" text="sm" font="700" text-primary>급여·노동</p>
+      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>퇴직금 계산기</h1>
+      <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark:text-dark-text-muted>
+        입사일과 퇴직일, 퇴직 전 3개월 임금을 기준으로 1일 평균임금과 예상 퇴직금을 계산합니다.
       </p>
     </header>
+
     <div max-w="4xl">
-      <CalculatorShell
-        kind="severance"
-        title="퇴직금 계산기"
-        description="월 평균임금과 근속기간을 기준으로 퇴직금을 단순 추정합니다."
-      />
+      <SeveranceCalculator />
     </div>
+
     <section max-w="4xl" mt="10 md:14">
-      <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
+      <h2 class="cm-section-title">퇴직금은 어떻게 계산하나요?</h2>
       <div class="cm-card" mt="4" p="5 md:6">
-        <p
-          m="0"
-          text="sm md:base"
-          leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          입력한 값을 바탕으로 계산 결과와 주요 계산 기준을 함께 표시합니다.
-          실제 계약, 신고 또는 급여 정산에 사용하는 경우에는 관련 기관이나
-          계약서의 정확한 조건을 확인하세요.
+        <div grid="~ cols-1 md:cols-2" gap="6">
+          <div>
+            <h3 m="0" text="base" font="800">기본 산식</h3>
+            <p m="2 0 0" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+              퇴직금은 1일 평균임금에 30일을 곱한 뒤 계속근로일수를 365로 나누어 계산합니다.
+            </p>
+            <p m="3 0 0" rounded-xl bg-surface-muted p="4" text="sm" font="700" dark:bg-dark-surface-subtle>
+              퇴직금 = 1일 적용 임금 × 30 × 계속근로일수 ÷ 365
+            </p>
+          </div>
+          <div>
+            <h3 m="0" text="base" font="800">평균임금</h3>
+            <p m="2 0 0" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+              퇴직일 이전 3개월의 임금과 산입 대상 상여금·연차수당을 반영해 평균임금을 계산합니다.
+              입력한 1일 통상임금이 더 높은 경우에는 비교 결과도 함께 표시합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section max-w="4xl" mt="8">
+      <h2 class="cm-section-title">입력값 안내</h2>
+      <div class="cm-card" mt="4" p="5 md:6">
+        <ul m="0" pl="5" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+          <li>퇴직일은 마지막 근무일의 다음 날을 입력합니다.</li>
+          <li>퇴직 전 3개월 임금은 세전 기준으로 실제 지급된 임금을 입력합니다.</li>
+          <li>최근 1년 상여금과 산입 대상 연차수당은 각각 3/12만 평균임금에 반영합니다.</li>
+          <li>1일 통상임금을 입력하면 평균임금과 비교해 적용 기준을 표시합니다.</li>
+          <li>평균임금 제외기간은 법정 제외 사유에 해당하는 경우에만 고급 설정에서 사용합니다.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section max-w="4xl" mt="8">
+      <h2 class="cm-section-title">주의사항</h2>
+      <div class="cm-card" mt="4" p="5 md:6">
+        <p m="0" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+          이 계산기는 세전 예상 퇴직금을 확인하기 위한 참고용 도구입니다. 평균임금 산정에서 제외되는 기간,
+          임금에 포함되는 항목, 중간정산 이력, 실제 계속근로관계 등 개별 사정에 따라 결과가 달라질 수 있습니다.
         </p>
       </div>
     </section>
