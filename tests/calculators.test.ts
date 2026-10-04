@@ -5,6 +5,7 @@ import { calculateSalary } from "../src/lib/calculators/salary";
 import { calculatePropertyTax } from "../src/lib/calculators/property";
 import { calculateDti } from "../src/lib/calculators/dti";
 import { calculateHourlyWage } from "../src/lib/calculators/hourlyWage";
+import { calculateAnnualLeave } from "../src/lib/calculators/annualLeave";
 import { calculateSeverance, getSeverancePeriod } from "../src/lib/calculators/severance";
 import {
   calculateBrokerage,
