@@ -477,4 +477,64 @@ describe("calculator calculations", () => {
     };
   }
 
+  test("annual leave allowance calculates unused leave and ordinary wage", () => {
+    const result = calculateAnnualLeave({
+      basis: "hire-date",
+      startDate: "2022-10-01",
+      calculationDate: "2026-10-05",
+      usedDays: 5,
+      dailyHours: 8,
+      weeklyDays: 5,
+      weeklyHours: 40,
+      monthlyBasePay: 3_000_000,
+      monthlyFixedAllowance: 200_000,
+      annualBonus: 1_200_000,
+    });
+
+    expect(result.leaveDays).toBe(17);
+    expect(result.unusedDays).toBe(12);
+    expect(result.monthlyHours).toBeCloseTo(208.56, 2);
+    expect(result.monthlyOrdinaryWage).toBe(3_300_000);
+    expect(result.hourlyOrdinaryWage).toBeCloseTo(15_823.15, 2);
+    expect(result.dailyOrdinaryWage).toBeCloseTo(126_585.17, 2);
+    expect(result.allowance).toBeCloseTo(1_519_022.02, 2);
+  });
+
+  test("annual leave allowance supports fiscal-year first-year prorating", () => {
+    const result = calculateAnnualLeave({
+      basis: "fiscal-year",
+      startDate: "2025-10-01",
+      calculationDate: "2026-10-05",
+      usedDays: 0,
+      dailyHours: 8,
+      weeklyDays: 5,
+      weeklyHours: 40,
+      monthlyBasePay: 3_000_000,
+      monthlyFixedAllowance: 0,
+      annualBonus: 0,
+    });
+
+    expect(result.proratedFirstYearDays).toBeCloseTo(3.7808, 3);
+    expect(result.leaveDays).toBeCloseTo(29.7808, 3);
+  });
+
+  test("annual leave allowance excludes weekly hours below 15", () => {
+    const result = calculateAnnualLeave({
+      basis: "hire-date",
+      startDate: "2025-01-01",
+      calculationDate: "2026-01-01",
+      usedDays: 0,
+      dailyHours: 4,
+      weeklyDays: 3,
+      weeklyHours: 12,
+      monthlyBasePay: 1_000_000,
+      monthlyFixedAllowance: 0,
+      annualBonus: 0,
+    });
+
+    expect(result.leaveDays).toBe(0);
+    expect(result.unusedDays).toBe(0);
+    expect(result.allowance).toBe(0);
+  });
+
 });
