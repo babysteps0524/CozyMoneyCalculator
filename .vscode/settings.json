@@ -1,5 +1,14 @@
 {
-  "cSpell.words": ["Attributify", "unocss"],
+  "cSpell.words": [
+    "ADSENSE",
+    "asof",
+    "Attributify",
+    "dday",
+    "nums",
+    "oklch",
+    "Pretendard",
+    "unocss"
+  ],
   "editor.formatOnSave": true,
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode",
