@@ -93,14 +93,14 @@
     <button id="severance-reset" type="button" class="cm-button-secondary" px="5" py="3">초기화</button>
   </div>
 
-  <div id="severance-error" hidden mt="4" rounded-xl border="1" border-danger/30 bg-danger-surface p="4" text="sm" text-danger-text dark="border-dark-danger-text/30" dark="bg-dark-danger-surface" dark="text-dark-danger-text"></div>
+  <div id="severance-error" hidden mt="4" rounded-xl border="1" border-danger/30 bg-danger-surface p="4" text="sm" text-danger-text dark="border-dark-danger-text/30 bg-dark-danger-surface text-dark-danger-text"></div>
 
-  <section mt="6" rounded-2xl border="1" border-border bg-surface-muted p="5" dark="border-dark-border" dark="bg-dark-surface-subtle" aria-live="polite">
+  <section mt="6" rounded-2xl border="1" border-border bg-surface-muted p="5" dark="border-dark-border bg-dark-surface-subtle" aria-live="polite">
     <p m="0" text="sm" font="700" text-primary>예상 퇴직금 · 세전</p>
     <p id="severance-value" m="1 0 0" text="3xl md:4xl" font="800" tracking-tight>0원</p>
     <div id="severance-eligibility" mt="3" inline-flex rounded-full bg-surface px="3" py="1.5" text="xs" font="700" dark="bg-dark-surface">계산 전</div>
     <div id="severance-summary" grid="~ cols-1 sm:cols-2 lg:cols-3" gap="3" mt="5"></div>
-    <div id="severance-breakdown" mt="5" rounded-xl border="1" border-border bg-surface p="4" dark="border-dark-border" dark="bg-dark-surface"></div>
+    <div id="severance-breakdown" mt="5" rounded-xl border="1" border-border bg-surface p="4" dark="border-dark-border bg-dark-surface"></div>
   </section>
 
   <p m="4 0 0" text="xs" leading="5" text-text-muted dark="text-dark-text-muted">참고용 모의계산입니다. 실제 퇴직금은 평균임금 산정 제외기간, 임금 포함 여부, 통상임금, 계속근로관계 등에 따라 달라질 수 있습니다.</p>
@@ -191,7 +191,7 @@
         ];
 
         summary.innerHTML = cards.map((card) =>
-          '<div rounded-xl border="1" border-border bg-surface p="4" dark="border-dark-border" dark="bg-dark-surface">' +
+          '<div rounded-xl border="1" border-border bg-surface p="4" dark="border-dark-border bg-dark-surface">' +
           '<p m="0" text="xs" text-text-muted dark="text-dark-text-muted">' + card[0] + '</p>' +
           '<p m="1 0 0" text="base" font="800">' + card[1] + '</p></div>'
         ).join('');
