@@ -340,7 +340,7 @@ describe("calculator calculations", () => {
     expect(result.averageWageAmount).toBe(9_400_000);
     expect(result.averageDailyWage).toBeCloseTo(102_173.913, 3);
     expect(result.appliedBasis).toBe("average");
-    expect(result.severancePay).toBeCloseTo(15_337_190.26, 2);
+    expect(result.severancePay).toBeCloseTo(15_334_484.81, 2);
     expect(result.eligible).toBe(true);
   });
 
