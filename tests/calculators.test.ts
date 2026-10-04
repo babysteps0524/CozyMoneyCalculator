@@ -1,20 +1,23 @@
-import { describe, expect, test } from "bun:test";
-import { calculateLoan } from "../src/lib/calculators/loan";
-import { calculateSavings } from "../src/lib/calculators/savings";
-import { calculateSalary } from "../src/lib/calculators/salary";
-import { calculatePropertyTax } from "../src/lib/calculators/property";
-import { calculateDti } from "../src/lib/calculators/dti";
-import { calculateHourlyWage } from "../src/lib/calculators/hourlyWage";
-import { calculateAnnualLeave } from "../src/lib/calculators/annualLeave";
-import { calculateSeverance, getSeverancePeriod } from "../src/lib/calculators/severance";
+import { describe, expect, test } from 'bun:test';
+import { calculateLoan } from '../src/lib/calculators/loan';
+import { calculateSavings } from '../src/lib/calculators/savings';
+import { calculateSalary } from '../src/lib/calculators/salary';
+import { calculatePropertyTax } from '../src/lib/calculators/property';
+import { calculateDti } from '../src/lib/calculators/dti';
+import { calculateHourlyWage } from '../src/lib/calculators/hourlyWage';
+import { calculateAnnualLeave } from '../src/lib/calculators/annualLeave';
+import {
+  calculateSeverance,
+  getSeverancePeriod,
+} from '../src/lib/calculators/severance';
 import {
   calculateBrokerage,
   getHousingRate,
   getMonthlyLeaseAmount,
-} from "../src/lib/calculators/brokerage";
+} from '../src/lib/calculators/brokerage';
 
-describe("calculator calculations", () => {
-  test("loan calculates equal principal and interest payments", () => {
+describe('calculator calculations', () => {
+  test('loan calculates equal principal and interest payments', () => {
     const result = calculateLoan({
       principal: 10_000_000,
       annualRate: 4.5,
@@ -26,25 +29,27 @@ describe("calculator calculations", () => {
     expect(result.totalInterest).toBeGreaterThan(0);
   });
 
-  test("loan supports equal principal repayment", () => {
+  test('loan supports equal principal repayment', () => {
     const result = calculateLoan({
       principal: 12_000_000,
       annualRate: 6,
       months: 12,
-      repaymentType: "equalPrincipal",
+      repaymentType: 'equalPrincipal',
     });
 
     expect(result.schedule).toHaveLength(12);
-    expect(result.schedule[0].payment).toBeGreaterThan(result.schedule[11].payment);
+    expect(result.schedule[0].payment).toBeGreaterThan(
+      result.schedule[11].payment,
+    );
     expect(result.totalInterest).toBeGreaterThan(0);
   });
 
-  test("loan supports maturity repayment and prepayment fee", () => {
+  test('loan supports maturity repayment and prepayment fee', () => {
     const result = calculateLoan({
       principal: 10_000_000,
       annualRate: 6,
       months: 12,
-      repaymentType: "maturity",
+      repaymentType: 'maturity',
       prepaymentMonth: 6,
       prepaymentAmount: 2_000_000,
       prepaymentFeeRate: 1,
@@ -56,12 +61,12 @@ describe("calculator calculations", () => {
     expect(result.schedule[11].remainingPrincipal).toBe(0);
   });
 
-  test("loan supports a grace period before repayment", () => {
+  test('loan supports a grace period before repayment', () => {
     const result = calculateLoan({
       principal: 10_000_000,
       annualRate: 6,
       months: 12,
-      repaymentType: "equalPrincipalInterest",
+      repaymentType: 'equalPrincipalInterest',
       graceMonths: 3,
     });
 
@@ -70,7 +75,7 @@ describe("calculator calculations", () => {
     expect(result.schedule[3].principalPayment).toBeGreaterThan(0);
   });
 
-  test("zero-rate loan divides principal evenly", () => {
+  test('zero-rate loan divides principal evenly', () => {
     const result = calculateLoan({
       principal: 12_000_000,
       annualRate: 0,
@@ -81,14 +86,14 @@ describe("calculator calculations", () => {
     expect(result.totalInterest).toBe(0);
   });
 
-  test("deposit returns principal plus after-tax interest", () => {
+  test('deposit returns principal plus after-tax interest', () => {
     const result = calculateSavings({
-      type: "deposit",
+      type: 'deposit',
       principal: 10_000_000,
       monthlyDeposit: 0,
       annualRate: 3.5,
       months: 12,
-      method: "compound",
+      method: 'compound',
     });
 
     expect(result.principal).toBe(10_000_000);
@@ -97,9 +102,9 @@ describe("calculator calculations", () => {
     expect(result.maturityAmount).toBeGreaterThan(10_000_000);
   });
 
-  test("installment savings uses monthly deposits", () => {
+  test('installment savings uses monthly deposits', () => {
     const result = calculateSavings({
-      type: "installment",
+      type: 'installment',
       principal: 0,
       monthlyDeposit: 300_000,
       annualRate: 3.5,
@@ -110,11 +115,11 @@ describe("calculator calculations", () => {
     expect(result.maturityAmount).toBeGreaterThan(3_600_000);
   });
 
-  test("salary converts annual salary and estimates take-home pay", () => {
+  test('salary converts annual salary and estimates take-home pay', () => {
     const result = calculateSalary({
       salary: 40_000_000,
-      salaryType: "annual",
-      retirementType: "separate",
+      salaryType: 'annual',
+      retirementType: 'separate',
       taxFreeMonthly: 200_000,
       dependents: 1,
       children8To20: 0,
@@ -126,11 +131,11 @@ describe("calculator calculations", () => {
     expect(result.totalDeductions).toBeGreaterThan(0);
   });
 
-  test("salary supports monthly input, retirement inclusion, tax-free pay and dependents", () => {
+  test('salary supports monthly input, retirement inclusion, tax-free pay and dependents', () => {
     const result = calculateSalary({
       salary: 3_333_333,
-      salaryType: "monthly",
-      retirementType: "included",
+      salaryType: 'monthly',
+      retirementType: 'included',
       taxFreeMonthly: 200_000,
       dependents: 4,
       children8To20: 2,
@@ -144,14 +149,14 @@ describe("calculator calculations", () => {
     expect(result.localIncomeTax).toBeCloseTo(result.incomeTax * 0.1, 6);
   });
 
-  test("property tax applies 2026 one-household-one-home rules", () => {
+  test('property tax applies 2026 one-household-one-home rules', () => {
     const result = calculatePropertyTax({
       year: 2026,
       oneHouseholdOneHome: true,
       taxBurdenCap: false,
       assets: [
         {
-          id: "1",
+          id: '1',
           assessedValue: 500_000_000,
           ownershipShare: 100,
           urbanArea: true,
@@ -168,14 +173,14 @@ describe("calculator calculations", () => {
     expect(result.total).toBe(620_000);
   });
 
-  test("property tax supports multiple homes and ownership share", () => {
+  test('property tax supports multiple homes and ownership share', () => {
     const result = calculatePropertyTax({
       year: 2026,
       oneHouseholdOneHome: false,
       taxBurdenCap: false,
       assets: [
         {
-          id: "1",
+          id: '1',
           assessedValue: 300_000_000,
           ownershipShare: 100,
           urbanArea: false,
@@ -183,7 +188,7 @@ describe("calculator calculations", () => {
           previousUrbanAreaTax: 0,
         },
         {
-          id: "2",
+          id: '2',
           assessedValue: 400_000_000,
           ownershipShare: 50,
           urbanArea: false,
@@ -198,13 +203,13 @@ describe("calculator calculations", () => {
     expect(result.propertyTax).toBeGreaterThan(0);
   });
 
-  test("DTI calculates annual mortgage payment and target headroom", () => {
+  test('DTI calculates annual mortgage payment and target headroom', () => {
     const result = calculateDti({
       annualIncome: 50_000_000,
       mortgageAmount: 300_000_000,
       mortgageRate: 4,
       mortgageYears: 30,
-      mortgageMethod: "equalPayment",
+      mortgageMethod: 'equalPayment',
       otherDebtAmount: 50_000_000,
       otherDebtRate: 5,
       targetDti: 40,
@@ -218,13 +223,13 @@ describe("calculator calculations", () => {
     expect(result.headroom).toBeGreaterThan(0);
   });
 
-  test("DTI supports equal-principal and maturity repayment methods", () => {
+  test('DTI supports equal-principal and maturity repayment methods', () => {
     const equalPrincipal = calculateDti({
       annualIncome: 60_000_000,
       mortgageAmount: 240_000_000,
       mortgageRate: 6,
       mortgageYears: 20,
-      mortgageMethod: "equalPrincipal",
+      mortgageMethod: 'equalPrincipal',
       otherDebtAmount: 0,
       otherDebtRate: 0,
       targetDti: 40,
@@ -234,7 +239,7 @@ describe("calculator calculations", () => {
       mortgageAmount: 240_000_000,
       mortgageRate: 6,
       mortgageYears: 20,
-      mortgageMethod: "maturity",
+      mortgageMethod: 'maturity',
       otherDebtAmount: 0,
       otherDebtRate: 0,
       targetDti: 40,
@@ -246,15 +251,15 @@ describe("calculator calculations", () => {
     expect(maturity.annualMortgagePayment).toBe(14_400_000);
   });
 
-  test("brokerage uses housing sale rate and statutory cap", () => {
-    expect(getHousingRate("sale", 40_000_000)).toEqual({
+  test('brokerage uses housing sale rate and statutory cap', () => {
+    expect(getHousingRate('sale', 40_000_000)).toEqual({
       rate: 0.6,
       cap: 250_000,
     });
 
     const result = calculateBrokerage({
-      transaction: "sale",
-      property: "house",
+      transaction: 'sale',
+      property: 'house',
       amount: 40_000_000,
       vatRate: 10,
     });
@@ -266,10 +271,10 @@ describe("calculator calculations", () => {
     expect(result.capped).toBe(false);
   });
 
-  test("brokerage applies the 800000 won cap for the 50m to 200m sale range", () => {
+  test('brokerage applies the 800000 won cap for the 50m to 200m sale range', () => {
     const result = calculateBrokerage({
-      transaction: "sale",
-      property: "house",
+      transaction: 'sale',
+      property: 'house',
       amount: 150_000_000,
       vatRate: 10,
     });
@@ -278,13 +283,13 @@ describe("calculator calculations", () => {
     expect(result.capped).toBe(false);
   });
 
-  test("brokerage converts monthly rent transaction amount", () => {
+  test('brokerage converts monthly rent transaction amount', () => {
     expect(getMonthlyLeaseAmount(10_000_000, 300_000)).toBe(31_000_000);
     expect(getMonthlyLeaseAmount(30_000_000, 300_000)).toBe(60_000_000);
 
     const result = calculateBrokerage({
-      transaction: "monthly",
-      property: "house",
+      transaction: 'monthly',
+      property: 'house',
       amount: 31_000_000,
       vatRate: 10,
     });
@@ -293,18 +298,18 @@ describe("calculator calculations", () => {
     expect(result.brokerageFee).toBe(155_000);
   });
 
-  test("brokerage supports officetel and presale rules", () => {
+  test('brokerage supports officetel and presale rules', () => {
     const officetel = calculateBrokerage({
-      transaction: "sale",
-      property: "officetel",
+      transaction: 'sale',
+      property: 'officetel',
       amount: 300_000_000,
       officetelEligible: true,
       vatRate: 0,
     });
 
     const presale = calculateBrokerage({
-      transaction: "sale",
-      property: "presale",
+      transaction: 'sale',
+      property: 'presale',
       amount: 0,
       paidAmount: 200_000_000,
       premium: 30_000_000,
@@ -318,16 +323,16 @@ describe("calculator calculations", () => {
     expect(presale.brokerageFee).toBe(920_000);
   });
 
-  test("severance calculates the statutory formula from the previous three months", () => {
-    const period = getSeverancePeriod("2026-10-01");
+  test('severance calculates the statutory formula from the previous three months', () => {
+    const period = getSeverancePeriod('2026-10-01');
 
-    expect(period.start).toBe("2026-07-01");
-    expect(period.end).toBe("2026-09-30");
+    expect(period.start).toBe('2026-07-01');
+    expect(period.end).toBe('2026-09-30');
     expect(period.days).toBe(92);
 
     const result = calculateSeverance({
-      startDate: "2021-10-01",
-      retirementDate: "2026-10-01",
+      startDate: '2021-10-01',
+      retirementDate: '2026-10-01',
       monthlyWages: [3_000_000, 3_000_000, 3_000_000],
       annualBonus: 1_200_000,
       annualLeaveAllowance: 400_000,
@@ -340,15 +345,15 @@ describe("calculator calculations", () => {
     expect(result.leaveAllowanceIncluded).toBe(100_000);
     expect(result.averageWageAmount).toBe(9_400_000);
     expect(result.averageDailyWage).toBeCloseTo(102_173.913, 3);
-    expect(result.appliedBasis).toBe("average");
+    expect(result.appliedBasis).toBe('average');
     expect(result.severancePay).toBeCloseTo(15_334_484.81, 2);
     expect(result.eligible).toBe(true);
   });
 
-  test("severance uses ordinary daily wage when it is higher", () => {
+  test('severance uses ordinary daily wage when it is higher', () => {
     const result = calculateSeverance({
-      startDate: "2024-01-01",
-      retirementDate: "2026-10-01",
+      startDate: '2024-01-01',
+      retirementDate: '2026-10-01',
       monthlyWages: [2_000_000, 2_000_000, 2_000_000],
       annualBonus: 0,
       annualLeaveAllowance: 0,
@@ -358,22 +363,22 @@ describe("calculator calculations", () => {
 
     expect(result.averageDailyWage).toBeCloseTo(65_217.391, 3);
     expect(result.appliedDailyWage).toBe(100_000);
-    expect(result.appliedBasis).toBe("ordinary");
+    expect(result.appliedBasis).toBe('ordinary');
     expect(result.severancePay).toBeCloseTo(8_252_054.795, 3);
   });
 
-  test("severance checks one-year and weekly-hours eligibility", () => {
+  test('severance checks one-year and weekly-hours eligibility', () => {
     const shortService = calculateSeverance({
-      startDate: "2026-01-01",
-      retirementDate: "2026-12-31",
+      startDate: '2026-01-01',
+      retirementDate: '2026-12-31',
       monthlyWages: [2_000_000, 2_000_000, 2_000_000],
       annualBonus: 0,
       annualLeaveAllowance: 0,
       weeklyHours: 40,
     });
     const shortHours = calculateSeverance({
-      startDate: "2024-01-01",
-      retirementDate: "2026-10-01",
+      startDate: '2024-01-01',
+      retirementDate: '2026-10-01',
       monthlyWages: [2_000_000, 2_000_000, 2_000_000],
       annualBonus: 0,
       annualLeaveAllowance: 0,
@@ -386,10 +391,10 @@ describe("calculator calculations", () => {
     expect(shortHours.severancePay).toBe(0);
   });
 
-  test("severance excludes configured average-wage days and wages", () => {
+  test('severance excludes configured average-wage days and wages', () => {
     const result = calculateSeverance({
-      startDate: "2024-01-01",
-      retirementDate: "2026-10-01",
+      startDate: '2024-01-01',
+      retirementDate: '2026-10-01',
       monthlyWages: [3_000_000, 3_000_000, 3_000_000],
       annualBonus: 0,
       annualLeaveAllowance: 0,
@@ -403,9 +408,9 @@ describe("calculator calculations", () => {
     expect(result.averageDailyWage).toBeCloseTo(106_097.5609, 3);
   });
 
-  test("hourly wage supports weekly holiday, overtime, tax and probation", () => {
+  test('hourly wage supports weekly holiday, overtime, tax and probation', () => {
     const result = calculateHourlyWage({
-      payType: "hourly",
+      payType: 'hourly',
       amount: 12_000,
       dailyHours: 8,
       weeklyDays: 5,
@@ -413,7 +418,7 @@ describe("calculator calculations", () => {
       weeklyOvertimeHours: 2,
       monthlyOvertimeHours: 4,
       weeklyHolidayIncluded: true,
-      taxType: "insurance",
+      taxType: 'insurance',
       probation: false,
     });
 
@@ -428,9 +433,9 @@ describe("calculator calculations", () => {
     expect(result.netMonthlyWage).toBeLessThan(result.grossMonthlyWage);
   });
 
-  test("hourly wage supports daily, weekly, monthly and annual pay inputs", () => {
+  test('hourly wage supports daily, weekly, monthly and annual pay inputs', () => {
     const daily = calculateHourlyWage({
-      payType: "daily",
+      payType: 'daily',
       amount: 100_000,
       dailyHours: 8,
       weeklyDays: 5,
@@ -438,22 +443,22 @@ describe("calculator calculations", () => {
       weeklyOvertimeHours: 0,
       monthlyOvertimeHours: 0,
       weeklyHolidayIncluded: false,
-      taxType: "none",
+      taxType: 'none',
       probation: false,
     });
     const weekly = calculateHourlyWage({
       ...dailyInput(),
-      payType: "weekly",
+      payType: 'weekly',
       amount: 500_000,
     });
     const monthly = calculateHourlyWage({
       ...dailyInput(),
-      payType: "monthly",
+      payType: 'monthly',
       amount: 2_000_000,
     });
     const annual = calculateHourlyWage({
       ...dailyInput(),
-      payType: "annual",
+      payType: 'annual',
       amount: 24_000_000,
     });
 
@@ -465,7 +470,7 @@ describe("calculator calculations", () => {
 
   function dailyInput() {
     return {
-      payType: "hourly" as const,
+      payType: 'hourly' as const,
       amount: 12_000,
       dailyHours: 8,
       weeklyDays: 5,
@@ -473,16 +478,16 @@ describe("calculator calculations", () => {
       weeklyOvertimeHours: 0,
       monthlyOvertimeHours: 0,
       weeklyHolidayIncluded: false,
-      taxType: "none" as const,
+      taxType: 'none' as const,
       probation: false,
     };
   }
 
-  test("annual leave allowance calculates unused leave and ordinary wage", () => {
+  test('annual leave allowance calculates unused leave and ordinary wage', () => {
     const result = calculateAnnualLeave({
-      basis: "hire-date",
-      startDate: "2022-10-01",
-      calculationDate: "2026-10-05",
+      basis: 'hire-date',
+      startDate: '2022-10-01',
+      calculationDate: '2026-10-05',
       usedDays: 5,
       dailyHours: 8,
       weeklyDays: 5,
@@ -501,11 +506,11 @@ describe("calculator calculations", () => {
     expect(result.allowance).toBeCloseTo(1_392_328.7671, 2);
   });
 
-  test("annual leave allowance supports fiscal-year first-year prorating", () => {
+  test('annual leave allowance supports fiscal-year first-year prorating', () => {
     const result = calculateAnnualLeave({
-      basis: "fiscal-year",
-      startDate: "2025-10-01",
-      calculationDate: "2026-10-05",
+      basis: 'fiscal-year',
+      startDate: '2025-10-01',
+      calculationDate: '2026-10-05',
       usedDays: 0,
       dailyHours: 8,
       weeklyDays: 5,
@@ -519,11 +524,11 @@ describe("calculator calculations", () => {
     expect(result.leaveDays).toBeCloseTo(29.7808, 3);
   });
 
-  test("annual leave allowance excludes weekly hours below 15", () => {
+  test('annual leave allowance excludes weekly hours below 15', () => {
     const result = calculateAnnualLeave({
-      basis: "hire-date",
-      startDate: "2025-01-01",
-      calculationDate: "2026-01-01",
+      basis: 'hire-date',
+      startDate: '2025-01-01',
+      calculationDate: '2026-01-01',
       usedDays: 0,
       dailyHours: 4,
       weeklyDays: 3,
@@ -537,5 +542,4 @@ describe("calculator calculations", () => {
     expect(result.unusedDays).toBe(0);
     expect(result.allowance).toBe(0);
   });
-
 });
