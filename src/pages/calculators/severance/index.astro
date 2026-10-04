@@ -12,7 +12,7 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
 >
   <Header />
   <main class="cm-container" py="10 md:14 lg:18">
-    <nav mb="5" text="xs sm:sm" text-text-muted dark:text-dark-text-muted>
+    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">홈</a>
       <span mx="2">/</span>
       <a href="/calculators/" no-underline hover="text-primary">계산기</a>
@@ -21,7 +21,7 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
     <header max-w="3xl" mb="8">
       <p m="0" text="sm" font="700" text-primary>급여·노동</p>
       <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>퇴직금 계산기</h1>
-      <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark:text-dark-text-muted>
+      <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">
         입사일과 퇴직일, 퇴직 전 3개월 임금을 기준으로 1일 평균임금과 예상 퇴직금을 계산합니다.
       </p>
     </header>
@@ -36,16 +36,16 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
         <div grid="~ cols-1 md:cols-2" gap="6">
           <div>
             <h3 m="0" text="base" font="800">기본 산식</h3>
-            <p m="2 0 0" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+            <p m="2 0 0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
               퇴직금은 1일 평균임금에 30일을 곱한 뒤 계속근로일수를 365로 나누어 계산합니다.
             </p>
-            <p m="3 0 0" rounded-xl bg-surface-muted p="4" text="sm" font="700" dark:bg-dark-surface-subtle>
+            <p m="3 0 0" rounded-xl bg-surface-muted p="4" text="sm" font="700" dark="bg-dark-surface-subtle">
               퇴직금 = 1일 적용 임금 × 30 × 계속근로일수 ÷ 365
             </p>
           </div>
           <div>
             <h3 m="0" text="base" font="800">평균임금</h3>
-            <p m="2 0 0" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+            <p m="2 0 0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
               퇴직일 이전 3개월의 임금과 산입 대상 상여금·연차수당을 반영해 평균임금을 계산합니다.
               입력한 1일 통상임금이 더 높은 경우에는 비교 결과도 함께 표시합니다.
             </p>
@@ -57,7 +57,7 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
     <section max-w="4xl" mt="8">
       <h2 class="cm-section-title">입력값 안내</h2>
       <div class="cm-card" mt="4" p="5 md:6">
-        <ul m="0" pl="5" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+        <ul m="0" pl="5" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
           <li>퇴직일은 마지막 근무일의 다음 날을 입력합니다.</li>
           <li>퇴직 전 3개월 임금은 세전 기준으로 실제 지급된 임금을 입력합니다.</li>
           <li>최근 1년 상여금과 산입 대상 연차수당은 각각 3/12만 평균임금에 반영합니다.</li>
@@ -70,7 +70,7 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
     <section max-w="4xl" mt="8">
       <h2 class="cm-section-title">주의사항</h2>
       <div class="cm-card" mt="4" p="5 md:6">
-        <p m="0" text="sm md:base" leading="7" text-text-muted dark:text-dark-text-muted>
+        <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
           이 계산기는 세전 예상 퇴직금을 확인하기 위한 참고용 도구입니다. 평균임금 산정에서 제외되는 기간,
           임금에 포함되는 항목, 중간정산 이력, 실제 계속근로관계 등 개별 사정에 따라 결과가 달라질 수 있습니다.
         </p>
