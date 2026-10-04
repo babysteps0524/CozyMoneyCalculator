@@ -25,7 +25,7 @@
   <div mt="5">
     <h3 m="0" text="base" font="800">퇴직 전 3개월 임금</h3>
     <p id="severance-period" m="0" mt="1" text="xs" text-text-muted dark="text-dark-text-muted">퇴직일을 입력하면 산정기간이 표시됩니다.</p>
-    <div id="severance-months" grid="~ cols-1 md:cols-3" gap="3" mt="3"></div>
+    <div id="severance-months" grid="~ cols-1 md:cols-2 lg:cols-3" gap="4" mt="3"></div>
     <p m="0" mt="2" text="xs" leading="5" text-text-muted dark="text-dark-text-muted">세전 임금 합계입니다. 기본급과 임금에 해당하는 수당 등 실제 지급액을 합산하세요.</p>
   </div>
 
@@ -140,7 +140,7 @@
         months.innerHTML = period.periods.map((item, index) =>
           '<label class="cm-card" p="4">' +
           '<span class="cm-label">' + (index + 1) + '개월차 · ' + item.start + ' ~ ' + item.end + '</span>' +
-          '<div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">' +
+          '<div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="3">' +
           '<button type="button" data-step-direction="-1" aria-label="임금 감소" class="cm-step-button">−</button>' +
           '<div relative><input id="severance-wage-' + index + '" class="cm-input pr-12" type="text" inputmode="numeric" value="0" data-number-input data-step="10000" data-min="0" data-decimal="false" />' +
           '<span absolute right="4" top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span></div>' +
