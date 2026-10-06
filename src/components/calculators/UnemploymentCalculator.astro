@@ -68,7 +68,7 @@
 
   <section mt="6" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
     <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">총 예상 구직급여</p>
-    <strong id="total" block mt="2" text="2xl md:3xl" font="800" text-primary">-</strong>
+    <strong id="total" block mt="2" text="2xl md:3xl" font="800" text-primary>-</strong>
     <p id="headline" m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">-</p>
   </section>
 
@@ -96,20 +96,23 @@
   import { calculateUnemployment } from '../../lib/calculators/unemployment';
 
   const root = document.querySelector<HTMLElement>('[data-unemployment-calculator]');
+
   if (root) {
     const daily = root.querySelector<HTMLInputElement>('#daily')!;
     const hours = root.querySelector<HTMLSelectElement>('#hours')!;
     const age = root.querySelector<HTMLSelectElement>('#age')!;
     const period = root.querySelector<HTMLSelectElement>('#period')!;
     const error = root.querySelector<HTMLElement>('#error')!;
-    const fmt = (v: number) => Math.round(v).toLocaleString('ko-KR') + '원';
-    const n = () => Number(daily.value.replace(/,/g, '') || 0);
+
+    const fmt = (value: number) => Math.round(value).toLocaleString('ko-KR') + '원';
+    const getDailyAverageWage = () => Number(daily.value.replace(/,/g, '') || 0);
 
     const calc = () => {
       try {
         error.hidden = true;
+
         const result = calculateUnemployment({
-          dailyAverageWage: n(),
+          dailyAverageWage: getDailyAverageWage(),
           dailyWorkingHours: Number(hours.value),
           ageGroup: age.value as 'under50' | 'over50OrDisabled',
           insurancePeriod: period.value as 'under1' | '1to3' | '3to5' | '5to10' | '10plus',
@@ -130,6 +133,7 @@
           : result.upperLimitApplied
             ? '평균임금의 60%가 상한액보다 높아 상한액을 적용했습니다.'
             : '평균임금의 60%가 상·하한 범위 안에 있어 그대로 적용했습니다.';
+
         root.querySelector<HTMLElement>('#status')!.textContent = status;
       } catch (e) {
         error.textContent = e instanceof Error ? e.message : '계산 중 오류가 발생했습니다.';
@@ -138,6 +142,7 @@
     };
 
     root.querySelector('#calculate')?.addEventListener('click', calc);
+
     root.querySelector('#reset')?.addEventListener('click', () => {
       daily.value = '100,000';
       hours.value = '8';
@@ -145,6 +150,7 @@
       period.value = 'under1';
       calc();
     });
+
     bindNumberControls(root);
     root.addEventListener('input', calc);
     root.addEventListener('change', calc);
