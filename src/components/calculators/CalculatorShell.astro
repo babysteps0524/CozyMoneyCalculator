@@ -554,8 +554,15 @@ const currentGuidance = guidance[kind] ?? {
 
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
-  import { calculateDti, type DtiRepaymentMethod } from '../../lib/calculators/dti';
-  import { calculateHourlyWage, type HourlyPayType, type HourlyTaxType } from '../../lib/calculators/hourlyWage';
+  import {
+    calculateDti,
+    type DtiRepaymentMethod,
+  } from '../../lib/calculators/dti';
+  import {
+    calculateHourlyWage,
+    type HourlyPayType,
+    type HourlyTaxType,
+  } from '../../lib/calculators/hourlyWage';
 
   const root = document.querySelector<HTMLElement>('[data-calculator]');
   if (root) {
@@ -646,7 +653,13 @@ const currentGuidance = guidance[kind] ?? {
         field('rate', '목표 DSR', '40', 'number', '%'),
       dti: () =>
         field('income', '연소득', '50000000', 'number', '원') +
-        field('mortgageAmount', '주택담보대출 금액', '300000000', 'number', '원') +
+        field(
+          'mortgageAmount',
+          '주택담보대출 금액',
+          '300000000',
+          'number',
+          '원',
+        ) +
         field('mortgageRate', '주택담보대출 금리', '4.0', 'number', '%') +
         field('mortgageYears', '주택담보대출 기간', '30', 'number', '년') +
         select('mortgageMethod', '주택담보대출 상환방식', [
@@ -721,11 +734,26 @@ const currentGuidance = guidance[kind] ?? {
         field('dailyHours', '일일 근무시간', '8', 'number', '시간') +
         field('weeklyDays', '일주 근무일수', '5', 'number', '일') +
         field('monthlyDays', '한달 근무일수', '22', 'number', '일') +
-        field('weeklyOvertimeHours', '주 연장 근무시간', '0', 'number', '시간') +
-        field('monthlyOvertimeHours', '월 연장 근무시간', '0', 'number', '시간') +
+        field(
+          'weeklyOvertimeHours',
+          '주 연장 근무시간',
+          '0',
+          'number',
+          '시간',
+        ) +
+        field(
+          'monthlyOvertimeHours',
+          '월 연장 근무시간',
+          '0',
+          'number',
+          '시간',
+        ) +
         select('weeklyHoliday', '주휴수당', ['포함', '미포함']) +
         select('taxType', '세금', ['미적용', '4대보험 9.7%', '소득세 3.3%']) +
-        select('probation', '수습', ['미적용 · 전액 지급', '적용 · 예상 급여액 10% 차감']),
+        select('probation', '수습', [
+          '미적용 · 전액 지급',
+          '적용 · 예상 급여액 10% 차감',
+        ]),
     };
     fields.innerHTML = (configs[kind] || configs.percentage)();
 
@@ -778,8 +806,7 @@ const currentGuidance = guidance[kind] ?? {
           const status = result.withinTarget
             ? `목표 DTI ${fmt(n('rate'), 2)}% 이내`
             : `목표 DTI ${fmt(n('rate'), 2)}% 초과`;
-          text =
-            `주택담보대출 연간 원리금: ${won(result.annualMortgagePayment)} · 기타 대출 연간 이자: ${won(result.annualOtherInterest)} · 연간 상환부담: ${won(result.annualDebtService)} · 상환방식: ${methodLabel} · ${status} · 목표 DTI 기준 연간 여유액: ${won(result.headroom)}`;
+          text = `주택담보대출 연간 원리금: ${won(result.annualMortgagePayment)} · 기타 대출 연간 이자: ${won(result.annualOtherInterest)} · 연간 상환부담: ${won(result.annualDebtService)} · 상환방식: ${methodLabel} · ${status} · 목표 DTI 기준 연간 여유액: ${won(result.headroom)}`;
           break;
         }
         case 'severance': {
@@ -811,8 +838,7 @@ const currentGuidance = guidance[kind] ?? {
           const dailyWage = monthlySalary / 21.75;
           const dailyWage8Hours = dailyWage;
           value = monthlySalary;
-          text =
-            `세전 월 급여: ${won(monthlySalary)} · 1일 8시간 기준 일급: ${won(dailyWage8Hours)} · 연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 계산입니다.`;
+          text = `세전 월 급여: ${won(monthlySalary)} · 1일 8시간 기준 일급: ${won(dailyWage8Hours)} · 연봉에서 입력한 연간 별도 금액을 제외한 금액을 12개월로 나눈 단순 계산입니다.`;
           break;
         }
         case 'hourlyWage': {
@@ -843,9 +869,10 @@ const currentGuidance = guidance[kind] ?? {
 
           value = result.netMonthlyWage;
           const minimumWageStatus =
-            result.hourlyWage >= 10320 ? '2026년 최저임금 이상' : '2026년 최저임금 미만';
-          text =
-            `예상 시급: ${won(result.hourlyWage)} · 예상 일급: ${won(result.dailyWage)} · 예상 주급: ${won(result.weeklyWage)} · 기본 월급: ${won(result.monthlyBaseWage)} · 주휴수당: ${won(result.weeklyHolidayPay)} · 주 연장수당: ${won(result.weeklyOvertimePay)} · 월 연장수당: ${won(result.monthlyOvertimePay)} · 월 세전: ${won(result.grossMonthlyWage)} · 공제: ${won(result.tax)} · 월 최종 환산금액: ${won(result.netMonthlyWage)} · ${minimumWageStatus}`;
+            result.hourlyWage >= 10320
+              ? '2026년 최저임금 이상'
+              : '2026년 최저임금 미만';
+          text = `예상 시급: ${won(result.hourlyWage)} · 예상 일급: ${won(result.dailyWage)} · 예상 주급: ${won(result.weeklyWage)} · 기본 월급: ${won(result.monthlyBaseWage)} · 주휴수당: ${won(result.weeklyHolidayPay)} · 주 연장수당: ${won(result.weeklyOvertimePay)} · 월 연장수당: ${won(result.monthlyOvertimePay)} · 월 세전: ${won(result.grossMonthlyWage)} · 공제: ${won(result.tax)} · 월 최종 환산금액: ${won(result.netMonthlyWage)} · ${minimumWageStatus}`;
           break;
         }
         case 'vat': {

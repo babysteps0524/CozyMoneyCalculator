@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "format": "prettier --write \"**/*.astro\"",
     "check": "astro check && tsc --noEmit",
     "test": "bun test",
     "verify": "bun run check && bun run test && bun run build"
