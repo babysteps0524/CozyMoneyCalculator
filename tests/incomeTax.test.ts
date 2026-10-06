@@ -94,10 +94,56 @@ describe('income tax calculator', () => {
     expect(result.pensionAccountTaxCredit).toBe(720_000);
     expect(result.insuranceTaxCredit).toBe(120_000);
     expect(result.educationTaxCredit).toBe(150_000);
+    expect(result.medicalTaxCredit).toBe(300_000);
     expect(result.rentTaxCredit).toBe(900_000);
-    expect(result.determinedTax).toBe(3_140_000);
+    expect(result.determinedTax).toBe(2_840_000);
     expect(result.finalTax).toBe(result.determinedTax - 1_500_000);
-    expect(result.finalTax).toBe(1_640_000);
+    expect(result.finalTax).toBe(1_340_000);
+  });
+
+  test('applies the 3% threshold only to general medical expenses', () => {
+    const result = calculateIncomeTax({
+      businessIncome: 0,
+      wageIncome: 50_000_000,
+      pensionIncome: 0,
+      interestIncome: 0,
+      dividendIncome: 0,
+      otherIncome: 0,
+      otherIncomeExpense: 0,
+      dependents: 1,
+      seniorDependents: 0,
+      disabledDependents: 0,
+      femaleAdditionalDeduction: 0,
+      singleParentDeduction: 0,
+      pensionInsurance: 0,
+      specialIncomeDeduction: 0,
+      otherIncomeDeduction: 0,
+      children: 0,
+      birthFirst: 0,
+      birthSecond: 0,
+      birthThirdPlus: 0,
+      pensionAccount: 0,
+      insurance: 0,
+      disabledInsurance: 0,
+      medicalSelfEtc: 2_000_000,
+      infertilityMedical: 0,
+      prematureMedical: 0,
+      otherMedical: 1_000_000,
+      actualReimbursement: 0,
+      educationSelf: 0,
+      educationDisabled: 0,
+      educationPreschool: 0,
+      educationSchool: 0,
+      educationUniversity: 0,
+      rentPayment: 0,
+      standardTaxCredit: 0,
+      otherTaxCredit: 0,
+      withholdingTax: 0,
+      prepaidTax: 0,
+      penaltyTax: 0,
+    });
+
+    expect(result.medicalTaxCredit).toBe(300_000);
   });
 
   test('caps pension account and insurance tax credits', () => {
