@@ -26,7 +26,7 @@
     <label>
       <span class="cm-label" id="vat-amount-label">공급가액</span>
       <div relative>
-        <input id="vat-amount" class="cm-input pr-12" type="text" inputmode="numeric" value="1000000" />
+        <input id="vat-amount" class="cm-input pr-12" type="text" inputmode="numeric" value="1000000" data-number-input data-step="10000" data-min="0" data-decimal="false" />
         <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
       </div>
     </label>
@@ -34,7 +34,7 @@
     <label>
       <span class="cm-label" id="vat-second-label">세율</span>
       <div relative>
-        <input id="vat-rate" class="cm-input pr-12" type="text" inputmode="decimal" value="10" />
+        <input id="vat-rate" class="cm-input pr-12" type="text" inputmode="decimal" value="10" data-number-input data-step="0.1" data-min="0" data-decimal="true" />
         <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span>
       </div>
     </label>
@@ -42,7 +42,7 @@
     <label>
       <span class="cm-label" id="vat-second-value-label">매입세액</span>
       <div relative>
-        <input id="vat-second-value" class="cm-input pr-12" type="text" inputmode="numeric" value="0" />
+        <input id="vat-second-value" class="cm-input pr-12" type="text" inputmode="numeric" value="0" data-number-input data-step="10000" data-min="0" data-decimal="false" />
         <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
       </div>
     </label>
