@@ -622,7 +622,10 @@ const currentGuidance = guidance[kind] ?? {
       }
       return '1';
     };
-    const isDecimal = (id: string) => id === 'rate' || id === 'loanRate';
+    const isDecimal = (id: string) =>
+      id === 'rate' ||
+      id === 'loanRate' ||
+      (kind === 'percentage' && (id === 'valueA' || id === 'valueB'));
     const field = (
       id: string,
       label: string,
