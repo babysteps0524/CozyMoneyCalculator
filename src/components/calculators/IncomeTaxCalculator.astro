@@ -1,7 +1,5 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
-import { bindNumberControls } from '../../lib/calculators/number-input';
-import { calculateIncomeTax, type IncomeTaxInput } from '../../lib/calculators/incomeTax';
 ---
 
 <section class="cm-card" data-income-tax-calculator p="5 md:7">
@@ -66,6 +64,9 @@ import { calculateIncomeTax, type IncomeTaxInput } from '../../lib/calculators/i
 </section>
 
 <script>
+  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { calculateIncomeTax, type IncomeTaxInput } from '../../lib/calculators/incomeTax';
+
   const root = document.querySelector<HTMLElement>('[data-income-tax-calculator]');
   if (root) {
     const fields = root.querySelector<HTMLElement>('#income-tax-fields')!;
