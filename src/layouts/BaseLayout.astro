@@ -30,27 +30,23 @@ const { title, description, canonical = 'https://cozymoney.kr/' } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link
-      id="pretendard-preload"
       rel="preload"
-      as="style"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+      href="/fonts/PretendardVariable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-    <script is:inline>
-      const pretendard = document.getElementById('pretendard-preload');
-      if (pretendard) {
-        pretendard.addEventListener('load', () => {
-          pretendard.rel = 'stylesheet';
-        });
+    <style is:global>
+      @font-face {
+        font-family: 'Pretendard Variable';
+        src: url('/fonts/PretendardVariable.woff2') format('woff2');
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
       }
-    </script>
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-      />
-    </noscript>
+    </style>
+
     <title>{title}</title>
     {import.meta.env.PUBLIC_ADSENSE_CLIENT && (
       <meta

@@ -13,20 +13,34 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
   <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-      <a href="/" no-underline hover="text-primary">홈</a>
+      <a href="/" no-underline hover="text-primary">
+        홈
+      </a>
       <span mx="2">/</span>
-      <a href="/calculators/" no-underline hover="text-primary">계산기</a>
+      <a href="/calculators/" no-underline hover="text-primary">
+        계산기
+      </a>
       <span mx="2">/</span>
       세금
     </nav>
 
     <header max-w="3xl" mb="8">
-      <p m="0" text="sm" font="700" text-primary>세금</p>
+      <p m="0" text="sm" font="700" text-primary>
+        세금
+      </p>
       <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
         부가가치세 계산기
       </h1>
-      <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">
-        공급가액과 부가세 포함 합계금액을 서로 환산하고, 부가세액 역산과 매출세액·매입세액 차이에 따른 납부·환급세액까지 확인할 수 있습니다.
+      <p
+        m="0"
+        mt="4"
+        text="base md:lg"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        공급가액과 부가세 포함 합계금액을 서로 환산하고, 부가세액 역산과
+        매출세액·매입세액 차이에 따른 납부·환급세액까지 확인할 수 있습니다.
       </p>
     </header>
 
@@ -37,11 +51,28 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">부가가치세 계산기 사용법</h2>
       <div class="cm-card" mt="4" p="5 md:6">
-        <ol m="0" pl="5" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-          <li>내가 알고 있는 금액이 공급가액인지, 부가세 포함 합계금액인지, 부가세액인지 먼저 선택합니다.</li>
-          <li>기본 세율 10%를 확인하고 필요한 경우 계산에 사용할 세율을 입력합니다.</li>
-          <li>필요하면 끝자리 처리 단위와 반올림·내림·올림 방식을 선택합니다.</li>
-          <li>계산 결과에서 공급가액·부가세·합계금액과 계산식을 함께 확인합니다.</li>
+        <ol
+          m="0"
+          pl="5"
+          text="sm md:base"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          <li>
+            내가 알고 있는 금액이 공급가액인지, 부가세 포함 합계금액인지,
+            부가세액인지 먼저 선택합니다.
+          </li>
+          <li>
+            기본 세율 10%를 확인하고 필요한 경우 계산에 사용할 세율을
+            입력합니다.
+          </li>
+          <li>
+            필요하면 끝자리 처리 단위와 반올림·내림·올림 방식을 선택합니다.
+          </li>
+          <li>
+            계산 결과에서 공급가액·부가세·합계금액과 계산식을 함께 확인합니다.
+          </li>
         </ol>
       </div>
     </section>
@@ -50,39 +81,82 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
       <h2 class="cm-section-title">계산 방법</h2>
       <div grid="~ cols-1 md:cols-2" gap="4" mt="4">
         <article class="cm-card" p="5 md:6">
-          <h3 m="0" text="lg" font="750">1. 공급가액으로 계산</h3>
-          <p m="0" mt="3" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            공급가액에 세율을 곱하면 부가세가 됩니다. 공급가액과 부가세를 더하면 부가세 포함 합계금액이 됩니다.
+          <h3 m="0" text="lg" font="750">
+            1. 공급가액으로 계산
+          </h3>
+          <p
+            m="0"
+            mt="3"
+            text="sm md:base"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            공급가액에 세율을 곱하면 부가세가 됩니다. 공급가액과 부가세를 더하면
+            부가세 포함 합계금액이 됩니다.
           </p>
           <p m="0" mt="3" text="sm" leading="7">
-            부가세 = 공급가액 × 세율<br />
+            부가세 = 공급가액 × 세율
+            <br />
             합계금액 = 공급가액 + 부가세
           </p>
         </article>
         <article class="cm-card" p="5 md:6">
-          <h3 m="0" text="lg" font="750">2. 합계금액에서 역산</h3>
-          <p m="0" mt="3" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            부가세가 포함된 합계금액을 알고 있다면 합계금액을 1+세율로 나누어 공급가액을 구하고, 합계금액에서 공급가액을 빼 부가세를 구합니다.
+          <h3 m="0" text="lg" font="750">
+            2. 합계금액에서 역산
+          </h3>
+          <p
+            m="0"
+            mt="3"
+            text="sm md:base"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            부가세가 포함된 합계금액을 알고 있다면 합계금액을 1+세율로 나누어
+            공급가액을 구하고, 합계금액에서 공급가액을 빼 부가세를 구합니다.
           </p>
           <p m="0" mt="3" text="sm" leading="7">
-            공급가액 = 합계금액 ÷ (1 + 세율)<br />
+            공급가액 = 합계금액 ÷ (1 + 세율)
+            <br />
             부가세 = 합계금액 − 공급가액
           </p>
         </article>
         <article class="cm-card" p="5 md:6">
-          <h3 m="0" text="lg" font="750">3. 부가세액에서 역산</h3>
-          <p m="0" mt="3" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            부가세액 자체를 알고 있을 때는 부가세액을 세율로 나누어 공급가액을 구할 수 있습니다. 세율이 0%이면 역산할 수 없습니다.
+          <h3 m="0" text="lg" font="750">
+            3. 부가세액에서 역산
+          </h3>
+          <p
+            m="0"
+            mt="3"
+            text="sm md:base"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            부가세액 자체를 알고 있을 때는 부가세액을 세율로 나누어 공급가액을
+            구할 수 있습니다. 세율이 0%이면 역산할 수 없습니다.
           </p>
           <p m="0" mt="3" text="sm" leading="7">
-            공급가액 = 부가세 ÷ 세율<br />
+            공급가액 = 부가세 ÷ 세율
+            <br />
             합계금액 = 공급가액 + 부가세
           </p>
         </article>
         <article class="cm-card" p="5 md:6">
-          <h3 m="0" text="lg" font="750">4. 납부·환급세액을 간편 추정</h3>
-          <p m="0" mt="3" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            일반과세자의 기본 구조를 단순화해 매출세액에서 공제할 매입세액을 뺍니다. 결과가 양수면 납부세액, 음수면 환급세액 방향입니다.
+          <h3 m="0" text="lg" font="750">
+            4. 납부·환급세액을 간편 추정
+          </h3>
+          <p
+            m="0"
+            mt="3"
+            text="sm md:base"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            일반과세자의 기본 구조를 단순화해 매출세액에서 공제할 매입세액을
+            뺍니다. 결과가 양수면 납부세액, 음수면 환급세액 방향입니다.
           </p>
           <p m="0" mt="3" text="sm" leading="7">
             납부(환급)세액 = 매출세액 − 매입세액
@@ -96,27 +170,66 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
       <div class="cm-card" mt="4" p="5 md:6">
         <div grid="~ cols-1 md:cols-2" gap="5">
           <div>
-            <h3 m="0" text="base" font="750">예시 1 · 공급가액 1,000,000원</h3>
-            <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+            <h3 m="0" text="base" font="750">
+              예시 1 · 공급가액 1,000,000원
+            </h3>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
               세율 10%라면 부가세는 100,000원이고 합계금액은 1,100,000원입니다.
             </p>
           </div>
           <div>
-            <h3 m="0" text="base" font="750">예시 2 · 합계금액 1,100,000원</h3>
-            <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              공급가액은 1,100,000 × 100 ÷ 110 = 1,000,000원, 부가세는 100,000원입니다.
+            <h3 m="0" text="base" font="750">
+              예시 2 · 합계금액 1,100,000원
+            </h3>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              공급가액은 1,100,000 × 100 ÷ 110 = 1,000,000원, 부가세는
+              100,000원입니다.
             </p>
           </div>
           <div>
-            <h3 m="0" text="base" font="750">예시 3 · 부가세 200,000원</h3>
-            <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              세율 10%라면 공급가액은 200,000 ÷ 0.10 = 2,000,000원, 합계금액은 2,200,000원입니다.
+            <h3 m="0" text="base" font="750">
+              예시 3 · 부가세 200,000원
+            </h3>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              세율 10%라면 공급가액은 200,000 ÷ 0.10 = 2,000,000원, 합계금액은
+              2,200,000원입니다.
             </p>
           </div>
           <div>
-            <h3 m="0" text="base" font="750">예시 4 · 매출세액 300,000원</h3>
-            <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              공제 가능한 매입세액이 180,000원이라면 단순 납부세액은 120,000원입니다.
+            <h3 m="0" text="base" font="750">
+              예시 4 · 매출세액 300,000원
+            </h3>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              공제 가능한 매입세액이 180,000원이라면 단순 납부세액은
+              120,000원입니다.
             </p>
           </div>
         </div>
@@ -127,39 +240,105 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
       <h2 class="cm-section-title">자주 묻는 질문</h2>
       <div mt="4" grid="~ cols-1" gap="3">
         <details class="cm-card" p="5">
-          <summary cursor-pointer font="700">부가세 10%는 합계금액의 10%인가요?</summary>
-          <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-            일반적인 과세 거래에서는 공급가액에 10%를 적용합니다. 따라서 부가세 포함 합계금액을 기준으로 보면 부가세 비중은 10%가 아니라 10/110, 약 9.09%가 됩니다.
+          <summary cursor-pointer font="700">
+            부가세 10%는 합계금액의 10%인가요?
+          </summary>
+          <p
+            m="0"
+            mt="3"
+            text="sm"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            일반적인 과세 거래에서는 공급가액에 10%를 적용합니다. 따라서 부가세
+            포함 합계금액을 기준으로 보면 부가세 비중은 10%가 아니라 10/110, 약
+            9.09%가 됩니다.
           </p>
         </details>
         <details class="cm-card" p="5">
-          <summary cursor-pointer font="700">1,100,000원에서 왜 부가세가 100,000원인가요?</summary>
-          <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-            공급가액 1,000,000원과 부가세 100,000원이 합쳐진 금액이기 때문입니다. 합계금액에 세율을 단순히 10% 곱하는 것이 아니라 1.10으로 나누어 공급가액을 먼저 역산합니다.
+          <summary cursor-pointer font="700">
+            1,100,000원에서 왜 부가세가 100,000원인가요?
+          </summary>
+          <p
+            m="0"
+            mt="3"
+            text="sm"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            공급가액 1,000,000원과 부가세 100,000원이 합쳐진 금액이기
+            때문입니다. 합계금액에 세율을 단순히 10% 곱하는 것이 아니라 1.10으로
+            나누어 공급가액을 먼저 역산합니다.
           </p>
         </details>
         <details class="cm-card" p="5">
-          <summary cursor-pointer font="700">부가세를 빼고 받은 금액이 있으면 어떻게 계산하나요?</summary>
-          <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-            거래대금에 부가세 포함 여부가 명확하지 않은 경우 법령상 공급가액을 별도로 산정하는 규정이 있습니다. 일반적인 10% 거래의 합계금액 역산은 합계금액 × 100 ÷ 110입니다.
+          <summary cursor-pointer font="700">
+            부가세를 빼고 받은 금액이 있으면 어떻게 계산하나요?
+          </summary>
+          <p
+            m="0"
+            mt="3"
+            text="sm"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            거래대금에 부가세 포함 여부가 명확하지 않은 경우 법령상 공급가액을
+            별도로 산정하는 규정이 있습니다. 일반적인 10% 거래의 합계금액 역산은
+            합계금액 × 100 ÷ 110입니다.
           </p>
         </details>
         <details class="cm-card" p="5">
-          <summary cursor-pointer font="700">납부세액과 부가세액은 같은 뜻인가요?</summary>
-          <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-            아닙니다. 거래에서 발생한 매출세액과 납부세액은 다를 수 있습니다. 일반과세자는 기본적으로 매출세액에서 공제 가능한 매입세액을 차감해 납부 또는 환급세액을 계산합니다.
+          <summary cursor-pointer font="700">
+            납부세액과 부가세액은 같은 뜻인가요?
+          </summary>
+          <p
+            m="0"
+            mt="3"
+            text="sm"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            아닙니다. 거래에서 발생한 매출세액과 납부세액은 다를 수 있습니다.
+            일반과세자는 기본적으로 매출세액에서 공제 가능한 매입세액을 차감해
+            납부 또는 환급세액을 계산합니다.
           </p>
         </details>
         <details class="cm-card" p="5">
-          <summary cursor-pointer font="700">면세나 영세율 거래도 이 계산기로 계산할 수 있나요?</summary>
-          <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-            이 계산기는 일반적인 과세 거래의 금액 환산을 중심으로 합니다. 영세율·면세·간이과세 등은 별도의 요건과 계산방법이 적용되므로 이 결과를 신고세액으로 사용하면 안 됩니다.
+          <summary cursor-pointer font="700">
+            면세나 영세율 거래도 이 계산기로 계산할 수 있나요?
+          </summary>
+          <p
+            m="0"
+            mt="3"
+            text="sm"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            이 계산기는 일반적인 과세 거래의 금액 환산을 중심으로 합니다.
+            영세율·면세·간이과세 등은 별도의 요건과 계산방법이 적용되므로 이
+            결과를 신고세액으로 사용하면 안 됩니다.
           </p>
         </details>
         <details class="cm-card" p="5">
-          <summary cursor-pointer font="700">끝자리 반올림 기능은 세법상 신고 금액을 그대로 의미하나요?</summary>
-          <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-            아닙니다. 계산기의 끝자리 처리는 결과를 보기 쉽게 조정하는 기능입니다. 실제 세금계산서나 신고서 작성에서는 적용되는 거래와 신고 기준을 확인해야 합니다.
+          <summary cursor-pointer font="700">
+            끝자리 반올림 기능은 세법상 신고 금액을 그대로 의미하나요?
+          </summary>
+          <p
+            m="0"
+            mt="3"
+            text="sm"
+            leading="7"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            아닙니다. 계산기의 끝자리 처리는 결과를 보기 쉽게 조정하는
+            기능입니다. 실제 세금계산서나 신고서 작성에서는 적용되는 거래와 신고
+            기준을 확인해야 합니다.
           </p>
         </details>
       </div>
@@ -168,11 +347,30 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">공식 기준 확인</h2>
       <div class="cm-card" mt="4" p="5 md:6">
-        <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-          부가가치세법 제30조에 따르면 부가가치세 세율은 10%입니다. 또한 제29조 제7항은 사업자가 받은 대가에 부가가치세 포함 여부가 명확하지 않은 경우 그 대가에 110분의 100을 곱한 금액을 공급가액으로 보도록 규정합니다. 일반과세자의 납부(환급)세액은 국세청 안내에 따라 매출세액에서 공제 가능한 매입세액 등을 차감하는 구조입니다.
+        <p
+          m="0"
+          text="sm md:base"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          부가가치세법 제30조에 따르면 부가가치세 세율은 10%입니다. 또한 제29조
+          제7항은 사업자가 받은 대가에 부가가치세 포함 여부가 명확하지 않은 경우
+          그 대가에 110분의 100을 곱한 금액을 공급가액으로 보도록 규정합니다.
+          일반과세자의 납부(환급)세액은 국세청 안내에 따라 매출세액에서 공제
+          가능한 매입세액 등을 차감하는 구조입니다.
         </p>
-        <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-          이 계산기는 법령상 모든 예외와 공제·불공제 항목을 재현하는 신고 프로그램이 아니라, 거래금액을 이해하고 기본 산식을 확인하기 위한 참고용 계산기입니다.
+        <p
+          m="0"
+          mt="3"
+          text="sm"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          이 계산기는 법령상 모든 예외와 공제·불공제 항목을 재현하는 신고
+          프로그램이 아니라, 거래금액을 이해하고 기본 산식을 확인하기 위한
+          참고용 계산기입니다.
         </p>
       </div>
     </section>
@@ -180,21 +378,77 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">관련 계산기</h2>
       <div mt="4" grid="~ cols-1 sm:cols-2 lg:cols-4" gap="3">
-        <a href="/calculators/brokerage/" class="cm-card" p="4" no-underline hover="border-primary">
+        <a
+          href="/calculators/brokerage/"
+          class="cm-card"
+          p="4"
+          no-underline
+          hover="border-primary"
+        >
           <strong>부동산 중개보수 계산기</strong>
-          <span block mt="1" text="xs" text-text-muted dark="text-dark-text-muted">중개보수와 부가세를 함께 확인</span>
+          <span
+            block
+            mt="1"
+            text="xs"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            중개보수와 부가세를 함께 확인
+          </span>
         </a>
-        <a href="/calculators/legal-scrivener/" class="cm-card" p="4" no-underline hover="border-primary">
+        <a
+          href="/calculators/legal-scrivener/"
+          class="cm-card"
+          p="4"
+          no-underline
+          hover="border-primary"
+        >
           <strong>법무사 보수 계산기</strong>
-          <span block mt="1" text="xs" text-text-muted dark="text-dark-text-muted">보수와 부가세 등 비용 확인</span>
+          <span
+            block
+            mt="1"
+            text="xs"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            보수와 부가세 등 비용 확인
+          </span>
         </a>
-        <a href="/calculators/income-tax/" class="cm-card" p="4" no-underline hover="border-primary">
+        <a
+          href="/calculators/income-tax/"
+          class="cm-card"
+          p="4"
+          no-underline
+          hover="border-primary"
+        >
           <strong>종합소득세 계산기</strong>
-          <span block mt="1" text="xs" text-text-muted dark="text-dark-text-muted">세금 계산기 모음에서 이동</span>
+          <span
+            block
+            mt="1"
+            text="xs"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            세금 계산기 모음에서 이동
+          </span>
         </a>
-        <a href="/calculators/property/" class="cm-card" p="4" no-underline hover="border-primary">
+        <a
+          href="/calculators/property/"
+          class="cm-card"
+          p="4"
+          no-underline
+          hover="border-primary"
+        >
           <strong>재산세 계산기</strong>
-          <span block mt="1" text="xs" text-text-muted dark="text-dark-text-muted">부동산 관련 세금 계산</span>
+          <span
+            block
+            mt="1"
+            text="xs"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            부동산 관련 세금 계산
+          </span>
         </a>
       </div>
     </section>

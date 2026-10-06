@@ -19,8 +19,8 @@ export default defineConfig({
   transformers: [transformerAttributifyJsx()],
 
   theme: {
-    font: {
-      family: '"Pretendard Variable", Pretendard, system-ui, sans-serif',
+    fontFamily: {
+      sans: '"Pretendard Variable", Pretendard, system-ui, sans-serif',
     },
     colors: {
       primary: 'oklch(56% 0.19 250)',

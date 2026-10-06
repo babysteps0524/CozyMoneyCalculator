@@ -1022,7 +1022,10 @@ const currentGuidance = guidance[kind] ?? {
         out.textContent = fmt(value, 2) + '%';
       if (kind === 'percentage') {
         const mode = $('percentageMode')?.value ?? '';
-        if (mode === 'X는 Y의 몇 %인지 계산' || mode === '이전 값에서 새 값으로의 증감률') {
+        if (
+          mode === 'X는 Y의 몇 %인지 계산' ||
+          mode === '이전 값에서 새 값으로의 증감률'
+        ) {
           out.textContent = fmt(value, 2) + '%';
         } else if (mode === '두 비율의 퍼센트포인트 차이') {
           out.textContent = fmt(value, 2) + '%p';
