@@ -1,11 +1,28 @@
 import { describe, expect, test } from 'bun:test';
 import {
+  calculateAgeAtSeparation,
   calculateEstimatedDailyAverageWage,
   calculateUnemployment,
+  getAgeGroupAtSeparation,
   getBenefitDays,
 } from '../src/lib/calculators/unemployment';
 
 describe('unemployment calculator', () => {
+  test('calculates age at separation from birth date', () => {
+    expect(calculateAgeAtSeparation('1975-10-07', '2026-10-06')).toBe(50);
+    expect(calculateAgeAtSeparation('1976-10-07', '2026-10-06')).toBe(49);
+    expect(calculateAgeAtSeparation('1975-10-06', '2026-10-06')).toBe(51);
+  });
+
+  test('automatically selects the 50+ benefit group at the separation date', () => {
+    expect(getAgeGroupAtSeparation('1975-10-07', '2026-10-06')).toBe('over50OrDisabled');
+    expect(getAgeGroupAtSeparation('1976-10-07', '2026-10-06')).toBe('under50');
+  });
+
+  test('disabled users use the 50+ or disabled benefit group regardless of age', () => {
+    expect(getAgeGroupAtSeparation('1990-01-01', '2026-10-06', true)).toBe('over50OrDisabled');
+  });
+
   test('calculates daily average wage from three-month wages', () => {
     const result = calculateEstimatedDailyAverageWage(9_000_000, '2026-10-06');
 
