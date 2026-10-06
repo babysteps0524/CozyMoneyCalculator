@@ -92,4 +92,21 @@ describe('acquisition tax calculations', () => {
     expect(result.acquisitionTax).toBe(17_500_000);
     expect(result.localEducationTax).toBe(1_500_000);
   });
+
+  test('uses the 4 percent base rate for non-house property purchases', () => {
+    const result = calculateAcquisitionTax({
+      price: 300_000_000,
+      cause: 'purchase',
+      asset: 'officetel',
+      houseCount: 1,
+      regulatedArea: false,
+      areaOver85: false,
+      corporation: false,
+      firstHome: false,
+      firstHomePopulationDecline: false,
+    });
+
+    expect(result.acquisitionRate).toBe(0.04);
+    expect(result.acquisitionTax).toBe(12_000_000);
+  });
 });
