@@ -67,18 +67,26 @@ function addMonths(date: Date, months: number): Date {
 }
 
 function daysBetween(start: Date, endExclusive: Date): number {
-  return Math.max(0, Math.round((endExclusive.getTime() - start.getTime()) / DAY_MS));
+  return Math.max(
+    0,
+    Math.round((endExclusive.getTime() - start.getTime()) / DAY_MS),
+  );
 }
 
 function daysInclusive(start: Date, end: Date): number {
   return daysBetween(start, new Date(end.getTime() + DAY_MS));
 }
 
-function monthSegments(start: Date, end: Date): Array<{ start: Date; end: Date; days: number }> {
+function monthSegments(
+  start: Date,
+  end: Date,
+): Array<{ start: Date; end: Date; days: number }> {
   return [0, 1, 2].map((offset) => {
     const segmentStart = addMonths(start, offset);
     const nextStart = addMonths(start, offset + 1);
-    const segmentEnd = new Date(Math.min(end.getTime(), nextStart.getTime() - DAY_MS));
+    const segmentEnd = new Date(
+      Math.min(end.getTime(), nextStart.getTime() - DAY_MS),
+    );
     return {
       start: segmentStart,
       end: segmentEnd,
@@ -136,9 +144,9 @@ export function calculateSeverance(input: SeveranceInput): SeveranceResult {
     Math.max(0, input.monthlyWages[2]),
   ];
   const threeMonthWages = monthlyWages.reduce((sum, value) => sum + value, 0);
-  const bonusIncluded = Math.max(0, input.annualBonus) * 3 / 12;
+  const bonusIncluded = (Math.max(0, input.annualBonus) * 3) / 12;
   const leaveAllowanceIncluded =
-    Math.max(0, input.annualLeaveAllowance) * 3 / 12;
+    (Math.max(0, input.annualLeaveAllowance) * 3) / 12;
   const excludedDays = Math.min(
     period.days,
     Math.max(0, Math.floor(input.excludedAverageWageDays ?? 0)),
@@ -155,7 +163,8 @@ export function calculateSeverance(input: SeveranceInput): SeveranceResult {
     input.ordinaryDailyWage !== undefined && input.ordinaryDailyWage > 0
       ? input.ordinaryDailyWage
       : null;
-  const useOrdinary = ordinaryDailyWage !== null && ordinaryDailyWage > averageDailyWage;
+  const useOrdinary =
+    ordinaryDailyWage !== null && ordinaryDailyWage > averageDailyWage;
   const appliedDailyWage = useOrdinary ? ordinaryDailyWage : averageDailyWage;
 
   const eligible = serviceDays >= 365 && input.weeklyHours >= 15;

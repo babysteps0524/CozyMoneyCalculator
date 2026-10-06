@@ -40,14 +40,21 @@ export interface PropertyTaxResult {
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
-function getFairMarketRatio(assessedValue: number, oneHouseholdOneHome: boolean, year: number) {
+function getFairMarketRatio(
+  assessedValue: number,
+  oneHouseholdOneHome: boolean,
+  year: number,
+) {
   if (!oneHouseholdOneHome || year !== 2026) return 0.6;
   if (assessedValue <= 300_000_000) return 0.43;
   if (assessedValue <= 600_000_000) return 0.44;
   return 0.45;
 }
 
-function calculateHousingPropertyTax(taxableBase: number, specialRate: boolean) {
+function calculateHousingPropertyTax(
+  taxableBase: number,
+  specialRate: boolean,
+) {
   if (specialRate) {
     if (taxableBase <= 60_000_000) return taxableBase * 0.0005;
     if (taxableBase <= 150_000_000)
@@ -71,7 +78,9 @@ function getCapRate(assessedValue: number) {
   return 1.3;
 }
 
-export function calculatePropertyTax(input: PropertyTaxInput): PropertyTaxResult {
+export function calculatePropertyTax(
+  input: PropertyTaxInput,
+): PropertyTaxResult {
   if (!Number.isInteger(input.year) || input.year < 2026) {
     throw new Error('현재 계산기는 2026년 기준으로 제공합니다.');
   }
@@ -84,7 +93,11 @@ export function calculatePropertyTax(input: PropertyTaxInput): PropertyTaxResult
     const assessedValue = Math.max(0, asset.assessedValue);
     const share = clamp(asset.ownershipShare || 100, 0, 100) / 100;
     const effectiveValue = assessedValue * share;
-    const ratio = getFairMarketRatio(assessedValue, input.oneHouseholdOneHome, input.year);
+    const ratio = getFairMarketRatio(
+      assessedValue,
+      input.oneHouseholdOneHome,
+      input.year,
+    );
     const taxableBase = effectiveValue * ratio;
     const specialRate =
       input.oneHouseholdOneHome && assessedValue <= 900_000_000;
@@ -131,16 +144,24 @@ export function calculatePropertyTax(input: PropertyTaxInput): PropertyTaxResult
   };
 
   if (input.oneHouseholdOneHome) {
-    result.notes.push('1세대 1주택 특례의 공정시장가액비율과 세율을 적용했습니다.');
+    result.notes.push(
+      '1세대 1주택 특례의 공정시장가액비율과 세율을 적용했습니다.',
+    );
   }
   if (input.taxBurdenCap && assets.some((asset) => asset.capApplied)) {
-    result.notes.push('입력한 전년도 재산세를 기준으로 세부담상한이 적용된 항목이 있습니다.');
+    result.notes.push(
+      '입력한 전년도 재산세를 기준으로 세부담상한이 적용된 항목이 있습니다.',
+    );
   }
   if (input.assets.some((asset) => asset.urbanArea)) {
-    result.notes.push('도시지역으로 선택한 주택에는 재산세 과세표준의 0.14% 도시지역분을 더했습니다.');
+    result.notes.push(
+      '도시지역으로 선택한 주택에는 재산세 과세표준의 0.14% 도시지역분을 더했습니다.',
+    );
   }
   result.notes.push('지방교육세는 재산세 납부세액의 20%로 계산했습니다.');
-  result.notes.push('현재 구현은 주택 재산세를 대상으로 하며, 실제 고지세액은 감면·조례·개별 조건에 따라 달라질 수 있습니다.');
+  result.notes.push(
+    '현재 구현은 주택 재산세를 대상으로 하며, 실제 고지세액은 감면·조례·개별 조건에 따라 달라질 수 있습니다.',
+  );
 
   return result;
 }

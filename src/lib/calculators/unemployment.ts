@@ -20,12 +20,30 @@ export interface UnemploymentResult {
   upperLimitApplied: boolean;
 }
 
-const BENEFIT_DAYS: Record<UnemploymentAgeGroup, Record<InsurancePeriod, number>> = {
-  under50: { under1: 120, '1to3': 150, '3to5': 180, '5to10': 210, '10plus': 240 },
-  over50OrDisabled: { under1: 120, '1to3': 180, '3to5': 210, '5to10': 240, '10plus': 270 },
+const BENEFIT_DAYS: Record<
+  UnemploymentAgeGroup,
+  Record<InsurancePeriod, number>
+> = {
+  under50: {
+    under1: 120,
+    '1to3': 150,
+    '3to5': 180,
+    '5to10': 210,
+    '10plus': 240,
+  },
+  over50OrDisabled: {
+    under1: 120,
+    '1to3': 180,
+    '3to5': 210,
+    '5to10': 240,
+    '10plus': 270,
+  },
 };
 
-export function getBenefitDays(ageGroup: UnemploymentAgeGroup, insurancePeriod: InsurancePeriod): number {
+export function getBenefitDays(
+  ageGroup: UnemploymentAgeGroup,
+  insurancePeriod: InsurancePeriod,
+): number {
   return BENEFIT_DAYS[ageGroup][insurancePeriod];
 }
 
@@ -33,8 +51,14 @@ export function getBenefitDays(ageGroup: UnemploymentAgeGroup, insurancePeriod: 
  * 이직일 기준 만 나이를 계산합니다.
  * 날짜 문자열을 로컬 날짜로 처리해 브라우저 시간대에 따른 하루 오차를 피합니다.
  */
-export function calculateAgeAtSeparation(birthDate: string, separationDate: string): number {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate) || !/^\d{4}-\d{2}-\d{2}$/.test(separationDate)) {
+export function calculateAgeAtSeparation(
+  birthDate: string,
+  separationDate: string,
+): number {
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(birthDate) ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(separationDate)
+  ) {
     throw new Error('생년월일과 이직일을 올바른 날짜로 입력하세요.');
   }
 
@@ -52,7 +76,8 @@ export function calculateAgeAtSeparation(birthDate: string, separationDate: stri
   let age = separation.getFullYear() - birth.getFullYear();
   const hasHadBirthday =
     separation.getMonth() > birth.getMonth() ||
-    (separation.getMonth() === birth.getMonth() && separation.getDate() >= birth.getDate());
+    (separation.getMonth() === birth.getMonth() &&
+      separation.getDate() >= birth.getDate());
 
   if (!hasHadBirthday) age -= 1;
 
@@ -79,22 +104,34 @@ export function calculateEstimatedDailyAverageWage(
   totalWages: number,
   separationDate: string,
 ): { dailyAverageWage: number; periodDays: number } {
-  if (totalWages <= 0) throw new Error('퇴직 전 3개월 임금총액은 0보다 커야 합니다.');
+  if (totalWages <= 0)
+    throw new Error('퇴직 전 3개월 임금총액은 0보다 커야 합니다.');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(separationDate)) {
     throw new Error('이직일을 올바른 날짜로 입력하세요.');
   }
 
   const end = new Date(`${separationDate}T00:00:00`);
-  if (Number.isNaN(end.getTime())) throw new Error('이직일을 올바른 날짜로 입력하세요.');
+  if (Number.isNaN(end.getTime()))
+    throw new Error('이직일을 올바른 날짜로 입력하세요.');
 
   const periodStart = new Date(end);
   const targetMonth = periodStart.getMonth() - 3;
   const targetYear = periodStart.getFullYear() + Math.floor(targetMonth / 12);
   const normalizedMonth = ((targetMonth % 12) + 12) % 12;
-  const lastDayOfTargetMonth = new Date(targetYear, normalizedMonth + 1, 0).getDate();
-  periodStart.setFullYear(targetYear, normalizedMonth, Math.min(end.getDate(), lastDayOfTargetMonth));
+  const lastDayOfTargetMonth = new Date(
+    targetYear,
+    normalizedMonth + 1,
+    0,
+  ).getDate();
+  periodStart.setFullYear(
+    targetYear,
+    normalizedMonth,
+    Math.min(end.getDate(), lastDayOfTargetMonth),
+  );
 
-  const periodDays = Math.round((end.getTime() - periodStart.getTime()) / 86_400_000);
+  const periodDays = Math.round(
+    (end.getTime() - periodStart.getTime()) / 86_400_000,
+  );
 
   if (periodDays <= 0) throw new Error('이직일을 확인하세요.');
 
@@ -104,8 +141,11 @@ export function calculateEstimatedDailyAverageWage(
   };
 }
 
-export function calculateUnemployment(input: UnemploymentInput): UnemploymentResult {
-  if (input.dailyAverageWage <= 0) throw new Error('1일 평균임금은 0보다 커야 합니다.');
+export function calculateUnemployment(
+  input: UnemploymentInput,
+): UnemploymentResult {
+  if (input.dailyAverageWage <= 0)
+    throw new Error('1일 평균임금은 0보다 커야 합니다.');
   if (input.dailyWorkingHours <= 0 || input.dailyWorkingHours > 8) {
     throw new Error('1일 소정근로시간은 1~8시간 범위로 입력하세요.');
   }

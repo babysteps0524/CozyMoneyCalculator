@@ -1,5 +1,5 @@
-export type SalaryType = "annual" | "monthly";
-export type RetirementType = "separate" | "included";
+export type SalaryType = 'annual' | 'monthly';
+export type RetirementType = 'separate' | 'included';
 
 export interface SalaryInput {
   salary: number;
@@ -34,8 +34,7 @@ function earnedIncomeDeduction(annualGross: number): number {
   if (income <= 5_000_000) return income * 0.7;
   if (income <= 15_000_000) return 3_500_000 + (income - 5_000_000) * 0.4;
   if (income <= 45_000_000) return 7_500_000 + (income - 15_000_000) * 0.15;
-  if (income <= 100_000_000)
-    return 12_000_000 + (income - 45_000_000) * 0.05;
+  if (income <= 100_000_000) return 12_000_000 + (income - 45_000_000) * 0.05;
   return Math.min(20_000_000, 14_750_000 + (income - 100_000_000) * 0.02);
 }
 
@@ -56,19 +55,19 @@ function progressiveIncomeTax(taxBase: number): number {
  * 소득세는 국세청 근로소득 간이세액표와 동일한 결과를 보장하지 않습니다.
  */
 export function calculateSalary(input: SalaryInput): SalaryResult {
-  if (input.salary <= 0) throw new Error("연봉 또는 월급은 0보다 커야 합니다.");
+  if (input.salary <= 0) throw new Error('연봉 또는 월급은 0보다 커야 합니다.');
 
   const salary = Math.max(0, input.salary);
   const annualSalary =
-    input.salaryType === "annual"
+    input.salaryType === 'annual'
       ? salary
-      : input.retirementType === "included"
+      : input.retirementType === 'included'
         ? salary * 13
         : salary * 12;
 
   const monthlyGross =
-    input.salaryType === "annual"
-      ? annualSalary / (input.retirementType === "included" ? 13 : 12)
+    input.salaryType === 'annual'
+      ? annualSalary / (input.retirementType === 'included' ? 13 : 12)
       : salary;
 
   const taxFreeMonthly = clamp(
@@ -88,11 +87,7 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
   const employmentInsurance = taxableMonthly * 0.009;
 
   const dependents = Math.max(1, Math.floor(input.dependents));
-  const children = clamp(
-    Math.floor(input.children8To20),
-    0,
-    dependents - 1,
-  );
+  const children = clamp(Math.floor(input.children8To20), 0, dependents - 1);
   const annualTaxableSalary = taxableMonthly * 12;
   const earnedIncome = Math.max(
     0,
@@ -145,5 +140,5 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
 }
 
 export function formatWon(value: number): string {
-  return `${Math.round(value).toLocaleString("ko-KR")}원`;
+  return `${Math.round(value).toLocaleString('ko-KR')}원`;
 }

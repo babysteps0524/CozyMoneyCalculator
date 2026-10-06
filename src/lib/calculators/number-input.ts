@@ -1,11 +1,17 @@
 export function parseNumber(value: string): number {
   const normalized = value.replace(/,/g, '').trim();
-  return normalized === '' || normalized === '-' || normalized === '.' || normalized === '-.'
+  return normalized === '' ||
+    normalized === '-' ||
+    normalized === '.' ||
+    normalized === '-.'
     ? 0
     : Number(normalized);
 }
 
-export function formatNumberInputValue(value: string, allowDecimal = false): string {
+export function formatNumberInputValue(
+  value: string,
+  allowDecimal = false,
+): string {
   let normalized = value.replace(/,/g, '').replace(/[^0-9.]/g, '');
 
   if (!allowDecimal) {
@@ -71,37 +77,42 @@ export function stepNumberInput(
   const next = Math.min(max, Math.max(min, current + direction * step));
   const precision = (String(step).split('.')[1] || '').length;
   const rounded = Number(next.toFixed(Math.max(precision, 0)));
-  input.value = formatNumberInputValue(String(rounded), input.dataset.decimal === 'true');
+  input.value = formatNumberInputValue(
+    String(rounded),
+    input.dataset.decimal === 'true',
+  );
   input.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 export function bindNumberControls(root: ParentNode): void {
-  root.querySelectorAll<HTMLInputElement>('input[data-number-input]').forEach((input) => {
-    bindNumberInput(input);
+  root
+    .querySelectorAll<HTMLInputElement>('input[data-number-input]')
+    .forEach((input) => {
+      bindNumberInput(input);
 
-    const controls = input.parentElement?.parentElement;
-    const decrease = controls?.querySelector<HTMLButtonElement>(
-      '[data-step-direction="-1"]',
-    );
-    const increase = controls?.querySelector<HTMLButtonElement>(
-      '[data-step-direction="1"]',
-    );
+      const controls = input.parentElement?.parentElement;
+      const decrease = controls?.querySelector<HTMLButtonElement>(
+        '[data-step-direction="-1"]',
+      );
+      const increase = controls?.querySelector<HTMLButtonElement>(
+        '[data-step-direction="1"]',
+      );
 
-    const prepareStep = (event: PointerEvent) => {
-      event.preventDefault();
-      if (document.activeElement === input) {
-        input.blur();
-      }
-    };
+      const prepareStep = (event: PointerEvent) => {
+        event.preventDefault();
+        if (document.activeElement === input) {
+          input.blur();
+        }
+      };
 
-    decrease?.addEventListener('pointerdown', prepareStep);
-    increase?.addEventListener('pointerdown', prepareStep);
+      decrease?.addEventListener('pointerdown', prepareStep);
+      increase?.addEventListener('pointerdown', prepareStep);
 
-    decrease?.addEventListener('click', () => {
-      stepNumberInput(input, -1);
+      decrease?.addEventListener('click', () => {
+        stepNumberInput(input, -1);
+      });
+      increase?.addEventListener('click', () => {
+        stepNumberInput(input, 1);
+      });
     });
-    increase?.addEventListener('click', () => {
-      stepNumberInput(input, 1);
-    });
-  });
 }

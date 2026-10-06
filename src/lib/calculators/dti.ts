@@ -36,19 +36,16 @@ export function calculateDti(input: DtiInput): DtiResult {
       const monthlyPayment =
         monthlyRate === 0
           ? principal / months
-          : (principal * monthlyRate) /
-            (1 - (1 + monthlyRate) ** -months);
+          : (principal * monthlyRate) / (1 - (1 + monthlyRate) ** -months);
       annualMortgagePayment = monthlyPayment * monthsToCount;
     } else if (input.mortgageMethod === 'equalPrincipal') {
       const monthlyPrincipal = principal / months;
       for (let month = 0; month < monthsToCount; month += 1) {
         const remaining = principal - monthlyPrincipal * month;
-        annualMortgagePayment +=
-          monthlyPrincipal + remaining * monthlyRate;
+        annualMortgagePayment += monthlyPrincipal + remaining * monthlyRate;
       }
     } else {
-      annualMortgagePayment =
-        principal * monthlyRate * monthsToCount;
+      annualMortgagePayment = principal * monthlyRate * monthsToCount;
     }
   }
 
@@ -57,8 +54,7 @@ export function calculateDti(input: DtiInput): DtiResult {
     (Math.max(0, input.otherDebtRate) / 100);
   const annualDebtService = annualMortgagePayment + annualOtherInterest;
   const dti = income > 0 ? (annualDebtService / income) * 100 : 0;
-  const targetAnnualDebtService =
-    (income * Math.max(0, input.targetDti)) / 100;
+  const targetAnnualDebtService = (income * Math.max(0, input.targetDti)) / 100;
   const headroom = targetAnnualDebtService - annualDebtService;
 
   return {

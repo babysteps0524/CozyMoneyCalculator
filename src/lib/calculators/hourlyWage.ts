@@ -1,5 +1,6 @@
-export type HourlyPayType = "hourly" | "daily" | "weekly" | "monthly" | "annual";
-export type HourlyTaxType = "none" | "insurance" | "income";
+export type HourlyPayType =
+  'hourly' | 'daily' | 'weekly' | 'monthly' | 'annual';
+export type HourlyTaxType = 'none' | 'insurance' | 'income';
 
 export interface HourlyWageInput {
   payType: HourlyPayType;
@@ -37,7 +38,8 @@ export const FOUR_INSURANCE_EMPLOYEE_RATE = 0.097174;
 export const INCOME_TAX_RATE = 0.033;
 export const PROBATION_RATE = 0.9;
 
-const nonNegative = (value: number) => (Number.isFinite(value) ? Math.max(0, value) : 0);
+const nonNegative = (value: number) =>
+  Number.isFinite(value) ? Math.max(0, value) : 0;
 
 export function calculateHourlyWage(input: HourlyWageInput): HourlyWageResult {
   const amount = nonNegative(input.amount);
@@ -55,33 +57,35 @@ export function calculateHourlyWage(input: HourlyWageInput): HourlyWageResult {
   let monthlyBaseWage = 0;
 
   switch (input.payType) {
-    case "hourly":
+    case 'hourly':
       hourlyWage = amount;
       dailyWage = hourlyWage * dailyHours;
       weeklyWage = dailyWage * weeklyDays;
       monthlyBaseWage = dailyWage * monthlyDays;
       break;
-    case "daily":
+    case 'daily':
       dailyWage = amount;
       hourlyWage = dailyHours > 0 ? dailyWage / dailyHours : 0;
       weeklyWage = dailyWage * weeklyDays;
       monthlyBaseWage = dailyWage * monthlyDays;
       break;
-    case "weekly":
+    case 'weekly':
       weeklyWage = amount;
       hourlyWage = weeklyHours > 0 ? weeklyWage / weeklyHours : 0;
       dailyWage = hourlyWage * dailyHours;
       monthlyBaseWage = weeklyWage * WEEKS_PER_MONTH;
       break;
-    case "monthly":
+    case 'monthly':
       monthlyBaseWage = amount;
-      hourlyWage = monthlyWorkHours > 0 ? monthlyBaseWage / monthlyWorkHours : 0;
+      hourlyWage =
+        monthlyWorkHours > 0 ? monthlyBaseWage / monthlyWorkHours : 0;
       dailyWage = hourlyWage * dailyHours;
       weeklyWage = dailyWage * weeklyDays;
       break;
-    case "annual":
+    case 'annual':
       monthlyBaseWage = amount / 12;
-      hourlyWage = monthlyWorkHours > 0 ? monthlyBaseWage / monthlyWorkHours : 0;
+      hourlyWage =
+        monthlyWorkHours > 0 ? monthlyBaseWage / monthlyWorkHours : 0;
       dailyWage = hourlyWage * dailyHours;
       weeklyWage = dailyWage * weeklyDays;
       break;
@@ -89,7 +93,7 @@ export function calculateHourlyWage(input: HourlyWageInput): HourlyWageResult {
 
   const weeklyHolidayHours =
     input.weeklyHolidayIncluded && weeklyHours >= 15
-      ? Math.min(weeklyHours, 40) / 40 * 8
+      ? (Math.min(weeklyHours, 40) / 40) * 8
       : 0;
   const weeklyHolidayPay = hourlyWage * weeklyHolidayHours * WEEKS_PER_MONTH;
   const weeklyOvertimePay =
@@ -105,9 +109,9 @@ export function calculateHourlyWage(input: HourlyWageInput): HourlyWageResult {
 
   const grossAnnualWage = grossMonthlyWage * 12;
   const taxRate =
-    input.taxType === "insurance"
+    input.taxType === 'insurance'
       ? FOUR_INSURANCE_EMPLOYEE_RATE
-      : input.taxType === "income"
+      : input.taxType === 'income'
         ? INCOME_TAX_RATE
         : 0;
   const tax = grossMonthlyWage * taxRate;

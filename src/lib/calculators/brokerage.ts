@@ -113,7 +113,5 @@ export function getMonthlyLeaseAmount(
   monthlyRent: number,
 ): number {
   const converted = deposit + monthlyRent * 100;
-  return converted < 50_000_000
-    ? deposit + monthlyRent * 70
-    : converted;
+  return converted < 50_000_000 ? deposit + monthlyRent * 70 : converted;
 }

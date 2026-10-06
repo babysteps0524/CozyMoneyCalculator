@@ -75,8 +75,7 @@ export function calculateEarnedIncomeDeduction(grossWage: number): number {
   const wage = clampNonNegative(grossWage);
   let deduction = 0;
   if (wage <= 5_000_000) deduction = wage * 0.7;
-  else if (wage <= 15_000_000)
-    deduction = 3_500_000 + (wage - 5_000_000) * 0.4;
+  else if (wage <= 15_000_000) deduction = 3_500_000 + (wage - 5_000_000) * 0.4;
   else if (wage <= 45_000_000)
     deduction = 7_500_000 + (wage - 15_000_000) * 0.15;
   else if (wage <= 100_000_000)
@@ -133,20 +132,11 @@ export function calculateEarnedIncomeTaxCredit(
   // 총급여액에 따라 법정 세액공제 한도를 적용한다.
   let creditLimit = 740_000;
   if (wage > 33_000_000 && wage <= 70_000_000) {
-    creditLimit = Math.max(
-      660_000,
-      740_000 - (wage - 33_000_000) * 0.008,
-    );
+    creditLimit = Math.max(660_000, 740_000 - (wage - 33_000_000) * 0.008);
   } else if (wage > 70_000_000 && wage <= 120_000_000) {
-    creditLimit = Math.max(
-      500_000,
-      660_000 - (wage - 70_000_000) * 0.5,
-    );
+    creditLimit = Math.max(500_000, 660_000 - (wage - 70_000_000) * 0.5);
   } else if (wage > 120_000_000) {
-    creditLimit = Math.max(
-      200_000,
-      500_000 - (wage - 120_000_000) * 0.5,
-    );
+    creditLimit = Math.max(200_000, 500_000 - (wage - 120_000_000) * 0.5);
   }
 
   return Math.min(rawCredit, creditLimit);
@@ -216,13 +206,17 @@ export function calculateIncomeTax(input: IncomeTaxInput): IncomeTaxResult {
   const dividendIncome = clampNonNegative(input.dividendIncome);
   const otherIncome = Math.max(
     0,
-    clampNonNegative(input.otherIncome) - clampNonNegative(input.otherIncomeExpense),
+    clampNonNegative(input.otherIncome) -
+      clampNonNegative(input.otherIncomeExpense),
   );
 
   const earnedIncomeDeduction = calculateEarnedIncomeDeduction(wageGross);
   const earnedIncome = Math.max(0, wageGross - earnedIncomeDeduction);
   const pensionIncomeDeduction = calculatePensionIncomeDeduction(pensionGross);
-  const pensionIncomeAmount = Math.max(0, pensionGross - pensionIncomeDeduction);
+  const pensionIncomeAmount = Math.max(
+    0,
+    pensionGross - pensionIncomeDeduction,
+  );
 
   const totalIncome =
     businessIncome +

@@ -48,14 +48,20 @@ function addMonths(date: Date, months: number): Date {
   const result = new Date(date);
   result.setDate(1);
   result.setMonth(result.getMonth() + months);
-  const lastDay = new Date(result.getFullYear(), result.getMonth() + 1, 0).getDate();
+  const lastDay = new Date(
+    result.getFullYear(),
+    result.getMonth() + 1,
+    0,
+  ).getDate();
   result.setDate(Math.min(date.getDate(), lastDay));
   return result;
 }
 
 function completedMonths(start: Date, end: Date): number {
   if (end < start) return 0;
-  let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  let months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth());
   if (addMonths(start, months) > end) months -= 1;
   return Math.max(0, months);
 }
@@ -65,17 +71,26 @@ function annualDaysForServiceYears(years: number): number {
   return Math.min(25, 15 + Math.floor((years - 1) / 2));
 }
 
-function calculateHireDateLeave(start: Date, end: Date): { leaveDays: number; proratedFirstYearDays: number } {
+function calculateHireDateLeave(
+  start: Date,
+  end: Date,
+): { leaveDays: number; proratedFirstYearDays: number } {
   const months = completedMonths(start, end);
   if (daysBetween(start, end) < 365) {
     return { leaveDays: Math.min(11, months), proratedFirstYearDays: 0 };
   }
 
   const years = Math.floor(daysBetween(start, end) / 365);
-  return { leaveDays: annualDaysForServiceYears(years), proratedFirstYearDays: 0 };
+  return {
+    leaveDays: annualDaysForServiceYears(years),
+    proratedFirstYearDays: 0,
+  };
 }
 
-function calculateFiscalYearLeave(start: Date, end: Date): { leaveDays: number; proratedFirstYearDays: number } {
+function calculateFiscalYearLeave(
+  start: Date,
+  end: Date,
+): { leaveDays: number; proratedFirstYearDays: number } {
   if (end < start) return { leaveDays: 0, proratedFirstYearDays: 0 };
 
   const firstGrantDate = new Date(start.getFullYear() + 1, 0, 1);
@@ -88,8 +103,12 @@ function calculateFiscalYearLeave(start: Date, end: Date): { leaveDays: number; 
     };
   }
 
-  const monthlyAccrualEnd = end < firstElevenMonthDate ? end : firstElevenMonthDate;
-  const monthlyAccrualDays = Math.min(11, completedMonths(start, monthlyAccrualEnd));
+  const monthlyAccrualEnd =
+    end < firstElevenMonthDate ? end : firstElevenMonthDate;
+  const monthlyAccrualDays = Math.min(
+    11,
+    completedMonths(start, monthlyAccrualEnd),
+  );
   const firstYearDays = daysBetween(start, firstGrantDate);
   const prorated = Math.min(15, (firstYearDays / 365) * 15);
   let total = monthlyAccrualDays;
@@ -106,21 +125,33 @@ function calculateFiscalYearLeave(start: Date, end: Date): { leaveDays: number; 
   }
 
   return {
-    leaveDays: Math.min(25 * Math.max(1, Math.ceil((daysBetween(start, end) + 1) / 365)), total),
+    leaveDays: Math.min(
+      25 * Math.max(1, Math.ceil((daysBetween(start, end) + 1) / 365)),
+      total,
+    ),
     proratedFirstYearDays: prorated,
   };
 }
 
-export function calculateAnnualLeave(input: AnnualLeaveInput): AnnualLeaveResult {
+export function calculateAnnualLeave(
+  input: AnnualLeaveInput,
+): AnnualLeaveResult {
   const start = parseDate(input.startDate);
   const end = parseDate(input.calculationDate);
 
   if (end < start) throw new Error('계산일자는 입사일 이후여야 합니다.');
   if (input.usedDays < 0) throw new Error('사용한 연차는 0 이상이어야 합니다.');
-  if (input.dailyHours <= 0 || input.dailyHours > 24) throw new Error('1일 소정근로시간을 확인하세요.');
-  if (input.weeklyDays <= 0 || input.weeklyDays > 7) throw new Error('1주 소정근로일수를 확인하세요.');
-  if (input.weeklyHours !== undefined && input.weeklyHours <= 0) throw new Error('1주 총 소정근로시간을 확인하세요.');
-  if (input.monthlyBasePay < 0 || input.monthlyFixedAllowance < 0 || input.annualBonus < 0) {
+  if (input.dailyHours <= 0 || input.dailyHours > 24)
+    throw new Error('1일 소정근로시간을 확인하세요.');
+  if (input.weeklyDays <= 0 || input.weeklyDays > 7)
+    throw new Error('1주 소정근로일수를 확인하세요.');
+  if (input.weeklyHours !== undefined && input.weeklyHours <= 0)
+    throw new Error('1주 총 소정근로시간을 확인하세요.');
+  if (
+    input.monthlyBasePay < 0 ||
+    input.monthlyFixedAllowance < 0 ||
+    input.annualBonus < 0
+  ) {
     throw new Error('임금은 0 이상이어야 합니다.');
   }
 
@@ -144,7 +175,8 @@ export function calculateAnnualLeave(input: AnnualLeaveInput): AnnualLeaveResult
   const unusedDays = Math.max(0, leaveDays - usedDays);
   const monthlyOrdinaryWage =
     input.monthlyBasePay + input.monthlyFixedAllowance + input.annualBonus / 12;
-  const hourlyOrdinaryWage = monthlyHours > 0 ? monthlyOrdinaryWage / monthlyHours : 0;
+  const hourlyOrdinaryWage =
+    monthlyHours > 0 ? monthlyOrdinaryWage / monthlyHours : 0;
   const dailyOrdinaryWage = hourlyOrdinaryWage * input.dailyHours;
   const allowance = dailyOrdinaryWage * unusedDays;
 
