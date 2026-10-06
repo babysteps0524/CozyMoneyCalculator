@@ -8,6 +8,7 @@ export interface SalaryInput {
   taxFreeMonthly: number;
   dependents: number;
   children8To20: number;
+  age60OrOlder?: boolean;
 }
 
 export interface SalaryResult {
@@ -51,12 +52,12 @@ function progressiveIncomeTax(taxBase: number): number {
 }
 
 /**
- * 연봉/월급을 세전 급여와 4대보험·소득세 기준으로 단순 추정합니다.
- * 소득세는 국세청 근로소득 간이세액표와 동일한 결과를 보장하는 것이 아니라
- * 총급여·인적공제를 이용한 연간 세액 추정값입니다.
+ * 연봉/월급을 2026년 근로자 부담률을 참고해 세전 급여와 공제액으로 단순 추정합니다.
+ * 소득세는 국세청 근로소득 간이세액표와 동일한 결과를 보장하지 않습니다.
  */
 export function calculateSalary(input: SalaryInput): SalaryResult {
   if (input.salary <= 0) throw new Error("연봉 또는 월급은 0보다 커야 합니다.");
+
   const salary = Math.max(0, input.salary);
   const annualSalary =
     input.salaryType === "annual"
@@ -70,12 +71,17 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
       ? annualSalary / (input.retirementType === "included" ? 13 : 12)
       : salary;
 
-  const taxFreeMonthly = clamp(Math.max(0, input.taxFreeMonthly), 0, monthlyGross);
+  const taxFreeMonthly = clamp(
+    Math.max(0, input.taxFreeMonthly),
+    0,
+    monthlyGross,
+  );
   const taxableMonthly = Math.max(0, monthlyGross - taxFreeMonthly);
 
   // 2026년 기준 근로자 부담률을 적용한 참고용 추정.
+  // 만 60세 이상은 국민연금 의무가입 대상이 아니라는 안내를 반영합니다.
   const pensionBase = clamp(taxableMonthly, 400_000, 6_370_000);
-  const nationalPension = pensionBase * 0.0475;
+  const nationalPension = input.age60OrOlder ? 0 : pensionBase * 0.0475;
   const healthBase = Math.min(taxableMonthly, 127_725_730);
   const healthInsurance = healthBase * 0.03595;
   const longTermCare = healthInsurance * 0.1314;
