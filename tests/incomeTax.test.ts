@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import {
   calculateEarnedIncomeDeduction,
+  calculateEarnedIncomeTaxCredit,
   calculateIncomeTax,
   calculatePensionIncomeDeduction,
   getIncomeTaxRate,
@@ -24,6 +25,12 @@ describe('income tax calculator', () => {
       rate: 0.45,
       progressiveDeduction: 65_940_000,
     });
+  });
+
+  test('calculates earned income tax credit under the statutory formula and cap', () => {
+    expect(calculateEarnedIncomeTaxCredit(6_540_000, 50_000_000)).toBe(660_000);
+    expect(calculateEarnedIncomeTaxCredit(1_000_000, 33_000_000)).toBe(550_000);
+    expect(calculateEarnedIncomeTaxCredit(1_000_000, 40_000_000)).toBe(660_000);
   });
 
   test('calculates earned income and pension deductions', () => {
@@ -82,15 +89,15 @@ describe('income tax calculator', () => {
     expect(result.taxableIncome).toBe(51_250_000);
     expect(result.taxRate).toBe(0.24);
     expect(result.calculatedTax).toBe(6_540_000);
-    expect(result.earnedIncomeTaxCredit).toBe(740_000);
+    expect(result.earnedIncomeTaxCredit).toBe(660_000);
     expect(result.childTaxCredit).toBe(850_000);
     expect(result.pensionAccountTaxCredit).toBe(720_000);
     expect(result.insuranceTaxCredit).toBe(120_000);
     expect(result.educationTaxCredit).toBe(150_000);
     expect(result.rentTaxCredit).toBe(900_000);
-    expect(result.determinedTax).toBe(3_060_000);
+    expect(result.determinedTax).toBe(3_140_000);
     expect(result.finalTax).toBe(result.determinedTax - 1_500_000);
-    expect(result.finalTax).toBe(1_560_000);
+    expect(result.finalTax).toBe(1_640_000);
   });
 
   test('caps pension account and insurance tax credits', () => {
