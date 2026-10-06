@@ -30,6 +30,45 @@ export function getBenefitDays(ageGroup: UnemploymentAgeGroup, insurancePeriod: 
 }
 
 /**
+ * 이직일 기준 만 나이를 계산합니다.
+ * 날짜 문자열을 로컬 날짜로 처리해 브라우저 시간대에 따른 하루 오차를 피합니다.
+ */
+export function calculateAgeAtSeparation(birthDate: string, separationDate: string): number {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate) || !/^\d{4}-\d{2}-\d{2}$/.test(separationDate)) {
+    throw new Error('생년월일과 이직일을 올바른 날짜로 입력하세요.');
+  }
+
+  const birth = new Date(`${birthDate}T00:00:00`);
+  const separation = new Date(`${separationDate}T00:00:00`);
+
+  if (Number.isNaN(birth.getTime()) || Number.isNaN(separation.getTime())) {
+    throw new Error('생년월일과 이직일을 올바른 날짜로 입력하세요.');
+  }
+
+  if (birth > separation) {
+    throw new Error('생년월일은 이직일보다 늦을 수 없습니다.');
+  }
+
+  let age = separation.getFullYear() - birth.getFullYear();
+  const hasHadBirthday =
+    separation.getMonth() > birth.getMonth() ||
+    (separation.getMonth() === birth.getMonth() && separation.getDate() >= birth.getDate());
+
+  if (!hasHadBirthday) age -= 1;
+
+  return age;
+}
+
+export function getAgeGroupAtSeparation(
+  birthDate: string,
+  separationDate: string,
+  isDisabled = false,
+): UnemploymentAgeGroup {
+  const age = calculateAgeAtSeparation(birthDate, separationDate);
+  return age >= 50 || isDisabled ? 'over50OrDisabled' : 'under50';
+}
+
+/**
  * 이직일 직전 3개월의 임금총액을 해당 기간의 총일수로 나누어
  * 1일 평균임금을 간편하게 추정합니다.
  *
