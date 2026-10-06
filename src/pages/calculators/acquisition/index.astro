@@ -7,7 +7,7 @@ import AcquisitionTaxCalculator from '../../../components/calculators/Acquisitio
 
 <BaseLayout
   title="취득세 계산기 | 주택 취득세·중과·생애최초 감면 | CozyMoney 코지머니"
-  description="주택·오피스텔·농지 등의 취득원인과 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 주요 부가세목을 참고용으로 계산합니다."
+  description="취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 지방교육세·농어촌특별세를 추정하는 계산기입니다."
   canonical="https://cozymoney.kr/calculators/acquisition/"
 >
   <Header />
@@ -16,245 +16,88 @@ import AcquisitionTaxCalculator from '../../../components/calculators/Acquisitio
       <a href="/" no-underline hover="text-primary">홈</a><span mx="2">/</span>
       <a href="/calculators/" no-underline hover="text-primary">계산기</a><span mx="2">/</span>부동산·세금
     </nav>
-
     <header max-w="3xl" mb="8">
       <p m="0" text="sm" font="700" text-primary>부동산·세금</p>
       <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>취득세 계산기</h1>
       <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">
-        집이나 부동산을 취득할 때 예상되는 취득세를 계산해 보세요.
-        취득원인, 부동산 종류, 주택 수, 조정대상지역, 생애최초 여부를 입력하면 취득세와 주요 부가세목을 함께 확인할 수 있습니다.
+        취득가액만 입력하는 단순 계산에서 벗어나 취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해
+        취득세와 주요 부가세목을 함께 확인합니다.
       </p>
-      <div flex="~ wrap" gap="2" mt="4">
-        <span rounded="full" bg="primary/10" px="3" py="1" text="xs" font="650" text-primary>주택 중과 반영</span>
-        <span rounded="full" bg="primary/10" px="3" py="1" text="xs" font="650" text-primary>생애최초 감면 반영</span>
-        <span rounded="full" bg="surface-muted" px="3" py="1" text="xs" font="650" text-text-muted dark="bg-dark-surface-muted dark:text-dark-text-muted">참고용 모의계산</span>
-      </div>
     </header>
-
     <div max-w="4xl"><AcquisitionTaxCalculator /></div>
 
     <div max-w="4xl" mt="12 md:16" space-y="10 md:12">
       <section aria-labelledby="method">
-        <h2 id="method" class="cm-section-title">취득세는 어떻게 계산하나요?</h2>
+        <h2 id="method" class="cm-section-title">취득세 계산 방법</h2>
         <div class="cm-card" mt="4" p="5 md:6">
           <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            취득세는 단순히 취득가격에 하나의 세율을 곱하는 방식으로 끝나지 않습니다.
-            먼저 법에서 정한 과세표준을 확인한 다음, 취득원인과 부동산 종류에 맞는 세율을 적용하고,
-            주택이라면 주택 수와 조정대상지역 등 중과 요건을 확인합니다. 마지막으로 적용 가능한 감면과
-            지방교육세·농어촌특별세 같은 관련 세목을 반영합니다.
+            취득세는 먼저 취득 당시의 과세표준을 정하고, 취득원인과 부동산 종류에 맞는 세율을 적용합니다.
+            주택 유상취득은 6억원·9억원 구간, 주택 수와 조정대상지역 여부에 따라 일반세율 또는 중과세율이 달라질 수 있습니다.
+            이후 법정 감면과 지방교육세·농어촌특별세 등 부가세목을 반영합니다.
           </p>
-
-          <div mt="5" rounded="xl" border="1" border-border p="4 md:5" dark="border-dark-border">
-            <p m="0" font="700" text="sm">핵심 계산식</p>
+          <div mt="5" rounded="xl" border="1" border-border p="4" dark="border-dark-border">
+            <p m="0" font="700" text="sm">기본 계산식</p>
             <p m="0" mt="2" font="650" text="sm md:base" leading="7">
               취득세 = 과세표준 × 적용 취득세율
               <br />
-              최종 부담액 = 취득세 + 지방교육세 + 농어촌특별세 − 적용 감면
+              총 취득 관련 세금 = 취득세 + 지방교육세 + 농어촌특별세 − 적용 감면
             </p>
           </div>
-
           <div grid="~ cols-1 md:cols-3" gap="3" mt="5">
-            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-              <p m="0" font="700" text="sm">① 과세표준 확인</p>
-              <p m="0" mt="2" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
-                취득 당시 가액을 중심으로 법정 과세표준을 확인합니다. 거래 유형에 따라 과세표준 산정 방법이 달라질 수 있습니다.
-              </p>
-            </div>
-            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-              <p m="0" font="700" text="sm">② 적용세율 결정</p>
-              <p m="0" mt="2" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
-                주택은 6억원·9억원 구간과 주택 수, 지역 등에 따라 일반세율 또는 중과세율이 적용될 수 있습니다.
-              </p>
-            </div>
-            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-              <p m="0" font="700" text="sm">③ 감면·부가세목 확인</p>
-              <p m="0" mt="2" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
-                생애최초 등 감면요건을 확인하고 지방교육세·농어촌특별세를 함께 살펴봅니다.
-              </p>
-            </div>
-          </div>
-
-          <div mt="5" rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-            <p m="0" font="700" text="sm">중요한 점</p>
-            <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              이 계산기의 입력값은 대표적인 사례를 빠르게 비교하기 위한 것입니다.
-              일시적 2주택, 저가주택, 중과 배제, 법인, 임대사업자, 특수한 증여·상속 등은 별도의 법정 요건을 확인해야 실제 세율을 확정할 수 있습니다.
-            </p>
+            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted"><p m="0" font="700" text="sm">① 과세표준</p><p m="0" mt="2" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">취득 당시 가액과 법정 포함비용 등을 기준으로 확인합니다.</p></div>
+            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted"><p m="0" font="700" text="sm">② 세율</p><p m="0" mt="2" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">취득원인·주택 수·지역 등 사실관계에 따라 적용세율을 결정합니다.</p></div>
+            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted"><p m="0" font="700" text="sm">③ 감면·부가세목</p><p m="0" mt="2" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">생애최초 감면과 지방교육세·농어촌특별세 등을 확인합니다.</p></div>
           </div>
         </div>
       </section>
 
-      <section aria-labelledby="housing-rates">
-        <h2 id="housing-rates" class="cm-section-title">주택 취득세율은 어떻게 달라지나요?</h2>
+      <section aria-labelledby="example">
+        <h2 id="example" class="cm-section-title">계산 예시</h2>
         <div class="cm-card" mt="4" p="5 md:6">
           <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            주택을 유상거래로 취득하는 경우 일반적인 1주택·중과 제외 사례는 취득 당시 가액에 따라 1%~3%의 세율이 적용됩니다.
-            6억원 초과 9억원 이하 구간은 고정된 2%가 아니라 취득가액에 따라 세율이 연속적으로 달라집니다.
-            다주택자의 경우에는 중과 요건에 해당하면 8% 또는 12%의 세율이 적용될 수 있습니다.
+            예를 들어 5억원 주택을 매매로 취득하고 1주택이며 중과 대상이 아니라면 취득세율은 1%입니다.
           </p>
-
-          <div mt="5" overflow-x="auto">
-            <table w="full" text="sm" border-collapse>
-              <thead>
-                <tr border-b="2" border-border dark="border-dark-border">
-                  <th p="3" text-left>대표 사례</th>
-                  <th p="3" text-right>취득세율</th>
-                  <th p="3" text-left>참고</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr border-b="1" border-border dark="border-dark-border">
-                  <td p="3">1주택·중과 제외·6억원 이하</td>
-                  <td p="3" text-right>1%</td>
-                  <td p="3">일반적인 유상 주택 취득</td>
-                </tr>
-                <tr border-b="1" border-border dark="border-dark-border">
-                  <td p="3">1주택·중과 제외·6억원 초과~9억원 이하</td>
-                  <td p="3" text-right>1%~3%</td>
-                  <td p="3">취득가액별 법정 산식 적용</td>
-                </tr>
-                <tr border-b="1" border-border dark="border-dark-border">
-                  <td p="3">1주택·중과 제외·9억원 초과</td>
-                  <td p="3" text-right>3%</td>
-                  <td p="3">일반세율</td>
-                </tr>
-                <tr border-b="1" border-border dark="border-dark-border">
-                  <td p="3">2주택·조정대상지역 중과</td>
-                  <td p="3" text-right>8%</td>
-                  <td p="3">중과 요건을 충족하는 경우</td>
-                </tr>
-                <tr border-b="1" border-border dark="border-dark-border">
-                  <td p="3">3주택 이상·조정대상지역 중과</td>
-                  <td p="3" text-right>12%</td>
-                  <td p="3">중과 요건을 충족하는 경우</td>
-                </tr>
-                <tr>
-                  <td p="3">4주택 이상·비조정대상지역 중과</td>
-                  <td p="3" text-right>12%</td>
-                  <td p="3">중과 요건을 충족하는 경우</td>
-                </tr>
-              </tbody>
-            </table>
+          <div mt="4" rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted" text="sm md:base" leading="7">
+            5억원 × 1% = 취득세 500만원
+            <br />지방교육세와 농어촌특별세는 전용면적 등 추가 조건에 따라 달라집니다.
           </div>
-
-          <div mt="5" rounded="xl" border="1" border-border p="4" dark="border-dark-border">
-            <p m="0" font="700" text="sm">6억원 초과 9억원 이하 주택의 세율</p>
-            <p m="0" mt="2" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              법정 산식에 따라 취득가액을 기준으로 세율을 계산하고, 소수점 이하 다섯째 자리에서 반올림해 소수점 넷째 자리까지 계산합니다.
-            </p>
-            <p m="0" mt="3" font="650" text="sm md:base">
-              세율 = (취득가액 × 2/3억원 − 3) × 1%
-            </p>
-            <p m="0" mt="2" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-              예: 7억5천만원 주택은 2% 세율 구간에 해당하므로 취득세는 1,500만원입니다.
-            </p>
-          </div>
+          <p m="0" mt="4" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
+            6억원 초과 9억원 이하 주택은 단순히 1% 또는 3%를 적용하는 것이 아니라 취득가액에 따른 법정 산식을 사용합니다.
+          </p>
         </div>
       </section>
 
-      <section aria-labelledby="examples">
-        <h2 id="examples" class="cm-section-title">취득세 계산 예시</h2>
-        <div grid="~ cols-1 md:cols-3" gap="4" mt="4">
-          <article class="cm-card" p="5">
-            <p m="0" text="xs" font="700" text-primary>예시 01 · 일반 1주택</p>
-            <h3 m="0" mt="2" text="lg" font="750">5억원 주택 매매</h3>
-            <ul m="0" mt="4" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              <li>1주택</li>
-              <li>중과 대상 아님</li>
-              <li>취득세율 1%</li>
-            </ul>
-            <p m="0" mt="4" font="750">5억원 × 1% = 500만원</p>
-            <p m="0" mt="2" text="xs" leading="6" text-text-muted dark="text-dark-text-muted">
-              지방교육세·농어촌특별세는 별도 조건에 따라 달라질 수 있습니다.
-            </p>
-          </article>
-
-          <article class="cm-card" p="5">
-            <p m="0" text="xs" font="700" text-primary>예시 02 · 6억~9억</p>
-            <h3 m="0" mt="2" text="lg" font="750">7억5천만원 주택 매매</h3>
-            <ul m="0" mt="4" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              <li>1주택</li>
-              <li>중과 대상 아님</li>
-              <li>취득세율 2%</li>
-            </ul>
-            <p m="0" mt="4" font="750">7.5억원 × 2% = 1,500만원</p>
-            <p m="0" mt="2" text="xs" leading="6" text-text-muted dark="text-dark-text-muted">
-              6억원 초과 9억원 이하에서는 가격에 따라 세율이 달라집니다.
-            </p>
-          </article>
-
-          <article class="cm-card" p="5">
-            <p m="0" text="xs" font="700" text-primary>예시 03 · 중과</p>
-            <h3 m="0" mt="2" text="lg" font="750">7억원 주택 매매</h3>
-            <ul m="0" mt="4" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              <li>2주택</li>
-              <li>조정대상지역</li>
-              <li>취득세율 8%</li>
-            </ul>
-            <p m="0" mt="4" font="750">7억원 × 8% = 5,600만원</p>
-            <p m="0" mt="2" text="xs" leading="6" text-text-muted dark="text-dark-text-muted">
-              중과 제외 사유가 있다면 실제 세율은 달라질 수 있습니다.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section aria-labelledby="first-home">
-        <h2 id="first-home" class="cm-section-title">생애최초 취득세 감면은 어떻게 적용되나요?</h2>
-        <div class="cm-card" mt="4" p="5 md:6">
-          <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            현행 지방세특례제한법은 본인과 배우자가 주택을 소유한 사실이 없고, 본인이 거주할 목적으로
-            취득 당시 가액 12억원 이하의 주택을 유상취득하는 등 법정 요건을 충족하는 경우 생애최초 주택 구입 취득세 감면을 규정하고 있습니다.
-            현행 규정의 적용기한은 2028년 12월 31일까지입니다.
-          </p>
-          <div mt="5" grid="~ cols-1 md:cols-3" gap="3">
-            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-              <p m="0" font="700" text="sm">주택 가격</p>
-              <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">취득 당시 가액이 12억원 이하인지 확인합니다.</p>
-            </div>
-            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-              <p m="0" font="700" text="sm">과거 주택 보유</p>
-              <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">본인과 배우자의 과거 주택 보유 이력을 법정 기준에 따라 확인해야 합니다.</p>
-            </div>
-            <div rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-              <p m="0" font="700" text="sm">거주 목적</p>
-              <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">본인이 거주할 목적으로 유상취득하는 등 법정 요건을 충족해야 합니다.</p>
-            </div>
-          </div>
-          <p m="0" mt="5" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
-            계산기에서는 대표적인 감면 한도를 반영하지만, 주택 보유 이력의 예외와 추징요건까지 자동 판정하지는 않습니다.
-            감면 신청 전에는 최신 법령을 반드시 확인하세요.
+      <section aria-labelledby="rates">
+        <h2 id="rates" class="cm-section-title">주택 취득세율 주요 구간</h2>
+        <div class="cm-card" mt="4" p="5 md:6" overflow-x="auto">
+          <table w="full" text="sm" border-collapse>
+            <thead><tr border-b="2" border-border dark="border-dark-border"><th p="3" text-left>구분</th><th p="3" text-right>취득세율</th></tr></thead>
+            <tbody>
+              <tr border-b="1" border-border dark="border-dark-border"><td p="3">1주택·중과 제외, 6억원 이하</td><td p="3" text-right>1%</td></tr>
+              <tr border-b="1" border-border dark="border-dark-border"><td p="3">1주택·중과 제외, 6억원 초과~9억원 이하</td><td p="3" text-right>가격별 1%~3%</td></tr>
+              <tr border-b="1" border-border dark="border-dark-border"><td p="3">1주택·중과 제외, 9억원 초과</td><td p="3" text-right>3%</td></tr>
+              <tr border-b="1" border-border dark="border-dark-border"><td p="3">2주택·조정대상지역</td><td p="3" text-right>8%</td></tr>
+              <tr border-b="1" border-border dark="border-dark-border"><td p="3">3주택 이상·조정대상지역</td><td p="3" text-right>12%</td></tr>
+              <tr><td p="3">4주택 이상·비조정대상지역</td><td p="3" text-right>12%</td></tr>
+            </tbody>
+          </table>
+          <p m="0" mt="4" text="xs sm:sm" leading="6" text-text-muted dark="text-dark-text-muted">
+            일시적 2주택, 저가주택, 중과 배제 주택 등은 별도 요건에 따라 일반세율이 적용될 수 있습니다.
           </p>
         </div>
       </section>
 
       <section aria-labelledby="basis">
-        <h2 id="basis" class="cm-section-title">공식 기준과 법령 확인</h2>
+        <h2 id="basis" class="cm-section-title">공식 기준 확인</h2>
         <div class="cm-card" mt="4" p="5 md:6">
           <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            취득세의 기본세율과 주택 중과는 <strong>지방세법</strong>, 취득세 감면은 주로 <strong>지방세특례제한법</strong>에서 확인할 수 있습니다.
-            실제 신고에서는 취득일 현재 시행되는 법령과 과세표준 산정기준이 중요합니다.
+            기본세율과 주택 중과는 지방세법, 감면은 지방세특례제한법 등 관련 법령을 기준으로 합니다.
+            취득세는 취득일 현재 시행되는 규정이 중요하므로 신고 시점의 최신 법령과 위택스 안내를 확인하세요.
           </p>
-
-          <div mt="5" grid="~ cols-1 md:cols-3" gap="3">
-            <a href="https://www.law.go.kr/법령/지방세법" target="_blank" rel="noreferrer" class="cm-button-secondary" px="4" py="3" no-underline>
-              지방세법 확인
-            </a>
-            <a href="https://www.law.go.kr/법령/지방세특례제한법" target="_blank" rel="noreferrer" class="cm-button-secondary" px="4" py="3" no-underline>
-              지방세특례제한법 확인
-            </a>
-            <a href="https://www.wetax.go.kr/" target="_blank" rel="noreferrer" class="cm-button-secondary" px="4" py="3" no-underline>
-              위택스 확인
-            </a>
-          </div>
-
-          <div mt="5" rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
-            <p m="0" font="700" text="sm">현재 확인할 핵심 기준</p>
-            <ul m="0" mt="2" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              <li>지방세법 제11조: 부동산 및 주택의 기본 취득세율</li>
-              <li>지방세법 제13조의2: 법인·다주택자의 주택 취득 중과</li>
-              <li>지방세특례제한법 제36조의3: 생애최초 주택 구입 취득세 감면</li>
-            </ul>
+          <div flex="~ wrap" gap="3" mt="5">
+            <a href="https://www.law.go.kr/법령/지방세법" target="_blank" rel="noreferrer" class="cm-button-secondary" px="4" py="2" no-underline>지방세법</a>
+            <a href="https://www.law.go.kr/법령/지방세특례제한법" target="_blank" rel="noreferrer" class="cm-button-secondary" px="4" py="2" no-underline>지방세특례제한법</a>
+            <a href="https://www.wetax.go.kr/" target="_blank" rel="noreferrer" class="cm-button-secondary" px="4" py="2" no-underline>위택스</a>
           </div>
         </div>
       </section>
@@ -262,103 +105,33 @@ import AcquisitionTaxCalculator from '../../../components/calculators/Acquisitio
       <section aria-labelledby="faq">
         <h2 id="faq" class="cm-section-title">자주 묻는 질문</h2>
         <div mt="4" space-y="3">
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">취득가액과 과세표준은 같은가요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              항상 같은 것은 아닙니다. 거래 형태와 취득원인에 따라 과세표준을 정하는 법정 기준이 있고, 취득 과정에서 법정으로 포함되는 비용 등이 있을 수 있습니다.
-              따라서 계약서의 금액만으로 실제 신고 과세표준을 단정해서는 안 됩니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">6억원 초과 9억원 이하 주택은 왜 2%가 아닌가요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              이 구간은 취득가액에 따라 1%에서 3% 사이의 세율을 법정 산식으로 계산합니다.
-              예를 들어 7억5천만원은 2%가 되지만, 다른 금액은 다른 세율이 적용될 수 있습니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">주택이 여러 채면 무조건 8% 또는 12%인가요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              아닙니다. 주택 수만으로 확정하지 않고 조정대상지역 여부와 중과 제외 여부 등 법정 요건을 함께 판단합니다.
-              일시적 2주택, 저가주택 등 예외가 있을 수 있습니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">생애최초 감면은 집값이 12억원 이하면 무조건 받을 수 있나요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              아닙니다. 12억원 이하는 가격 요건 중 하나일 뿐입니다. 본인과 배우자의 주택 보유 이력, 거주 목적, 유상취득 여부 등 여러 요건을 충족해야 합니다.
-              법에서 인정하는 과거 주택 보유 예외도 있으므로 개별 사실관계를 확인해야 합니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">지방교육세와 농어촌특별세는 왜 별도로 계산하나요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              취득세와 별도의 세목이기 때문입니다. 적용 여부와 세율은 취득원인, 주택 여부, 면적, 취득세율 등에 따라 달라질 수 있어
-              이 계산기에서는 주요 사례를 기준으로 참고 금액을 표시합니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">오피스텔도 주택처럼 계산하면 되나요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              취득세 계산에서 오피스텔의 취득 형태와 실제 주거용 사용 여부 등 사실관계가 중요합니다.
-              이 계산기는 대표적인 비주택 취득세율을 기준으로 단순화한 참고 계산을 제공하므로 개별 거래에서는 별도 확인이 필요합니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">취득세 외에 어떤 비용을 더 준비해야 하나요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              취득세 관련 세금 외에도 소유권이전등기 비용, 법무사 보수, 국민주택채권 관련 비용 등이 발생할 수 있습니다.
-              거래 구조에 따라 비용 항목과 금액이 달라지므로 별도로 확인하는 것이 좋습니다.
-            </p>
-          </details>
-
-          <details class="cm-card" p="5">
-            <summary cursor-pointer font="700">계산기 결과가 실제 신고금액과 다를 수 있나요?</summary>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              네. 취득일, 과세표준, 중과 제외 사유, 감면 요건, 특수한 거래 조건 등에 따라 결과가 달라질 수 있습니다.
-              중요한 거래라면 관할 지방자치단체의 세무 담당 부서나 위택스 안내를 통해 최종 확인하세요.
-            </p>
-          </details>
+          <details class="cm-card" p="5"><summary cursor-pointer font="700">취득가액과 과세표준은 항상 같은가요?</summary><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">항상 같지는 않습니다. 취득 당시 가액에 법정으로 포함되는 비용 등이 반영될 수 있어 실제 신고에서는 과세표준 산정기준을 확인해야 합니다.</p></details>
+          <details class="cm-card" p="5"><summary cursor-pointer font="700">6억원과 9억원 구간은 어떻게 계산하나요?</summary><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">6억원 이하는 1%, 9억원 초과는 3%이며, 6억원 초과 9억원 이하는 취득가액에 따라 법정 산식으로 세율이 계산됩니다.</p></details>
+          <details class="cm-card" p="5"><summary cursor-pointer font="700">주택이 여러 채면 무조건 중과되나요?</summary><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">아닙니다. 일시적 2주택, 저가주택, 중과 배제 주택 등 예외가 있어 취득 당시의 전체 사실관계를 함께 판단해야 합니다.</p></details>
+          <details class="cm-card" p="5"><summary cursor-pointer font="700">생애최초 감면은 누구에게 적용되나요?</summary><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">본인과 배우자가 주택을 소유한 사실이 없고 본인 거주 목적의 12억원 이하 주택을 유상취득하는 등 법정 요건을 충족해야 합니다. 현행 감면 규정은 2028년 12월 31일까지 적용됩니다.</p></details>
+          <details class="cm-card" p="5"><summary cursor-pointer font="700">지방교육세와 농어촌특별세도 포함되나요?</summary><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">주요 부가세목을 함께 표시하지만 모든 특례와 세부 요건을 자동 판정하지는 않습니다. 특히 전용면적과 취득원인, 적용세율에 따라 달라질 수 있습니다.</p></details>
+          <details class="cm-card" p="5"><summary cursor-pointer font="700">실제 신고금액과 다를 수 있나요?</summary><p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">네. 취득일, 과세표준, 중과 제외, 감면, 특수관계인 거래 등 사실관계에 따라 결과가 달라질 수 있습니다. 실제 신고 전 관할 지방자치단체 또는 위택스 기준을 확인하세요.</p></details>
         </div>
       </section>
 
       <section aria-labelledby="related">
         <h2 id="related" class="cm-section-title">관련 계산기</h2>
         <div mt="4" grid="~ cols-1 md:cols-2" gap="4">
-          <a href="/calculators/property/" class="cm-card" p="5" no-underline hover="border-primary">
-            <h3 m="0" font="750">재산세 계산기</h3>
-            <p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">부동산을 보유한 뒤 매년 부담하는 재산세를 참고용으로 계산합니다.</p>
-          </a>
-          <a href="/calculators/legal-scrivener/" class="cm-card" p="5" no-underline hover="border-primary">
-            <h3 m="0" font="750">법무사 보수 계산기</h3>
-            <p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">소유권이전등기 과정에서 발생할 수 있는 법무사 보수를 계산합니다.</p>
-          </a>
-          <a href="/calculators/loan/" class="cm-card" p="5" no-underline hover="border-primary">
-            <h3 m="0" font="750">대출 계산기</h3>
-            <p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">주택 구입자금 대출의 월 상환액과 총 이자를 비교합니다.</p>
-          </a>
-          <a href="/calculators/dti/" class="cm-card" p="5" no-underline hover="border-primary">
-            <h3 m="0" font="750">DTI 계산기</h3>
-            <p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">소득 대비 주택담보대출 상환 부담을 참고용으로 계산합니다.</p>
-          </a>
+          <a href="/calculators/property/" class="cm-card" p="5" no-underline hover="border-primary"><h3 m="0" font="750">재산세 계산기</h3><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">부동산 보유에 따른 재산세를 참고용으로 계산합니다.</p></a>
+          <a href="/calculators/legal-scrivener/" class="cm-card" p="5" no-underline hover="border-primary"><h3 m="0" font="750">법무사 보수 계산기</h3><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">소유권이전등기 관련 법무사 보수를 계산합니다.</p></a>
+          <a href="/calculators/loan/" class="cm-card" p="5" no-underline hover="border-primary"><h3 m="0" font="750">대출 계산기</h3><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">주택 구입자금 대출의 상환액과 이자를 계산합니다.</p></a>
+          <a href="/calculators/dti/" class="cm-card" p="5" no-underline hover="border-primary"><h3 m="0" font="750">DTI 계산기</h3><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">소득 대비 주택담보대출 상환부담을 계산합니다.</p></a>
         </div>
       </section>
 
       <section aria-labelledby="caution">
-        <h2 id="caution" class="cm-section-title">계산 전 꼭 확인하세요</h2>
+        <h2 id="caution" class="cm-section-title">계산 전 확인사항</h2>
         <div class="cm-card" mt="4" p="5 md:6">
           <ul m="0" pl="5" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
             <li>이 계산기는 취득세 신고를 대신하지 않는 참고용 모의계산기입니다.</li>
             <li>세율과 감면제도는 취득일과 법령 개정에 따라 달라질 수 있습니다.</li>
-            <li>일시적 2주택, 저가주택, 중과 배제, 임대사업자, 법인, 증여·상속의 개별 특례는 모두 자동 판정하지 않습니다.</li>
-            <li>취득세 외 등기비용, 국민주택채권, 법무사 비용 등은 총액에 포함하지 않습니다.</li>
-            <li>중요한 거래 전에는 취득일 현재의 법령과 관할 시·군·구 세무부서 또는 위택스 안내를 최종 확인하세요.</li>
+            <li>취득세 외 등기비용, 국민주택채권, 법무사 비용 등은 포함하지 않습니다.</li>
+            <li>중요한 거래 전에는 관할 시·군·구 세무부서 또는 위택스에서 최종 확인하세요.</li>
           </ul>
         </div>
       </section>
