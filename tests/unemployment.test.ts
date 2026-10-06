@@ -1,7 +1,25 @@
 import { describe, expect, test } from 'bun:test';
-import { calculateUnemployment, getBenefitDays } from '../src/lib/calculators/unemployment';
+import {
+  calculateEstimatedDailyAverageWage,
+  calculateUnemployment,
+  getBenefitDays,
+} from '../src/lib/calculators/unemployment';
 
 describe('unemployment calculator', () => {
+  test('calculates daily average wage from three-month wages', () => {
+    const result = calculateEstimatedDailyAverageWage(9_000_000, '2026-10-06');
+
+    expect(result.periodDays).toBe(92);
+    expect(result.dailyAverageWage).toBe(97_826);
+  });
+
+  test('handles a three-month period crossing a shorter month', () => {
+    const result = calculateEstimatedDailyAverageWage(9_000_000, '2026-05-31');
+
+    expect(result.periodDays).toBe(90);
+    expect(result.dailyAverageWage).toBe(100_000);
+  });
+
   test('applies 2026 lower limit and 50세 미만 1~3년 지급일수', () => {
     const result = calculateUnemployment({
       dailyAverageWage: 100_000,
