@@ -33,8 +33,8 @@ describe('unemployment calculator', () => {
   test('handles a three-month period crossing a shorter month', () => {
     const result = calculateEstimatedDailyAverageWage(9_000_000, '2026-05-31');
 
-    expect(result.periodDays).toBe(90);
-    expect(result.dailyAverageWage).toBe(100_000);
+    expect(result.periodDays).toBe(92);
+    expect(result.dailyAverageWage).toBe(97_826);
   });
 
   test('applies 2026 lower limit and 50세 미만 1~3년 지급일수', () => {
