@@ -190,22 +190,21 @@ function calculateMedicalTaxCredit(
   const reimbursed = clampNonNegative(reimbursement);
   if (general + special <= reimbursed) return 0;
 
+  // 일반 의료비에만 총급여액의 3% 기준을 적용한다.
+  // 본인·6세 이하·65세 이상·장애인 의료비와 난임·미숙아/선천성이상아
+  // 관련 의료비는 3% 기준을 적용하지 않는다.
   const threshold = wage * 0.03;
   const generalEligible = Math.max(0, general - threshold);
-  const remainingThreshold = Math.max(0, threshold - general);
-  const specialEligible = Math.max(0, special - remainingThreshold);
-
-  if (special <= 0) return generalEligible * 0.15;
 
   const self = clampNonNegative(selfEtc);
   const infertilityAmount = clampNonNegative(infertility);
   const prematureAmount = clampNonNegative(premature);
-  const eligibleRatio = Math.min(1, specialEligible / special);
+
   return (
     generalEligible * 0.15 +
-    self * eligibleRatio * 0.15 +
-    infertilityAmount * eligibleRatio * 0.3 +
-    prematureAmount * eligibleRatio * 0.2
+    self * 0.15 +
+    infertilityAmount * 0.3 +
+    prematureAmount * 0.2
   );
 }
 
