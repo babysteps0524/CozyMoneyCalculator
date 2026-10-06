@@ -49,7 +49,11 @@ export function calculateEstimatedDailyAverageWage(
   if (Number.isNaN(end.getTime())) throw new Error('이직일을 올바른 날짜로 입력하세요.');
 
   const periodStart = new Date(end);
-  periodStart.setMonth(periodStart.getMonth() - 3);
+  const targetMonth = periodStart.getMonth() - 3;
+  const targetYear = periodStart.getFullYear() + Math.floor(targetMonth / 12);
+  const normalizedMonth = ((targetMonth % 12) + 12) % 12;
+  const lastDayOfTargetMonth = new Date(targetYear, normalizedMonth + 1, 0).getDate();
+  periodStart.setFullYear(targetYear, normalizedMonth, Math.min(end.getDate(), lastDayOfTargetMonth));
 
   const periodDays = Math.round((end.getTime() - periodStart.getTime()) / 86_400_000);
 
