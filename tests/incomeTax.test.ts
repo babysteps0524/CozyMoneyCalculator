@@ -80,17 +80,17 @@ describe('income tax calculator', () => {
     expect(result.pensionIncomeDeduction).toBe(5_500_000);
     expect(result.basicDeduction).toBe(3_000_000);
     expect(result.taxableIncome).toBe(51_250_000);
-    expect(result.taxRate).toBe(0.15);
-    expect(result.calculatedTax).toBe(6_427_500);
+    expect(result.taxRate).toBe(0.24);
+    expect(result.calculatedTax).toBe(6_540_000);
     expect(result.earnedIncomeTaxCredit).toBe(740_000);
     expect(result.childTaxCredit).toBe(850_000);
     expect(result.pensionAccountTaxCredit).toBe(720_000);
     expect(result.insuranceTaxCredit).toBe(120_000);
     expect(result.educationTaxCredit).toBe(150_000);
     expect(result.rentTaxCredit).toBe(900_000);
-    expect(result.determinedTax).toBe(2_722_500);
+    expect(result.determinedTax).toBe(3_060_000);
     expect(result.finalTax).toBe(result.determinedTax - 1_500_000);
-    expect(result.finalTax).toBe(1_222_500);
+    expect(result.finalTax).toBe(1_560_000);
   });
 
   test('caps pension account and insurance tax credits', () => {
