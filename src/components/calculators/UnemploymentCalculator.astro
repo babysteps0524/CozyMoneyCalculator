@@ -6,19 +6,27 @@
     <p m="0" text="sm" font="700" text-primary>CALCULATOR</p>
     <h2 m="0" mt="1" text="xl md:2xl" font="800">구직급여 예상액 계산</h2>
     <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">
-      이직 전 1일 평균임금, 소정근로시간, 이직 당시 연령, 고용보험 가입기간을 기준으로 2026년 단순 예상액을 계산합니다.
+      어려운 1일 평균임금을 직접 계산할 필요 없이 이직일과 직전 3개월 임금총액을 입력하면 자동으로 추정합니다.
     </p>
   </div>
 
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4" mt="6">
     <label>
-      <span class="cm-label">1일 평균임금</span>
+      <span class="cm-label">이직일</span>
+      <input id="separation-date" class="cm-input" type="date" aria-describedby="date-help" />
+      <span id="date-help" block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
+        마지막 근무일 다음 날이 아니라 실제 고용관계가 종료된 이직일을 기준으로 입력하세요.
+      </span>
+    </label>
+
+    <label>
+      <span class="cm-label">이직 전 3개월 임금총액</span>
       <div relative>
-        <input id="daily" class="cm-input pr-12" type="text" inputmode="numeric" value="100,000" data-number-input data-step="1000" data-min="1" data-decimal="false" />
+        <input id="wages" class="cm-input pr-12" type="text" inputmode="numeric" value="9,000,000" data-number-input data-step="10000" data-min="1" data-decimal="false" />
         <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
       </div>
       <span block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
-        월급 자체가 아니라 퇴직 전 3개월 임금총액 ÷ 그 기간 총일수로 산정한 1일 평균임금을 입력하는 것이 가장 정확합니다.
+        이직일 이전 3개월 동안의 임금총액을 입력하세요. 급여명세서의 실제 지급 임금을 기준으로 확인하는 것이 좋습니다.
       </span>
     </label>
 
@@ -34,8 +42,8 @@
         <option value="2">2시간</option>
         <option value="1">1시간</option>
       </select>
-      <span block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
-        하한액 계산에 사용합니다. 단시간근로자는 실제 소정근로시간에 따라 달라질 수 있습니다.
+      <span block mt="2" text="xs" leading="6" text-text-subtle dark:text-dark-text-subtle>
+        구직급여 하한액 계산에 사용합니다.
       </span>
     </label>
 
@@ -59,6 +67,14 @@
     </label>
   </div>
 
+  <div mt="5" rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
+    <p m="0" text="sm" font="750">1일 평균임금은 자동으로 계산됩니다</p>
+    <p m="0" mt="2" text="xs sm" leading="6" text-text-muted dark="text-dark-text-muted">
+      계산기는 이직일 직전 3개월의 임금총액을 해당 기간의 총일수로 나누어 1일 평균임금을 추정합니다.
+      실제 산정에서는 제외기간·제외임금 등이 반영될 수 있어 고용센터의 최종 산정액과 차이가 날 수 있습니다.
+    </p>
+  </div>
+
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
     <button id="calculate" type="button" class="cm-button-primary" py="3.5">계산하기</button>
     <button id="reset" type="button" class="cm-button-secondary" py="3.5">초기화</button>
@@ -73,11 +89,11 @@
   </section>
 
   <div grid="~ cols-2 md:cols-3" gap="3" mt="3">
+    <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">3개월 임금총액</p><strong id="wages-result" block mt="2">-</strong></div>
+    <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">산정기간 총일수</p><strong id="period-days" block mt="2">-</strong></div>
     <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">1일 평균임금</p><strong id="average" block mt="2">-</strong></div>
     <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">60% 산정액</p><strong id="base" block mt="2">-</strong></div>
     <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">최종 1일 구직급여</p><strong id="daily-benefit" block mt="2">-</strong></div>
-    <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">하한액</p><strong id="lower" block mt="2">-</strong></div>
-    <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">상한액</p><strong id="upper" block mt="2">-</strong></div>
     <div class="cm-result"><p m="0" text="xs sm" text-text-muted dark="text-dark-text-muted">소정급여일수</p><strong id="days" block mt="2">-</strong></div>
   </div>
 
@@ -93,26 +109,39 @@
 
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
-  import { calculateUnemployment } from '../../lib/calculators/unemployment';
+  import {
+    calculateEstimatedDailyAverageWage,
+    calculateUnemployment,
+  } from '../../lib/calculators/unemployment';
 
   const root = document.querySelector<HTMLElement>('[data-unemployment-calculator]');
 
   if (root) {
-    const daily = root.querySelector<HTMLInputElement>('#daily')!;
+    const separationDate = root.querySelector<HTMLInputElement>('#separation-date')!;
+    const wages = root.querySelector<HTMLInputElement>('#wages')!;
     const hours = root.querySelector<HTMLSelectElement>('#hours')!;
     const age = root.querySelector<HTMLSelectElement>('#age')!;
     const period = root.querySelector<HTMLSelectElement>('#period')!;
     const error = root.querySelector<HTMLElement>('#error')!;
 
     const fmt = (value: number) => Math.round(value).toLocaleString('ko-KR') + '원';
-    const getDailyAverageWage = () => Number(daily.value.replace(/,/g, '') || 0);
+    const getWages = () => Number(wages.value.replace(/,/g, '') || 0);
+
+    const getToday = () => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
 
     const calc = () => {
       try {
         error.hidden = true;
 
+        const estimated = calculateEstimatedDailyAverageWage(getWages(), separationDate.value);
         const result = calculateUnemployment({
-          dailyAverageWage: getDailyAverageWage(),
+          dailyAverageWage: estimated.dailyAverageWage,
           dailyWorkingHours: Number(hours.value),
           ageGroup: age.value as 'under50' | 'over50OrDisabled',
           insurancePeriod: period.value as 'under1' | '1to3' | '3to5' | '5to10' | '10plus',
@@ -121,18 +150,18 @@
         root.querySelector<HTMLElement>('#total')!.textContent = fmt(result.totalBenefit);
         root.querySelector<HTMLElement>('#headline')!.textContent =
           `1일 ${fmt(result.dailyBenefit)} × ${result.benefitDays}일`;
+        root.querySelector<HTMLElement>('#wages-result')!.textContent = fmt(getWages());
+        root.querySelector<HTMLElement>('#period-days')!.textContent = `${estimated.periodDays}일`;
         root.querySelector<HTMLElement>('#average')!.textContent = fmt(result.dailyAverageWage);
         root.querySelector<HTMLElement>('#base')!.textContent = fmt(result.baseBenefit);
         root.querySelector<HTMLElement>('#daily-benefit')!.textContent = fmt(result.dailyBenefit);
-        root.querySelector<HTMLElement>('#lower')!.textContent = fmt(result.lowerLimit);
-        root.querySelector<HTMLElement>('#upper')!.textContent = fmt(result.upperLimit);
         root.querySelector<HTMLElement>('#days')!.textContent = `${result.benefitDays}일`;
 
         const status = result.lowerLimitApplied
-          ? '평균임금의 60%가 하한액보다 낮아 하한액을 적용했습니다.'
+          ? '1일 평균임금의 60%가 하한액보다 낮아 하한액을 적용했습니다.'
           : result.upperLimitApplied
-            ? '평균임금의 60%가 상한액보다 높아 상한액을 적용했습니다.'
-            : '평균임금의 60%가 상·하한 범위 안에 있어 그대로 적용했습니다.';
+            ? '1일 평균임금의 60%가 상한액보다 높아 상한액을 적용했습니다.'
+            : '1일 평균임금의 60%가 상·하한 범위 안에 있어 그대로 적용했습니다.';
 
         root.querySelector<HTMLElement>('#status')!.textContent = status;
       } catch (e) {
@@ -144,13 +173,15 @@
     root.querySelector('#calculate')?.addEventListener('click', calc);
 
     root.querySelector('#reset')?.addEventListener('click', () => {
-      daily.value = '100,000';
+      separationDate.value = getToday();
+      wages.value = '9,000,000';
       hours.value = '8';
       age.value = 'under50';
       period.value = 'under1';
       calc();
     });
 
+    separationDate.value = getToday();
     bindNumberControls(root);
     root.addEventListener('input', calc);
     root.addEventListener('change', calc);
