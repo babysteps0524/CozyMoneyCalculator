@@ -166,27 +166,32 @@ function calculateMedicalTaxCredit(
   reimbursement: number,
 ): number {
   const wage = clampNonNegative(totalWage);
-  const base = Math.max(
+  const general = Math.max(0, Math.min(clampNonNegative(other), 7_000_000));
+  const special = Math.max(
     0,
     clampNonNegative(selfEtc) +
       clampNonNegative(infertility) +
-      clampNonNegative(premature) +
-      clampNonNegative(other) -
-      clampNonNegative(reimbursement),
+      clampNonNegative(premature),
   );
-  if (base <= 0) return 0;
+  const reimbursed = clampNonNegative(reimbursement);
+  if (general + special <= reimbursed) return 0;
 
   const threshold = wage * 0.03;
-  const protectedMedical = clampNonNegative(selfEtc) + clampNonNegative(infertility) + clampNonNegative(premature);
-  const generalEligible = Math.max(
-    0,
-    Math.min(clampNonNegative(other), 7_000_000) - Math.max(0, threshold - protectedMedical),
-  );
+  const generalEligible = Math.max(0, general - threshold);
+  const remainingThreshold = Math.max(0, threshold - general);
+  const specialEligible = Math.max(0, special - remainingThreshold);
+
+  if (special <= 0) return generalEligible * 0.15;
+
+  const self = clampNonNegative(selfEtc);
+  const infertilityAmount = clampNonNegative(infertility);
+  const prematureAmount = clampNonNegative(premature);
+  const eligibleRatio = Math.min(1, specialEligible / special);
   return (
-    Math.max(0, protectedMedical - Math.max(0, threshold)) * 0.15 +
     generalEligible * 0.15 +
-    clampNonNegative(infertility) * 0.15 +
-    clampNonNegative(premature) * 0.05
+    self * eligibleRatio * 0.15 +
+    infertilityAmount * eligibleRatio * 0.3 +
+    prematureAmount * eligibleRatio * 0.2
   );
 }
 
@@ -299,13 +304,11 @@ export function calculateIncomeTax(input: IncomeTaxInput): IncomeTaxResult {
     clampNonNegative(input.otherTaxCredit);
 
   const determinedTax = Math.max(0, calculatedTax - totalTaxCredit);
-  const finalTax = Math.max(
-    0,
+  const finalTax =
     determinedTax +
-      clampNonNegative(input.penaltyTax) -
-      clampNonNegative(input.withholdingTax) -
-      clampNonNegative(input.prepaidTax),
-  );
+    clampNonNegative(input.penaltyTax) -
+    clampNonNegative(input.withholdingTax) -
+    clampNonNegative(input.prepaidTax);
 
   return {
     businessIncome,
