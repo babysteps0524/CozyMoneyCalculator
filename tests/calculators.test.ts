@@ -131,6 +131,31 @@ describe('calculator calculations', () => {
     expect(result.totalDeductions).toBeGreaterThan(0);
   });
 
+  test('monthly salary excludes national pension for workers aged 60 or older', () => {
+    const under60 = calculateSalary({
+      salary: 3_333_333,
+      salaryType: 'monthly',
+      retirementType: 'separate',
+      taxFreeMonthly: 200_000,
+      dependents: 1,
+      children8To20: 0,
+      age60OrOlder: false,
+    });
+    const age60Plus = calculateSalary({
+      salary: 3_333_333,
+      salaryType: 'monthly',
+      retirementType: 'separate',
+      taxFreeMonthly: 200_000,
+      dependents: 1,
+      children8To20: 0,
+      age60OrOlder: true,
+    });
+
+    expect(under60.nationalPension).toBeGreaterThan(0);
+    expect(age60Plus.nationalPension).toBe(0);
+    expect(age60Plus.monthlyTakeHome).toBeGreaterThan(under60.monthlyTakeHome);
+  });
+
   test('salary supports monthly input, retirement inclusion, tax-free pay and dependents', () => {
     const result = calculateSalary({
       salary: 3_333_333,
