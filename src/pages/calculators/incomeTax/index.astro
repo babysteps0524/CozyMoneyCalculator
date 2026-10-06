@@ -2,12 +2,12 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import IncomeTaxCalculator from '../../../components/calculators/IncomeTaxCalculator.astro';
 ---
 
 <BaseLayout
   title="종합소득세 계산기 | CozyMoney 코지머니"
-  description="과세표준을 입력해 누진세율을 단순 적용한 소득세를 계산합니다."
+  description="사업·근로·연금·이자·배당·기타소득과 주요 공제·세액공제를 반영해 종합소득세를 모의 계산합니다."
   canonical="https://cozymoney.kr/calculators/incomeTax/"
 >
   <Header />
@@ -41,11 +41,7 @@ import CalculatorShell from '../../../components/calculators/CalculatorShell.ast
       </p>
     </header>
     <div max-w="4xl">
-      <CalculatorShell
-        kind="incomeTax"
-        title="종합소득세 계산기"
-        description="과세표준을 입력해 누진세율을 단순 적용한 소득세를 계산합니다."
-      />
+      <IncomeTaxCalculator />
     </div>
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
@@ -57,9 +53,9 @@ import CalculatorShell from '../../../components/calculators/CalculatorShell.ast
           text-text-muted
           dark="text-dark-text-muted"
         >
-          입력한 값을 바탕으로 계산 결과와 주요 계산 기준을 함께 표시합니다.
-          실제 계약, 신고 또는 급여 정산에 사용하는 경우에는 관련 기관이나
-          계약서의 정확한 조건을 확인하세요.
+          소득의 종류별 금액을 입력한 뒤 소득공제와 세액공제를 반영하면 과세표준,
+          산출세액, 결정세액, 납부 또는 환급 예상액까지 단계별로 확인할 수 있습니다.
+          실제 신고 전에는 국세청·홈택스의 최신 기준과 개인별 공제요건을 확인하세요.
         </p>
       </div>
     </section>
