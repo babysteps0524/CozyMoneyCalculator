@@ -7,7 +7,7 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
 
 <BaseLayout
   title="실업급여 계산기 | CozyMoney 코지머니"
-  description="이직 전 1일 평균임금, 소정근로시간, 연령, 고용보험 가입기간을 기준으로 2026년 구직급여 예상액과 소정급여일수를 계산합니다."
+  description="이직일과 생년월일, 이직 전 3개월 임금총액, 소정근로시간, 고용보험 가입기간을 기준으로 2026년 구직급여 예상액과 소정급여일수를 계산합니다."
   canonical="https://cozymoney.kr/calculators/unemployment/"
 >
   <Header />
@@ -25,8 +25,8 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
         <p m="0" text="sm" font="700" text-primary>급여·노동</p>
         <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>실업급여 계산기</h1>
         <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">
-          이직일과 직전 3개월 임금총액, 소정근로시간, 연령, 고용보험 가입기간을 입력하면
-          1일 평균임금을 자동으로 추정해 1일 구직급여액과 소정급여일수, 총 예상액을 확인할 수 있습니다.
+          이직일과 생년월일, 직전 3개월 임금총액, 소정근로시간, 고용보험 가입기간을 입력하면
+          이직일 기준 만 나이를 자동으로 계산하고 1일 구직급여액과 소정급여일수, 총 예상액을 확인할 수 있습니다.
         </p>
       </header>
 
@@ -35,6 +35,13 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
       <section mt="10 md:14">
         <h2 class="cm-section-title">실업급여 계산 방법</h2>
         <div grid="~ cols-1 md:cols-3" gap="4" mt="4">
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">이직일 기준 연령</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              생년월일과 이직일을 입력하면 만 나이를 자동으로 계산합니다. 만 50세 이상이면 50세 이상 구분을 적용합니다.
+              장애인인 경우에는 연령과 관계없이 해당 구분이 적용될 수 있도록 별도로 입력할 수 있습니다.
+            </p>
+          </div>
           <div class="cm-card" p="5">
             <h3 m="0" font="750">1일 평균임금</h3>
             <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
@@ -46,12 +53,6 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
             <h3 m="0" font="750">1일 구직급여액</h3>
             <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
               기본적으로 1일 평균임금의 60%를 계산한 뒤 이직일과 근로시간에 따른 상·하한을 적용합니다.
-            </p>
-          </div>
-          <div class="cm-card" p="5">
-            <h3 m="0" font="750">소정급여일수</h3>
-            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              이직 당시 연령 구분과 고용보험 가입기간에 따라 120~270일 범위에서 달라집니다.
             </p>
           </div>
         </div>
@@ -125,10 +126,10 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
         <h2 class="cm-section-title">계산 예시</h2>
         <div class="cm-card" mt="4" p="5 md:6">
           <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
-            예를 들어 2026년 10월 6일을 이직일로 입력하고 직전 3개월 임금총액이 900만원,
-            1일 소정근로시간이 8시간, 50세 미만, 고용보험 가입기간이 1년 이상 3년 미만이라면
-            계산기가 3개월의 산정기간 총일수를 계산한 뒤 1일 평균임금을 추정합니다.
-            이후 평균임금의 60%와 2026년 상·하한액을 비교하고 소정급여일수 150일을 적용합니다.
+            예를 들어 2026년 10월 6일을 이직일로 입력하고 생년월일이 1975년 10월 7일이라면 이직일 기준 만 50세가 됩니다.
+            직전 3개월 임금총액이 900만원, 1일 소정근로시간이 8시간, 고용보험 가입기간이 1년 이상 3년 미만이라면
+            계산기가 연령 구분과 3개월의 산정기간 총일수를 자동 계산한 뒤 1일 평균임금을 추정합니다.
+            이후 평균임금의 60%와 2026년 상·하한액을 비교하고 소정급여일수 180일을 적용합니다.
           </p>
         </div>
       </section>
@@ -137,15 +138,22 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
         <h2 class="cm-section-title">자주 묻는 질문</h2>
         <div grid="~ cols-1 md:cols-2" gap="4" mt="4">
           <div class="cm-card" p="5">
-            <h3 m="0" font="750">3개월 임금총액은 어떻게 입력하나요?</h3>
+            <h3 m="0" font="750">생년월일을 입력하면 나이가 자동으로 계산되나요?</h3>
             <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              이 계산기는 월급 한 달치가 아니라 이직일 직전 3개월 동안의 임금총액을 입력하도록 구성했습니다. 급여명세서에서 해당 기간의 실제 임금총액을 확인해 입력하면 1일 평균임금을 자동으로 추정합니다.
+              네. 생년월일과 이직일을 기준으로 만 나이를 계산해 50세 미만 또는 50세 이상 구분을 자동으로 적용합니다.
+              생일이 아직 지나지 않았는지도 계산에 반영합니다.
             </p>
           </div>
           <div class="cm-card" p="5">
-            <h3 m="0" font="750">50세가 넘으면 무조건 더 오래 받나요?</h3>
+            <h3 m="0" font="750">장애인인 경우에는 어떻게 입력하나요?</h3>
             <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
-              소정급여일수 표에서 50세 이상 또는 장애인 구분이 더 긴 일수로 정해진 구간이 있습니다. 실제 적용 여부는 법정 기준을 확인해야 합니다.
+              장애인 여부를 별도로 선택할 수 있습니다. 장애인으로 선택하면 연령과 관계없이 50세 이상·장애인 구분의 소정급여일수를 적용합니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">3개월 임금총액은 어떻게 입력하나요?</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              이 계산기는 월급 한 달치가 아니라 이직일 직전 3개월 동안의 임금총액을 입력하도록 구성했습니다. 급여명세서에서 해당 기간의 실제 임금총액을 확인해 입력하면 1일 평균임금을 자동으로 추정합니다.
             </p>
           </div>
           <div class="cm-card" p="5">
