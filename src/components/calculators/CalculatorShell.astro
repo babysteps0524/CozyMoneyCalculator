@@ -268,16 +268,21 @@ const guidance: Record<
     ],
   },
   percentage: {
-    intro: '기준값에서 특정 퍼센트가 차지하는 금액을 계산합니다.',
+    intro:
+      '퍼센트 계산은 기준값의 일정 비율을 구하거나, 일부가 전체에서 차지하는 비율, 두 값의 증감률, 퍼센트에 해당하는 원래 값 등을 구할 때 사용합니다. 이 계산기는 실생활에서 자주 쓰는 6가지 유형을 한곳에서 계산합니다.',
     steps: [
-      '기준값을 입력합니다.',
-      '퍼센트를 입력합니다.',
-      '기준값에 퍼센트를 곱하고 100으로 나눕니다.',
+      '계산 유형을 먼저 선택합니다.',
+      '화면에 표시된 입력값의 의미와 순서를 확인한 뒤 숫자를 입력합니다.',
+      '계산 결과와 함께 실제 계산에 사용된 공식을 확인합니다.',
     ],
-    formula: '퍼센트 금액 = 기준값 × 퍼센트 ÷ 100.',
-    basis: '일반적인 백분율 산식을 사용합니다.',
+    formula:
+      '대표 공식: Y의 X% = Y × X ÷ 100, X가 Y의 몇 % = X ÷ Y × 100, 증감률 = (새 값 - 이전 값) ÷ 이전 값 × 100.',
+    basis:
+      '백분율은 어떤 비율을 100을 기준으로 나타내는 일반적인 수학적 표현입니다. 따라서 이 계산기의 퍼센트 산식은 특정 세법이나 금융상품 약관이 아닌 일반적인 백분율 정의와 산술식을 기준으로 합니다.',
     cautions: [
-      '세금·수수료 등 실제 거래에서는 별도의 적용 기준과 반올림 규칙이 있을 수 있습니다.',
+      '증감률의 기준값은 이전 값이며, 이전 값이 0이면 증감률을 계산할 수 없습니다.',
+      '퍼센트(%)와 퍼센트포인트(%p)는 다릅니다. 10%에서 12%는 2%p 증가이지만 상대적인 증감률은 20%입니다.',
+      '금액 계산에서 원 단위 반올림·절사나 세금·수수료 규칙이 적용되면 실제 거래 결과와 차이가 날 수 있습니다.',
     ],
   },
   monthlySalary: {
@@ -717,8 +722,16 @@ const currentGuidance = guidance[kind] ?? {
         field('loanRate', '대출비율', '80', 'number', '%') +
         field('rate', '연이율', '3.5', 'number', '%'),
       percentage: () =>
-        field('base', '기준값', '100000', 'number', '') +
-        field('rate', '퍼센트', '15', 'number', '%'),
+        select('percentageMode', '계산 유형', [
+          'Y의 X% 계산',
+          'X는 Y의 몇 %인지 계산',
+          '이전 값에서 새 값으로의 증감률',
+          '기준값의 X% 증가·감소 후 값',
+          'X%에 해당하는 원래 값',
+          '두 비율의 퍼센트포인트 차이',
+        ]) +
+        field('valueA', '첫 번째 값', '100000', 'number', '') +
+        field('valueB', '두 번째 값', '15', 'number', ''),
       monthlySalary: () =>
         field('annual', '연봉', '40000000', 'number', '원') +
         field('bonus', '연간 비과세·별도 금액', '0', 'number', '원'),
@@ -941,8 +954,38 @@ const currentGuidance = guidance[kind] ?? {
           break;
         }
         default: {
-          value = (n('base') * n('rate')) / 100;
-          text = `기준값의 ${fmt(n('rate'), 2)}% = ${won(value)}`;
+          const mode = $('percentageMode')?.value ?? 'Y의 X% 계산';
+          const a = n('valueA');
+          const b = n('valueB');
+
+          if (mode === 'Y의 X% 계산') {
+            value = (a * b) / 100;
+            text = `${won(a)}의 ${fmt(b, 2)}% = ${won(value)} · 공식: ${fmt(a, 2)} × ${fmt(b, 2)} ÷ 100`;
+          } else if (mode === 'X는 Y의 몇 %인지 계산') {
+            value = b === 0 ? NaN : (a / b) * 100;
+            text =
+              b === 0
+                ? '전체값은 0이 될 수 없습니다.'
+                : `${won(a)}은 ${won(b)}의 ${fmt(value, 2)}%입니다 · 공식: ${fmt(a, 2)} ÷ ${fmt(b, 2)} × 100`;
+          } else if (mode === '이전 값에서 새 값으로의 증감률') {
+            value = a === 0 ? NaN : ((b - a) / a) * 100;
+            text =
+              a === 0
+                ? '이전 값은 0이 될 수 없습니다.'
+                : `${won(a)} → ${won(b)}: ${value >= 0 ? '증가' : '감소'} ${fmt(Math.abs(value), 2)}% · 공식: (${fmt(b, 2)} - ${fmt(a, 2)}) ÷ ${fmt(a, 2)} × 100`;
+          } else if (mode === '기준값의 X% 증가·감소 후 값') {
+            value = a * (1 + b / 100);
+            text = `${won(a)}에 ${b >= 0 ? '+' : ''}${fmt(b, 2)}%를 적용한 결과입니다 · 공식: ${fmt(a, 2)} × (1 + ${fmt(b, 2)} ÷ 100)`;
+          } else if (mode === 'X%에 해당하는 원래 값') {
+            value = b === 0 ? NaN : (a * 100) / b;
+            text =
+              b === 0
+                ? '퍼센트 값은 0이 될 수 없습니다.'
+                : `${fmt(b, 2)}%가 ${won(a)}라면 원래 값은 ${won(value)}입니다 · 공식: ${fmt(a, 2)} × 100 ÷ ${fmt(b, 2)}`;
+          } else {
+            value = b - a;
+            text = `${fmt(a, 2)}% → ${fmt(b, 2)}%: ${value >= 0 ? '+' : ''}${fmt(value, 2)}%p · 퍼센트포인트는 두 비율의 단순한 차이입니다.`;
+          }
         }
       }
       out.textContent =
