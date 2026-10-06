@@ -90,6 +90,7 @@ describe('income tax calculator', () => {
     expect(result.rentTaxCredit).toBe(900_000);
     expect(result.determinedTax).toBeGreaterThan(1_000_000);
     expect(result.finalTax).toBe(result.determinedTax - 1_500_000);
+    expect(result.finalTax).toBe(-127_500);
   });
 
   test('caps pension account and insurance tax credits', () => {
