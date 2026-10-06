@@ -75,7 +75,7 @@ describe('income tax calculator', () => {
       penaltyTax: 0,
     });
 
-    expect(result.totalIncome).toBe(69_500_000);
+    expect(result.totalIncome).toBe(57_250_000);
     expect(result.earnedIncomeDeduction).toBe(12_250_000);
     expect(result.pensionIncomeDeduction).toBe(5_500_000);
     expect(result.basicDeduction).toBe(3_000_000);
@@ -135,7 +135,7 @@ describe('income tax calculator', () => {
       penaltyTax: 0,
     });
 
-    expect(result.pensionAccountTaxCredit).toBe(900_000);
+    expect(result.pensionAccountTaxCredit).toBe(1_350_000);
     expect(result.insuranceTaxCredit).toBe(270_000);
   });
 });
