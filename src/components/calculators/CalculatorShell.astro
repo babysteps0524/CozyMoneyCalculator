@@ -731,7 +731,8 @@ const currentGuidance = guidance[kind] ?? {
           '두 비율의 퍼센트포인트 차이',
         ]) +
         field('valueA', '첫 번째 값', '100000', 'number', '') +
-        field('valueB', '두 번째 값', '15', 'number', ''),
+        field('valueB', '두 번째 값', '15', 'number', '') +
+        select('percentageDirection', '증가·감소', ['증가', '감소']),
       monthlySalary: () =>
         field('annual', '연봉', '40000000', 'number', '원') +
         field('bonus', '연간 비과세·별도 금액', '0', 'number', '원'),
@@ -974,8 +975,10 @@ const currentGuidance = guidance[kind] ?? {
                 ? '이전 값은 0이 될 수 없습니다.'
                 : `${won(a)} → ${won(b)}: ${value >= 0 ? '증가' : '감소'} ${fmt(Math.abs(value), 2)}% · 공식: (${fmt(b, 2)} - ${fmt(a, 2)}) ÷ ${fmt(a, 2)} × 100`;
           } else if (mode === '기준값의 X% 증가·감소 후 값') {
-            value = a * (1 + b / 100);
-            text = `${won(a)}에 ${b >= 0 ? '+' : ''}${fmt(b, 2)}%를 적용한 결과입니다 · 공식: ${fmt(a, 2)} × (1 + ${fmt(b, 2)} ÷ 100)`;
+            const direction = $('percentageDirection')?.value ?? '증가';
+            const multiplier = direction === '증가' ? 1 + b / 100 : 1 - b / 100;
+            value = a * multiplier;
+            text = `${won(a)}에 ${fmt(b, 2)}% ${direction}를 적용한 결과입니다 · 공식: ${fmt(a, 2)} × (1 ${direction === '증가' ? '+' : '-'} ${fmt(b, 2)} ÷ 100)`;
           } else if (mode === 'X%에 해당하는 원래 값') {
             value = b === 0 ? NaN : (a * 100) / b;
             text =
@@ -1013,6 +1016,14 @@ const currentGuidance = guidance[kind] ?? {
               : fmt(value, 2) + '%';
       if (kind === 'dsr' || kind === 'dti')
         out.textContent = fmt(value, 2) + '%';
+      if (kind === 'percentage') {
+        const mode = $('percentageMode')?.value ?? '';
+        if (mode === 'X는 Y의 몇 %인지 계산' || mode === '이전 값에서 새 값으로의 증감률') {
+          out.textContent = fmt(value, 2) + '%';
+        } else if (mode === '두 비율의 퍼센트포인트 차이') {
+          out.textContent = fmt(value, 2) + '%p';
+        }
+      }
       detail.textContent = text;
     };
     const reset = () => {
