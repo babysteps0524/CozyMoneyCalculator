@@ -70,6 +70,9 @@ export function calculateAcquisitionTax(input: AcquisitionTaxInput): Acquisition
   } else if (input.cause === 'gift') {
     rate = 0.035;
     explanation = '무상취득(증여)의 일반세율을 적용했습니다. 주택 증여 중과 여부는 별도 요건 확인이 필요합니다.';
+  } else if (input.cause === 'purchase' && (input.asset === 'officetel' || input.asset === 'other')) {
+    rate = 0.04;
+    explanation = '주택 외 부동산의 유상취득에 대한 기본세율을 적용했습니다.';
   } else {
     rate = 0.028;
     explanation = '원시취득의 기본세율을 적용했습니다.';
