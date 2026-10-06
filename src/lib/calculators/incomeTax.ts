@@ -126,16 +126,30 @@ export function calculateEarnedIncomeTaxCredit(
   const wage = clampNonNegative(grossWage);
   if (wage <= 0 || tax <= 0) return 0;
 
-  const raw = tax <= 1_300_000 ? tax * 0.55 : 715_000 + (tax - 1_300_000) * 0.3;
-  let limit = 740_000;
+  // 소득세법 제59조: 산출세액 130만원 이하 55%, 초과분 30%를 공제한다.
+  const rawCredit =
+    tax <= 1_300_000 ? tax * 0.55 : 715_000 + (tax - 1_300_000) * 0.3;
+
+  // 총급여액에 따라 법정 세액공제 한도를 적용한다.
+  let creditLimit = 740_000;
   if (wage > 33_000_000 && wage <= 70_000_000) {
-    limit = Math.max(660_000, 740_000 - (wage - 33_000_000) * 0.008);
+    creditLimit = Math.max(
+      660_000,
+      740_000 - (wage - 33_000_000) * 0.008,
+    );
   } else if (wage > 70_000_000 && wage <= 120_000_000) {
-    limit = Math.max(500_000, 660_000 - (wage - 70_000_000) * 0.5);
+    creditLimit = Math.max(
+      500_000,
+      660_000 - (wage - 70_000_000) * 0.5,
+    );
   } else if (wage > 120_000_000) {
-    limit = Math.max(200_000, 500_000 - (wage - 120_000_000) * 0.5);
+    creditLimit = Math.max(
+      200_000,
+      500_000 - (wage - 120_000_000) * 0.5,
+    );
   }
-  return Math.min(raw, limit);
+
+  return Math.min(rawCredit, creditLimit);
 }
 
 function calculateChildTaxCredit(children: number): number {
