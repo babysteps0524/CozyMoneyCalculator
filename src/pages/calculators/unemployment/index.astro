@@ -2,67 +2,166 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import UnemploymentCalculator from '../../../components/calculators/UnemploymentCalculator.astro';
 ---
 
 <BaseLayout
   title="실업급여 계산기 | CozyMoney 코지머니"
-  description="평균임금과 예상 지급일수를 입력해 구직급여를 단순 추정합니다."
+  description="이직 전 1일 평균임금, 소정근로시간, 연령, 고용보험 가입기간을 기준으로 2026년 구직급여 예상액과 소정급여일수를 계산합니다."
   canonical="https://cozymoney.kr/calculators/unemployment/"
 >
   <Header />
   <main class="cm-container" py="10 md:14 lg:18">
-    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-      <a href="/" no-underline hover="text-primary">
-        홈
-      </a>
-      <span mx="2">/</span>
-      <a href="/calculators/" no-underline hover="text-primary">
-        계산기
-      </a>
-      <span mx="2">/</span>급여·노동
-    </nav>
-    <header max-w="3xl" mb="8">
-      <p m="0" text="sm" font="700" text-primary>
-        급여·노동
-      </p>
-      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
-        실업급여 계산기
-      </h1>
-      <p
-        m="0"
-        mt="4"
-        text="base md:lg"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        평균임금과 예상 지급일수를 입력해 구직급여를 단순 추정합니다.
-      </p>
-    </header>
-    <div max-w="4xl">
-      <CalculatorShell
-        kind="unemployment"
-        title="실업급여 계산기"
-        description="평균임금과 예상 지급일수를 입력해 구직급여를 단순 추정합니다."
-      />
-    </div>
-    <section max-w="4xl" mt="10 md:14">
-      <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
-      <div class="cm-card" mt="4" p="5 md:6">
-        <p
-          m="0"
-          text="sm md:base"
-          leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          입력한 값을 바탕으로 계산 결과와 주요 계산 기준을 함께 표시합니다.
-          실제 계약, 신고 또는 급여 정산에 사용하는 경우에는 관련 기관이나
-          계약서의 정확한 조건을 확인하세요.
+    <div max-w="5xl" mx="auto">
+      <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
+        <a href="/" no-underline hover="text-primary">홈</a>
+        <span mx="2">/</span>
+        <a href="/calculators/" no-underline hover="text-primary">계산기</a>
+        <span mx="2">/</span>
+        <span>급여·노동</span>
+      </nav>
+
+      <header mb="8">
+        <p m="0" text="sm" font="700" text-primary>급여·노동</p>
+        <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>실업급여 계산기</h1>
+        <p m="0" mt="4" text="base md:lg" leading="7" text-text-muted dark="text-dark-text-muted">
+          이직 전 1일 평균임금과 소정근로시간, 연령, 고용보험 가입기간을 입력해
+          1일 구직급여액과 소정급여일수, 총 예상액을 확인하세요.
         </p>
-      </div>
-    </section>
+      </header>
+
+      <UnemploymentCalculator />
+
+      <section mt="10 md:14">
+        <h2 class="cm-section-title">실업급여 계산 방법</h2>
+        <div grid="~ cols-1 md:cols-3" gap="4" mt="4">
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">1일 평균임금</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              퇴직 전 3개월 임금총액과 해당 기간의 총일수를 기준으로 산정한 1일 평균임금을 사용합니다.
+              월 평균임금을 단순히 30으로 나누는 방식은 참고용 환산에 가깝습니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">1일 구직급여액</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              기본적으로 1일 평균임금의 60%를 계산한 뒤 이직일과 근로시간에 따른 상·하한을 적용합니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">소정급여일수</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              이직 당시 연령 구분과 고용보험 가입기간에 따라 120~270일 범위에서 달라집니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
+        <h2 m="0" font="750">2026년 소정급여일수 표</h2>
+        <div overflow-x="auto" mt="4">
+          <table w="full" text="sm" border-collapse>
+            <thead>
+              <tr border-b="1" border-border dark="border-dark-border">
+                <th p="3" text="left">구분</th>
+                <th p="3" text="center">1년 미만</th>
+                <th p="3" text="center">1~3년 미만</th>
+                <th p="3" text="center">3~5년 미만</th>
+                <th p="3" text="center">5~10년 미만</th>
+                <th p="3" text="center">10년 이상</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr border-b="1" border-border dark="border-dark-border">
+                <th p="3" text="left">50세 미만</th><td p="3" text="center">120일</td><td p="3" text="center">150일</td><td p="3" text="center">180일</td><td p="3" text="center">210일</td><td p="3" text="center">240일</td>
+              </tr>
+              <tr>
+                <th p="3" text="left">50세 이상·장애인</th><td p="3" text="center">120일</td><td p="3" text="center">180일</td><td p="3" text="center">210일</td><td p="3" text="center">240일</td><td p="3" text="center">270일</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p m="0" mt="3" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
+          위 표는 일반적인 구직급여의 소정급여일수 계산을 설명하기 위한 것입니다. 실제 적용은 이직일과 법정 요건을 확인해야 합니다.
+        </p>
+      </section>
+
+      <section mt="6" rounded="2xl" border="1" border-danger/20 bg-danger-surface p="5 md:6" dark="border-dark-border dark:bg-dark-danger-surface">
+        <h2 m="0" font="750">실업급여를 받을 수 있는지는 별도로 확인해야 합니다</h2>
+        <ul m="0" mt="3" pl="5" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+          <li>이 계산기는 구직급여 금액을 모의 계산할 뿐 수급자격을 판정하지 않습니다.</li>
+          <li>피보험 단위기간, 이직사유, 근로 의사·능력과 재취업활동 등 실제 수급요건을 별도로 확인해야 합니다.</li>
+          <li>피보험 단위기간 180일은 단순 재직기간 6개월과 같은 의미가 아닙니다.</li>
+          <li>상한액·하한액은 이직일과 1일 소정근로시간 등에 따라 달라질 수 있습니다.</li>
+          <li>반복수급, 연장급여, 조기재취업수당 등은 이 계산기에 포함하지 않습니다.</li>
+        </ul>
+      </section>
+
+      <section mt="6">
+        <h2 class="cm-section-title">계산 예시</h2>
+        <div class="cm-card" mt="4" p="5 md:6">
+          <p m="0" text="sm md:base" leading="7" text-text-muted dark="text-dark-text-muted">
+            예를 들어 2026년 기준 1일 평균임금이 100,000원이고 1일 소정근로시간이 8시간이며,
+            50세 미만이고 고용보험 가입기간이 1년 이상 3년 미만이라면 60% 산정액은 60,000원입니다.
+            2026년 8시간 기준 하한액을 적용하면 최종 1일 구직급여액이 달라질 수 있고,
+            소정급여일수는 150일이 됩니다. 계산기에서 각 항목을 바꾸어 결과를 직접 비교할 수 있습니다.
+          </p>
+        </div>
+      </section>
+
+      <section mt="6">
+        <h2 class="cm-section-title">자주 묻는 질문</h2>
+        <div grid="~ cols-1 md:cols-2" gap="4" mt="4">
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">월급을 입력하면 되나요?</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              이 계산기는 월급이 아니라 1일 평균임금을 입력하도록 구성했습니다. 퇴직 전 3개월 임금총액과 해당 기간 총일수를 기준으로 산정한 금액을 사용하는 것이 좋습니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">50세가 넘으면 무조건 더 오래 받나요?</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              소정급여일수 표에서 50세 이상 또는 장애인 구분이 더 긴 일수로 정해진 구간이 있습니다. 실제 적용 여부는 법정 기준을 확인해야 합니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">6개월 일하면 실업급여를 받을 수 있나요?</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              단순히 재직기간이 6개월이라는 이유만으로 판단할 수 없습니다. 피보험 단위기간 180일 이상 등 별도의 수급요건을 확인해야 합니다.
+            </p>
+          </div>
+          <div class="cm-card" p="5">
+            <h3 m="0" font="750">계산 결과가 실제 지급액과 다른 이유는 무엇인가요?</h3>
+            <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+              수급자격 인정 여부, 이직일, 실제 평균임금, 피보험기간, 소정근로시간 및 법령상 상·하한 적용에 따라 실제 지급액이 달라질 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
+        <h2 m="0" font="750">공식 기준 확인</h2>
+        <p m="0" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted">
+          구직급여는 고용보험법과 관련 시행령·시행규칙에 따라 결정됩니다. 실제 신청과 수급자격 확인은 고용24 및 관할 고용센터의 최신 안내를 우선 확인하세요.
+          이 페이지의 계산값은 교육·비교 목적의 참고용 모의계산입니다.
+        </p>
+        <div flex="~ wrap" gap="3" mt="4">
+          <a href="https://www.ei.go.kr/" target="_blank" rel="noopener noreferrer" class="cm-button-secondary" px="4" py="2.5">고용보험</a>
+          <a href="https://www.work24.go.kr/" target="_blank" rel="noopener noreferrer" class="cm-button-secondary" px="4" py="2.5">고용24</a>
+        </div>
+      </section>
+
+      <section mt="6" rounded="2xl" border="1" border-border bg="surface-muted" p="5 md:6" dark="border-dark-border dark:bg-dark-surface-muted">
+        <h2 m="0" font="750">관련 계산기</h2>
+        <div flex="~ wrap" gap="3" mt="4">
+          <a href="/calculators/salary/" class="cm-button-secondary" px="4" py="2.5">연봉 계산기</a>
+          <a href="/calculators/monthly-salary/" class="cm-button-secondary" px="4" py="2.5">월급 계산기</a>
+          <a href="/calculators/hourly-wage/" class="cm-button-secondary" px="4" py="2.5">시급 계산기</a>
+          <a href="/calculators/severance/" class="cm-button-secondary" px="4" py="2.5">퇴직금 계산기</a>
+          <a href="/calculators/vacation/" class="cm-button-secondary" px="4" py="2.5">연차수당 계산기</a>
+        </div>
+      </section>
+    </div>
   </main>
   <Footer />
 </BaseLayout>
