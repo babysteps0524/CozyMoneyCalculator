@@ -6,6 +6,8 @@ import {
   presetWind4,
 } from 'unocss';
 
+import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx';
+
 export default defineConfig({
   presets: [
     presetWind4({ dark: 'media' }),
@@ -13,6 +15,9 @@ export default defineConfig({
     presetIcons(),
     presetTypography(),
   ],
+
+  transformers: [transformerAttributifyJsx()],
+
   theme: {
     font: {
       family: '"Pretendard Variable", Pretendard, system-ui, sans-serif',
