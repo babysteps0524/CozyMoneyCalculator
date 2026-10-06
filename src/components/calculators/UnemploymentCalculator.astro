@@ -6,7 +6,7 @@
     <p m="0" text="sm" font="700" text-primary>CALCULATOR</p>
     <h2 m="0" mt="1" text="xl md:2xl" font="800">구직급여 예상액 계산</h2>
     <p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">
-      어려운 1일 평균임금을 직접 계산할 필요 없이 이직일과 직전 3개월 임금총액을 입력하면 자동으로 추정합니다.
+      1일 평균임금과 이직 당시 연령을 직접 계산하지 않아도 됩니다. 생년월일과 이직일을 입력하면 만 나이를 자동으로 계산합니다.
     </p>
   </div>
 
@@ -15,7 +15,15 @@
       <span class="cm-label">이직일</span>
       <input id="separation-date" class="cm-input" type="date" aria-describedby="date-help" />
       <span id="date-help" block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
-        마지막 근무일 다음 날이 아니라 실제 고용관계가 종료된 이직일을 기준으로 입력하세요.
+        실제 고용관계가 종료된 이직일을 기준으로 입력하세요.
+      </span>
+    </label>
+
+    <label>
+      <span class="cm-label">생년월일</span>
+      <input id="birth-date" class="cm-input" type="date" aria-describedby="birth-help" />
+      <span id="birth-help" block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
+        이직일을 기준으로 만 나이를 자동 계산합니다.
       </span>
     </label>
 
@@ -26,7 +34,7 @@
         <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
       </div>
       <span block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
-        이직일 이전 3개월 동안의 임금총액을 입력하세요. 급여명세서의 실제 지급 임금을 기준으로 확인하는 것이 좋습니다.
+        이직일 이전 3개월 동안의 임금총액을 입력하세요.
       </span>
     </label>
 
@@ -48,11 +56,14 @@
     </label>
 
     <label>
-      <span class="cm-label">이직 당시 연령 구분</span>
-      <select id="age" class="cm-input">
-        <option value="under50" selected>50세 미만</option>
-        <option value="over50OrDisabled">50세 이상 또는 장애인</option>
+      <span class="cm-label">장애인 여부</span>
+      <select id="disabled" class="cm-input">
+        <option value="no" selected>아니오</option>
+        <option value="yes">예</option>
       </select>
+      <span block mt="2" text="xs" leading="6" text-text-subtle dark="text-dark-text-subtle">
+        장애인은 연령과 관계없이 별도의 소정급여일수 구분이 적용될 수 있어 함께 입력합니다.
+      </span>
     </label>
 
     <label>
@@ -68,6 +79,14 @@
   </div>
 
   <div mt="5" rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
+    <p m="0" text="sm" font="750">연령 구분은 자동으로 계산됩니다</p>
+    <p m="0" mt="2" text="xs sm" leading="6" text-text-muted dark="text-dark-text-muted">
+      생년월일과 이직일을 기준으로 만 나이를 계산합니다. 만 50세 이상이면 50세 이상 구분을 적용하고,
+      장애인으로 입력한 경우에도 해당 구분을 적용합니다.
+    </p>
+  </div>
+
+  <div mt="4" rounded="xl" bg="surface-muted" p="4" dark="bg-dark-surface-muted">
     <p m="0" text="sm" font="750">1일 평균임금은 자동으로 계산됩니다</p>
     <p m="0" mt="2" text="xs sm" leading="6" text-text-muted dark="text-dark-text-muted">
       계산기는 이직일 직전 3개월의 임금총액을 해당 기간의 총일수로 나누어 1일 평균임금을 추정합니다.
@@ -80,7 +99,7 @@
     <button id="reset" type="button" class="cm-button-secondary" py="3.5">초기화</button>
   </div>
 
-  <p id="error" hidden m="0" mt="4" rounded="xl" bg="danger-surface" px="4" py="3" text="sm" text="danger-text"></p>
+  <p id="error" hidden m="0" mt="4" rounded="xl" bg="danger-surface" px="4" py="3" text="sm danger-text"></p>
 
   <section mt="6" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
     <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">총 예상 구직급여</p>
@@ -110,17 +129,20 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import {
+    calculateAgeAtSeparation,
     calculateEstimatedDailyAverageWage,
     calculateUnemployment,
+    getAgeGroupAtSeparation,
   } from '../../lib/calculators/unemployment';
 
   const root = document.querySelector<HTMLElement>('[data-unemployment-calculator]');
 
   if (root) {
     const separationDate = root.querySelector<HTMLInputElement>('#separation-date')!;
+    const birthDate = root.querySelector<HTMLInputElement>('#birth-date')!;
     const wages = root.querySelector<HTMLInputElement>('#wages')!;
     const hours = root.querySelector<HTMLSelectElement>('#hours')!;
-    const age = root.querySelector<HTMLSelectElement>('#age')!;
+    const disabled = root.querySelector<HTMLSelectElement>('#disabled')!;
     const period = root.querySelector<HTMLSelectElement>('#period')!;
     const error = root.querySelector<HTMLElement>('#error')!;
 
@@ -139,17 +161,23 @@
       try {
         error.hidden = true;
 
+        const age = calculateAgeAtSeparation(birthDate.value, separationDate.value);
+        const ageGroup = getAgeGroupAtSeparation(
+          birthDate.value,
+          separationDate.value,
+          disabled.value === 'yes',
+        );
         const estimated = calculateEstimatedDailyAverageWage(getWages(), separationDate.value);
         const result = calculateUnemployment({
           dailyAverageWage: estimated.dailyAverageWage,
           dailyWorkingHours: Number(hours.value),
-          ageGroup: age.value as 'under50' | 'over50OrDisabled',
+          ageGroup,
           insurancePeriod: period.value as 'under1' | '1to3' | '3to5' | '5to10' | '10plus',
         });
 
         root.querySelector<HTMLElement>('#total')!.textContent = fmt(result.totalBenefit);
         root.querySelector<HTMLElement>('#headline')!.textContent =
-          `1일 ${fmt(result.dailyBenefit)} × ${result.benefitDays}일`;
+          `만 ${age}세 · 1일 ${fmt(result.dailyBenefit)} × ${result.benefitDays}일`;
         root.querySelector<HTMLElement>('#wages-result')!.textContent = fmt(getWages());
         root.querySelector<HTMLElement>('#period-days')!.textContent = `${estimated.periodDays}일`;
         root.querySelector<HTMLElement>('#average')!.textContent = fmt(result.dailyAverageWage);
@@ -157,13 +185,19 @@
         root.querySelector<HTMLElement>('#daily-benefit')!.textContent = fmt(result.dailyBenefit);
         root.querySelector<HTMLElement>('#days')!.textContent = `${result.benefitDays}일`;
 
-        const status = result.lowerLimitApplied
+        const ageMessage = ageGroup === 'over50OrDisabled'
+          ? disabled.value === 'yes'
+            ? `만 ${age}세이며 장애인으로 입력되어 50세 이상·장애인 구분의 소정급여일수를 적용했습니다.`
+            : `만 ${age}세로 50세 이상 구분의 소정급여일수를 적용했습니다.`
+          : `만 ${age}세로 50세 미만 구분의 소정급여일수를 적용했습니다.`;
+
+        const limitMessage = result.lowerLimitApplied
           ? '1일 평균임금의 60%가 하한액보다 낮아 하한액을 적용했습니다.'
           : result.upperLimitApplied
             ? '1일 평균임금의 60%가 상한액보다 높아 상한액을 적용했습니다.'
             : '1일 평균임금의 60%가 상·하한 범위 안에 있어 그대로 적용했습니다.';
 
-        root.querySelector<HTMLElement>('#status')!.textContent = status;
+        root.querySelector<HTMLElement>('#status')!.textContent = `${ageMessage} ${limitMessage}`;
       } catch (e) {
         error.textContent = e instanceof Error ? e.message : '계산 중 오류가 발생했습니다.';
         error.hidden = false;
@@ -174,14 +208,16 @@
 
     root.querySelector('#reset')?.addEventListener('click', () => {
       separationDate.value = getToday();
+      birthDate.value = '1990-01-01';
       wages.value = '9,000,000';
       hours.value = '8';
-      age.value = 'under50';
+      disabled.value = 'no';
       period.value = 'under1';
       calc();
     });
 
     separationDate.value = getToday();
+    birthDate.value = '1990-01-01';
     bindNumberControls(root);
     root.addEventListener('input', calc);
     root.addEventListener('change', calc);
