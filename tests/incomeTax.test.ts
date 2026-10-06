@@ -30,7 +30,7 @@ describe('income tax calculator', () => {
   test('calculates earned income tax credit under the statutory formula and cap', () => {
     expect(calculateEarnedIncomeTaxCredit(6_540_000, 50_000_000)).toBe(660_000);
     expect(calculateEarnedIncomeTaxCredit(1_000_000, 33_000_000)).toBe(550_000);
-    expect(calculateEarnedIncomeTaxCredit(1_000_000, 40_000_000)).toBe(660_000);
+    expect(calculateEarnedIncomeTaxCredit(2_000_000, 40_000_000)).toBe(684_000);
   });
 
   test('calculates earned income and pension deductions', () => {
