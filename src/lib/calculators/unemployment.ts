@@ -29,6 +29,38 @@ export function getBenefitDays(ageGroup: UnemploymentAgeGroup, insurancePeriod: 
   return BENEFIT_DAYS[ageGroup][insurancePeriod];
 }
 
+/**
+ * 이직일 직전 3개월의 임금총액을 해당 기간의 총일수로 나누어
+ * 1일 평균임금을 간편하게 추정합니다.
+ *
+ * 실제 평균임금 산정에서는 제외기간·제외임금 등이 발생할 수 있으므로
+ * 고용센터의 최종 산정 결과와 다를 수 있습니다.
+ */
+export function calculateEstimatedDailyAverageWage(
+  totalWages: number,
+  separationDate: string,
+): { dailyAverageWage: number; periodDays: number } {
+  if (totalWages <= 0) throw new Error('퇴직 전 3개월 임금총액은 0보다 커야 합니다.');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(separationDate)) {
+    throw new Error('이직일을 올바른 날짜로 입력하세요.');
+  }
+
+  const end = new Date(`${separationDate}T00:00:00`);
+  if (Number.isNaN(end.getTime())) throw new Error('이직일을 올바른 날짜로 입력하세요.');
+
+  const periodStart = new Date(end);
+  periodStart.setMonth(periodStart.getMonth() - 3);
+
+  const periodDays = Math.round((end.getTime() - periodStart.getTime()) / 86_400_000);
+
+  if (periodDays <= 0) throw new Error('이직일을 확인하세요.');
+
+  return {
+    dailyAverageWage: Math.floor(totalWages / periodDays),
+    periodDays,
+  };
+}
+
 export function calculateUnemployment(input: UnemploymentInput): UnemploymentResult {
   if (input.dailyAverageWage <= 0) throw new Error('1일 평균임금은 0보다 커야 합니다.');
   if (input.dailyWorkingHours <= 0 || input.dailyWorkingHours > 8) {
