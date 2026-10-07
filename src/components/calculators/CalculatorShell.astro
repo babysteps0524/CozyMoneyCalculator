@@ -20,8 +20,8 @@ const {
 
 {mode === 'custom' ? (
   <slot />
-) : ( 
-<section class="cm-card" w="full" p="5 md:7">
+) : guidance ? (
+  <section class="cm-card" w="full" p="5 md:7">
   <header mb="6">
     <p m="0" text="sm" font="700" text-primary>
       CALCULATOR
@@ -98,5 +98,5 @@ const {
   </p>
 </section>
 
-<CalculatorDetails content={guidance!} />
-)}
+  <CalculatorDetails content={guidance} />
+) : null}
