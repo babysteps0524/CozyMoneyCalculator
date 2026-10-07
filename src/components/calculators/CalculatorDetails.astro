@@ -70,7 +70,7 @@ const { content } = Astro.props;
   {content.examples?.length ? (
     <section data-calculator-section="examples" mt="10 md:14">
       <h2 class="cm-section-title">계산 예시</h2>
-      <div mt="4" grid="~ cols-1 md:cols-2" gap="6 md:8">
+      <div mt="4" grid="~ cols-1" gap="6 md:8">
         {content.examples.map((example) => (
           <div>
             <h3 m="0" text="base md:lg" font="700" text-text dark="text-dark-text">
@@ -101,6 +101,7 @@ const { content } = Astro.props;
       </div>
     </section>
   ) : null}
+
   {content.cautions?.length ? (
     <section data-calculator-section="cautions" mt="10 md:14">
       <h2 class="cm-section-title">주의사항</h2>
