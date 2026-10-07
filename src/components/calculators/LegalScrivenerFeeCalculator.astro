@@ -630,6 +630,7 @@
     [taxableInput, statedInput].forEach((input) => {
       input.addEventListener('input', () => {
         formatInput(input);
+        calculate();
       });
       formatInput(input);
     });
