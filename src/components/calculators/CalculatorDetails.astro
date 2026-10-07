@@ -12,11 +12,7 @@ const { content } = Astro.props;
   {content.intro ? (
     <section data-calculator-section="description">
       <h2 class="cm-section-title">계산기 설명</h2>
-      <div
-        class="cm-card"
-        mt="4"
-        p="5 md:6"
-      >
+      <div class="cm-card" mt="4" p="5 md:6">
         <p
           m="0"
           text="sm md:base"
@@ -43,7 +39,9 @@ const { content } = Astro.props;
             text-text-muted
             dark="text-dark-text-muted"
           >
-            {content.steps.map((step) => <li>{step}</li>)}
+            {content.steps.map((step) => (
+              <li>{step}</li>
+            ))}
           </ol>
         ) : null}
 
@@ -57,13 +55,10 @@ const { content } = Astro.props;
             leading="7"
             dark="bg-dark-surface-muted"
           >
-            <strong text-text dark="text-dark-text">공식</strong>
-            <p
-              m="0"
-              mt="1"
-              text-text-muted
-              dark="text-dark-text-muted"
-            >
+            <strong text-text dark="text-dark-text">
+              공식
+            </strong>
+            <p m="0" mt="1" text-text-muted dark="text-dark-text-muted">
               {content.formula}
             </p>
           </div>
@@ -135,7 +130,9 @@ const { content } = Astro.props;
           text-text-muted
           dark="text-dark-text-muted"
         >
-          {content.cautions.map((caution) => <li>{caution}</li>)}
+          {content.cautions.map((caution) => (
+            <li>{caution}</li>
+          ))}
         </ul>
       </div>
     </section>
