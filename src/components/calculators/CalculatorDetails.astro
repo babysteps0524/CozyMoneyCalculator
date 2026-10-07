@@ -8,11 +8,11 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<div mt="10 md:14">
+<div w="full" mt="10 md:14">
   {content.intro ? (
-    <section data-calculator-section="description">
+    <section w="full" data-calculator-section="description">
       <h2 class="cm-section-title">계산기 설명</h2>
-      <div class="cm-card" mt="4" p="5 md:6">
+      <div class="cm-card" w="full" mt="4" p="5 md:6">
         <p
           m="0"
           text="sm md:base"
@@ -27,9 +27,9 @@ const { content } = Astro.props;
   ) : null}
 
   {content.steps?.length || content.formula ? (
-    <section data-calculator-section="method" mt="10 md:14">
+    <section w="full" data-calculator-section="method" mt="10 md:14">
       <h2 class="cm-section-title">계산 방법과 공식</h2>
-      <div class="cm-card" mt="4" p="5 md:6">
+      <div class="cm-card" w="full" mt="4" p="5 md:6">
         {content.steps?.length ? (
           <ol
             m="0"
@@ -68,17 +68,16 @@ const { content } = Astro.props;
   ) : null}
 
   {content.examples?.length ? (
-    <section data-calculator-section="examples" mt="10 md:14">
+    <section w="full" data-calculator-section="examples" mt="10 md:14">
       <h2 class="cm-section-title">계산 예시</h2>
       <div mt="4" grid="~ cols-1" gap="6 md:8">
         {content.examples.map((example) => (
           <div
-            rounded="2xl"
-            border="1"
-            border-border
+            class="cm-card"
+            w="full"
             bg="surface-muted"
             p="5 md:6"
-            dark="border-dark-border bg-dark-surface-muted"
+            dark="bg-dark-surface-muted"
           >
             <h3 m="0" text="base md:lg" font="700" text-text dark="text-dark-text">
               {example.title}
@@ -109,10 +108,11 @@ const { content } = Astro.props;
     </section>
   ) : null}
   {content.cautions?.length ? (
-    <section data-calculator-section="cautions" mt="10 md:14">
+    <section w="full" data-calculator-section="cautions" mt="10 md:14">
       <h2 class="cm-section-title">주의사항</h2>
       <div
         class="cm-card"
+        w="full"
         mt="4"
         border="danger/20"
         bg="danger-surface"
@@ -136,11 +136,12 @@ const { content } = Astro.props;
   ) : null}
 
   {content.faqs?.length ? (
-    <section data-calculator-section="faq" mt="10 md:14">
+    <section w="full" data-calculator-section="faq" mt="10 md:14">
       <h2 class="cm-section-title">자주 묻는 질문</h2>
       <div mt="4" grid="~ cols-1" gap="3">
         {content.faqs.map((faq) => (
           <details
+            w="full"
             rounded="2xl"
             border="1"
             border-border
@@ -174,9 +175,9 @@ const { content } = Astro.props;
   ) : null}
 
   {content.basis || content.sources?.length ? (
-    <section data-calculator-section="basis" mt="10 md:14">
+    <section w="full" data-calculator-section="basis" mt="10 md:14">
       <h2 class="cm-section-title">공식 기준</h2>
-      <div class="cm-card" mt="4" p="5 md:6">
+      <div class="cm-card" w="full" mt="4" p="5 md:6">
         {content.basis ? (
           <p
             m="0"
@@ -219,11 +220,12 @@ const { content } = Astro.props;
   ) : null}
 
   {content.relatedCalculators?.length ? (
-    <section data-calculator-section="related" mt="10 md:14">
+    <section w="full" data-calculator-section="related" mt="10 md:14">
       <h2 class="cm-section-title">관련 계산기</h2>
       <div mt="4" grid="~ cols-1 sm:cols-2 lg:cols-3" gap="3">
         {content.relatedCalculators.map((calculator) => (
           <a
+            w="full"
             href={calculator.href}
             class="cm-card-interactive"
             block
