@@ -8,15 +8,41 @@ import BrokerageCalculator from '../../../components/calculators/BrokerageCalcul
 
 <CalculatorPage
   frameOnly
-  category="부동산"
-  lead="거래 유형과 부동산 종류에 맞춰 중개보수 상한액과 부가가치세를 계산합니다."
   title="부동산 중개보수 계산기 | CozyMoney 코지머니"
   description="매매·전세·월세와 주택·오피스텔·분양권 거래의 부동산 중개보수와 부가가치세를 계산합니다."
   canonical="https://cozymoney.kr/calculators/brokerage/"
 >
-      
+  <main class="cm-container" py="10 md:14 lg:18">
+    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
+      <a href="/" no-underline hover="text-primary">
+        홈
+      </a>
+      <span mx="2">/</span>
+      <a href="/calculators/" no-underline hover="text-primary">
+        계산기
+      </a>
+      <span mx="2">/</span>부동산
+    </nav>
 
-    
+    <header max-w="3xl" mb="8">
+      <p m="0" text="sm" font="700" text-primary>
+        부동산
+      </p>
+      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
+        부동산 중개보수 계산기
+      </h1>
+      <p
+        m="0"
+        mt="4"
+        text="base md:lg"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        거래 유형과 부동산 종류에 맞춰 중개보수 상한액과 부가가치세를
+        계산합니다.
+      </p>
+    </header>
 
     <div max-w="4xl">
       <BrokerageCalculator />
@@ -54,5 +80,5 @@ import BrokerageCalculator from '../../../components/calculators/BrokerageCalcul
       </div>
     </section>
     <CalculatorDetails content={supplementalCalculatorDetails['brokerage']} />
-  
+  </main>
 </CalculatorPage>
