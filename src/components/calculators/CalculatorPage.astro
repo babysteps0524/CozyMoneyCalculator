@@ -11,7 +11,7 @@ interface Props {
   canonical: string;
   category?: string;
   guidance?: CalculatorGuidance;
-  frameOnly?: boolean;
+  mode?: 'standard' | 'custom';
 }
 
 const {
@@ -20,15 +20,17 @@ const {
   canonical,
   category = '',
   guidance,
-  frameOnly = false,
+  mode = 'standard',
 } = Astro.props;
 
-const pageTitle = frameOnly ? title : `${title} | CozyMoney 코지머니`;
+const isCustom = mode === 'custom';
+const pageTitle = isCustom ? title : `${title} | CozyMoney 코지머니`;
+
 ---
 
 <BaseLayout title={pageTitle} description={description} canonical={canonical}>
   <Header />
-  {frameOnly ? (
+  {isCustom ? (
     <CalculatorShell mode="custom">
       <slot />
     </CalculatorShell>
