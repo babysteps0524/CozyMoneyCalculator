@@ -64,7 +64,7 @@ export default defineConfig({
     'cm-button-primary':
       'cm-button bg-primary text-white hover:bg-primary-hover active:bg-primary-active',
     'cm-button-secondary':
-      'cm-button border border-border bg-surface text-text-muted hover:border-border-strong hover:text-text active:bg-surface-subtle dark:border-dark-border dark:bg-dark-surface-muted dark:text-dark-text-muted dark:hover:border-dark-border-strong dark:hover:text-dark-text dark:active:bg-dark-surface-subtle',
+      'cm-button border border-border bg-surface text-text-muted hover:border-border-strong active:border-border-active dark:border-dark-border dark:bg-dark-surface-muted dark:text-dark-text-muted dark:hover:border-dark-border-strong dark:hover:text-dark-text dark:active:bg-dark-surface-subtle',
     'cm-input':
       'w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-text outline-none transition duration-100 placeholder:text-text-subtle focus:border-primary focus:ring-2 focus:ring-primary/15 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-text-subtle dark:focus:border-primary',
     'cm-step-button':
