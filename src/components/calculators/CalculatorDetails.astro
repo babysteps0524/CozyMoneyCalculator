@@ -14,11 +14,10 @@ const { content } = Astro.props;
       <h2 class="cm-section-title">계산기 설명</h2>
       <div class="cm-card" w="full" mt="4" p="5 md:6">
         <p
+          class="cm-help-text"
           m="0"
           text="sm md:base"
           leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
         >
           {content.intro}
         </p>
@@ -83,12 +82,11 @@ const { content } = Astro.props;
               {example.title}
             </h3>
             <p
+              class="cm-help-text"
               m="0"
               mt="2"
               text="sm md:base"
               leading="7"
-              text-text-muted
-              dark="text-dark-text-muted"
             >
               {example.inputs}
             </p>
@@ -159,12 +157,11 @@ const { content } = Astro.props;
               {faq.question}
             </summary>
             <p
+              class="cm-help-text"
               m="0"
               mt="3"
               text="sm md:base"
               leading="7"
-              text-text-muted
-              dark="text-dark-text-muted"
             >
               {faq.answer}
             </p>
@@ -180,11 +177,10 @@ const { content } = Astro.props;
       <div class="cm-card" w="full" mt="4" p="5 md:6">
         {content.basis ? (
           <p
+            class="cm-help-text"
             m="0"
             text="sm md:base"
             leading="7"
-            text-text-muted
-            dark="text-dark-text-muted"
           >
             {content.basis}
           </p>
