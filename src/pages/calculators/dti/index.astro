@@ -1,16 +1,18 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import DtiCalculator from '../../../components/calculators/DtiCalculator.astro';
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
 <CalculatorPage
-  title="DTI 계산기"
+  title=""
   description="연소득과 주택담보대출 원리금, 기타 이자상환액을 기준으로 DTI를 계산합니다."
   canonical="https://cozymoney.kr/calculators/dti/"
-  category=""
+  category="금융"
   guidance={calculatorGuidance.dti}
 >
-  <CalculatorShell />
-  {after ? <div slot="after">{after}</div> : null}
+  <DtiCalculator />
+  <div slot="after">
+
+  </div>
 </CalculatorPage>
