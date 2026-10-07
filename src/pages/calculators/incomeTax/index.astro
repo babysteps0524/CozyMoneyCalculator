@@ -6,15 +6,43 @@ import IncomeTaxCalculator from '../../../components/calculators/IncomeTaxCalcul
 
 <CalculatorPage
   frameOnly
-  category="세금"
-  lead="사업·근로·연금·이자·배당·기타소득을 합산하고 주요 소득공제와 세액공제, 기납부세액을 반영해 예상 납부세액 또는 환급액을 확인하는 모의계산기입니다."
   title="종합소득세 계산기 | 소득공제·세액공제 반영 | CozyMoney 코지머니"
   description="사업·근로·연금·이자·배당·기타소득을 합산하고 소득공제·세액공제·기납부세액을 반영해 종합소득세 납부 또는 환급 예상액을 계산합니다."
   canonical="https://cozymoney.kr/calculators/incomeTax/"
 >
-      
+  <main class="cm-container" py="10 md:14 lg:18">
+    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
+      <a href="/" no-underline hover="text-primary">
+        홈
+      </a>
+      <span mx="2">/</span>
+      <a href="/calculators/" no-underline hover="text-primary">
+        계산기
+      </a>
+      <span mx="2">/</span>
+      세금
+    </nav>
 
-    
+    <header max-w="3xl" mb="8">
+      <p m="0" text="sm" font="700" text-primary>
+        세금
+      </p>
+      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
+        종합소득세 계산기
+      </h1>
+      <p
+        m="0"
+        mt="4"
+        text="base md:lg"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        사업·근로·연금·이자·배당·기타소득을 합산하고 주요 소득공제와 세액공제,
+        기납부세액을 반영해 예상 납부세액 또는 환급액을 확인하는
+        모의계산기입니다.
+      </p>
+    </header>
 
     <div max-w="4xl">
       <IncomeTaxCalculator />
@@ -665,5 +693,5 @@ import IncomeTaxCalculator from '../../../components/calculators/IncomeTaxCalcul
         </div>
       </section>
     </div>
-  
+  </main>
 </CalculatorPage>
