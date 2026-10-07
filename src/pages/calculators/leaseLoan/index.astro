@@ -3,6 +3,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
 import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import LeaseLoanCalculator from '../../../components/calculators/LeaseLoanCalculator.astro';
+import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
 <BaseLayout
@@ -42,10 +44,12 @@ import CalculatorShell from '../../../components/calculators/CalculatorShell.ast
     </header>
     <div max-w="4xl">
       <CalculatorShell
-        kind="leaseLoan"
         title="전세대출 이자 계산기"
         description="보증금과 대출비율, 금리를 기준으로 1년 단순 이자를 계산합니다."
-      />
+        guidance={calculatorGuidance.leaseLoan}
+      >
+        <LeaseLoanCalculator />
+      </CalculatorShell>
     </div>
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
