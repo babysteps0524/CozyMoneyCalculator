@@ -3,6 +3,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
 import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import PercentageCalculator from '../../../components/calculators/PercentageCalculator.astro';
+import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
 <BaseLayout
@@ -43,10 +45,12 @@ import CalculatorShell from '../../../components/calculators/CalculatorShell.ast
     </header>
     <div max-w="4xl">
       <CalculatorShell
-        kind="percentage"
         title="퍼센트 계산기"
         description="어떤 수의 몇 %인지, 전체 대비 비율, 증감률, 증가·감소 후 값, 퍼센트 역산과 퍼센트포인트 차이를 한 번에 계산합니다."
-      />
+        guidance={calculatorGuidance.percentage}
+      >
+        <PercentageCalculator />
+      </CalculatorShell>
 
       <section
         mt="6"
