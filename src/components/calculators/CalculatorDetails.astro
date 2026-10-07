@@ -197,14 +197,14 @@ const { content } = Astro.props;
         {content.sources?.length ? (
           <ul
             m="0"
-            mt="4"}
+            mt="4"
             pl="5"
             text="sm md:base"
             leading="7"
             text-text-muted
             dark="text-dark-text-muted"
           >
-            {content.sources.map((source) => (
+            {content.sources?.map((source) => (
               <li>
                 <a
                   href={source.href}
