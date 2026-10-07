@@ -1,6 +1,6 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import RentCalculator from '../../../components/calculators/RentCalculator.astro';
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
@@ -8,8 +8,8 @@ import { calculatorGuidance } from '../../../lib/calculators/guidance';
   title="전월세 계산기"
   description="보증금과 월세, 전환율을 이용해 연간 주거비를 비교합니다."
   canonical="https://cozymoney.kr/calculators/rent/"
-  category=""
+  category="부동산"
   guidance={calculatorGuidance.rent}
 >
-  <CalculatorShell />
+  <RentCalculator />
 </CalculatorPage>
