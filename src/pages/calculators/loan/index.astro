@@ -947,6 +947,7 @@ import Footer from '../../../components/common/Footer.astro';
     });
 
     bindNumberControls(form);
+    form.addEventListener('input', renderResult);
     renderResult();
   }
 </script>
