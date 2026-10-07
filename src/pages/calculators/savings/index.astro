@@ -1,16 +1,14 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="예적금 계산기 | CozyMoney 코지머니"
   description="예금과 적금의 예상 만기금액을 계산할 수 있습니다."
   canonical="https://cozymoney.kr/calculators/savings/"
 >
-  <Header />
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
       <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
@@ -661,8 +659,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       </section>
     </div>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>
 
 <script>
   import {

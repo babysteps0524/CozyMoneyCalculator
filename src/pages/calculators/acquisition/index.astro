@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import AcquisitionTaxCalculator from '../../../components/calculators/AcquisitionTaxCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="취득세 계산기 | 주택 취득세·중과·생애최초 감면 | CozyMoney 코지머니"
   description="취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 지방교육세·농어촌특별세를 추정하는 계산기입니다."
   canonical="https://cozymoney.kr/calculators/acquisition/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -44,6 +43,7 @@ import AcquisitionTaxCalculator from '../../../components/calculators/Acquisitio
     </header>
     <div max-w="4xl">
       <AcquisitionTaxCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
 
     <div max-w="4xl" mt="12 md:16" space-y="10 md:12">
@@ -540,5 +540,4 @@ import AcquisitionTaxCalculator from '../../../components/calculators/Acquisitio
       </section>
     </div>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

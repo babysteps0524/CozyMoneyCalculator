@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import VatCalculator from '../../../components/calculators/VatCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="부가가치세 계산기 | 공급가액·부가세·합계금액 계산 | CozyMoney"
   description="부가가치세 계산기. 공급가액에서 부가세와 합계금액 계산, 부가세 포함 합계금액 역산, 부가세액 역산, 매출세액·매입세액 차이에 따른 납부·환급세액을 계산합니다."
   canonical="https://cozymoney.kr/calculators/vat/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -46,6 +45,7 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
 
     <div max-w="4xl">
       <VatCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
 
     <section max-w="4xl" mt="10 md:14">
@@ -453,5 +453,4 @@ import VatCalculator from '../../../components/calculators/VatCalculator.astro';
       </div>
     </section>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

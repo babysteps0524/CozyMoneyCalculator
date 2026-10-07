@@ -1,16 +1,14 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="월급 계산기 | CozyMoney 코지머니"
   description="월급, 비과세액, 부양가족, 20세 이하 자녀 수를 입력해 4대보험과 소득세를 반영한 예상 실수령액을 계산합니다."
   canonical="https://cozymoney.kr/calculators/monthly-salary/"
 >
-  <Header />
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
       <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
@@ -558,7 +556,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         border-border
         bg="surface-muted"
         p="5 md:6"
-        dark="border-dark-border dark:bg-dark-surface-muted"
+        dark="border-dark-border bg-dark-surface-muted"
       >
         <h2 m="0" font="750" dark="text-dark-text">
           계산 예시
@@ -586,7 +584,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         border="danger/20"
         bg="danger-surface"
         p="5 md:6"
-        dark="border-dark-border dark:bg-dark-danger-surface"
+        dark="border-dark-border bg-dark-danger-surface"
       >
         <h2 m="0" font="750" dark="text-dark-text">
           주의사항
@@ -630,7 +628,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         border-border
         bg="surface-muted"
         p="5 md:6"
-        dark="border-dark-border dark:bg-dark-surface-muted"
+        dark="border-dark-border bg-dark-surface-muted"
       >
         <h2 m="0" text="lg" font="750">
           자주 묻는 질문
@@ -696,7 +694,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         border-border
         bg="surface-muted"
         p="5 md:6"
-        dark="border-dark-border dark:bg-dark-surface-muted"
+        dark="border-dark-border bg-dark-surface-muted"
       >
         <h2 m="0" text="sm" font="750">
           공식 기준 및 관련 계산기
@@ -734,8 +732,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       </section>
     </div>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>
 
 <script>
   import { calculateSalary, formatWon } from '../../../lib/calculators/salary';

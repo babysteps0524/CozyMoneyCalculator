@@ -1,16 +1,14 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="연봉 계산기 | CozyMoney 코지머니"
   description="연봉 또는 월급, 퇴직금 포함 여부, 비과세액, 부양가족을 입력해 예상 실수령액과 4대보험 공제액을 계산합니다."
   canonical="https://cozymoney.kr/calculators/salary/"
 >
-  <Header />
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
       <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
@@ -562,7 +560,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         border-border
         bg="surface-muted"
         p="5 md:6"
-        dark="border-dark-border dark:bg-dark-surface-muted"
+        dark="border-dark-border bg-dark-surface-muted"
       >
         <h2 m="0" font="750" dark="text-dark-text">
           계산 기준과 주의사항
@@ -605,7 +603,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         border-border
         bg="surface-muted"
         p="5 md:6"
-        dark="border-dark-border dark:bg-dark-surface-muted"
+        dark="border-dark-border bg-dark-surface-muted"
       >
         <h2 m="0" text="sm" font="750" dark="text-dark-text">
           공통 이용 안내
@@ -632,8 +630,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       </section>
     </div>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>
 
 <script>
   import { calculateSalary, formatWon } from '../../../lib/calculators/salary';

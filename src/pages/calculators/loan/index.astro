@@ -1,16 +1,14 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="대출 계산기 | CozyMoney 코지머니"
   description="대출금액과 금리, 대출기간을 입력하면 월 상환금액과 총 이자를 계산할 수 있습니다."
   canonical="https://cozymoney.kr/calculators/loan/"
 >
-  <Header />
-
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
       <nav
@@ -613,6 +611,8 @@ import Footer from '../../../components/common/Footer.astro';
         </div>
       </section>
 
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
+
       <section mt="10 md:14">
         <h2 class="cm-section-title">대출 계산 방법</h2>
         <div grid="~ cols-1 lg:cols-3" gap="4" mt="4">
@@ -748,9 +748,7 @@ import Footer from '../../../components/common/Footer.astro';
       </section>
     </div>
   </main>
-
-  <Footer />
-</BaseLayout>
+</CalculatorPage>
 
 <script>
   import {

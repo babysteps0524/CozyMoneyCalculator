@@ -11,12 +11,14 @@ export function bindLiveCalculation(
   const onChange = () => calculate();
 
   root.addEventListener('input', onInput);
-  if (options.change !== false) {
+  if (options.change) {
     root.addEventListener('change', onChange);
   }
 
   return () => {
     root.removeEventListener('input', onInput);
-    root.removeEventListener('change', onChange);
+    if (options.change) {
+      root.removeEventListener('change', onChange);
+    }
   };
 }

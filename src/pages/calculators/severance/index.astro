@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import SeveranceCalculator from '../../../components/calculators/SeveranceCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="퇴직금 계산기 | CozyMoney 코지머니"
   description="입사일·퇴직일과 퇴직 전 3개월 임금, 상여금·연차수당, 통상임금을 반영해 예상 퇴직금을 계산합니다."
   canonical="https://cozymoney.kr/calculators/severance/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -44,6 +43,7 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
 
     <div max-w="4xl">
       <SeveranceCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
 
     <section max-w="4xl" mt="10 md:14">
@@ -143,5 +143,4 @@ import SeveranceCalculator from '../../../components/calculators/SeveranceCalcul
       </div>
     </section>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

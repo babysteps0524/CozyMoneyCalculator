@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalScrivenerFeeCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="법무사 보수 계산기 | CozyMoney 코지머니"
   description="부동산 등기 과세표준과 기재금액을 기준으로 법무사 기본보수, 인지세, 등기신청수수료와 부가가치세를 계산합니다."
   canonical="https://cozymoney.kr/calculators/legal-scrivener/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -45,6 +44,7 @@ import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalSc
 
     <div max-w="4xl">
       <LegalScrivenerFeeCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
 
     <section max-w="4xl" mt="10 md:14">
@@ -91,5 +91,4 @@ import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalSc
       </div>
     </section>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

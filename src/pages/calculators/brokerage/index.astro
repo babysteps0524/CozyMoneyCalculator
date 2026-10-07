@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import BrokerageCalculator from '../../../components/calculators/BrokerageCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="부동산 중개보수 계산기 | CozyMoney 코지머니"
   description="매매·전세·월세와 주택·오피스텔·분양권 거래의 부동산 중개보수와 부가가치세를 계산합니다."
   canonical="https://cozymoney.kr/calculators/brokerage/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -45,6 +44,7 @@ import BrokerageCalculator from '../../../components/calculators/BrokerageCalcul
 
     <div max-w="4xl">
       <BrokerageCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
 
     <section max-w="4xl" mt="10 md:14">
@@ -78,5 +78,4 @@ import BrokerageCalculator from '../../../components/calculators/BrokerageCalcul
       </div>
     </section>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

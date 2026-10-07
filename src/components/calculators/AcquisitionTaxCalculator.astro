@@ -166,6 +166,7 @@
 </section>
 
 <script>
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import {
     calculateAcquisitionTax,
@@ -263,8 +264,7 @@
       .querySelector('#acquisition-calculate')
       ?.addEventListener('click', calc);
     root.querySelector('#acquisition-reset')?.addEventListener('click', reset);
-    fields.addEventListener('input', calc);
-    fields.addEventListener('change', calc);
+    bindLiveCalculation(fields, calc);
     calc();
   }
 </script>

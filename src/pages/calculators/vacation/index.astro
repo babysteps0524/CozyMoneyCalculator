@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import AnnualLeaveAllowanceCalculator from '../../../components/calculators/AnnualLeaveAllowanceCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="연차수당 계산기 | CozyMoney 코지머니"
   description="입사일·회계연도 기준 연차일수와 근로시간·통상임금을 반영해 예상 연차수당을 계산합니다."
   canonical="https://cozymoney.kr/calculators/vacation/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -45,6 +44,7 @@ import AnnualLeaveAllowanceCalculator from '../../../components/calculators/Annu
 
     <div max-w="4xl">
       <AnnualLeaveAllowanceCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
 
     <section max-w="4xl" mt="10 md:14">
@@ -132,5 +132,4 @@ import AnnualLeaveAllowanceCalculator from '../../../components/calculators/Annu
       </p>
     </section>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import PropertyTaxCalculator from '../../../components/calculators/PropertyTaxCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="재산세 계산기 | CozyMoney 코지머니"
   description="과세표준과 가정 세율을 기준으로 재산세를 계산합니다."
   canonical="https://cozymoney.kr/calculators/property/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
@@ -43,6 +42,7 @@ import PropertyTaxCalculator from '../../../components/calculators/PropertyTaxCa
     </header>
     <div max-w="4xl">
       <PropertyTaxCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
     </div>
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
@@ -61,5 +61,4 @@ import PropertyTaxCalculator from '../../../components/calculators/PropertyTaxCa
       </div>
     </section>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>

@@ -125,7 +125,7 @@
     p="4"
     text="sm"
     text-danger-text
-    dark="border-dark-border dark:bg-dark-danger-surface dark:text-dark-danger-text"
+    dark="border-dark-border bg-dark-danger-surface text-dark-danger-text"
   ></div>
 
   <div
@@ -172,7 +172,7 @@
       border-border
       bg="surface-muted"
       p="5"
-      dark="border-dark-border dark:bg-dark-surface-muted"
+      dark="border-dark-border bg-dark-surface-muted"
     >
       <h3 m="0" text="sm" font="750">
         이번 계산에 반영한 항목
@@ -199,7 +199,7 @@
       border-border
       bg="surface-muted"
       p="5"
-      dark="border-dark-border dark:bg-dark-surface-muted"
+      dark="border-dark-border bg-dark-surface-muted"
     >
       <h3 m="0" text="sm" font="750">
         주의사항
@@ -247,7 +247,7 @@
         border-border
         bg="surface-muted"
         p="4 md:5"
-        dark="border-dark-border dark:bg-dark-surface-muted"
+        dark="border-dark-border bg-dark-surface-muted"
       >
         <div flex="~" items-center justify-between gap="3" mb="4">
           <h4 m="0" text="base" font="800">주택 ${id}</h4>
@@ -335,17 +335,17 @@
                 data-step="10000"
                 data-min="0"
               />
-              <span absolute right-4 top="[50%]" class="-translate-y-1/2" text="sm" text-text-muted class="-translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+              <span absolute right-4 top="[50%]" class="-translate-y-1/2" text="sm" text-text-muted class="-translate-y-1/2" text-text-muted dark="text-dark-text-muted">원</span>
             </div>
           </label>
         </div>
 
         <div grid="~ cols-1 sm:cols-2" gap="3" mt="4">
-          <label flex="~" items-center gap="3" rounded="xl" border="1" border-border bg="surface" p="3" cursor-pointer dark="border-dark-border dark:bg-dark-surface">
+          <label flex="~" items-center gap="3" rounded="xl" border="1" border-border bg="surface" p="3" cursor-pointer dark="border-dark-border bg-dark-surface">
             <input id="urban-${id}" type="checkbox" />
             <span text="sm" font="650">도시지역</span>
           </label>
-          <div rounded="xl" bg="surface-subtle" p="3" text="xs" leading="6" text-text-muted dark="bg-dark-surface-subtle dark:text-dark-text-muted">
+          <div rounded="xl" bg="surface-subtle" p="3" text="xs" leading="6" text-text-muted dark="bg-dark-surface-subtle text-dark-text-muted">
             공동명의는 소유지분을 입력하면 해당 지분만 계산합니다.
           </div>
         </div>
@@ -429,7 +429,7 @@
         breakdown.innerHTML = result.assets
           .map(
             (asset, index) => `
-              <div flex="~" items-center justify-between gap="4" rounded="xl" border="1" border-border bg="surface" p="3" text="sm" dark="border-dark-border dark:bg-dark-surface">
+              <div flex="~" items-center justify-between gap="4" rounded="xl" border="1" border-border bg="surface" p="3" text="sm" dark="border-dark-border bg-dark-surface">
                 <span font="700">주택 ${index + 1}</span>
                 <span text-right text-text-muted dark="text-dark-text-muted">
                   재산세 ${format(asset.propertyTax)}원 · 총 ${format(asset.total)}원

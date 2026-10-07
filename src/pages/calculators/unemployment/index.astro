@@ -1,16 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import UnemploymentCalculator from '../../../components/calculators/UnemploymentCalculator.astro';
 ---
 
-<BaseLayout
+<CalculatorPage
+  frameOnly
   title="실업급여 계산기 | CozyMoney 코지머니"
   description="이직일과 생년월일, 이직 전 3개월 임금총액, 소정근로시간, 고용보험 가입기간을 기준으로 2026년 구직급여 예상액과 소정급여일수를 계산합니다."
   canonical="https://cozymoney.kr/calculators/unemployment/"
 >
-  <Header />
   <main class="cm-container" py="10 md:14 lg:18">
     <div max-w="5xl" mx="auto">
       <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
@@ -47,6 +46,7 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
       </header>
 
       <UnemploymentCalculator />
+      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
 
       <section mt="10 md:14">
         <h2 class="cm-section-title">실업급여 계산 방법</h2>
@@ -454,5 +454,4 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
       </section>
     </div>
   </main>
-  <Footer />
-</BaseLayout>
+</CalculatorPage>
