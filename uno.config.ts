@@ -71,8 +71,20 @@ export default defineConfig({
       'cm-button h-11 w-11 shrink-0 border border-border bg-surface text-xl font-700 text-text-muted hover:border-border-strong hover:text-text active:bg-surface-subtle sm:h-12 sm:w-12 md:h-11 md:w-11 lg:h-12 lg:w-12 dark:border-dark-border dark:bg-dark-surface-muted dark:text-dark-text-muted dark:hover:border-dark-border-strong dark:hover:text-dark-text dark:active:bg-dark-surface-subtle',
     'cm-label':
       'mb-2 block text-sm font-semibold text-text dark:text-dark-text',
+    'cm-field':
+      'flex flex-col gap-2',
+    'cm-help-text':
+      'm-0 text-sm leading-6 text-text-muted dark:text-dark-text-muted',
+    'cm-error':
+      'm-0 text-sm leading-6 text-danger-text dark:text-dark-danger-text',
     'cm-result':
       'rounded-xl border border-border bg-surface p-4 dark:border-dark-border dark:bg-dark-surface',
+    'cm-result-primary':
+      'rounded-xl border border-primary/25 bg-primary/5 p-4 dark:border-dark-border-active dark:bg-dark-primary-surface',
+    'cm-result-row':
+      'flex items-center justify-between gap-4 border-b border-border py-3 last:border-b-0 dark:border-dark-border',
+    'cm-divider':
+      'h-px w-full bg-border dark:bg-dark-border',
     'cm-number-ball':
       'inline-flex h-10 w-10 items-center justify-center rounded-full bg-surface-subtle text-sm font-800 text-text dark:bg-dark-surface-subtle dark:text-dark-text',
     'cm-section-title':
