@@ -134,7 +134,6 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
     '[data-calculator="percentage"]',
@@ -228,7 +227,6 @@
 
     root.querySelector('#calculate')?.addEventListener('click', calc);
     root.querySelector('#reset')?.addEventListener('click', reset);
-    fields.addEventListener('input', calc);
     bindLiveCalculation(fields, calc);
     calc();
   }
