@@ -1,0 +1,290 @@
+---
+import type { CalculatorDetailsContent } from '../../lib/calculators/guidance';
+
+interface Props {
+  content: CalculatorDetailsContent;
+}
+
+const { content } = Astro.props;
+---
+
+<div mt="8" space-y="4">
+  {content.intro ? (
+    <section
+      data-calculator-section="description"
+      rounded="2xl"
+      border="1"
+      border-border
+      bg="surface-muted"
+      p="5"
+      dark="border-dark-border bg-dark-surface-muted"
+    >
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        계산기 설명
+      </h2>
+      <p
+        m="0"
+        mt="3"
+        text="sm"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {content.intro}
+      </p>
+    </section>
+  ) : null}
+
+  {content.steps?.length || content.formula ? (
+    <section
+      data-calculator-section="method"
+      rounded="2xl"
+      border="1"
+      border-border
+      bg="surface-muted"
+      p="5"
+      dark="border-dark-border bg-dark-surface-muted"
+    >
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        계산 방법과 공식
+      </h2>
+      <ol
+        m="0"
+        mt="3"
+        pl="5"
+        text="sm"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {content.steps?.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+      <p
+        m="0"
+        mt="4"
+        text="sm"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {content.formula && (
+          <>
+            <strong text-text dark="text-dark-text">
+              공식:
+            </strong>{' '}
+            {content.formula}
+          </>
+        )}
+      </p>
+    </section>
+  ) : null}
+
+  {content.examples?.length ? (
+    <section
+      data-calculator-section="examples"
+      rounded="2xl"
+      border="1"
+      border-border
+      bg="surface-muted"
+      p="5"
+      dark="border-dark-border bg-dark-surface-muted"
+    >
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        계산 예시
+      </h2>
+      <div mt="3" grid="~ cols-1 md:cols-2" gap="3">
+        {content.examples.map((example) => (
+          <article
+            rounded="xl"
+            border="1"
+            border-border
+            bg="surface"
+            p="4"
+            dark="border-dark-border bg-dark-surface"
+          >
+            <h3 m="0" text="sm" font="700" text-text dark="text-dark-text">
+              {example.title}
+            </h3>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="6"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              {example.inputs}
+            </p>
+            <p
+              m="0"
+              mt="2"
+              text="sm"
+              leading="6"
+              text-text
+              dark="text-dark-text"
+            >
+              {example.result}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+  ) : null}
+
+  {content.cautions?.length ? (
+    <section
+      data-calculator-section="cautions"
+      rounded="2xl"
+      border="1"
+      border="danger/20"
+      bg="danger-surface"
+      p="5"
+      dark="border-dark-border bg-dark-danger-surface"
+    >
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        주의사항
+      </h2>
+      <ul
+        m="0"
+        mt="3"
+        pl="5"
+        text="sm"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {content.cautions?.map((caution) => (
+          <li>{caution}</li>
+        ))}
+      </ul>
+    </section>
+  ) : null}
+
+  {content.faqs?.length ? (
+    <section data-calculator-section="faq">
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        자주 묻는 질문
+      </h2>
+      <div mt="3" space-y="3">
+        {content.faqs.map((faq) => (
+          <details
+            rounded="xl"
+            border="1"
+            border-border
+            bg="surface-muted"
+            p="4"
+            dark="border-dark-border bg-dark-surface-muted"
+          >
+            <summary
+              cursor="pointer"
+              font="700"
+              text-text
+              dark="text-dark-text"
+            >
+              {faq.question}
+            </summary>
+            <p
+              m="0"
+              mt="3"
+              text="sm"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              {faq.answer}
+            </p>
+          </details>
+        ))}
+      </div>
+    </section>
+  ) : null}
+
+  {content.basis || content.sources?.length ? (
+    <section
+      data-calculator-section="basis"
+      rounded="2xl"
+      border="1"
+      border-border
+      bg="surface-muted"
+      p="5"
+      dark="border-dark-border bg-dark-surface-muted"
+    >
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        공식 기준
+      </h2>
+      {content.basis ? (
+        <p
+          m="0"
+          mt="3"
+          text="sm"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          {content.basis}
+        </p>
+      ) : null}
+      {content.sources?.length ? (
+        <ul
+          m="0"
+          mt="3"
+          pl="5"
+          text="sm"
+          leading="7"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          {content.sources.map((source) => (
+            <li>
+              <a
+                href={source.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                text-primary
+                underline
+                hover="text-primary-hover"
+              >
+                {source.title} (새 창)
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </section>
+  ) : null}
+
+  {content.relatedCalculators?.length ? (
+    <section data-calculator-section="related">
+      <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
+        관련 계산기
+      </h2>
+      <div mt="3" grid="~ cols-1 sm:cols-2 lg:cols-3" gap="3">
+        {content.relatedCalculators.map((calculator) => (
+          <a
+            href={calculator.href}
+            class="cm-card-interactive"
+            block
+            p="4"
+            no-underline
+          >
+            <span block font="700" text-text dark="text-dark-text">
+              {calculator.title}
+            </span>
+            <span
+              block
+              mt="1"
+              text="sm"
+              leading="6"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              {calculator.description}
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  ) : null}
+</div>

@@ -1,4 +1,6 @@
 ---
+import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
+import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 import AnnualLeaveAllowanceCalculator from '../../../components/calculators/AnnualLeaveAllowanceCalculator.astro';
@@ -131,5 +133,7 @@ import AnnualLeaveAllowanceCalculator from '../../../components/calculators/Annu
         따라 실제 연차일수와 수당이 달라질 수 있습니다.
       </p>
     </section>
-  </main>
+  <CalculatorDetails content={supplementalCalculatorDetails['vacation']} />
+
+    </main>
 </CalculatorPage>

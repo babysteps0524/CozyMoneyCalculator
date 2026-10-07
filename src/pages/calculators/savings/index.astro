@@ -1,4 +1,6 @@
 ---
+import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
+import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
@@ -199,7 +201,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
                     bg="transparent"
                     text-text-muted
                     hover="bg-surface hover:text-text"
-                    dark="text-dark-text-muted dark:hover:bg-dark-surface dark:hover:text-dark-text"
+                    dark="text-dark-text-muted hover:bg-dark-surface hover:text-dark-text"
                   >
                     단리
                   </span>
@@ -247,7 +249,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
                     bg="transparent"
                     text-text-muted
                     hover="bg-surface hover:text-text"
-                    dark="text-dark-text-muted dark:hover:bg-dark-surface dark:hover:text-dark-text"
+                    dark="text-dark-text-muted hover:bg-dark-surface hover:text-dark-text"
                   >
                     복리
                   </span>
@@ -658,7 +660,9 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         </ul>
       </section>
     </div>
-  </main>
+  <CalculatorDetails content={supplementalCalculatorDetails['savings']} />
+
+    </main>
 </CalculatorPage>
 
 <script>

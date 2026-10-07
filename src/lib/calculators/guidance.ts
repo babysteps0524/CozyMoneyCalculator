@@ -1,4 +1,38 @@
-export interface CalculatorGuidance {
+export interface CalculatorExample {
+  title: string;
+  inputs: string;
+  result: string;
+}
+
+export interface CalculatorFaq {
+  question: string;
+  answer: string;
+}
+
+export interface RelatedCalculator {
+  title: string;
+  href: string;
+  description: string;
+}
+
+export interface CalculatorSource {
+  title: string;
+  href: string;
+}
+
+export interface CalculatorDetailsContent {
+  intro?: string;
+  steps?: string[];
+  formula?: string;
+  examples?: CalculatorExample[];
+  cautions?: string[];
+  faqs?: CalculatorFaq[];
+  basis?: string;
+  sources?: CalculatorSource[];
+  relatedCalculators?: RelatedCalculator[];
+}
+
+export interface CalculatorGuidance extends CalculatorDetailsContent {
   intro: string;
   steps: string[];
   formula: string;
@@ -22,6 +56,37 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
       '세금과 상품별 우대조건은 반영하지 않습니다.',
       '실제 적립식 상품은 납입시점에 따라 이자가 달라질 수 있습니다.',
     ],
+    examples: [
+      {
+        title: '원금 1,000만 원, 연 5%, 3년',
+        inputs: '추가 납입 없이 이자를 연 1회 복리로 계산합니다.',
+        result: '세전 만기금액은 약 1,157만 6,250원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '추가 납입도 계산에 포함되나요?',
+        answer:
+          '추가 납입액과 납입 주기를 입력한 경우 계산에 반영합니다. 납입 시점 가정에 따라 실제 상품 결과와 차이가 날 수 있습니다.',
+      },
+      {
+        question: '세후 이자도 표시되나요?',
+        answer:
+          '계산 결과의 세금 반영 여부를 확인하세요. 금융상품의 과세와 우대 조건은 상품별 약관에 따라 달라질 수 있습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '예적금 계산기',
+        href: '/calculators/savings/',
+        description: '정기예금과 적금의 만기 금액을 비교합니다.',
+      },
+      {
+        title: '대출 계산기',
+        href: '/calculators/loan/',
+        description: '상환 방식별 월 납입액과 이자를 계산합니다.',
+      },
+    ],
   },
   dsr: {
     intro:
@@ -37,6 +102,38 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
     cautions: [
       '대출 종류와 상환기간, 금리, 소득 인정방법에 따라 실제 심사값이 달라질 수 있습니다.',
       '이 결과만으로 대출 가능 여부를 판단할 수 없습니다.',
+    ],
+    examples: [
+      {
+        title: '연소득 5,000만 원, 연간 원리금 2,000만 원',
+        inputs:
+          '기존 대출과 신규 대출의 연간 원리금 합계가 2,000만 원이라고 가정합니다.',
+        result: 'DSR은 2,000만 원 ÷ 5,000만 원 × 100 = 40%입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'DSR과 DTI는 어떻게 다른가요?',
+        answer:
+          '이 계산기의 DSR은 모든 대출의 연간 원리금을 소득과 비교합니다. DTI는 일반적으로 주택담보대출 원리금과 기타 대출 이자 등을 구분해 살펴보므로 입력 기준과 적용 규정을 확인해야 합니다.',
+      },
+      {
+        question: '계산 결과만으로 대출 한도를 알 수 있나요?',
+        answer:
+          '아니요. 실제 한도는 금융기관의 소득 인정, 부채 산정, 담보 가치와 심사 기준을 함께 적용해 결정됩니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: 'DTI 계산기',
+        href: '/calculators/dti/',
+        description: '주택담보대출과 다른 부채의 부담을 비교합니다.',
+      },
+      {
+        title: '대출 계산기',
+        href: '/calculators/loan/',
+        description: '대출 조건별 예상 상환액을 계산합니다.',
+      },
     ],
   },
   dti: {
@@ -55,6 +152,37 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
       '이 계산기는 입력한 대출조건으로 연간 상환액을 추정한 참고용 계산이며 실제 금융기관 심사값과 다를 수 있습니다.',
       '목표 DTI는 사용자가 비교하기 위한 기준값이며 실제 대출 가능 여부나 법정 한도를 의미하지 않습니다.',
     ],
+    examples: [
+      {
+        title: '연소득 5,000만 원, 주택 대출 상환액 1,500만 원',
+        inputs: '기타 대출의 연간 이자를 200만 원으로 가정합니다.',
+        result: 'DTI는 (1,500만 원 + 200만 원) ÷ 5,000만 원 × 100 = 34%입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '기타 대출 원금도 DTI에 포함되나요?',
+        answer:
+          '이 계산기는 기타 대출의 연간 이자를 입력해 반영합니다. 실제 금융기관의 DTI 산정 방식은 대출과 적용 규정에 따라 다를 수 있습니다.',
+      },
+      {
+        question: '목표 DTI는 대출 가능 기준인가요?',
+        answer:
+          '아닙니다. 목표 DTI는 결과를 비교하기 위한 사용자 입력값이며 대출 승인이나 법정 한도를 의미하지 않습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: 'DSR 계산기',
+        href: '/calculators/dsr/',
+        description: '모든 대출의 연간 원리금 부담을 소득과 비교합니다.',
+      },
+      {
+        title: '대출 계산기',
+        href: '/calculators/loan/',
+        description: '상환 방식에 따른 대출 납입액을 확인합니다.',
+      },
+    ],
   },
   weekly: {
     intro: '시급과 주 소정근로시간을 이용해 주급과 주휴수당을 단순 추정합니다.',
@@ -71,6 +199,39 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
       '소정근로일 개근 여부와 근로시간 등 실제 조건에 따라 달라집니다.',
       '근로계약서의 소정근로시간과 임금항목을 확인해야 합니다.',
     ],
+    examples: [
+      {
+        title: '시급 10,000원, 주 40시간 근무',
+        inputs:
+          '주휴수당 요건을 충족한다고 가정하고 주휴수당 포함 여부를 선택합니다.',
+        result:
+          '기본 주급은 400,000원이며, 주휴수당은 설정한 계산 조건에 따라 별도로 표시됩니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '주휴수당은 자동으로 받을 수 있나요?',
+        answer:
+          '근로시간과 소정근로일 개근 등 법정 요건을 충족해야 합니다. 이 계산 결과만으로 지급 요건이 확정되지는 않습니다.',
+      },
+      {
+        question: '세후 주급인가요?',
+        answer:
+          '세금 공제 설정과 결과 항목을 확인하세요. 실제 공제액은 보험 가입 상태와 급여 항목 등에 따라 달라질 수 있습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '시급 계산기',
+        href: '/calculators/hourly-wage/',
+        description: '시급·주급·월급·연봉을 근무 조건과 함께 환산합니다.',
+      },
+      {
+        title: '월급 계산기',
+        href: '/calculators/monthly-salary/',
+        description: '월 급여에서 예상 공제액과 실수령액을 계산합니다.',
+      },
+    ],
   },
   rent: {
     intro: '보증금과 월세를 같은 연간 기준으로 환산해 주거비를 비교합니다.',
@@ -86,6 +247,37 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
       '법정 전환율 상한과 임대인이 제시하는 전환율은 구분해야 합니다.',
       '계약 변경 가능 여부를 판단하는 계산기는 아닙니다.',
     ],
+    examples: [
+      {
+        title: '보증금 1억 원, 월세 50만 원',
+        inputs: '비교에 사용할 연 전환율을 5%로 입력합니다.',
+        result: '보증금의 연 환산액은 500만 원이고, 연 월세는 600만 원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '전월세 전환율을 입력하면 법정 한도가 적용되나요?',
+        answer:
+          '입력한 전환율로 비용을 비교합니다. 법정 상한 적용 여부와 실제 계약 조건은 별도로 확인해야 합니다.',
+      },
+      {
+        question: '보증금과 월세 중 어느 쪽이 유리한가요?',
+        answer:
+          '이 계산기는 입력한 환산율을 기준으로 부담액을 비교합니다. 대출이자, 관리비, 계약 기간과 보증금 회수 위험도 함께 고려하세요.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '전세대출 계산기',
+        href: '/calculators/leaseLoan/',
+        description: '보증금 기준 예상 대출금과 단순 이자를 계산합니다.',
+      },
+      {
+        title: '중개보수 계산기',
+        href: '/calculators/brokerage/',
+        description: '주택 임대차 거래의 중개보수를 확인합니다.',
+      },
+    ],
   },
   carTax: {
     intro: '배기량과 입력한 세율을 곱해 자동차세를 단순 추정합니다.',
@@ -99,6 +291,37 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
     cautions: [
       '차종과 용도에 따라 과세방법이 달라질 수 있습니다.',
       '차령 경감과 지방교육세 등은 완전히 반영하지 않습니다.',
+    ],
+    examples: [
+      {
+        title: '배기량 2,000cc, 입력 세율 200원',
+        inputs: '차령 경감 등을 적용하지 않는 단순 예시입니다.',
+        result: '배기량 기준 계산액은 2,000cc × 200원 = 400,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '전기차도 배기량을 입력하나요?',
+        answer:
+          '전기차는 배기량을 기준으로 과세하지 않는 별도 기준이 적용될 수 있습니다. 차량 종류에 맞는 항목과 최신 세액 기준을 확인하세요.',
+      },
+      {
+        question: '실제 고지 금액과 왜 다른가요?',
+        answer:
+          '차량 종류, 차령 경감, 지방교육세, 과세 기간과 납부 시점 등이 실제 고지액에 반영될 수 있습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '취득세 계산기',
+        href: '/calculators/acquisition/',
+        description: '주택과 부동산 취득에 따른 세액을 추정합니다.',
+      },
+      {
+        title: '재산세 계산기',
+        href: '/calculators/property/',
+        description: '주택 보유 조건을 바탕으로 재산세를 계산합니다.',
+      },
     ],
   },
   leaseLoan: {
@@ -116,6 +339,38 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
     cautions: [
       '입력한 비율이 실제 대출한도를 의미하지 않습니다.',
       '보증료·우대금리·상환방식 등은 별도입니다.',
+    ],
+    examples: [
+      {
+        title: '임차보증금 2억 원, 대출비율 80%',
+        inputs: '연이율을 4%로 가정합니다.',
+        result:
+          '예상 대출금은 1억 6,000만 원이며, 단순 연이자는 640만 원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '입력한 대출비율만큼 대출받을 수 있나요?',
+        answer:
+          '아닙니다. 보증기관과 금융기관의 상품 조건, 소득·부채, 주택 요건과 보증 심사에 따라 한도가 달라집니다.',
+      },
+      {
+        question: '월 상환액도 계산하나요?',
+        answer:
+          '이 계산기는 보증금 대비 대출금과 단순 연이자를 확인하기 위한 참고용입니다. 상환 방식과 기간을 포함한 월 납입액은 대출 계산기를 이용하세요.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '대출 계산기',
+        href: '/calculators/loan/',
+        description: '상환 방식과 기간별 월 납입액을 계산합니다.',
+      },
+      {
+        title: '월세 계산기',
+        href: '/calculators/rent/',
+        description: '보증금과 월세를 같은 기준으로 비교합니다.',
+      },
     ],
   },
   percentage: {
@@ -135,6 +390,37 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
       '퍼센트(%)와 퍼센트포인트(%p)는 다릅니다. 10%에서 12%는 2%p 증가이지만 상대적인 증감률은 20%입니다.',
       '금액 계산에서 원 단위 반올림·절사나 세금·수수료 규칙이 적용되면 실제 거래 결과와 차이가 날 수 있습니다.',
     ],
+    examples: [
+      {
+        title: '200,000원의 15%',
+        inputs: '기준값 200,000원과 비율 15%를 입력합니다.',
+        result: '계산 결과는 30,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '퍼센트와 퍼센트포인트는 무엇이 다른가요?',
+        answer:
+          '퍼센트포인트는 두 비율의 차이를 나타냅니다. 10%에서 12%로 바뀌면 차이는 2%p이고, 기존 비율 대비 증가율은 20%입니다.',
+      },
+      {
+        question: '기준값이 0일 때 증감률을 구할 수 있나요?',
+        answer:
+          '이전 값이 0이면 나눗셈을 할 수 없어 일반적인 증감률을 계산할 수 없습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '부가가치세 계산기',
+        href: '/calculators/vat/',
+        description: '공급가액과 부가세 포함 금액을 계산합니다.',
+      },
+      {
+        title: '복리 계산기',
+        href: '/calculators/compound/',
+        description: '금리와 기간에 따른 복리 변화를 확인합니다.',
+      },
+    ],
   },
   capitalGain: {
     intro:
@@ -150,6 +436,38 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
     cautions: [
       '보유기간, 다주택 여부, 기본공제, 장기보유특별공제 등을 반영하지 않습니다.',
       '실제 양도소득세 신고용 계산이 아닙니다.',
+    ],
+    examples: [
+      {
+        title: '양도가액 5억 원, 취득가액 3억 5천만 원',
+        inputs: '필요경비를 1,000만 원으로 입력합니다.',
+        result:
+          '단순 양도차익은 1억 4,000만 원이며, 실제 과세표준과 세액은 별도 공제·세율에 따라 달라집니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '계산 결과가 신고할 양도소득세인가요?',
+        answer:
+          '아닙니다. 이 계산기는 입력값과 가정 세율을 이용한 단순 추정입니다. 보유기간, 주택 수, 공제와 자산 종류에 따른 세법 적용을 별도로 확인해야 합니다.',
+      },
+      {
+        question: '필요경비에는 어떤 금액을 입력하나요?',
+        answer:
+          '취득·양도와 관련해 인정될 수 있는 비용을 확인해 입력하세요. 세법상 인정 여부는 지출의 종류와 증빙에 따라 달라질 수 있습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '취득세 계산기',
+        href: '/calculators/acquisition/',
+        description: '부동산 취득 조건을 반영해 세액을 추정합니다.',
+      },
+      {
+        title: '재산세 계산기',
+        href: '/calculators/property/',
+        description: '보유 부동산의 재산세를 계산합니다.',
+      },
     ],
   },
   hourlyWage: {
@@ -168,6 +486,394 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
       '주휴수당은 주 15시간 이상 소정근로 및 개근 등 실제 요건을 충족하는 경우에 발생합니다.',
       '연장근로 가산수당은 사업장 규모와 근로조건 등에 따라 실제 적용이 달라질 수 있습니다.',
       '4대보험 9.7174%와 소득세 3.3%는 간편 추정값이며 실제 원천징수액과 다를 수 있습니다.',
+    ],
+    examples: [
+      {
+        title: '시급 12,000원, 하루 8시간, 주 5일',
+        inputs: '연장근로 없이 주휴수당 포함 여부를 선택해 계산합니다.',
+        result:
+          '기본 주급은 480,000원이며, 주휴수당·세금·수습 반영 결과는 선택한 조건에 따라 달라집니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '월급이나 연봉을 시급으로 환산할 수 있나요?',
+        answer:
+          '급여 유형을 선택하고 근무시간과 근무일수 등 환산 조건을 입력하면 비교 가능한 급여 단위로 환산합니다.',
+      },
+      {
+        question: '실제 급여명세서와 왜 차이가 나나요?',
+        answer:
+          '근로계약, 사업장 규모, 보험 자격, 비과세 항목과 원천징수 기준 등이 다를 수 있습니다. 실제 급여명세서와 계약 조건을 확인하세요.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '주급 계산기',
+        href: '/calculators/weekly/',
+        description: '주 소정근로시간과 주휴수당을 반영해 주급을 계산합니다.',
+      },
+      {
+        title: '월급 계산기',
+        href: '/calculators/monthly-salary/',
+        description: '월 급여의 예상 공제액과 실수령액을 확인합니다.',
+      },
+      {
+        title: '연봉 계산기',
+        href: '/calculators/salary/',
+        description: '연봉과 급여 공제 항목을 입력해 실수령액을 계산합니다.',
+      },
+    ],
+  },
+};
+
+export const supplementalCalculatorDetails: Record<
+  string,
+  CalculatorDetailsContent
+> = {
+  vat: {
+    cautions: [
+      '면세·영세율 거래와 업종별 특례는 기본 세율을 이용한 계산과 결과가 다를 수 있습니다.',
+      '신고할 세액은 매입세액 공제, 공제 제한, 가산세 등 신고 조건을 확인해야 합니다.',
+    ],
+  },
+  percentage: {
+    cautions: [
+      '비율 변화의 차이(%p)와 상대적인 증감률(%)은 서로 다른 값입니다.',
+      '이 계산기는 입력한 숫자를 산술적으로 계산하며 세금·수수료·거래별 반올림 기준은 별도로 적용해야 합니다.',
+    ],
+  },
+  vacation: {
+    examples: [
+      {
+        title: '미사용 연차 8일, 1일 통상임금 100,000원',
+        inputs: '입력한 연차일수와 1일 통상임금을 기준으로 계산합니다.',
+        result: '세전 연차수당 예시는 8일 × 100,000원 = 800,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '입사일 기준과 회계연도 기준 결과가 다른가요?',
+        answer:
+          '연차를 산정하는 기준일이 다르면 발생 일수와 첫해 비례 계산이 달라질 수 있습니다. 회사의 운영 기준과 근로조건을 확인하세요.',
+      },
+      {
+        question: '계산된 금액이 실수령액인가요?',
+        answer:
+          '아닙니다. 결과는 입력한 통상임금과 미사용 일수에 따른 세전 추정액입니다. 실제 지급액은 임금 항목과 세금 처리에 따라 달라질 수 있습니다.',
+      },
+    ],
+    basis:
+      '연차 발생과 미사용 연차수당은 근로기준법, 취업규칙과 근로계약 등 적용 조건을 함께 확인해야 합니다. 이 계산기는 입력한 기준일과 임금으로 예상값을 보여줍니다.',
+    sources: [
+      {
+        title: '근로기준법 제60조(연차 유급휴가)',
+        href: 'https://law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1029727971',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '주급 계산기',
+        href: '/calculators/weekly/',
+        description: '시급과 소정근로시간을 이용해 주급을 계산합니다.',
+      },
+      {
+        title: '월급 계산기',
+        href: '/calculators/monthly-salary/',
+        description: '월급에서 예상 공제액과 실수령액을 확인합니다.',
+      },
+    ],
+  },
+  severance: {
+    examples: [
+      {
+        title: '1일 평균임금 100,000원, 계속근로 365일',
+        inputs: '퇴직소득세와 별도 공제는 반영하지 않는 단순 예시입니다.',
+        result:
+          '기본 산식에 따른 예상 퇴직금은 100,000원 × 30일 × 365 ÷ 365 = 3,000,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '퇴직금은 마지막 월급만으로 계산하나요?',
+        answer:
+          '일반적으로 퇴직 전 일정 기간의 임금으로 계산한 평균임금과 계속근로기간을 사용합니다. 임금 항목과 제외 기간 등 실제 적용 기준을 확인해야 합니다.',
+      },
+      {
+        question: '계산 결과가 실제 지급액과 다른 이유는 무엇인가요?',
+        answer:
+          '평균임금 산정에 포함되는 임금, 계속근로기간, 지급 요건과 퇴직소득세 등이 개인별로 다를 수 있습니다.',
+      },
+    ],
+    basis:
+      '퇴직금 산정은 근로자퇴직급여 보장법상 지급 요건과 평균임금 산정 기준을 따릅니다. 예외 기간이나 임금 항목의 포함 여부는 개별 근로관계에 따라 확인해야 합니다.',
+    sources: [
+      {
+        title: '근로자퇴직급여 보장법 제8조(퇴직금제도의 설정 등)',
+        href: 'https://law.go.kr/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1023689743',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '연봉 계산기',
+        href: '/calculators/salary/',
+        description: '연봉·월급과 공제 항목을 반영해 실수령액을 추정합니다.',
+      },
+      {
+        title: '연차수당 계산기',
+        href: '/calculators/vacation/',
+        description: '미사용 연차와 통상임금을 바탕으로 연차수당을 계산합니다.',
+      },
+    ],
+  },
+  savings: {
+    examples: [
+      {
+        title: '예금 10,000,000원, 연 3%, 1년',
+        inputs: '세금과 우대금리를 제외하고 단순 연이율로 계산합니다.',
+        result: '세전 이자는 300,000원이며 세전 만기금액은 10,300,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '예금과 적금은 계산 방식이 다른가요?',
+        answer:
+          '예금은 맡긴 원금 전체에 이자가 붙고, 적금은 납입 시점이 다른 각 회차 금액에 이자가 붙습니다. 같은 금리라도 만기 이자가 다를 수 있습니다.',
+      },
+      {
+        question: '실제 만기 수령액과 왜 다른가요?',
+        answer:
+          '이자 지급 주기, 납입일, 세금, 우대금리, 중도해지 여부와 상품 약관에 따라 달라질 수 있습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '복리 계산기',
+        href: '/calculators/compound/',
+        description: '기간별 이자 재투자 효과를 계산합니다.',
+      },
+      {
+        title: '대출 계산기',
+        href: '/calculators/loan/',
+        description: '상환 방식에 따른 월 납입액과 총 이자를 계산합니다.',
+      },
+    ],
+  },
+  salary: {
+    examples: [
+      {
+        title: '연봉 40,000,000원 입력 예시',
+        inputs:
+          '퇴직금 포함 여부, 비과세액, 부양가족과 급여 조건을 입력합니다.',
+        result:
+          '결과에서 월 환산 급여와 공제 항목별 예상액, 월 실수령액을 확인합니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '연봉에 퇴직금이 포함되어 있는지 어떻게 입력하나요?',
+        answer:
+          '근로계약서나 연봉 안내에 표시된 금액 기준으로 포함 여부를 선택해야 월 환산 급여가 올바르게 비교됩니다.',
+      },
+      {
+        question: '계산 결과를 급여명세서 금액으로 보면 되나요?',
+        answer:
+          '예상 비교값으로 활용하세요. 실제 공제액은 보험 자격, 과세 대상 급여, 가족 공제 조건과 회사의 급여 처리에 따라 다를 수 있습니다.',
+      },
+    ],
+    cautions: [
+      '4대보험 부담액과 소득세는 적용 연도, 보수월액, 가입 상태와 가족 공제 조건에 따라 달라집니다.',
+      '실제 급여명세서와 연말정산 결과를 대신하지 않는 참고용 추정치입니다.',
+    ],
+    basis:
+      '이 계산기는 입력한 급여와 비과세액, 가족 조건에 따라 2026년 기준의 보험료와 소득세를 추정합니다. 소득세는 국세청 근로소득 간이세액표의 실제 원천징수액과 다를 수 있으므로 급여 담당자와 최신 기준을 확인하세요.',
+    relatedCalculators: [
+      {
+        title: '월급 계산기',
+        href: '/calculators/monthly-salary/',
+        description:
+          '월 급여와 가족 조건을 기준으로 예상 실수령액을 계산합니다.',
+      },
+      {
+        title: '시급 계산기',
+        href: '/calculators/hourly-wage/',
+        description: '근무시간과 급여 유형에 따라 시급·주급·월급을 환산합니다.',
+      },
+    ],
+  },
+  property: {
+    examples: [
+      {
+        title: '공시가격 5억 원, 1세대 1주택',
+        inputs:
+          '도시지역분을 제외하고 전년도 재산세가 없는 조건으로 계산합니다.',
+        result:
+          '현재 계산기의 2026년 기준에서는 과세표준 2억 2천만 원, 지방교육세 포함 합계 312,000원으로 추정됩니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '공시가격이 곧 재산세 과세표준인가요?',
+        answer:
+          '항상 같지는 않습니다. 과세표준을 정할 때 적용되는 공정시장가액비율 등 해당 연도의 기준을 확인해야 합니다.',
+      },
+      {
+        question: '고지서 금액과 왜 다를 수 있나요?',
+        answer:
+          '과세표준, 세부담 상한, 감면, 도시지역분, 지방교육세와 납부 조건 등 실제 고지에 적용되는 항목에 따라 차이가 날 수 있습니다.',
+      },
+    ],
+    cautions: [
+      '과세표준과 적용 세율은 주택 종류, 보유 상황과 과세 연도에 따라 달라질 수 있습니다.',
+      '실제 납부액은 관할 지자체의 과세 내역과 고지서를 기준으로 확인하세요.',
+    ],
+    basis:
+      '재산세는 지방세법과 해당 과세 연도의 과세표준·세율·공제 기준을 바탕으로 산정됩니다. 입력한 가정이나 간편 계산과 실제 과세 내역은 다를 수 있습니다.',
+    sources: [
+      {
+        title: '지방세법 제110조(과세표준)',
+        href: 'https://www.law.go.kr/LSW/lsInfoP.do?ancYnChk=0&chrClsCd=010202&efYd=20260102&joNo=011000&lsiSeq=276349&urlMode=lsInfoP',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '취득세 계산기',
+        href: '/calculators/acquisition/',
+        description: '부동산 취득 조건에 따른 세액을 추정합니다.',
+      },
+      {
+        title: '양도소득세 계산기',
+        href: '/calculators/capitalGain/',
+        description: '양도가액과 취득가액을 이용해 단순 양도차익을 계산합니다.',
+      },
+    ],
+  },
+  loan: {
+    examples: [
+      {
+        title: '원금 12,000,000원, 연 12%, 12개월 원금균등상환',
+        inputs:
+          '매월 원금을 같은 금액으로 갚고, 중도상환은 하지 않는다고 가정합니다.',
+        result:
+          '첫 달 납입액은 약 1,120,000원이며, 전체 이자는 약 780,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '원리금균등과 원금균등은 무엇이 다른가요?',
+        answer:
+          '원리금균등은 정기 납입액이 대체로 일정하고, 원금균등은 매월 갚는 원금이 일정해 초기 납입액이 더 크고 시간이 지나며 줄어듭니다.',
+      },
+      {
+        question: '실제 은행 상환액과 왜 차이가 나나요?',
+        answer:
+          '금리 변동, 일할 이자 계산, 납입일, 수수료와 금융기관의 원 단위 처리 방식 등이 실제 상환액에 반영될 수 있습니다.',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: 'DSR 계산기',
+        href: '/calculators/dsr/',
+        description: '연소득 대비 연간 대출 원리금 부담을 확인합니다.',
+      },
+      {
+        title: 'DTI 계산기',
+        href: '/calculators/dti/',
+        description: '주택담보대출 상환액과 연소득을 비교합니다.',
+      },
+      {
+        title: '전세대출 계산기',
+        href: '/calculators/leaseLoan/',
+        description: '임차보증금 기준 예상 대출금과 연이자를 계산합니다.',
+      },
+    ],
+  },
+  'legal-scrivener': {
+    examples: [
+      {
+        title: '소유권 이전 등기 과세표준 4억 원',
+        inputs: '계산기에 등록된 기본 보수표를 적용하는 예시입니다.',
+        result:
+          '현재 계산 로직의 기본 보수는 520,000원이며, 부가가치세와 선택한 실비는 별도로 합산됩니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '계산된 금액이 법무사 견적과 같은가요?',
+        answer:
+          '참고용 예상액입니다. 실제 보수와 실비는 등기 업무의 범위, 사건 난이도, 의뢰 조건과 발생 비용에 따라 달라질 수 있습니다.',
+      },
+      {
+        question: '취득세도 합계에 포함되나요?',
+        answer:
+          '이 계산기는 등기 관련 보수와 선택한 부대 비용을 추정합니다. 취득세는 취득세 계산기에서 별도로 확인하세요.',
+      },
+    ],
+    cautions: [
+      '실제 보수와 공과금은 적용 시점의 요율·수수료표와 사건별 업무 범위를 확인해야 합니다.',
+      '세금이나 금융기관 비용처럼 계산기에 포함되지 않은 비용이 있을 수 있습니다.',
+    ],
+    basis:
+      '기본 보수와 공과금은 계산기에 반영된 요율 및 입력한 등기 종류·과세표준을 기준으로 추정합니다. 실제 위임 계약과 최신 기준을 우선 확인하세요.',
+    relatedCalculators: [
+      {
+        title: '취득세 계산기',
+        href: '/calculators/acquisition/',
+        description: '부동산 취득 조건에 따른 취득세를 추정합니다.',
+      },
+      {
+        title: '중개보수 계산기',
+        href: '/calculators/brokerage/',
+        description: '부동산 거래 유형별 중개보수를 계산합니다.',
+      },
+    ],
+  },
+  brokerage: {
+    examples: [
+      {
+        title: '주택 매매 3억 원, 부가가치세 10%',
+        inputs: '주택 매매 기본 요율 0.4%와 부가가치세 10%를 적용합니다.',
+        result:
+          '중개보수 1,200,000원과 부가가치세 120,000원을 합해 1,320,000원입니다.',
+      },
+    ],
+    faqs: [
+      {
+        question: '계산된 중개보수가 확정 수수료인가요?',
+        answer:
+          '법정 상한을 기준으로 한 예상액입니다. 실제 수수료는 상한 범위에서 협의하거나 거래 종류에 맞는 별도 기준이 적용될 수 있습니다.',
+      },
+      {
+        question: '부가가치세도 포함되어 있나요?',
+        answer:
+          '부가가치세 포함 여부는 계산 결과의 항목과 설정을 확인하세요. 중개업자의 과세 유형과 거래 조건에 따라 달라질 수 있습니다.',
+      },
+    ],
+    cautions: [
+      '적용 요율과 한도는 주택 여부, 거래 종류, 거래금액과 지역 기준에 따라 달라질 수 있습니다.',
+      '계산 결과는 협의된 최종 보수나 세금계산서 금액을 보장하지 않습니다.',
+    ],
+    sources: [
+      {
+        title: '공인중개사법 시행규칙 제20조(중개보수 및 실비의 한도 등)',
+        href: 'https://www.law.go.kr/LSW/lsSideInfoP.do?docCls=jo&joBrNo=00&joNo=0020&lsiSeq=263573&urlMode=lsScJoRltInfoR',
+      },
+      {
+        title: '공인중개사법 시행규칙 개정문(2026년 8월 28일 시행)',
+        href: 'https://law.go.kr/LSW/lsRvsDocListP.do?lsId=007292&lsRvsGubun=all',
+      },
+    ],
+    relatedCalculators: [
+      {
+        title: '전월세 계산기',
+        href: '/calculators/rent/',
+        description: '보증금과 월세를 연간 기준으로 비교합니다.',
+      },
+      {
+        title: '취득세 계산기',
+        href: '/calculators/acquisition/',
+        description: '부동산 취득 시 세금 항목을 추정합니다.',
+      },
     ],
   },
 };

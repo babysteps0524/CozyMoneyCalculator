@@ -1,5 +1,6 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
+import CalculatorDetails from './CalculatorDetails.astro';
 import type { CalculatorGuidance } from '../../lib/calculators/guidance';
 
 interface Props {
@@ -37,129 +38,7 @@ const { title, description, guidance } = Astro.props;
 
   <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
 
-  <div mt="8" grid="~ cols-1 lg:cols-2" gap="4">
-    <section
-      rounded="2xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="5"
-      dark="border-dark-border bg-dark-surface-muted"
-    >
-      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">
-        계산기 사용 목적
-      </h3>
-      <p
-        m="0"
-        mt="3"
-        text="sm"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        {guidance.intro}
-      </p>
-    </section>
-
-    <section
-      rounded="2xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="5"
-      dark="border-dark-border bg-dark-surface-muted"
-    >
-      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">
-        계산 방법
-      </h3>
-      <ol
-        m="0"
-        mt="3"
-        pl="5"
-        text="sm"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        {guidance.steps.map((step) => (
-          <li>{step}</li>
-        ))}
-      </ol>
-    </section>
-
-    <section
-      rounded="2xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="5"
-      dark="border-dark-border bg-dark-surface-muted"
-    >
-      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">
-        계산 공식
-      </h3>
-      <p
-        m="0"
-        mt="3"
-        text="sm"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        {guidance.formula}
-      </p>
-    </section>
-
-    <section
-      rounded="2xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="5"
-      dark="border-dark-border bg-dark-surface-muted"
-    >
-      <h3 m="0" text="sm" font="750" text-text dark="text-dark-text">
-        공식 기준
-      </h3>
-      <p
-        m="0"
-        mt="3"
-        text="sm"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        {guidance.basis}
-      </p>
-    </section>
-  </div>
-
-  <section
-    mt="4"
-    rounded="2xl"
-    border="1"
-    border="danger/20"
-    bg="danger-surface"
-    p="5"
-    dark="border-dark-border bg-dark-danger-surface"
-  >
-    <h3 m="0" text="sm" font="750" dark="text-dark-text">
-      주의사항
-    </h3>
-    <ul
-      m="0"
-      mt="3"
-      pl="5"
-      text="sm"
-      leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      {guidance.cautions.map((item) => (
-        <li>{item}</li>
-      ))}
-    </ul>
-  </section>
+  <CalculatorDetails content={guidance} />
 
   <div
     mt="6"

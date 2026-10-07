@@ -1,4 +1,6 @@
 ---
+import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
+import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalScrivenerFeeCalculator.astro';
@@ -90,5 +92,7 @@ import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalSc
         </ul>
       </div>
     </section>
-  </main>
+  <CalculatorDetails content={supplementalCalculatorDetails['legal-scrivener']} />
+
+    </main>
 </CalculatorPage>

@@ -1,4 +1,6 @@
 ---
+import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
+import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
@@ -629,7 +631,9 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         </ul>
       </section>
     </div>
-  </main>
+  <CalculatorDetails content={supplementalCalculatorDetails['salary']} />
+
+    </main>
 </CalculatorPage>
 
 <script>
