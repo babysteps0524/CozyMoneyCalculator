@@ -217,6 +217,7 @@
     getMonthlyLeaseAmount,
   } from '../../lib/calculators/brokerage';
   import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>('[data-brokerage]');
   if (root) {
@@ -394,6 +395,7 @@
     });
     root.querySelector('#calculate')?.addEventListener('click', calculate);
     root.querySelector('#reset')?.addEventListener('click', reset);
+    bindLiveCalculation(root, calculate);
     renderFields();
     calculate();
   }
