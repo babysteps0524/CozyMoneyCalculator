@@ -72,7 +72,14 @@ const { content } = Astro.props;
       <h2 class="cm-section-title">계산 예시</h2>
       <div mt="4" grid="~ cols-1" gap="6 md:8">
         {content.examples.map((example) => (
-          <div>
+          <div
+            rounded="2xl"
+            border="1"
+            border-border
+            bg="surface-muted"
+            p="5 md:6"
+            dark="border-dark-border bg-dark-surface-muted"
+          >
             <h3 m="0" text="base md:lg" font="700" text-text dark="text-dark-text">
               {example.title}
             </h3>
