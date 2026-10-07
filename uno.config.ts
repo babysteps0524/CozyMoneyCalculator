@@ -34,6 +34,7 @@ export default defineConfig({
       'text-subtle': 'oklch(62% 0.02 250)',
       border: 'oklch(89% 0.02 250)',
       'border-strong': 'oklch(80% 0.025 250)',
+      'border-active': 'oklch(56% 0.19 250)',
       'danger-surface': 'oklch(96% 0.025 25)',
       'dark-primary-surface': 'oklch(25% 0.04 250)',
       'danger-text': 'oklch(48% 0.16 25)',
@@ -47,6 +48,7 @@ export default defineConfig({
       'dark-text-subtle': 'oklch(62% 0.02 250)',
       'dark-border': 'oklch(31% 0.025 250)',
       'dark-border-strong': 'oklch(40% 0.03 250)',
+      'dark-border-active': 'oklch(56% 0.19 250)',
     },
   },
   shortcuts: {
@@ -56,7 +58,7 @@ export default defineConfig({
     'cm-card':
       'rounded-2xl border border-border bg-surface dark:border-dark-border dark:bg-dark-surface-muted',
     'cm-card-interactive':
-      'cm-card cursor-pointer transition duration-100 ease-out hover:border-border-strong active:opacity-90 dark:hover:border-dark-border-strong',
+      'cm-card cursor-pointer transition duration-100 ease-out hover:border-border-strong active:border-border-active dark:hover:border-dark-border-strong dark:active:border-dark-border-active',
     'cm-button':
       'inline-flex cursor-pointer items-center justify-center rounded-xl font-semibold outline-none transition duration-100 ease-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-dark-surface disabled:cursor-not-allowed disabled:opacity-50',
     'cm-button-primary':
