@@ -1,6 +1,6 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import WeeklyCalculator from '../../../components/calculators/WeeklyCalculator.astro';
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
@@ -8,8 +8,8 @@ import { calculatorGuidance } from '../../../lib/calculators/guidance';
   title="주휴수당 계산기"
   description="시급과 주 소정근로시간을 기준으로 주급과 주휴수당을 계산합니다."
   canonical="https://cozymoney.kr/calculators/weekly/"
-  category=""
+  category="급여·노동"
   guidance={calculatorGuidance.weekly}
 >
-  <CalculatorShell />
+  <WeeklyCalculator />
 </CalculatorPage>
