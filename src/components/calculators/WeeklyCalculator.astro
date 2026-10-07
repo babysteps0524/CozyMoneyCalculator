@@ -1,0 +1,90 @@
+---
+---
+
+<div data-calculator="weekly">
+  <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
+    <label>
+      <span class="cm-label">시급</span>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="시급 감소" class="cm-step-button">−</button>
+        <div relative>
+          <input class="cm-input pr-12" id="hourly" type="text" inputmode="numeric" value="12000" data-default-value="12000" data-number-input data-step="100" data-min="0" data-decimal="false" />
+          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+        </div>
+        <button type="button" data-step-direction="1" aria-label="시급 증가" class="cm-step-button">+</button>
+      </div>
+    </label>
+    <label>
+      <span class="cm-label">주 소정근로시간</span>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="주 소정근로시간 감소" class="cm-step-button">−</button>
+        <div relative>
+          <input class="cm-input pr-14" id="hours" type="text" inputmode="numeric" value="40" data-default-value="40" data-number-input data-step="1" data-min="0" data-decimal="false" />
+          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">시간</span>
+        </div>
+        <button type="button" data-step-direction="1" aria-label="주 소정근로시간 증가" class="cm-step-button">+</button>
+      </div>
+    </label>
+  </div>
+  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
+    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  </div>
+  <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
+    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
+    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+  </div>
+</div>
+
+<script>
+  import { bindNumberControls } from '../../lib/calculators/number-input';
+
+  const root = document.querySelector<HTMLElement>('[data-calculator="weekly"]');
+  if (root) {
+    const fields = root.querySelector<HTMLElement>('#fields')!;
+    const out = root.querySelector<HTMLElement>('#result-value')!;
+    const detail = root.querySelector<HTMLElement>('#result-detail')!;
+    const $ = (id: string) =>
+      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
+    const n = (id: string) => {
+      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
+      return Number(value.replace(/,/g, '') || 0);
+    };
+    const fmt = (v: number, d = 0) =>
+      Number.isFinite(v)
+        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
+        : '-';
+    const won = (v: number) => fmt(v) + '원';
+
+    bindNumberControls(fields);
+
+    const calc = () => {
+      const weeklyHoliday =
+        n('hours') >= 15 ? n('hourly') * Math.min(8, n('hours')) : 0;
+      const value = n('hourly') * n('hours') + weeklyHoliday;
+      out.textContent = won(value);
+      detail.textContent =
+        '입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.';
+    };
+
+    const reset = () => {
+      fields.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
+        const defaultValue = input.dataset.defaultValue;
+        if (defaultValue !== undefined) {
+          input.value = defaultValue;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+      fields.querySelectorAll<HTMLSelectElement>('select').forEach((select) => {
+        select.selectedIndex = 0;
+      });
+      calc();
+    };
+
+    root.querySelector('#calculate')?.addEventListener('click', calc);
+    root.querySelector('#reset')?.addEventListener('click', reset);
+    fields.addEventListener('change', calc);
+    calc();
+  }
+</script>
