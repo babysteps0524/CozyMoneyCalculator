@@ -1,73 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
-import CompoundCalculator from '../../../components/calculators/CompoundCalculator.astro';
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
-<BaseLayout
-  title="복리 계산기 | CozyMoney 코지머니"
+<CalculatorPage
+  title="복리 계산기"
   description="원금과 금리, 기간 및 추가납입을 기준으로 복리로 늘어나는 금액을 계산합니다."
   canonical="https://cozymoney.kr/calculators/compound/"
+  category=""
+  guidance={calculatorGuidance.compound}
 >
-  <Header />
-  <main class="cm-container" py="10 md:14 lg:18">
-    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-      <a href="/" no-underline hover="text-primary">
-        홈
-      </a>
-      <span mx="2">/</span>
-      <a href="/calculators/" no-underline hover="text-primary">
-        계산기
-      </a>
-      <span mx="2">/</span>금융
-    </nav>
-    <header max-w="3xl" mb="8">
-      <p m="0" text="sm" font="700" text-primary>
-        금융
-      </p>
-      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
-        복리 계산기
-      </h1>
-      <p
-        m="0"
-        mt="4"
-        text="base md:lg"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        원금과 금리, 기간 및 추가납입을 기준으로 복리로 늘어나는 금액을
-        계산합니다.
-      </p>
-    </header>
-    <div max-w="4xl">
-      <CalculatorShell
-        title="복리 계산기"
-        description="원금과 금리, 기간 및 추가납입을 기준으로 복리로 늘어나는 금액을 계산합니다."
-        guidance={calculatorGuidance.compound}
-      >
-        <CompoundCalculator />
-      </CalculatorShell>
-    </div>
-    <section max-w="4xl" mt="10 md:14">
-      <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
-      <div class="cm-card" mt="4" p="5 md:6">
-        <p
-          m="0"
-          text="sm md:base"
-          leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          입력한 값을 바탕으로 계산 결과와 주요 계산 기준을 함께 표시합니다.
-          실제 계약, 신고 또는 급여 정산에 사용하는 경우에는 관련 기관이나
-          계약서의 정확한 조건을 확인하세요.
-        </p>
-      </div>
-    </section>
-  </main>
-  <Footer />
-</BaseLayout>
+  <CalculatorShell />
+</CalculatorPage>
