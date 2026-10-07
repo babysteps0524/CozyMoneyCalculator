@@ -3,7 +3,7 @@
 
 <div data-calculator="percentage">
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">계산 유형</span>
       <select class="cm-input" id="percentageMode">
         <option value="Y의 X% 계산">Y의 X% 계산</option>
@@ -20,7 +20,7 @@
         </option>
       </select>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">첫 번째 값</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -55,7 +55,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">두 번째 값</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -90,7 +90,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">증가·감소</span>
       <select class="cm-input" id="percentageDirection">
         <option value="증가">증가</option>
