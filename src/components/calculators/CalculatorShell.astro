@@ -13,32 +13,28 @@ const { title, description, guidance } = Astro.props;
 ---
 
 <section class="cm-card" p="5 md:7">
-  <div flex="~" items-start justify-between gap="4" mb="6">
-    <div>
-      <p m="0" text="sm" font="700" text-primary>
-        CALCULATOR
-      </p>
-      <h2 m="0" mt="1" text="xl md:2xl" font="800">
-        {title}
-      </h2>
-      <p
-        m="0"
-        mt="2"
-        text="sm"
-        leading="6"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        {description}
-      </p>
-    </div>
-  </div>
+  <header mb="6">
+    <p m="0" text="sm" font="700" text-primary>
+      CALCULATOR
+    </p>
+    <h2 m="0" mt="1" text="xl md:2xl" font="800">
+      {title}
+    </h2>
+    <p
+      m="0"
+      mt="2"
+      text="sm"
+      leading="6"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      {description}
+    </p>
+  </header>
 
   <slot />
 
   <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
-
-  <CalculatorDetails content={guidance} />
 
   <div
     mt="6"
@@ -49,7 +45,7 @@ const { title, description, guidance } = Astro.props;
     p="5"
     dark="border-dark-border bg-dark-surface-muted"
   >
-    <h3 m="0" text="sm" font="750">
+    <h3 m="0" text="base" font="750">
       이용 전 확인
     </h3>
     <ul
@@ -92,3 +88,5 @@ const { title, description, guidance } = Astro.props;
     않습니다.
   </p>
 </section>
+
+<CalculatorDetails content={guidance} />
