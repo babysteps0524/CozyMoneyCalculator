@@ -8,15 +8,41 @@ import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalSc
 
 <CalculatorPage
   frameOnly
-  category="부동산"
-  lead="부동산 등기 과세표준과 계약서 기재금액을 기준으로 법무사 기본보수와 인지·증지 비용을 계산합니다."
   title="법무사 보수 계산기 | CozyMoney 코지머니"
   description="부동산 등기 과세표준과 기재금액을 기준으로 법무사 기본보수, 인지세, 등기신청수수료와 부가가치세를 계산합니다."
   canonical="https://cozymoney.kr/calculators/legal-scrivener/"
 >
-      
+  <main class="cm-container" py="10 md:14 lg:18">
+    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
+      <a href="/" no-underline hover="text-primary">
+        홈
+      </a>
+      <span mx="2">/</span>
+      <a href="/calculators/" no-underline hover="text-primary">
+        계산기
+      </a>
+      <span mx="2">/</span>부동산
+    </nav>
 
-    
+    <header max-w="3xl" mb="8">
+      <p m="0" text="sm" font="700" text-primary>
+        부동산
+      </p>
+      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
+        법무사 보수 계산기
+      </h1>
+      <p
+        m="0"
+        mt="4"
+        text="base md:lg"
+        leading="7"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        부동산 등기 과세표준과 계약서 기재금액을 기준으로 법무사 기본보수와
+        인지·증지 비용을 계산합니다.
+      </p>
+    </header>
 
     <div max-w="4xl">
       <LegalScrivenerFeeCalculator />
@@ -69,5 +95,5 @@ import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalSc
     <CalculatorDetails
       content={supplementalCalculatorDetails['legal-scrivener']}
     />
-  
+  </main>
 </CalculatorPage>
