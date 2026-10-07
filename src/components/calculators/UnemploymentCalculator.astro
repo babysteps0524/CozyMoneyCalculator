@@ -23,7 +23,7 @@
   </div>
 
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4" mt="6">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">이직일</span>
       <input
         id="separation-date"
@@ -44,7 +44,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">생년월일</span>
       <input
         id="birth-date"
@@ -65,7 +65,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">이직 전 3개월 임금총액</span>
       <div relative>
         <input
@@ -103,7 +103,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">1일 소정근로시간</span>
       <select id="hours" class="cm-input">
         <option value="8" selected>
@@ -129,7 +129,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">장애인 여부</span>
       <select id="disabled" class="cm-input">
         <option value="no" selected>
@@ -150,7 +150,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">고용보험 가입기간</span>
       <select id="period" class="cm-input">
         <option value="under1" selected>
@@ -239,7 +239,7 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p class="cm-help-text" text="sm">
       총 예상 구직급여
     </p>
     <strong id="total" block mt="2" text="2xl md:3xl" font="800" text-primary>
@@ -247,12 +247,8 @@
     </strong>
     <p
       id="headline"
-      m="0"
+      class="cm-help-text"
       mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
     >
       -
     </p>
@@ -322,25 +318,14 @@
     </p>
     <p
       id="status"
-      m="0"
+      class="cm-help-text"
       mt="2"
-      text="sm"
-      leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     >
       -
     </p>
   </div>
 
-  <p
-    m="0"
-    mt="4"
-    text="xs"
-    leading="6"
-    text-text-subtle
-    dark="text-dark-text-subtle"
-  >
+  <p class="cm-help-text" mt="4" text="xs">
     이 계산기는 수급자격을 판정하지 않으며, 실제 지급액은
     이직일·피보험기간·이직사유·근로시간·고용센터의 수급자격 인정 결과 등에 따라
     달라질 수 있습니다.
