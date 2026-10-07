@@ -70,47 +70,37 @@ const { content } = Astro.props;
   {content.examples?.length ? (
     <section data-calculator-section="examples" mt="10 md:14">
       <h2 class="cm-section-title">계산 예시</h2>
-      <div class="cm-card" mt="4" p="5" md="6">
-        <div grid="~ cols-1 md:cols-2" gap="3" md="4">
-          {content.examples.map((example) => (
-            <article
-              rounded="xl"
-              border="1"
-              border-border
-              bg="surface-muted"
-              p="4"
-              dark="border-dark-border bg-dark-surface-muted"
+      <div mt="4" grid="~ cols-1" gap="6 md:8">
+        {content.examples.map((example) => (
+          <div>
+            <h3 m="0" text="base md:lg" font="700" text-text dark="text-dark-text">
+              {example.title}
+            </h3>
+            <p
+              m="0"
+              mt="2"
+              text="sm md:base"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
             >
-              <h3 m="0" text="base" font="700" text-text dark="text-dark-text">
-                {example.title}
-              </h3>
-              <p
-                m="0"
-                mt="2"
-                text="sm"
-                leading="6"
-                text-text-muted
-                dark="text-dark-text-muted"
-              >
-                {example.inputs}
-              </p>
-              <p
-                m="0"
-                mt="2"
-                text="sm"
-                leading="6"
-                text-text
-                dark="text-dark-text"
-              >
-                {example.result}
-              </p>
-            </article>
-          ))}
-        </div>
+              {example.inputs}
+            </p>
+            <p
+              m="0"
+              mt="2"
+              text="sm md:base"
+              leading="7"
+              text-text
+              dark="text-dark-text"
+            >
+              {example.result}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   ) : null}
-
   {content.cautions?.length ? (
     <section data-calculator-section="cautions" mt="10 md:14">
       <h2 class="cm-section-title">주의사항</h2>
