@@ -3,7 +3,7 @@
 
 <div data-calculator="hourlyWage">
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">급여 형태</span>
       <select class="cm-input" id="payType">
         <option value="시급">시급</option>
@@ -13,7 +13,7 @@
         <option value="연봉">연봉</option>
       </select>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">급여 금액</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -59,7 +59,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">일일 근무시간</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -105,7 +105,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">일주 근무일수</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -151,7 +151,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">한달 근무일수</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -197,7 +197,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">주 연장 근무시간</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -243,7 +243,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">월 연장 근무시간</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -289,14 +289,14 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">주휴수당</span>
       <select class="cm-input" id="weeklyHoliday">
         <option value="포함">포함</option>
         <option value="미포함">미포함</option>
       </select>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">세금</span>
       <select class="cm-input" id="taxType">
         <option value="미적용">미적용</option>
@@ -304,7 +304,7 @@
         <option value="소득세 3.3%">소득세 3.3%</option>
       </select>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">수습</span>
       <select class="cm-input" id="probation">
         <option value="미적용 · 전액 지급">미적용 · 전액 지급</option>
@@ -322,20 +322,13 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p class="cm-help-text" text="sm">
       계산 결과
     </p>
     <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
       -
     </div>
-    <div
-      id="result-detail"
-      mt="3"
-      text="sm"
-      leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
-    ></div>
+    <div id="result-detail" class="cm-help-text" mt="3"></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
     <button id="calculate" class="cm-button-primary" py="3">
