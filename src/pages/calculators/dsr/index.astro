@@ -3,6 +3,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/common/Header.astro';
 import Footer from '../../../components/common/Footer.astro';
 import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import DsrCalculator from '../../../components/calculators/DsrCalculator.astro';
+import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
 <BaseLayout
@@ -42,10 +44,12 @@ import CalculatorShell from '../../../components/calculators/CalculatorShell.ast
     </header>
     <div max-w="4xl">
       <CalculatorShell
-        kind="dsr"
         title="DSR 계산기"
         description="연소득과 대출 상환액을 입력해 총부채원리금상환비율을 계산합니다."
-      />
+        guidance={calculatorGuidance.dsr}
+      >
+        <DsrCalculator />
+      </CalculatorShell>
     </div>
     <section max-w="4xl" mt="10 md:14">
       <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
