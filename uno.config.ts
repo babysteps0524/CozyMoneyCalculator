@@ -72,7 +72,7 @@ export default defineConfig({
     'cm-label':
       'mb-2 block text-sm font-semibold text-text dark:text-dark-text',
     'cm-field':
-      'flex flex-col gap-2',
+      'flex flex-col',
     'cm-help-text':
       'm-0 text-sm leading-6 text-text-muted dark:text-dark-text-muted',
     'cm-error':
