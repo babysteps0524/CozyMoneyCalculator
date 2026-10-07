@@ -1,57 +1,15 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/common/Header.astro';
-import Footer from '../../../components/common/Footer.astro';
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
-import HourlyWageCalculator from '../../../components/calculators/HourlyWageCalculator.astro';
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
-<BaseLayout
-  title="시급 계산기 | CozyMoney 코지머니"
+<CalculatorPage
+  title="시급 계산기"
   description="시급·일급·주급·월급·연봉과 주휴수당, 연장수당, 세금, 수습을 반영해 예상 급여를 계산합니다."
   canonical="https://cozymoney.kr/calculators/hourly-wage/"
+  category=""
+  guidance={calculatorGuidance.hourlyWage}
 >
-  <Header />
-  <main class="cm-container" py="10 md:14 lg:18">
-    <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-      <a href="/" no-underline hover="text-primary">
-        홈
-      </a>
-      <span mx="2">/</span>
-      <a href="/calculators/" no-underline hover="text-primary">
-        계산기
-      </a>
-      <span mx="2">/</span>급여·노동
-    </nav>
-    <header max-w="3xl" mb="8">
-      <p m="0" text="sm" font="700" text-primary>
-        급여·노동
-      </p>
-      <h1 m="0" mt="2" text="3xl md:4xl" font="800">
-        시급 계산기
-      </h1>
-      <p
-        m="0"
-        mt="4"
-        text="base md:lg"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        시급·일급·주급·월급·연봉과 주휴수당, 연장수당, 세금, 수습을 반영해 예상
-        급여를 계산합니다.
-      </p>
-    </header>
-    <div max-w="4xl">
-      <CalculatorShell
-        title="시급 계산기"
-        description="시급·일급·주급·월급·연봉과 주휴수당, 연장수당, 세금, 수습을 반영해 예상 급여를 계산합니다."
-        guidance={calculatorGuidance.hourlyWage}
-      >
-        <HourlyWageCalculator />
-      </CalculatorShell>
-    </div>
-  </main>
-  <Footer />
-</BaseLayout>
+  <CalculatorShell />
+</CalculatorPage>
