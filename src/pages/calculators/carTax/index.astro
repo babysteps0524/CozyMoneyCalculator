@@ -1,6 +1,6 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import CalculatorShell from '../../../components/calculators/CalculatorShell.astro';
+import CarTaxCalculator from '../../../components/calculators/CarTaxCalculator.astro';
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
@@ -8,8 +8,8 @@ import { calculatorGuidance } from '../../../lib/calculators/guidance';
   title="자동차세 계산기"
   description="배기량과 입력 세율을 기준으로 자동차세를 단순 계산합니다."
   canonical="https://cozymoney.kr/calculators/carTax/"
-  category=""
+  category="세금"
   guidance={calculatorGuidance.carTax}
 >
-  <CalculatorShell />
+  <CarTaxCalculator />
 </CalculatorPage>
