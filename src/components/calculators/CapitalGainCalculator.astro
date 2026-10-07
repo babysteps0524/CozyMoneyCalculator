@@ -1,0 +1,111 @@
+---
+---
+
+<div data-calculator="capitalGain">
+  <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
+    <label>
+      <span class="cm-label">양도가액</span>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="양도가액 감소" class="cm-step-button">−</button>
+        <div relative>
+          <input class="cm-input pr-12" id="sale" type="text" inputmode="numeric" value="700000000" data-default-value="700000000" data-number-input data-step="100000" data-min="0" data-decimal="false" />
+          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+        </div>
+        <button type="button" data-step-direction="1" aria-label="양도가액 증가" class="cm-step-button">+</button>
+      </div>
+    </label>
+    <label>
+      <span class="cm-label">취득가액</span>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="취득가액 감소" class="cm-step-button">−</button>
+        <div relative>
+          <input class="cm-input pr-12" id="buy" type="text" inputmode="numeric" value="500000000" data-default-value="500000000" data-number-input data-step="100000" data-min="0" data-decimal="false" />
+          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+        </div>
+        <button type="button" data-step-direction="1" aria-label="취득가액 증가" class="cm-step-button">+</button>
+      </div>
+    </label>
+    <label>
+      <span class="cm-label">필요경비</span>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="필요경비 감소" class="cm-step-button">−</button>
+        <div relative>
+          <input class="cm-input pr-12" id="cost" type="text" inputmode="numeric" value="10000000" data-default-value="10000000" data-number-input data-step="10000" data-min="0" data-decimal="false" />
+          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+        </div>
+        <button type="button" data-step-direction="1" aria-label="필요경비 증가" class="cm-step-button">+</button>
+      </div>
+    </label>
+    <label>
+      <span class="cm-label">가정 세율</span>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button type="button" data-step-direction="-1" aria-label="가정 세율 감소" class="cm-step-button">−</button>
+        <div relative>
+          <input class="cm-input pr-14" id="rate" type="text" inputmode="numeric" value="20" data-default-value="20" data-number-input data-step="1" data-min="0" data-decimal="false" />
+          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span>
+        </div>
+        <button type="button" data-step-direction="1" aria-label="가정 세율 증가" class="cm-step-button">+</button>
+      </div>
+    </label>
+  </div>
+  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
+    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  </div>
+  <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
+    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
+    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+  </div>
+</div>
+
+<script>
+  import { bindNumberControls } from '../../lib/calculators/number-input';
+
+  const root = document.querySelector<HTMLElement>('[data-calculator="capitalGain"]');
+  if (root) {
+    const fields = root.querySelector<HTMLElement>('#fields')!;
+    const out = root.querySelector<HTMLElement>('#result-value')!;
+    const detail = root.querySelector<HTMLElement>('#result-detail')!;
+    const $ = (id: string) =>
+      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
+    const n = (id: string) => {
+      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
+      return Number(value.replace(/,/g, '') || 0);
+    };
+    const fmt = (v: number, d = 0) =>
+      Number.isFinite(v)
+        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
+        : '-';
+    const won = (v: number) => fmt(v) + '원';
+
+    bindNumberControls(fields);
+
+    const calc = () => {
+      const gain = Math.max(0, n('sale') - n('buy') - n('cost'));
+      const value = (gain * n('rate')) / 100;
+      out.textContent = won(value);
+      detail.textContent =
+        `양도차익: ${won(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
+    };
+
+    const reset = () => {
+      fields.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
+        const defaultValue = input.dataset.defaultValue;
+        if (defaultValue !== undefined) {
+          input.value = defaultValue;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+      fields.querySelectorAll<HTMLSelectElement>('select').forEach((select) => {
+        select.selectedIndex = 0;
+      });
+      calc();
+    };
+
+    root.querySelector('#calculate')?.addEventListener('click', calc);
+    root.querySelector('#reset')?.addEventListener('click', reset);
+    fields.addEventListener('change', calc);
+    calc();
+  }
+</script>
