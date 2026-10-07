@@ -6,56 +6,218 @@
     <label>
       <span class="cm-label">연소득</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="연소득 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="연소득 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-12" id="income" type="text" inputmode="numeric" value="50000000" data-default-value="50000000" data-number-input data-step="100000" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+          <input
+            class="cm-input pr-12"
+            id="income"
+            type="text"
+            inputmode="numeric"
+            value="50000000"
+            data-default-value="50000000"
+            data-number-input
+            data-step="100000"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="연소득 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="연소득 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">연간 원리금 상환액</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="연간 원리금 상환액 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="연간 원리금 상환액 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-12" id="debt" type="text" inputmode="numeric" value="12000000" data-default-value="12000000" data-number-input data-step="100000" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+          <input
+            class="cm-input pr-12"
+            id="debt"
+            type="text"
+            inputmode="numeric"
+            value="12000000"
+            data-default-value="12000000"
+            data-number-input
+            data-step="100000"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="연간 원리금 상환액 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="연간 원리금 상환액 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">새 대출 연간 상환액</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="새 대출 연간 상환액 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="새 대출 연간 상환액 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-12" id="newdebt" type="text" inputmode="numeric" value="6000000" data-default-value="6000000" data-number-input data-step="100000" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+          <input
+            class="cm-input pr-12"
+            id="newdebt"
+            type="text"
+            inputmode="numeric"
+            value="6000000"
+            data-default-value="6000000"
+            data-number-input
+            data-step="100000"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="새 대출 연간 상환액 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="새 대출 연간 상환액 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">목표 DSR</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="목표 DSR 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="목표 DSR 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="rate" type="text" inputmode="decimal" value="40" data-default-value="40" data-number-input data-step="0.1" data-min="0" data-decimal="true" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">%</span>
+          <input
+            class="cm-input pr-14"
+            id="rate"
+            type="text"
+            inputmode="decimal"
+            value="40"
+            data-default-value="40"
+            data-number-input
+            data-step="0.1"
+            data-min="0"
+            data-decimal="true"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            %
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="목표 DSR 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="목표 DSR 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
   </div>
-  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
-    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
-    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  <div
+    id="result"
+    mt="5"
+    rounded="2xl"
+    bg="primary/10"
+    p="5"
+    dark="bg-dark-primary-surface"
+  >
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+      계산 결과
+    </p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
+      -
+    </div>
+    <div
+      id="result-detail"
+      mt="3"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    ></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
-    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+    <button id="calculate" class="cm-button-primary" py="3">
+      계산하기
+    </button>
+    <button id="reset" class="cm-button-secondary" py="3">
+      초기화
+    </button>
   </div>
 </div>
 
@@ -77,7 +239,6 @@
       Number.isFinite(v)
         ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
         : '-';
-    const won = (v: number) => fmt(v) + '원';
 
     bindNumberControls(fields);
 
@@ -86,8 +247,7 @@
       const total = n('debt') + n('newdebt');
       const dsr = income === 0 ? NaN : (total / income) * 100;
       out.textContent = Number.isFinite(dsr) ? fmt(dsr, 2) + '%' : '-';
-      detail.textContent =
-        `현재 대출만 반영한 DSR: ${fmt(income === 0 ? NaN : (n('debt') / income) * 100, 2)}%. 새 대출 포함: ${fmt(dsr, 2)}%. 입력한 목표 기준: ${fmt(n('rate'), 2)}%.`;
+      detail.textContent = `현재 대출만 반영한 DSR: ${fmt(income === 0 ? NaN : (n('debt') / income) * 100, 2)}%. 새 대출 포함: ${fmt(dsr, 2)}%. 입력한 목표 기준: ${fmt(n('rate'), 2)}%.`;
     };
 
     const reset = () => {

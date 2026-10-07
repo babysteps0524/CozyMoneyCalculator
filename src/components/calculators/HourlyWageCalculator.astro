@@ -16,67 +16,277 @@
     <label>
       <span class="cm-label">급여 금액</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="급여 금액 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="급여 금액 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-12" id="amount" type="text" inputmode="numeric" value="10320" data-default-value="10320" data-number-input data-step="100" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+          <input
+            class="cm-input pr-12"
+            id="amount"
+            type="text"
+            inputmode="numeric"
+            value="10320"
+            data-default-value="10320"
+            data-number-input
+            data-step="100"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="급여 금액 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="급여 금액 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">일일 근무시간</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="일일 근무시간 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="일일 근무시간 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="dailyHours" type="text" inputmode="numeric" value="8" data-default-value="8" data-number-input data-step="1" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">시간</span>
+          <input
+            class="cm-input pr-14"
+            id="dailyHours"
+            type="text"
+            inputmode="numeric"
+            value="8"
+            data-default-value="8"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            시간
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="일일 근무시간 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="일일 근무시간 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">일주 근무일수</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="일주 근무일수 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="일주 근무일수 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="weeklyDays" type="text" inputmode="numeric" value="5" data-default-value="5" data-number-input data-step="1" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">일</span>
+          <input
+            class="cm-input pr-14"
+            id="weeklyDays"
+            type="text"
+            inputmode="numeric"
+            value="5"
+            data-default-value="5"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            일
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="일주 근무일수 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="일주 근무일수 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">한달 근무일수</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="한달 근무일수 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="한달 근무일수 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="monthlyDays" type="text" inputmode="numeric" value="22" data-default-value="22" data-number-input data-step="1" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">일</span>
+          <input
+            class="cm-input pr-14"
+            id="monthlyDays"
+            type="text"
+            inputmode="numeric"
+            value="22"
+            data-default-value="22"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            일
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="한달 근무일수 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="한달 근무일수 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">주 연장 근무시간</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="주 연장 근무시간 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="주 연장 근무시간 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="weeklyOvertimeHours" type="text" inputmode="numeric" value="0" data-default-value="0" data-number-input data-step="1" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">시간</span>
+          <input
+            class="cm-input pr-14"
+            id="weeklyOvertimeHours"
+            type="text"
+            inputmode="numeric"
+            value="0"
+            data-default-value="0"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            시간
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="주 연장 근무시간 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="주 연장 근무시간 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">월 연장 근무시간</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="월 연장 근무시간 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="월 연장 근무시간 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="monthlyOvertimeHours" type="text" inputmode="numeric" value="0" data-default-value="0" data-number-input data-step="1" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">시간</span>
+          <input
+            class="cm-input pr-14"
+            id="monthlyOvertimeHours"
+            type="text"
+            inputmode="numeric"
+            value="0"
+            data-default-value="0"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            시간
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="월 연장 근무시간 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="월 연장 근무시간 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
@@ -98,26 +308,56 @@
       <span class="cm-label">수습</span>
       <select class="cm-input" id="probation">
         <option value="미적용 · 전액 지급">미적용 · 전액 지급</option>
-        <option value="적용 · 예상 급여액 10% 차감">적용 · 예상 급여액 10% 차감</option>
+        <option value="적용 · 예상 급여액 10% 차감">
+          적용 · 예상 급여액 10% 차감
+        </option>
       </select>
     </label>
   </div>
-  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
-    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
-    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  <div
+    id="result"
+    mt="5"
+    rounded="2xl"
+    bg="primary/10"
+    p="5"
+    dark="bg-dark-primary-surface"
+  >
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+      계산 결과
+    </p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
+      -
+    </div>
+    <div
+      id="result-detail"
+      mt="3"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    ></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
-    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+    <button id="calculate" class="cm-button-primary" py="3">
+      계산하기
+    </button>
+    <button id="reset" class="cm-button-secondary" py="3">
+      초기화
+    </button>
   </div>
 </div>
 
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
-  import { calculateHourlyWage, type HourlyPayType, type HourlyTaxType } from '../../lib/calculators/hourlyWage';
+  import {
+    calculateHourlyWage,
+    type HourlyPayType,
+    type HourlyTaxType,
+  } from '../../lib/calculators/hourlyWage';
 
-  const root = document.querySelector<HTMLElement>('[data-calculator="hourlyWage"]');
+  const root = document.querySelector<HTMLElement>(
+    '[data-calculator="hourlyWage"]',
+  );
   if (root) {
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
@@ -167,8 +407,7 @@
         result.hourlyWage >= 10320
           ? '2026년 최저임금 이상'
           : '2026년 최저임금 미만';
-      detail.textContent =
-        `예상 시급: ${won(result.hourlyWage)} · 예상 일급: ${won(result.dailyWage)} · 예상 주급: ${won(result.weeklyWage)} · 기본 월급: ${won(result.monthlyBaseWage)} · 주휴수당: ${won(result.weeklyHolidayPay)} · 주 연장수당: ${won(result.weeklyOvertimePay)} · 월 연장수당: ${won(result.monthlyOvertimePay)} · 월 세전: ${won(result.grossMonthlyWage)} · 공제: ${won(result.tax)} · 월 최종 환산금액: ${won(result.netMonthlyWage)} · ${minimumWageStatus}`;
+      detail.textContent = `예상 시급: ${won(result.hourlyWage)} · 예상 일급: ${won(result.dailyWage)} · 예상 주급: ${won(result.weeklyWage)} · 기본 월급: ${won(result.monthlyBaseWage)} · 주휴수당: ${won(result.weeklyHolidayPay)} · 주 연장수당: ${won(result.weeklyOvertimePay)} · 월 연장수당: ${won(result.monthlyOvertimePay)} · 월 세전: ${won(result.grossMonthlyWage)} · 공제: ${won(result.tax)} · 월 최종 환산금액: ${won(result.netMonthlyWage)} · ${minimumWageStatus}`;
     };
 
     const reset = () => {

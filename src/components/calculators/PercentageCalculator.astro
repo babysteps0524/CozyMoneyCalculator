@@ -8,32 +8,86 @@
       <select class="cm-input" id="percentageMode">
         <option value="Y의 X% 계산">Y의 X% 계산</option>
         <option value="X는 Y의 몇 %인지 계산">X는 Y의 몇 %인지 계산</option>
-        <option value="이전 값에서 새 값으로의 증감률">이전 값에서 새 값으로의 증감률</option>
-        <option value="기준값의 X% 증가·감소 후 값">기준값의 X% 증가·감소 후 값</option>
+        <option value="이전 값에서 새 값으로의 증감률">
+          이전 값에서 새 값으로의 증감률
+        </option>
+        <option value="기준값의 X% 증가·감소 후 값">
+          기준값의 X% 증가·감소 후 값
+        </option>
         <option value="X%에 해당하는 원래 값">X%에 해당하는 원래 값</option>
-        <option value="두 비율의 퍼센트포인트 차이">두 비율의 퍼센트포인트 차이</option>
+        <option value="두 비율의 퍼센트포인트 차이">
+          두 비율의 퍼센트포인트 차이
+        </option>
       </select>
     </label>
     <label>
       <span class="cm-label">첫 번째 값</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="첫 번째 값 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="첫 번째 값 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input " id="valueA" type="text" inputmode="decimal" value="100000" data-default-value="100000" data-number-input data-step="1" data-min="0" data-decimal="true" />
-          
+          <input
+            class="cm-input"
+            id="valueA"
+            type="text"
+            inputmode="decimal"
+            value="100000"
+            data-default-value="100000"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="true"
+          />
         </div>
-        <button type="button" data-step-direction="1" aria-label="첫 번째 값 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="첫 번째 값 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">두 번째 값</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="두 번째 값 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="두 번째 값 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input " id="valueB" type="text" inputmode="decimal" value="15" data-default-value="15" data-number-input data-step="1" data-min="0" data-decimal="true" />
-          
+          <input
+            class="cm-input"
+            id="valueB"
+            type="text"
+            inputmode="decimal"
+            value="15"
+            data-default-value="15"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="true"
+          />
         </div>
-        <button type="button" data-step-direction="1" aria-label="두 번째 값 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="두 번째 값 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
@@ -44,21 +98,45 @@
       </select>
     </label>
   </div>
-  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
-    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
-    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  <div
+    id="result"
+    mt="5"
+    rounded="2xl"
+    bg="primary/10"
+    p="5"
+    dark="bg-dark-primary-surface"
+  >
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+      계산 결과
+    </p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
+      -
+    </div>
+    <div
+      id="result-detail"
+      mt="3"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    ></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
-    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+    <button id="calculate" class="cm-button-primary" py="3">
+      계산하기
+    </button>
+    <button id="reset" class="cm-button-secondary" py="3">
+      초기화
+    </button>
   </div>
 </div>
 
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
 
-  const root = document.querySelector<HTMLElement>('[data-calculator="percentage"]');
+  const root = document.querySelector<HTMLElement>(
+    '[data-calculator="percentage"]',
+  );
   if (root) {
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
@@ -85,8 +163,7 @@
       if (mode === 'Y의 X% 계산') {
         const value = (a * b) / 100;
         out.textContent = won(value);
-        detail.textContent =
-          `${won(a)}의 ${fmt(b, 2)}% = ${won(value)} · 공식: ${fmt(a, 2)} × ${fmt(b, 2)} ÷ 100`;
+        detail.textContent = `${won(a)}의 ${fmt(b, 2)}% = ${won(value)} · 공식: ${fmt(a, 2)} × ${fmt(b, 2)} ÷ 100`;
         return;
       }
 
@@ -114,8 +191,7 @@
         const direction = $('percentageDirection')?.value ?? '증가';
         const value = a * (direction === '증가' ? 1 + b / 100 : 1 - b / 100);
         out.textContent = won(value);
-        detail.textContent =
-          `${won(a)}에 ${fmt(b, 2)}% ${direction}를 적용한 결과입니다 · 공식: ${fmt(a, 2)} × (1 ${direction === '증가' ? '+' : '-'} ${fmt(b, 2)} ÷ 100)`;
+        detail.textContent = `${won(a)}에 ${fmt(b, 2)}% ${direction}를 적용한 결과입니다 · 공식: ${fmt(a, 2)} × (1 ${direction === '증가' ? '+' : '-'} ${fmt(b, 2)} ÷ 100)`;
         return;
       }
 
@@ -131,8 +207,7 @@
 
       const value = b - a;
       out.textContent = fmt(value, 2) + '%p';
-      detail.textContent =
-        `${fmt(a, 2)}% → ${fmt(b, 2)}%: ${value >= 0 ? '+' : ''}${fmt(value, 2)}%p · 퍼센트포인트는 두 비율의 단순한 차이입니다.`;
+      detail.textContent = `${fmt(a, 2)}% → ${fmt(b, 2)}%: ${value >= 0 ? '+' : ''}${fmt(value, 2)}%p · 퍼센트포인트는 두 비율의 단순한 차이입니다.`;
     };
 
     const reset = () => {

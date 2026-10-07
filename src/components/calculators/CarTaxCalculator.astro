@@ -6,41 +6,135 @@
     <label>
       <span class="cm-label">배기량</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="배기량 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="배기량 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="cc" type="text" inputmode="numeric" value="1998" data-default-value="1998" data-number-input data-step="100" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">cc</span>
+          <input
+            class="cm-input pr-14"
+            id="cc"
+            type="text"
+            inputmode="numeric"
+            value="1998"
+            data-default-value="1998"
+            data-number-input
+            data-step="100"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            cc
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="배기량 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="배기량 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
     <label>
       <span class="cm-label">가정 세율</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-        <button type="button" data-step-direction="-1" aria-label="가정 세율 감소" class="cm-step-button">−</button>
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="가정 세율 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
         <div relative>
-          <input class="cm-input pr-14" id="rate" type="text" inputmode="numeric" value="200" data-default-value="200" data-number-input data-step="1" data-min="0" data-decimal="false" />
-          <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원/cc</span>
+          <input
+            class="cm-input pr-14"
+            id="rate"
+            type="text"
+            inputmode="numeric"
+            value="200"
+            data-default-value="200"
+            data-number-input
+            data-step="1"
+            data-min="0"
+            data-decimal="false"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원/cc
+          </span>
         </div>
-        <button type="button" data-step-direction="1" aria-label="가정 세율 증가" class="cm-step-button">+</button>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="가정 세율 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
       </div>
     </label>
   </div>
-  <div id="result" mt="5" rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">계산 결과</p>
-    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>-</div>
-    <div id="result-detail" mt="3" text="sm" leading="7" text-text-muted dark="text-dark-text-muted"></div>
+  <div
+    id="result"
+    mt="5"
+    rounded="2xl"
+    bg="primary/10"
+    p="5"
+    dark="bg-dark-primary-surface"
+  >
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+      계산 결과
+    </p>
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
+      -
+    </div>
+    <div
+      id="result-detail"
+      mt="3"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    ></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="calculate" class="cm-button-primary" py="3">계산하기</button>
-    <button id="reset" class="cm-button-secondary" py="3">초기화</button>
+    <button id="calculate" class="cm-button-primary" py="3">
+      계산하기
+    </button>
+    <button id="reset" class="cm-button-secondary" py="3">
+      초기화
+    </button>
   </div>
 </div>
 
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
 
-  const root = document.querySelector<HTMLElement>('[data-calculator="carTax"]');
+  const root = document.querySelector<HTMLElement>(
+    '[data-calculator="carTax"]',
+  );
   if (root) {
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
