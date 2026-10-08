@@ -266,7 +266,7 @@
       .querySelector('#acquisition-calculate')
       ?.addEventListener('click', calc);
     root.querySelector('#acquisition-reset')?.addEventListener('click', reset);
-    bindLiveCalculation(fields, calc);
+    bindLiveCalculation(fields, calc, { change: true });
     calc();
   }
 </script>
