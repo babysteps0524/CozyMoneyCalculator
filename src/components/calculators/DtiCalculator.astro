@@ -3,8 +3,8 @@
 
 <div data-calculator="dti">
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
-    <label class="cm-field">
-      <span class="cm-label">연소득</span>
+    <div class="cm-field">
+      <label class="cm-label" for="income">연소득</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -48,9 +48,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">주택담보대출 금액</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="mortgageAmount">주택담보대출 금액</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -94,9 +94,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">주택담보대출 금리</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="mortgageRate">주택담보대출 금리</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -140,9 +140,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">주택담보대출 기간</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="mortgageYears">주택담보대출 기간</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -186,7 +186,7 @@
           +
         </button>
       </div>
-    </label>
+    </div>
     <label class="cm-field">
       <span class="cm-label">주택담보대출 상환방식</span>
       <select class="cm-input" id="mortgageMethod">
@@ -195,8 +195,8 @@
         <option value="만기일시">만기일시</option>
       </select>
     </label>
-    <label class="cm-field">
-      <span class="cm-label">기타 대출 금액</span>
+    <div class="cm-field">
+      <label class="cm-label" for="otherDebt">기타 대출 금액</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -240,9 +240,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">기타 대출 금리</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="otherRate">기타 대출 금리</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -286,9 +286,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">목표 DTI</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="rate">목표 DTI</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -332,7 +332,7 @@
           +
         </button>
       </div>
-    </label>
+    </div>
   </div>
   <div
     id="result"
