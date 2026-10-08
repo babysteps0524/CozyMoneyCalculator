@@ -21,7 +21,7 @@ const { kind, title, description } = Astro.props;
 
 <section class="cm-tool-shell" data-tool={kind}>
   <div class="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
-    <div class="min-w-0">
+    <div min-w="0">
     <div class="cm-card p-5 md:p-7">
       {kind === 'lotto' && (
         <div>
@@ -452,7 +452,7 @@ const { kind, title, description } = Astro.props;
       )}
     </div>
 
-    <aside class="cm-card min-w-0" p="5 md:p-6" h="fit">
+    <aside class="cm-card" min-w="0" p="5 md:p-6" h="fit">
       <p m="0" text="sm" font="700" text-primary>
         ABOUT THIS TOOL
       </p>
