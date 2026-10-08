@@ -1,13 +1,15 @@
 ---
+const definition = calculatorDefinitions.monthly-salary;
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import { calculatorDefinitions } from '../../../data/calculators';
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
 
 <CalculatorPage
   mode="custom"
-  title="월급 계산기 | CozyMoney 코지머니"
-  description="월급, 비과세액, 부양가족, 20세 이하 자녀 수를 입력해 4대보험과 소득세를 반영한 예상 실수령액을 계산합니다."
-  canonical="https://cozymoney.kr/calculators/monthly-salary/"
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
 >
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
