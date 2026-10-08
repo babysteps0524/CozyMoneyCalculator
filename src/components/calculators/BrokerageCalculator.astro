@@ -194,7 +194,7 @@
     calculateBrokerage,
     getMonthlyLeaseAmount,
   } from '../../lib/calculators/brokerage';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>('[data-brokerage]');
   if (root) {
@@ -292,8 +292,7 @@
       extra += '</div>';
       extraFields.innerHTML = extra;
 
-      bindNumberControls(mainFields);
-      bindNumberControls(extraFields);
+      // Number inputs are initialized by the shared calculator input runtime.
     };
 
     const valueOf = (id: string) => {
@@ -362,17 +361,12 @@
       calculate();
     };
 
-    transaction.addEventListener('change', () => {
-      renderFields();
-      calculate();
-    });
-    property.addEventListener('change', () => {
-      renderFields();
-      calculate();
-    });
+    transaction.addEventListener('change', renderFields);
+    property.addEventListener('change', renderFields);
     root.querySelector('#calculate')?.addEventListener('click', calculate);
     root.querySelector('#reset')?.addEventListener('click', reset);
     renderFields();
+    bindCalculatorInputs(root, calculate, { change: true });
     calculate();
   }
 </script>
