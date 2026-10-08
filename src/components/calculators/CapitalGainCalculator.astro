@@ -234,13 +234,12 @@
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const gain = Math.max(
-        0,
-        readCalculatorNumber(root, 'sale') -
-          readCalculatorNumber(root, 'buy') -
-          readCalculatorNumber(root, 'cost'),
-      );
-      const value = (gain * readCalculatorNumber(root, 'rate')) / 100;
+      const sale = readCalculatorNumber(root, 'sale');
+      const buy = readCalculatorNumber(root, 'buy');
+      const cost = readCalculatorNumber(root, 'cost');
+      const rate = readCalculatorNumber(root, 'rate');
+      const gain = Math.max(0, sale - buy - cost);
+      const value = (gain * rate) / 100;
       out.textContent = formatCalculatorWon(value);
       detail.textContent = `양도차익: ${formatCalculatorWon(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
     };
