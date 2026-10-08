@@ -435,8 +435,8 @@
 
 <script>
   import { calculateSalary, formatWon } from '../../lib/calculators/salary';
-  import { parseNumber } from '../../lib/calculators/number-input';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
 
   const form = document.querySelector<HTMLFormElement>('#monthly-salary-form');
   const salary = document.querySelector<HTMLInputElement>('#salary');
@@ -469,12 +469,12 @@
 
     try {
       const result = calculateSalary({
-        salary: parseNumber(salary.value),
+        salary: readCalculatorNumber(form, 'salary'),
         salaryType: 'monthly',
         retirementType: 'separate',
-        taxFreeMonthly: parseNumber(taxFree.value),
-        dependents: parseNumber(dependents.value),
-        children8To20: parseNumber(children.value),
+        taxFreeMonthly: readCalculatorNumber(form, 'tax-free'),
+        dependents: readCalculatorNumber(form, 'dependents'),
+        children8To20: readCalculatorNumber(form, 'children'),
         age60OrOlder: radio('#age-60')?.checked ?? false,
       });
 
