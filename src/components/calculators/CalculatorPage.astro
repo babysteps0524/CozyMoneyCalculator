@@ -89,19 +89,13 @@ const pageTitle = isCustom ? title : `${title} | CozyMoney 코지머니`;
       </header>
 
       <div w="full" max-w="4xl">
-        {guidance ? (
-          <CalculatorShell
-            title={title}
-            description={description}
-            guidance={guidance}
-          >
-            <slot />
-          </CalculatorShell>
-        ) : (
-          <CalculatorShell mode="custom">
-            <slot />
-          </CalculatorShell>
-        )}
+        <CalculatorShell
+          title={title}
+          description={description}
+          guidance={guidance}
+        >
+          <slot />
+        </CalculatorShell>
       </div>
 
       <slot name="after" />
