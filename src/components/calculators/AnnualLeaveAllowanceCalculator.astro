@@ -358,10 +358,8 @@
     calculateAnnualLeave,
     type AnnualLeaveBasis,
   } from '../../lib/calculators/annualLeave';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { parseNumber } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
     '[data-annual-leave-calculator]',
@@ -527,7 +525,7 @@
       calculate();
     };
 
-    bindNumberControls(root);
+    bindCalculatorInputs(root, calculate, { change: true });
     updateMode();
     $('basis-hire')?.addEventListener('click', () => {
       setBasis('hire-date');
@@ -537,16 +535,8 @@
       setBasis('fiscal-year');
       calculate();
     });
-    mode.addEventListener('change', () => {
-      updateMode();
-      calculate();
-    });
-    root.addEventListener('input', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
-    root.addEventListener('change', (event) => {
-      if ((event.target as HTMLElement).matches('input, select')) calculate();
-    });
+    mode.addEventListener('change', updateMode);
+
     $('annual-calculate')?.addEventListener('click', calculate);
     $('annual-reset')?.addEventListener('click', reset);
     calculate();
