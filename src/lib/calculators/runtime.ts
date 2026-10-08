@@ -13,11 +13,19 @@ const liveCalculationBindings = new WeakMap<
   { cleanup: () => void }
 >();
 
+const calculatorInputBindings = new WeakMap<
+  ParentNode,
+  { cleanup: () => void }
+>();
+
 export function bindCalculatorInputs(
   root: ParentNode,
   calculate: () => void,
   options: CalculatorInputOptions = {},
 ): () => void {
+  const existing = calculatorInputBindings.get(root);
+  if (existing) return existing.cleanup;
+
   let observer: MutationObserver | undefined;
 
   if (options.numberControls !== false) {
@@ -29,14 +37,20 @@ export function bindCalculatorInputs(
     }
   }
 
-  const cleanup = bindLiveCalculation(root, calculate, options);
+  const liveCleanup = bindLiveCalculation(root, calculate, options);
+  let active = true;
 
-  if (!observer) return cleanup;
+  const cleanup = () => {
+    if (!active) return;
+    active = false;
 
-  return () => {
     observer?.disconnect();
-    cleanup();
+    liveCleanup();
+    calculatorInputBindings.delete(root);
   };
+
+  calculatorInputBindings.set(root, { cleanup });
+  return cleanup;
 }
 
 export function bindLiveCalculation(
