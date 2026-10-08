@@ -20,7 +20,7 @@
   </div>
 
   <div grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">입사일</span>
       <input
         id="severance-start"
@@ -29,7 +29,7 @@
         value="2021-10-01"
       />
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">퇴직일</span>
       <input
         id="severance-retirement"
@@ -79,7 +79,7 @@
   </div>
 
   <div grid="~ cols-1 md:cols-2" gap="4" mt="5">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">최근 1년 상여금 총액</span>
       <div relative>
         <input
@@ -116,7 +116,7 @@
         평균임금 산입 대상 금액의 3/12만 반영합니다.
       </span>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">최근 1년 연차수당</span>
       <div relative>
         <input
@@ -156,7 +156,7 @@
   </div>
 
   <div grid="~ cols-1 md:cols-2" gap="4" mt="5">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">
         1일 통상임금{' '}
         <span font="400" text-text-muted dark="text-dark-text-muted">
@@ -198,7 +198,7 @@
         평균임금보다 높으면 더 높은 통상임금을 적용합니다.
       </span>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">주 소정근로시간</span>
       <div relative>
         <input
@@ -454,7 +454,7 @@
         months.innerHTML = period.periods
           .map(
             (item, index) =>
-              '<label class="cm-card" p="4">' +
+              '<label class="cm-card cm-field" p="4">' +
               '<span class="cm-label">' +
               (index + 1) +
               '개월차 · ' +
