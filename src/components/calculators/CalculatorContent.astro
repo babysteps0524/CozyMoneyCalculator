@@ -1,0 +1,16 @@
+---
+import AdSlot from '../common/AdSlot.astro';
+import CalculatorDetails from './CalculatorDetails.astro';
+import type { CalculatorDetailsContent } from '../../lib/calculators/guidance';
+
+interface Props {
+  guidance: CalculatorDetailsContent;
+}
+
+const { guidance } = Astro.props;
+---
+
+<section aria-label="계산기 상세 정보" mt="10 md:14">
+  <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
+  <CalculatorDetails content={guidance} />
+</section>
