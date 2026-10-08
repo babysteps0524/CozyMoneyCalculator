@@ -223,9 +223,12 @@
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import {
+    bindNumberControls,
+    parseNumber,
+  } from '../../lib/calculators/number-input';
 
-  const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
+  const numberValue = (value: string) => parseNumber(value);
   const root = document.querySelector<HTMLElement>('[data-property-tax]');
 
   if (root) {
