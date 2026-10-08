@@ -214,7 +214,10 @@
 </section>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import {
+    bindNumberControls,
+    parseNumber,
+  } from '../../lib/calculators/number-input';
 
   const root = document.querySelector<HTMLElement>('[data-vat-calculator]');
 
@@ -235,8 +238,7 @@
     const detail = root.querySelector<HTMLElement>('#vat-detail')!;
     const breakdown = root.querySelector<HTMLElement>('#vat-breakdown')!;
 
-    const number = (input: HTMLInputElement) =>
-      Number(input.value.replace(/,/g, '') || 0);
+    const number = (input: HTMLInputElement) => parseNumber(input.value);
 
     const money = (value: number) =>
       Number.isFinite(value)
@@ -388,7 +390,6 @@
       second.value = '0';
       unit.value = '1';
       roundMode.value = 'round';
-      bindNumberControls(root);
       updateMode();
     };
 
