@@ -1,3 +1,5 @@
+import { parseNumber } from './number-input';
+
 export function resetCalculatorFields(fields: ParentNode): void {
   fields.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
     const defaultValue = input.dataset.defaultValue;
@@ -27,8 +29,7 @@ export function readCalculatorNumber(
   id: string,
 ): number {
   const field = getCalculatorField(root, id);
-  const value = field instanceof HTMLInputElement ? field.value : '';
-  return Number(value.replace(/,/g, '') || 0);
+  return field instanceof HTMLInputElement ? parseNumber(field.value) : 0;
 }
 
 export function formatCalculatorNumber(
