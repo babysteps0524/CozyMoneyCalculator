@@ -431,9 +431,7 @@
       }
     };
 
-    root.querySelector('#calculate')?.addEventListener('click', calc);
-
-    root.querySelector('#reset')?.addEventListener('click', () => {
+    const reset = () => {
       separationDate.value = getToday();
       birthDate.value = '1990-01-01';
       wages.value = '9,000,000';
@@ -441,7 +439,10 @@
       disabled.value = 'no';
       period.value = 'under1';
       calc();
-    });
+    };
+
+    root.querySelector('#calculate')?.addEventListener('click', calc);
+    root.querySelector('#reset')?.addEventListener('click', reset);
 
     separationDate.value = getToday();
     birthDate.value = '1990-01-01';
