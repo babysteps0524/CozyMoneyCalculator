@@ -52,7 +52,7 @@ export default defineConfig({
     },
   },
   shortcuts: {
-    'cm-container': 'mx-auto w-full max-w-6xl px-4 md:px-6 lg:px-8',
+    'cm-container': 'mx-auto min-w-0 w-full max-w-6xl px-4 md:px-6 lg:px-8',
     'cm-page':
       'min-h-screen bg-surface text-text dark:bg-dark-surface dark:text-dark-text',
     'cm-card':
