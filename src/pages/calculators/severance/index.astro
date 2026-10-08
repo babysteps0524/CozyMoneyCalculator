@@ -1,16 +1,18 @@
 ---
+const definition = calculatorDefinitions.severance;
 import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
 import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import { calculatorDefinitions } from '../../../data/calculators';
 import AdSlot from '../../../components/common/AdSlot.astro';
 import SeveranceCalculator from '../../../components/calculators/SeveranceCalculator.astro';
 ---
 
 <CalculatorPage
   mode="custom"
-  title="퇴직금 계산기 | CozyMoney 코지머니"
-  description="입사일·퇴직일과 퇴직 전 3개월 임금, 상여금·연차수당, 통상임금을 반영해 예상 퇴직금을 계산합니다."
-  canonical="https://cozymoney.kr/calculators/severance/"
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
 >
   <main class="cm-container" py="10 md:14 lg:18">
     <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
