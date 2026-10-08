@@ -1,5 +1,6 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
+import { bindLiveCalculation } from '../../lib/calculators/runtime';
 ---
 
 <section class="cm-card" data-income-tax-calculator p="5 md:7">
@@ -299,8 +300,7 @@ import AdSlot from '../common/AdSlot.astro';
       .querySelector('#income-tax-calculate')
       ?.addEventListener('click', calculate);
     root.querySelector('#income-tax-reset')?.addEventListener('click', reset);
-    fields.addEventListener('input', calculate);
-    fields.addEventListener('change', calculate);
+    bindLiveCalculation(fields, calculate, { change: true });
     calculate();
   }
 </script>
