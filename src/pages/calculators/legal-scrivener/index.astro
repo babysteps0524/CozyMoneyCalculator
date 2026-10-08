@@ -6,12 +6,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
 import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalScrivenerFeeCalculator.astro';
 ---
 
-<CalculatorPage
-  mode="custom"
-  title="법무사 보수 계산기 | CozyMoney 코지머니"
-  description="부동산 등기 과세표준과 기재금액을 기준으로 법무사 기본보수, 인지세, 등기신청수수료와 부가가치세를 계산합니다."
-  canonical="https://cozymoney.kr/calculators/legal-scrivener/"
->
+<CalculatorPage definition={definition}>
   <main class="cm-container" py="10 md:14 lg:18">
     <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
