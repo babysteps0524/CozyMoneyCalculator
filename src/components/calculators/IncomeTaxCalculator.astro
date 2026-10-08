@@ -181,12 +181,12 @@ import AdSlot from '../common/AdSlot.astro';
 </section>
 
 <script>
-  import { parseNumber } from '../../lib/calculators/number-input';
   import {
     calculateIncomeTax,
     type IncomeTaxInput,
   } from '../../lib/calculators/incomeTax';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>(
     '[data-income-tax-calculator]',
@@ -199,10 +199,7 @@ import AdSlot from '../common/AdSlot.astro';
 
     const money = (value: number) =>
       Math.round(value).toLocaleString('ko-KR') + '원';
-    const number = (id: string) => {
-      const input = root.querySelector<HTMLInputElement>('#' + id);
-      return parseNumber(input?.value ?? '0');
-    };
+    const number = (id: string) => readCalculatorNumber(root, id);
 
     const field = (
       id: string,
