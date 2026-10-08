@@ -8,12 +8,7 @@ const definition = calculatorDefinitions.salary;
 import AdSlot from '../../../components/common/AdSlot.astro';
 ---
 
-<CalculatorPage
-  mode="custom"
-  title={definition.title}
-  description={definition.description}
-  canonical={definition.canonical}
->
+<CalculatorPage definition={definition}>
   <main class="cm-container" py="8 md:12 lg:16">
     <div max-w="5xl" mx="auto">
       <nav mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
