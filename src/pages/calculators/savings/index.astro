@@ -3,7 +3,6 @@ import CalculatorDetails from '../../../components/calculators/CalculatorDetails
 import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import AdSlot from '../../../components/common/AdSlot.astro';
-import { bindLiveCalculation } from '../../../lib/calculators/runtime';
 ---
 
 <CalculatorPage
@@ -461,7 +460,14 @@ import { bindLiveCalculation } from '../../../lib/calculators/runtime';
           </form>
         </section>
 
-        <section id="result" class="cm-card" p="5 md:7" lg="sticky top-24" aria-live="polite" aria-atomic="true">
+        <section
+          id="result"
+          class="cm-card"
+          p="5 md:7"
+          lg="sticky top-24"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <div flex="~" items-center justify-between mb="5">
             <div>
               <p m="0" text="xs" font="700" text-primary>
@@ -675,6 +681,8 @@ import { bindLiveCalculation } from '../../../lib/calculators/runtime';
     bindNumberControls,
     parseNumber,
   } from '../../../lib/calculators/number-input';
+  import { bindLiveCalculation } from '../../../lib/calculators/runtime';
+
   const form = document.querySelector<HTMLFormElement>('#savings-form');
   const depositTab = document.querySelector<HTMLButtonElement>('#deposit-tab');
   const installmentTab =
