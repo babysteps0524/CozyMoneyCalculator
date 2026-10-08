@@ -29,7 +29,7 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p m="0" class="cm-help-text">
       예상 취득 관련 세금
     </p>
     <div
@@ -44,10 +44,9 @@
     <div
       id="acquisition-detail"
       mt="3"
+      class="cm-help-text"
       text="sm"
       leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     ></div>
   </div>
 
@@ -188,9 +187,9 @@
     const won = (v: number) => Math.round(v).toLocaleString('ko-KR') + '원';
 
     const field = (id: string, label: string, value: string, suffix = '원') =>
-      `<label><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input pr-12" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="100000" data-min="0" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></label>`;
+      `<label class="cm-field"><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input pr-12" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="100000" data-min="0" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></label>`;
     const select = (id: string, label: string, options: string[]) =>
-      `<label><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map((x) => `<option>${x}</option>`).join('')}</select></label>`;
+      `<label class="cm-field"><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map((x) => `<option>${x}</option>`).join('')}</select></label>`;
     const checkbox = (id: string, label: string) =>
       `<label flex="~" items-center gap="3" rounded="xl" border="1" border-border p="4" dark="border-dark-border"><input id="${id}" type="checkbox" /><span text="sm">${label}</span></label>`;
 
