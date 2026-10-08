@@ -194,7 +194,6 @@
     calculateBrokerage,
     getMonthlyLeaseAmount,
   } from '../../lib/calculators/brokerage';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>('[data-brokerage]');
@@ -293,8 +292,7 @@
       extra += '</div>';
       extraFields.innerHTML = extra;
 
-      bindNumberControls(mainFields);
-      bindNumberControls(extraFields);
+
     };
 
     const valueOf = (id: string) => {
