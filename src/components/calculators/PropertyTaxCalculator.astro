@@ -481,14 +481,16 @@
       if (article) removeAsset(article);
     });
 
-    root.querySelector('#property-reset')?.addEventListener('click', () => {
+    const reset = () => {
       list.innerHTML = assetHtml(1);
       nextId = 2;
       oneHouse.checked = true;
       taxCap.checked = true;
       bindDynamicNumbers();
       calc();
-    });
+    };
+
+    root.querySelector('#property-reset')?.addEventListener('click', reset);
 
     calc();
   }
