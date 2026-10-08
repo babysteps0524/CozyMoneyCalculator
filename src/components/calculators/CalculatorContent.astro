@@ -10,7 +10,7 @@ interface Props {
 const { guidance } = Astro.props;
 ---
 
-<section aria-label="계산기 상세 정보" mt="10 md:14">
+<section aria-label="계산기 상세 정보" w="full" mt="10 md:14">
   <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
   <CalculatorDetails content={guidance} />
 </section>
