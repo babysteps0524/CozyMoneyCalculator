@@ -306,7 +306,7 @@
 </div>
 
 <script>
-  import { parseNumber } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   import {
     calculateAgeAtSeparation,
@@ -331,7 +331,7 @@
 
     const fmt = (value: number) =>
       Math.round(value).toLocaleString('ko-KR') + '원';
-    const getWages = () => parseNumber(wages.value);
+    const getWages = () => readCalculatorNumber(root, 'wages');
 
     const getToday = () => {
       const today = new Date();
