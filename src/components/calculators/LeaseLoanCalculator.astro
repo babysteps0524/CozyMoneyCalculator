@@ -180,9 +180,7 @@
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
-    formatCalculatorNumber,
     formatCalculatorWon,
-    getCalculatorField,
     readCalculatorNumber,
     resetCalculatorFields,
   } from '../../lib/calculators/dom';
@@ -197,7 +195,10 @@
     bindNumberControls(fields);
 
     const calc = () => {
-      const loan = (readCalculatorNumber(root, 'deposit') * readCalculatorNumber(root, 'loanRate')) / 100;
+      const loan =
+        (readCalculatorNumber(root, 'deposit') *
+          readCalculatorNumber(root, 'loanRate')) /
+        100;
       const value = (loan * readCalculatorNumber(root, 'rate')) / 100;
       out.textContent = formatCalculatorWon(value);
       detail.textContent = `예상 대출금: ${formatCalculatorWon(loan)} · 1년 단순 이자: ${formatCalculatorWon(value)}`;

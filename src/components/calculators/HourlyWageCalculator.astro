@@ -346,7 +346,6 @@
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
-    formatCalculatorNumber,
     formatCalculatorWon,
     getCalculatorField,
     readCalculatorNumber,
@@ -381,16 +380,26 @@
         '소득세 3.3%': 'income',
       };
       const result = calculateHourlyWage({
-        payType: payTypeMap[getCalculatorField(root, 'payType')?.value ?? '시급'] ?? 'hourly',
+        payType:
+          payTypeMap[getCalculatorField(root, 'payType')?.value ?? '시급'] ??
+          'hourly',
         amount: readCalculatorNumber(root, 'amount'),
         dailyHours: readCalculatorNumber(root, 'dailyHours'),
         weeklyDays: readCalculatorNumber(root, 'weeklyDays'),
         monthlyDays: readCalculatorNumber(root, 'monthlyDays'),
         weeklyOvertimeHours: readCalculatorNumber(root, 'weeklyOvertimeHours'),
-        monthlyOvertimeHours: readCalculatorNumber(root, 'monthlyOvertimeHours'),
-        weeklyHolidayIncluded: getCalculatorField(root, 'weeklyHoliday')?.value === '포함',
-        taxType: taxTypeMap[getCalculatorField(root, 'taxType')?.value ?? '미적용'] ?? 'none',
-        probation: (getCalculatorField(root, 'probation')?.value ?? '').startsWith('적용'),
+        monthlyOvertimeHours: readCalculatorNumber(
+          root,
+          'monthlyOvertimeHours',
+        ),
+        weeklyHolidayIncluded:
+          getCalculatorField(root, 'weeklyHoliday')?.value === '포함',
+        taxType:
+          taxTypeMap[getCalculatorField(root, 'taxType')?.value ?? '미적용'] ??
+          'none',
+        probation: (
+          getCalculatorField(root, 'probation')?.value ?? ''
+        ).startsWith('적용'),
       });
 
       out.textContent = formatCalculatorWon(result.netMonthlyWage);

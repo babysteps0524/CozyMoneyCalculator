@@ -220,9 +220,7 @@
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
-    formatCalculatorNumber,
     formatCalculatorWon,
-    getCalculatorField,
     readCalculatorNumber,
     resetCalculatorFields,
   } from '../../lib/calculators/dom';
@@ -237,7 +235,12 @@
     bindNumberControls(fields);
 
     const calc = () => {
-      const gain = Math.max(0, readCalculatorNumber(root, 'sale') - readCalculatorNumber(root, 'buy') - readCalculatorNumber(root, 'cost'));
+      const gain = Math.max(
+        0,
+        readCalculatorNumber(root, 'sale') -
+          readCalculatorNumber(root, 'buy') -
+          readCalculatorNumber(root, 'cost'),
+      );
       const value = (gain * readCalculatorNumber(root, 'rate')) / 100;
       out.textContent = formatCalculatorWon(value);
       detail.textContent = `양도차익: ${formatCalculatorWon(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;

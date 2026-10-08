@@ -174,9 +174,7 @@
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
-    formatCalculatorNumber,
     formatCalculatorWon,
-    getCalculatorField,
     readCalculatorNumber,
     resetCalculatorFields,
   } from '../../lib/calculators/dom';
@@ -189,7 +187,10 @@
     bindNumberControls(fields);
 
     const calc = () => {
-      const annual = (readCalculatorNumber(root, 'deposit') * readCalculatorNumber(root, 'rate')) / 100;
+      const annual =
+        (readCalculatorNumber(root, 'deposit') *
+          readCalculatorNumber(root, 'rate')) /
+        100;
       const monthlyAnnual = readCalculatorNumber(root, 'monthly') * 12;
       const value = monthlyAnnual + annual;
       out.textContent = formatCalculatorWon(value);

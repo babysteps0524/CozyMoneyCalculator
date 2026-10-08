@@ -227,8 +227,6 @@
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
     formatCalculatorNumber,
-    formatCalculatorWon,
-    getCalculatorField,
     readCalculatorNumber,
     resetCalculatorFields,
   } from '../../lib/calculators/dom';
@@ -242,9 +240,13 @@
 
     const calc = () => {
       const income = readCalculatorNumber(root, 'income');
-      const total = readCalculatorNumber(root, 'debt') + readCalculatorNumber(root, 'newdebt');
+      const total =
+        readCalculatorNumber(root, 'debt') +
+        readCalculatorNumber(root, 'newdebt');
       const dsr = income === 0 ? NaN : (total / income) * 100;
-      out.textContent = Number.isFinite(dsr) ? formatCalculatorNumber(dsr, 2) + '%' : '-';
+      out.textContent = Number.isFinite(dsr)
+        ? formatCalculatorNumber(dsr, 2) + '%'
+        : '-';
       detail.textContent = `현재 대출만 반영한 DSR: ${formatCalculatorNumber(income === 0 ? NaN : (readCalculatorNumber(root, 'debt') / income) * 100, 2)}%. 새 대출 포함: ${formatCalculatorNumber(dsr, 2)}%. 입력한 목표 기준: ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}%.`;
     };
 

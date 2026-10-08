@@ -128,9 +128,7 @@
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
-    formatCalculatorNumber,
     formatCalculatorWon,
-    getCalculatorField,
     readCalculatorNumber,
     resetCalculatorFields,
   } from '../../lib/calculators/dom';
@@ -146,8 +144,14 @@
 
     const calc = () => {
       const weeklyHoliday =
-        readCalculatorNumber(root, 'hours') >= 15 ? readCalculatorNumber(root, 'hourly') * Math.min(8, readCalculatorNumber(root, 'hours')) : 0;
-      const value = readCalculatorNumber(root, 'hourly') * readCalculatorNumber(root, 'hours') + weeklyHoliday;
+        readCalculatorNumber(root, 'hours') >= 15
+          ? readCalculatorNumber(root, 'hourly') *
+            Math.min(8, readCalculatorNumber(root, 'hours'))
+          : 0;
+      const value =
+        readCalculatorNumber(root, 'hourly') *
+          readCalculatorNumber(root, 'hours') +
+        weeklyHoliday;
       out.textContent = formatCalculatorWon(value);
       detail.textContent =
         '입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.';
