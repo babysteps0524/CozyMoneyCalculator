@@ -8,11 +8,6 @@ export interface CalculatorInputOptions extends LiveCalculationOptions {
   numberControls?: boolean;
 }
 
-const liveCalculationBindings = new WeakMap<
-  ParentNode,
-  { cleanup: () => void }
->();
-
 const calculatorInputBindings = new WeakMap<
   ParentNode,
   { cleanup: () => void }
@@ -37,32 +32,6 @@ export function bindCalculatorInputs(
     }
   }
 
-  const liveCleanup = bindLiveCalculation(root, calculate, options);
-  let active = true;
-
-  const cleanup = () => {
-    if (!active) return;
-    active = false;
-
-    observer?.disconnect();
-    liveCleanup();
-    calculatorInputBindings.delete(root);
-  };
-
-  calculatorInputBindings.set(root, { cleanup });
-  return cleanup;
-}
-
-export function bindLiveCalculation(
-  root: ParentNode,
-  calculate: () => void,
-  options: LiveCalculationOptions = {},
-): () => void {
-  const existing = liveCalculationBindings.get(root);
-  if (existing) {
-    return existing.cleanup;
-  }
-
   const onInput = () => calculate();
   const onChange = () => calculate();
 
@@ -72,18 +41,21 @@ export function bindLiveCalculation(
   }
 
   let active = true;
+
   const cleanup = () => {
     if (!active) return;
 
     active = false;
+    observer?.disconnect();
     root.removeEventListener('input', onInput);
+
     if (options.change) {
       root.removeEventListener('change', onChange);
     }
 
-    liveCalculationBindings.delete(root);
+    calculatorInputBindings.delete(root);
   };
 
-  liveCalculationBindings.set(root, { cleanup });
+  calculatorInputBindings.set(root, { cleanup });
   return cleanup;
 }
