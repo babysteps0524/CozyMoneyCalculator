@@ -333,7 +333,10 @@
 </section>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import {
+    bindNumberControls,
+    parseNumber,
+  } from '../../lib/calculators/number-input';
   import {
     calculateAgeAtSeparation,
     calculateEstimatedDailyAverageWage,
@@ -357,7 +360,7 @@
 
     const fmt = (value: number) =>
       Math.round(value).toLocaleString('ko-KR') + '원';
-    const getWages = () => Number(wages.value.replace(/,/g, '') || 0);
+    const getWages = () => parseNumber(wages.value);
 
     const getToday = () => {
       const today = new Date();
