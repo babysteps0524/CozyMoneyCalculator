@@ -8,5 +8,6 @@ export default defineConfig({
   site: 'https://cozymoney.kr',
 
   server: {
-    open: true,},
+    open: true,
+  },
 });
