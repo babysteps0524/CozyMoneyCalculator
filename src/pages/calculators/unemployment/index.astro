@@ -1,14 +1,16 @@
 ---
+const definition = calculatorDefinitions.unemployment;
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import { calculatorDefinitions } from '../../../data/calculators';
 import AdSlot from '../../../components/common/AdSlot.astro';
 import UnemploymentCalculator from '../../../components/calculators/UnemploymentCalculator.astro';
 ---
 
 <CalculatorPage
   mode="custom"
-  title="실업급여 계산기 | CozyMoney 코지머니"
-  description="이직일과 생년월일, 이직 전 3개월 임금총액, 소정근로시간, 고용보험 가입기간을 기준으로 2026년 구직급여 예상액과 소정급여일수를 계산합니다."
-  canonical="https://cozymoney.kr/calculators/unemployment/"
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
 >
   <main class="cm-container" py="10 md:14 lg:18">
     <div max-w="5xl" mx="auto">
