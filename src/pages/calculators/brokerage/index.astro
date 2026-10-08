@@ -9,12 +9,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
 import BrokerageCalculator from '../../../components/calculators/BrokerageCalculator.astro';
 ---
 
-<CalculatorPage
-  mode="custom"
-  title={definition.title}
-  description={definition.description}
-  canonical={definition.canonical}
->
+<CalculatorPage definition={definition}>
   <main class="cm-container" py="10 md:14 lg:18">
     <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
       <a href="/" no-underline hover="text-primary">
