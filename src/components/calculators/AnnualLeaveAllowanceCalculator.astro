@@ -59,7 +59,7 @@
   </fieldset>
 
   <div grid="~ cols-1 md:cols-2" gap="4" mt="5">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">입사일자</span>
       <input
         id="annual-start"
@@ -68,14 +68,14 @@
         value="2021-10-01"
       />
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">계산일자</span>
       <input id="annual-date" class="cm-input" type="date" value="2026-10-05" />
     </label>
   </div>
 
   <div grid="~ cols-1 md:cols-2" gap="4" mt="5">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">사용한 연차일수</span>
       <div relative>
         <input
@@ -111,7 +111,7 @@
         계산 기준일까지 실제 사용한 연차를 입력하세요.
       </span>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">근무시간 입력 방식</span>
       <select id="annual-hours-mode" class="cm-input">
         <option value="preset">선택입력</option>
@@ -121,7 +121,7 @@
   </div>
 
   <div id="preset-hours" grid="~ cols-1 sm:cols-2" gap="4" mt="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">일 근무시간</span>
       <select id="annual-daily-hours" class="cm-input">
         <option value="8">8시간</option>
@@ -131,7 +131,7 @@
         <option value="4">4시간</option>
       </select>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">주 근무일수</span>
       <select id="annual-weekly-days" class="cm-input">
         <option value="5">주 5일</option>
@@ -145,7 +145,7 @@
   </div>
 
   <div id="direct-hours" hidden grid="~ cols-1 md:cols-2" gap="4" mt="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">1주일 총 소정근로시간</span>
       <div relative>
         <input
@@ -192,7 +192,7 @@
       기본급과 정기·일률적으로 지급되는 고정수당, 연간 상여금 등을 입력하세요.
     </p>
     <div grid="~ cols-1 md:cols-2" gap="4" mt="3">
-      <label>
+      <label class="cm-field">
         <span class="cm-label">월 기본급</span>
         <div relative>
           <input
@@ -219,7 +219,7 @@
           </span>
         </div>
       </label>
-      <label>
+      <label class="cm-field">
         <span class="cm-label">월 고정수당 합계</span>
         <div relative>
           <input
@@ -255,7 +255,7 @@
           정기적·일률적으로 지급되는 고정수당을 입력하세요.
         </span>
       </label>
-      <label>
+      <label class="cm-field">
         <span class="cm-label">연간 상여금 합계</span>
         <div relative>
           <input
