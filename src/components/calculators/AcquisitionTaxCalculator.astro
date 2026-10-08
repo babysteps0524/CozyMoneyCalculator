@@ -166,7 +166,10 @@
 
 <script>
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import {
+    bindNumberControls,
+    parseNumber,
+  } from '../../lib/calculators/number-input';
   import {
     calculateAcquisitionTax,
     type AcquisitionAsset,
@@ -181,9 +184,7 @@
     const $ = (id: string) =>
       root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
     const n = (id: string) =>
-      Number(
-        (($('' + id) as HTMLInputElement)?.value ?? '').replace(/,/g, '') || 0,
-      );
+      parseNumber(($('' + id) as HTMLInputElement)?.value ?? '0');
     const won = (v: number) => Math.round(v).toLocaleString('ko-KR') + '원';
 
     const field = (id: string, label: string, value: string, suffix = '원') =>
