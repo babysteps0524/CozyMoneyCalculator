@@ -59,10 +59,10 @@ import AdSlot from '../common/AdSlot.astro';
   <div id="income-tax-breakdown" mt="4" grid="~ cols-1 md:cols-2" gap="3"></div>
 
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="income-tax-calculate" class="cm-button-primary" py="3">
+    <button\n      id="income-tax-calculate"\n      type="button"\n      class="cm-button-primary"\n      py="3"\n    >
       계산하기
     </button>
-    <button id="income-tax-reset" class="cm-button-secondary" py="3">
+    <button\n      id="income-tax-reset"\n      type="button"\n      class="cm-button-secondary"\n      py="3"\n    >
       초기화
     </button>
   </div>
@@ -136,7 +136,7 @@ import AdSlot from '../common/AdSlot.astro';
     mt="4"
     rounded="2xl"
     border="1"
-    border="danger/20"
+    border="danger-text/20"
     bg="danger-surface"
     p="5"
     dark="border-dark-border bg-dark-danger-surface"
