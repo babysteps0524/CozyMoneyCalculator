@@ -95,6 +95,11 @@ export function bindNumberControls(root: ParentNode): void {
       bindNumberInput(input);
 
       const controls = input.parentElement?.parentElement;
+      if (!controls || controls.dataset.numberControlsBound === 'true') {
+        return;
+      }
+
+      controls.dataset.numberControlsBound = 'true';
       const decrease = controls?.querySelector<HTMLButtonElement>(
         '[data-step-direction="-1"]',
       );
