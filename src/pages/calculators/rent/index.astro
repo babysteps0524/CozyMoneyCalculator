@@ -1,8 +1,9 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import RentCalculator from '../../../components/calculators/RentCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
----
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.rent;
+import RentCalculator from '../../../components/calculators/RentCalculator.astro';---
 
 <CalculatorPage
   title="전월세 계산기"
