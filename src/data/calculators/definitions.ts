@@ -10,7 +10,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '연소득과 주택담보대출 원리금, 기타 이자상환액을 기준으로 DTI를 계산합니다.',
     canonical: `${site}/calculators/dti/`,
     category: '금융',
-    mode: 'standard',
     guidance: calculatorGuidance.dti,
   },
   dsr: {
@@ -19,7 +18,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '연소득과 대출 원리금을 기준으로 DSR을 계산합니다.',
     canonical: `${site}/calculators/dsr/`,
     category: '금융',
-    mode: 'standard',
     guidance: calculatorGuidance.dsr,
   },
   rent: {
@@ -28,7 +26,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '보증금과 월세를 같은 기준으로 환산해 주거비를 비교합니다.',
     canonical: `${site}/calculators/rent/`,
     category: '부동산',
-    mode: 'standard',
     guidance: calculatorGuidance.rent,
   },
   carTax: {
@@ -37,7 +34,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '배기량과 입력한 세율을 기준으로 자동차세를 단순 추정합니다.',
     canonical: `${site}/calculators/carTax/`,
     category: '세금',
-    mode: 'standard',
     guidance: calculatorGuidance.carTax,
   },
   weekly: {
@@ -46,7 +42,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '시급과 주 소정근로시간을 이용해 주급과 주휴수당을 단순 추정합니다.',
     canonical: `${site}/calculators/weekly/`,
     category: '급여',
-    mode: 'standard',
     guidance: calculatorGuidance.weekly,
   },
   compound: {
@@ -55,7 +50,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '원금과 금리, 기간을 기준으로 복리 효과를 계산합니다.',
     canonical: `${site}/calculators/compound/`,
     category: '금융',
-    mode: 'standard',
     guidance: calculatorGuidance.compound,
   },
   leaseLoan: {
@@ -64,7 +58,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '임차보증금과 대출비율, 금리를 기준으로 예상 대출금과 이자를 계산합니다.',
     canonical: `${site}/calculators/leaseLoan/`,
     category: '금융',
-    mode: 'standard',
     guidance: calculatorGuidance.leaseLoan,
   },
   'hourly-wage': {
@@ -73,7 +66,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '시급과 근무 조건을 기준으로 주급, 월급, 연봉을 환산합니다.',
     canonical: `${site}/calculators/hourly-wage/`,
     category: '급여',
-    mode: 'standard',
     guidance: calculatorGuidance.hourlyWage,
   },
   capitalGain: {
@@ -82,7 +74,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '양도가액과 취득가액, 필요경비를 기준으로 양도차익을 추정합니다.',
     canonical: `${site}/calculators/capitalGain/`,
     category: '부동산·세금',
-    mode: 'standard',
     guidance: calculatorGuidance.capitalGain,
   },
   percentage: {
@@ -91,7 +82,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '비율, 증감률, 퍼센트에 해당하는 값을 다양한 방식으로 계산합니다.',
     canonical: `${site}/calculators/percentage/`,
     category: '일반 계산',
-    mode: 'standard',
     guidance: calculatorGuidance.percentage,
   },
 
@@ -101,7 +91,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 주요 부가세목을 추정합니다.',
     canonical: `${site}/calculators/acquisition/`,
     category: '부동산·세금',
-    mode: 'custom',
   },
   brokerage: {
     slug: 'brokerage',
@@ -109,7 +98,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '부동산 거래금액과 거래 유형을 기준으로 중개보수와 부가가치세를 계산합니다.',
     canonical: `${site}/calculators/brokerage/`,
     category: '부동산',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.brokerage,
   },
   incomeTax: {
@@ -118,7 +106,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '종합소득과 공제 조건을 입력해 예상 종합소득세를 계산합니다.',
     canonical: `${site}/calculators/incomeTax/`,
     category: '세금',
-    mode: 'custom',
   },
   loan: {
     slug: 'loan',
@@ -126,7 +113,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '대출금액, 금리, 기간과 상환방식을 입력해 월 상환액과 총 이자를 계산합니다.',
     canonical: `${site}/calculators/loan/`,
     category: '금융',
-    mode: 'custom',
     guidance: calculatorGuidance.loan,
   },
   'monthly-salary': {
@@ -135,7 +121,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '월급과 공제 조건을 입력해 예상 실수령액을 계산합니다.',
     canonical: `${site}/calculators/monthly-salary/`,
     category: '급여',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.salary,
   },
   property: {
@@ -144,7 +129,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '주택 공시가격과 보유 조건을 바탕으로 재산세를 추정합니다.',
     canonical: `${site}/calculators/property/`,
     category: '부동산·세금',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.property,
   },
   salary: {
@@ -153,7 +137,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '연봉과 공제 조건을 입력해 예상 월 실수령액을 계산합니다.',
     canonical: `${site}/calculators/salary/`,
     category: '급여',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.salary,
   },
   savings: {
@@ -162,7 +145,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '예금과 적금의 금리, 기간, 납입 조건을 기준으로 예상 만기금액을 계산합니다.',
     canonical: `${site}/calculators/savings/`,
     category: '금융',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.savings,
   },
   severance: {
@@ -171,7 +153,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '평균임금과 계속근로기간을 기준으로 예상 퇴직금을 계산합니다.',
     canonical: `${site}/calculators/severance/`,
     category: '급여',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.severance,
   },
   unemployment: {
@@ -180,7 +161,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '평균임금과 고용보험 가입기간 등을 기준으로 실업급여를 추정합니다.',
     canonical: `${site}/calculators/unemployment/`,
     category: '급여',
-    mode: 'custom',
   },
   vacation: {
     slug: 'vacation',
@@ -188,7 +168,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '미사용 연차일수와 통상임금을 기준으로 예상 연차수당을 계산합니다.',
     canonical: `${site}/calculators/vacation/`,
     category: '급여',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.vacation,
   },
   vat: {
@@ -197,7 +176,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '공급가액, 부가가치세, 합계금액을 서로 변환해 계산합니다.',
     canonical: `${site}/calculators/vat/`,
     category: '세금',
-    mode: 'custom',
     guidance: supplementalCalculatorDetails.vat,
   },
 };
