@@ -127,6 +127,7 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import { resetCalculatorFields } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>(
     '[data-calculator="weekly"]',
@@ -159,16 +160,7 @@
     };
 
     const reset = () => {
-      fields.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
-        const defaultValue = input.dataset.defaultValue;
-        if (defaultValue !== undefined) {
-          input.value = defaultValue;
-          input.dispatchEvent(new Event('input', { bubbles: true }));
-        }
-      });
-      fields.querySelectorAll<HTMLSelectElement>('select').forEach((select) => {
-        select.selectedIndex = 0;
-      });
+      resetCalculatorFields(fields);
       calc();
     };
 
