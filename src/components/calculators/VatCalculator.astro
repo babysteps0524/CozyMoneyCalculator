@@ -222,6 +222,7 @@
 </section>
 
 <script>
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
     bindNumberControls,
     parseNumber,
@@ -296,7 +297,6 @@
         help.textContent =
           '일반과세자의 기본 구조인 매출세액에서 공제 가능한 매입세액을 차감해 납부·환급세액을 간편 추정합니다.';
       }
-      calculate();
     };
 
     const calculate = () => {
@@ -399,15 +399,13 @@
       unit.value = '1';
       roundMode.value = 'round';
       updateMode();
+      calculate();
     };
 
-    [amount, rate, second].forEach((input) => {
-      input.addEventListener('input', calculate);
-      input.addEventListener('change', calculate);
-    });
     [mode, unit, roundMode].forEach((input) => {
       input.addEventListener('change', updateMode);
     });
+    bindLiveCalculation(root, calculate, { change: true });
 
     root.querySelector('#vat-calculate')?.addEventListener('click', calculate);
     root.querySelector('#vat-reset')?.addEventListener('click', reset);
