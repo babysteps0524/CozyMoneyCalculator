@@ -357,11 +357,8 @@
 </div>
 
 <script>
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   type FeeType =
     | 'ownership'
