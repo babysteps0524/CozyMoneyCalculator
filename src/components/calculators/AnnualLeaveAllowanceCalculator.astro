@@ -358,7 +358,7 @@
     calculateAnnualLeave,
     type AnnualLeaveBasis,
   } from '../../lib/calculators/annualLeave';
-  import { parseNumber } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
@@ -412,21 +412,21 @@
       error.hidden = true;
       try {
         const isDirect = mode.value === 'direct';
-        const dailyHours = isDirect ? 8 : parseNumber(daily.value);
+        const dailyHours = isDirect ? 8 : readCalculatorNumber(root, 'annual-daily-hours');
         const weekly = isDirect
-          ? parseNumber(weeklyInput.value)
-          : dailyHours * parseNumber(weeklyDays.value);
+          ? readCalculatorNumber(root, 'annual-weekly-hours')
+          : dailyHours * readCalculatorNumber(root, 'annual-weekly-days');
         const result = calculateAnnualLeave({
           basis,
           startDate: start.value,
           calculationDate: date.value,
-          usedDays: parseNumber(used.value),
+          usedDays: readCalculatorNumber(root, 'annual-used'),
           dailyHours,
-          weeklyDays: isDirect ? 5 : parseNumber(weeklyDays.value),
+          weeklyDays: isDirect ? 5 : readCalculatorNumber(root, 'annual-weekly-days'),
           weeklyHours: weekly,
-          monthlyBasePay: parseNumber(basePay.value),
-          monthlyFixedAllowance: parseNumber(fixed.value),
-          annualBonus: parseNumber(bonus.value),
+          monthlyBasePay: readCalculatorNumber(root, 'annual-base-pay'),
+          monthlyFixedAllowance: readCalculatorNumber(root, 'annual-fixed-allowance'),
+          annualBonus: readCalculatorNumber(root, 'annual-bonus'),
         });
 
         value.textContent = won(result.allowance);
@@ -476,11 +476,11 @@
           '시간</p>' +
           '<p m="2 0 0" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">' +
           '월 통상임금 = 기본급 ' +
-          won(parseNumber(basePay.value)) +
+          won(readCalculatorNumber(root, 'annual-base-pay')) +
           ' + 고정수당 ' +
-          won(parseNumber(fixed.value)) +
+          won(readCalculatorNumber(root, 'annual-fixed-allowance')) +
           ' + 연간 상여금 월할 ' +
-          won(parseNumber(bonus.value) / 12) +
+          won(readCalculatorNumber(root, 'annual-bonus') / 12) +
           '</p>' +
           '<p m="2 0 0" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">' +
           '1일 통상임금 = 시간당 통상임금 × 1일 근무시간 = ' +
