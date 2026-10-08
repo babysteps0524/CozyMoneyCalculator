@@ -633,6 +633,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
 
 <script>
   import { calculateSalary, formatWon } from '../../../lib/calculators/salary';
+  import { bindLiveCalculation } from '../../../lib/calculators/runtime';
   import {
     bindNumberControls,
     parseNumber,
@@ -709,7 +710,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       salary.dataset.step = monthlyMode ? '10000' : '100000';
       salary.value = monthlyMode ? '3,333,333' : '40,000,000';
     }
-    render();
   };
 
   const setSelectedStyles = () => {
@@ -745,7 +745,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
       .querySelectorAll<HTMLInputElement>('input[name="retirement"]')
       .forEach((input) => {
         input.addEventListener('change', () => {
-          render();
           setSelectedStyles();
         });
       });
@@ -783,7 +782,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     });
 
     bindNumberControls(form);
-    form.addEventListener('input', render);
+    bindLiveCalculation(form, render, { change: true });
     setSelectedStyles();
     render();
   }
