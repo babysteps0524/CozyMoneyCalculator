@@ -224,6 +224,10 @@
 <script>
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   import { parseNumber } from '../../lib/calculators/number-input';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+  } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>('[data-vat-calculator]');
 
@@ -246,15 +250,9 @@
 
     const number = (input: HTMLInputElement) => parseNumber(input.value);
 
-    const money = (value: number) =>
-      Number.isFinite(value)
-        ? value.toLocaleString('ko-KR', { maximumFractionDigits: 0 }) + '원'
-        : '-';
+    const money = (value: number) => formatCalculatorWon(value);
 
-    const decimal = (value: number) =>
-      Number.isFinite(value)
-        ? value.toLocaleString('ko-KR', { maximumFractionDigits: 2 })
-        : '-';
+    const decimal = (value: number) => formatCalculatorNumber(value, 2);
 
     const applyRounding = (value: number) => {
       const size = Number(unit.value);
