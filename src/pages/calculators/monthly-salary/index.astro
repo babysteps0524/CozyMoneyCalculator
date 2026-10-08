@@ -1,4 +1,5 @@
 ---
+import AdSlot from '../../../components/common/AdSlot.astro';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import MonthlySalaryCalculator from '../../../components/calculators/MonthlySalaryCalculator.astro';
 import { calculatorDefinitions } from '../../../data/calculators';
@@ -9,6 +10,8 @@ const definition = calculatorDefinitions['monthly-salary'];
 <CalculatorPage definition={definition}>
   <MonthlySalaryCalculator />
   <div slot="after">
+    <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
+<div slot="after">
     <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
 <section mt="10 md:14">
         <h2 class="cm-section-title">월급 계산기는 어떻게 계산하나요?</h2>
@@ -262,5 +265,7 @@ const definition = calculatorDefinitions['monthly-salary'];
         </ul>
       </section>
     </div>
+  </div>
+</CalculatorPage>
   </div>
 </CalculatorPage>
