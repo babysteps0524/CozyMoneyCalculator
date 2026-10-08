@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
 import UnoCSS from 'unocss/astro';
-import seoFiles from './src/integrations/seo-files';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  integrations: [UnoCSS(), seoFiles()],
+  integrations: [UnoCSS(), sitemap()],
   output: 'static',
   site: 'https://cozymoney.kr',
 
