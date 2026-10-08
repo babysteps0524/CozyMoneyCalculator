@@ -1,8 +1,9 @@
+---
+---
 
-  
-
+<section class="cm-card" data-property-tax p="5 md:7">
   <div grid="~ cols-1 md:cols-2" gap="4">
-    <label class="cm-field">
+    <label>
       <span class="cm-label">기준연도</span>
       <select id="property-year" class="cm-input">
         <option value="2026" selected>
@@ -99,27 +100,23 @@
     hidden
     mt="4"
     rounded="xl"
-    border="1"
-    border="danger-text/20"
-    role="alert"
+    border="1 danger/20"
     bg-danger-surface
     p="4"
     text="sm"
     text-danger-text
-    dark="border-dark-border bg-dark-danger-surface text-dark-danger-text"
+    dark="border-dark-border dark:bg-dark-danger-surface dark:text-dark-danger-text"
   ></div>
 
   <div
     id="property-result"
-    aria-live="polite"
-    aria-atomic="true"
     mt="6"
     rounded="2xl"
     bg="primary/10"
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" class="cm-help-text">
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
       예상 납부액
     </p>
     <div id="property-total" mt="2" text="3xl md:4xl" font="800" text-primary>
@@ -155,7 +152,7 @@
       border-border
       bg="surface-muted"
       p="5"
-      dark="border-dark-border bg-dark-surface-muted"
+      dark="border-dark-border dark:bg-dark-surface-muted"
     >
       <h3 m="0" text="sm" font="750">
         이번 계산에 반영한 항목
@@ -182,7 +179,7 @@
       border-border
       bg="surface-muted"
       p="5"
-      dark="border-dark-border bg-dark-surface-muted"
+      dark="border-dark-border dark:bg-dark-surface-muted"
     >
       <h3 m="0" text="sm" font="750">
         주의사항
@@ -201,17 +198,12 @@
       </p>
     </section>
   </div>
-</section>
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { bindNumberControls } from '../../lib/calculators/number-input';
 
-  const numberValue = (value: string) => parseNumber(value);
+  const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
   const root = document.querySelector<HTMLElement>('[data-property-tax]');
 
   if (root) {
@@ -234,7 +226,7 @@
         border-border
         bg="surface-muted"
         p="4 md:5"
-        dark="border-dark-border bg-dark-surface-muted"
+        dark="border-dark-border dark:bg-dark-surface-muted"
       >
         <div flex="~" items-center justify-between gap="3" mb="4">
           <h4 m="0" text="base" font="800">주택 ${id}</h4>
@@ -249,8 +241,8 @@
         </div>
 
         <div grid="~ cols-1 md:cols-2" gap="4">
-          <div class="cm-field">
-            <label class="cm-label" for="assessed-${id}">공시가격</label>
+          <label>
+            <span class="cm-label">공시가격</span>
             <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
               <button type="button" data-step-direction="-1" aria-label="공시가격 감소" class="cm-step-button">−</button>
               <div relative>
@@ -264,14 +256,14 @@
                   data-step="1000000"
                   data-min="0"
                 />
-                <span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+                <span absolute right-4 top="[50%]" class="-translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
               </div>
               <button type="button" data-step-direction="1" aria-label="공시가격 증가" class="cm-step-button">+</button>
             </div>
-          </div>
+          </label>
 
-          <div class="cm-field">
-            <label class="cm-label" for="share-${id}">소유지분</label>
+          <label>
+            <span class="cm-label">소유지분</span>
             <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
               <button type="button" data-step-direction="-1" aria-label="소유지분 감소" class="cm-step-button">−</button>
               <div relative>
@@ -290,9 +282,9 @@
               </div>
               <button type="button" data-step-direction="1" aria-label="소유지분 증가" class="cm-step-button">+</button>
             </div>
-          </div>
+          </label>
 
-          <label class="cm-field">
+          <label>
             <span class="cm-label">전년도 재산세</span>
             <div relative>
               <input
@@ -309,7 +301,7 @@
             </div>
           </label>
 
-          <label class="cm-field">
+          <label>
             <span class="cm-label">전년도 도시지역분</span>
             <div relative>
               <input
@@ -322,17 +314,17 @@
                 data-step="10000"
                 data-min="0"
               />
-              <span absolute right-4 top="[50%]" class="-translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
+              <span absolute right-4 top="[50%]" class="-translate-y-1/2" text="sm" text-text-muted class="-translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">원</span>
             </div>
           </label>
         </div>
 
         <div grid="~ cols-1 sm:cols-2" gap="3" mt="4">
-          <label flex="~" items-center gap="3" rounded="xl" border="1" border-border bg="surface" p="3" cursor-pointer dark="border-dark-border bg-dark-surface">
+          <label flex="~" items-center gap="3" rounded="xl" border="1" border-border bg="surface" p="3" cursor-pointer dark="border-dark-border dark:bg-dark-surface">
             <input id="urban-${id}" type="checkbox" />
             <span text="sm" font="650">도시지역</span>
           </label>
-          <div rounded="xl" bg="surface-subtle" p="3" text="xs" leading="6" text-text-muted dark="bg-dark-surface-subtle text-dark-text-muted">
+          <div rounded="xl" bg="surface-subtle" p="3" text="xs" leading="6" text-text-muted dark="bg-dark-surface-subtle dark:text-dark-text-muted">
             공동명의는 소유지분을 입력하면 해당 지분만 계산합니다.
           </div>
         </div>
@@ -416,7 +408,7 @@
         breakdown.innerHTML = result.assets
           .map(
             (asset, index) => `
-              <div flex="~" items-center justify-between gap="4" rounded="xl" border="1" border-border bg="surface" p="3" text="sm" dark="border-dark-border bg-dark-surface">
+              <div flex="~" items-center justify-between gap="4" rounded="xl" border="1" border-border bg="surface" p="3" text="sm" dark="border-dark-border dark:bg-dark-surface">
                 <span font="700">주택 ${index + 1}</span>
                 <span text-right text-text-muted dark="text-dark-text-muted">
                   재산세 ${format(asset.propertyTax)}원 · 총 ${format(asset.total)}원
@@ -443,7 +435,9 @@
 
     root.querySelector('#add-property')?.addEventListener('click', addAsset);
     root.querySelector('#property-calculate')?.addEventListener('click', calc);
-    bindLiveCalculation(root, calc, { change: true });
+    oneHouse.addEventListener('change', calc);
+    taxCap.addEventListener('change', calc);
+    root.querySelector('#property-year')?.addEventListener('change', calc);
 
     list.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
@@ -455,16 +449,16 @@
       if (article) removeAsset(article);
     });
 
-    const reset = () => {
+    list.addEventListener('input', calc);
+
+    root.querySelector('#property-reset')?.addEventListener('click', () => {
       list.innerHTML = assetHtml(1);
       nextId = 2;
       oneHouse.checked = true;
       taxCap.checked = true;
       bindDynamicNumbers();
       calc();
-    };
-
-    root.querySelector('#property-reset')?.addEventListener('click', reset);
+    });
 
     calc();
   }
