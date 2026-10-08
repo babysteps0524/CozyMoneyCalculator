@@ -1,82 +1,48 @@
 ---
-import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
-import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import BrokerageCalculator from '../../../components/calculators/BrokerageCalculator.astro';
 import { calculatorDefinitions } from '../../../data/calculators';
 
 const definition = calculatorDefinitions.brokerage;
-import AdSlot from '../../../components/common/AdSlot.astro';
-import BrokerageCalculator from '../../../components/calculators/BrokerageCalculator.astro';
 ---
 
 <CalculatorPage definition={definition}>
-  <main class="cm-container" py="10 md:14 lg:18">
-    <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-      <a href="/" no-underline hover="text-primary">
-        홈
-      </a>
-      <span mx="2">/</span>
-      <a href="/calculators/" no-underline hover="text-primary">
-        계산기
-      </a>
-      <span mx="2">/</span>부동산
-    </nav>
+  <BrokerageCalculator />
 
-    <header max-w="3xl" mb="8">
-      <p m="0" text="sm" font="700" text-primary>
-        부동산
-      </p>
-      <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
-        부동산 중개보수 계산기
-      </h1>
-      <p
-        m="0"
-        mt="4"
-        text="base md:lg"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        거래 유형과 부동산 종류에 맞춰 중개보수 상한액과 부가가치세를
-        계산합니다.
-      </p>
-    </header>
+  <div slot="after">
+    <BrokerageCalculator />
+    
+        <section max-w="4xl" mt="10 md:14">
+          <h2 class="cm-section-title">부동산 중개보수 계산 기준</h2>
+          <div class="cm-card" mt="4" p="5 md:6">
+            <ul
+              m="0"
+              pl="5"
+              text="sm md:base"
+              leading="7"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              <li>
+                주택 매매·교환은 거래금액에 따라 0.4~0.7% 등의 구간별 상한요율과
+                일부 한도액을 적용합니다.
+              </li>
+              <li>
+                주택 임대차는 거래금액에 따라 0.3~0.6% 등의 구간별 상한요율과 일부
+                한도액을 적용합니다.
+              </li>
+              <li>
+                적용 요율은 법정 상한이며 실제 중개보수는 상한 범위에서 협의할 수
+                있습니다.
+              </li>
+              <li>
+                주택 외 거래와 오피스텔은 거래대상과 시설요건에 따라 별도 기준이
+                적용될 수 있습니다.
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
+  </div>
 
-    <div max-w="4xl">
-      <BrokerageCalculator />
-      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
-    </div>
-
-    <section max-w="4xl" mt="10 md:14">
-      <h2 class="cm-section-title">부동산 중개보수 계산 기준</h2>
-      <div class="cm-card" mt="4" p="5 md:6">
-        <ul
-          m="0"
-          pl="5"
-          text="sm md:base"
-          leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          <li>
-            주택 매매·교환은 거래금액에 따라 0.4~0.7% 등의 구간별 상한요율과
-            일부 한도액을 적용합니다.
-          </li>
-          <li>
-            주택 임대차는 거래금액에 따라 0.3~0.6% 등의 구간별 상한요율과 일부
-            한도액을 적용합니다.
-          </li>
-          <li>
-            적용 요율은 법정 상한이며 실제 중개보수는 상한 범위에서 협의할 수
-            있습니다.
-          </li>
-          <li>
-            주택 외 거래와 오피스텔은 거래대상과 시설요건에 따라 별도 기준이
-            적용될 수 있습니다.
-          </li>
-        </ul>
-      </div>
-    </section>
-    <CalculatorDetails content={supplementalCalculatorDetails['brokerage']} />
-  </main>
 </CalculatorPage>
