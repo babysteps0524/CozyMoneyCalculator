@@ -1,11 +1,29 @@
+import { bindNumberControls } from './number-input';
+
 export interface LiveCalculationOptions {
   change?: boolean;
+}
+
+export interface CalculatorInputOptions extends LiveCalculationOptions {
+  numberControls?: boolean;
 }
 
 const liveCalculationBindings = new WeakMap<
   ParentNode,
   { cleanup: () => void }
 >();
+
+export function bindCalculatorInputs(
+  root: ParentNode,
+  calculate: () => void,
+  options: CalculatorInputOptions = {},
+): () => void {
+  if (options.numberControls !== false) {
+    bindNumberControls(root);
+  }
+
+  return bindLiveCalculation(root, calculate, options);
+}
 
 export function bindLiveCalculation(
   root: ParentNode,
