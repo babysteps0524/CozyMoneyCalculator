@@ -376,6 +376,7 @@
 </section>
 
 <script>
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
     calculateAnnualLeave,
     type AnnualLeaveBasis,
@@ -559,16 +560,8 @@
       setBasis('fiscal-year');
       calculate();
     });
-    mode.addEventListener('change', () => {
-      updateMode();
-      calculate();
-    });
-    root.addEventListener('input', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
-    root.addEventListener('change', (event) => {
-      if ((event.target as HTMLElement).matches('input, select')) calculate();
-    });
+    mode.addEventListener('change', updateMode);
+    bindLiveCalculation(root, calculate, { change: true });
     $('annual-calculate')?.addEventListener('click', calculate);
     $('annual-reset')?.addEventListener('click', reset);
     calculate();
