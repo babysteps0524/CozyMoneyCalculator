@@ -396,10 +396,9 @@
     calculateSeverance,
     getSeverancePeriod,
   } from '../../lib/calculators/severance';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { parseNumber } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { bindNumberControls } from '../../lib/calculators/number-input';
 
   const root = document.querySelector<HTMLElement>(
     '[data-severance-calculator]',
@@ -614,12 +613,7 @@
       calculate();
     });
     start.addEventListener('change', calculate);
-    root.addEventListener('input', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
-    root.addEventListener('change', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
+    bindCalculatorInputs(root, calculate, { change: true });
     calculate();
   }
 </script>
