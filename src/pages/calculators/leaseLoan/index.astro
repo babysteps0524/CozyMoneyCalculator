@@ -1,15 +1,17 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import LeaseLoanCalculator from '../../../components/calculators/LeaseLoanCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.leaseLoan;
 ---
 
 <CalculatorPage
-  title="전세대출 이자 계산기"
-  description="보증금과 대출비율, 금리를 기준으로 1년 단순 이자를 계산합니다."
-  canonical="https://cozymoney.kr/calculators/leaseLoan/"
-  category="부동산"
-  guidance={calculatorGuidance.leaseLoan}
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
+  category={definition.category}
+  guidance={definition.guidance!}
 >
   <LeaseLoanCalculator />
 </CalculatorPage>
