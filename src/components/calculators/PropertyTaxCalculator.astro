@@ -348,14 +348,8 @@
         id: article.dataset.propertyAsset || String(index + 1),
         assessedValue: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.id || ''),
         ownershipShare: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="share-"]')?.id || ''),
-        previousPropertyTax: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')
-            ?.value || '',
-        ),
-        previousUrbanAreaTax: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="previous-urban-"]')
-            ?.value || '',
-        ),
+        previousPropertyTax: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')?.id || ''),
+        previousUrbanAreaTax: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="previous-urban-"]')?.id || ''),
         urbanArea:
           article.querySelector<HTMLInputElement>('[id^="urban-"]')?.checked ||
           false,
