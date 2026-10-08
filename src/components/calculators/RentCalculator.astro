@@ -173,6 +173,13 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    getCalculatorField,
+    readCalculatorNumber,
+    resetCalculatorFields,
+  } from '../../lib/calculators/dom';
   import { resetCalculatorFields } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>('[data-calculator="rent"]');
@@ -180,26 +187,14 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    const $ = (id: string) =>
-      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => {
-      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
-      return Number(value.replace(/,/g, '') || 0);
-    };
-    const fmt = (v: number, d = 0) =>
-      Number.isFinite(v)
-        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
-        : '-';
-    const won = (v: number) => fmt(v) + '원';
-
     bindNumberControls(fields);
 
     const calc = () => {
-      const annual = (n('deposit') * n('rate')) / 100;
-      const monthlyAnnual = n('monthly') * 12;
+      const annual = (readCalculatorNumber(root, 'deposit') * readCalculatorNumber(root, 'rate')) / 100;
+      const monthlyAnnual = readCalculatorNumber(root, 'monthly') * 12;
       const value = monthlyAnnual + annual;
-      out.textContent = won(value);
-      detail.textContent = `연간 월세: ${won(monthlyAnnual)} · 보증금 환산액: ${won(annual)} · 합계: ${won(value)}`;
+      out.textContent = formatCalculatorWon(value);
+      detail.textContent = `연간 월세: ${formatCalculatorWon(monthlyAnnual)} · 보증금 환산액: ${formatCalculatorWon(annual)} · 합계: ${formatCalculatorWon(value)}`;
     };
 
     const reset = () => {
