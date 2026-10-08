@@ -247,8 +247,8 @@
       value: string,
       suffix = '원',
     ) => `
-      <label class="cm-field">
-        <span class="cm-label">${label}</span>
+      <div class="cm-field">
+        <label class="cm-label" for="${id}">${label}</label>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
           <button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button>
           <div relative>
@@ -267,7 +267,7 @@
           </div>
           <button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button>
         </div>
-      </label>`;
+      </div>`;
 
     const percentField = (id: string, label: string, value: string) => `
       <label class="cm-field">
