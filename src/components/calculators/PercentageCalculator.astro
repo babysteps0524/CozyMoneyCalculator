@@ -20,8 +20,8 @@
         </option>
       </select>
     </label>
-    <label class="cm-field">
-      <span class="cm-label">첫 번째 값</span>
+    <div class="cm-field">
+      <label class="cm-label" for="valueA">첫 번째 값</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -54,9 +54,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">두 번째 값</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="valueB">두 번째 값</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -89,7 +89,7 @@
           +
         </button>
       </div>
-    </label>
+    </div>
     <label class="cm-field">
       <span class="cm-label">증가·감소</span>
       <select class="cm-input" id="percentageDirection">
