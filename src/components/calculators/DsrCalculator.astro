@@ -225,6 +225,13 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    getCalculatorField,
+    readCalculatorNumber,
+    resetCalculatorFields,
+  } from '../../lib/calculators/dom';
   import { resetCalculatorFields } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>('[data-calculator="dsr"]');
@@ -232,25 +239,14 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    const $ = (id: string) =>
-      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => {
-      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
-      return Number(value.replace(/,/g, '') || 0);
-    };
-    const fmt = (v: number, d = 0) =>
-      Number.isFinite(v)
-        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
-        : '-';
-
     bindNumberControls(fields);
 
     const calc = () => {
-      const income = n('income');
-      const total = n('debt') + n('newdebt');
+      const income = readCalculatorNumber(root, 'income');
+      const total = readCalculatorNumber(root, 'debt') + readCalculatorNumber(root, 'newdebt');
       const dsr = income === 0 ? NaN : (total / income) * 100;
-      out.textContent = Number.isFinite(dsr) ? fmt(dsr, 2) + '%' : '-';
-      detail.textContent = `현재 대출만 반영한 DSR: ${fmt(income === 0 ? NaN : (n('debt') / income) * 100, 2)}%. 새 대출 포함: ${fmt(dsr, 2)}%. 입력한 목표 기준: ${fmt(n('rate'), 2)}%.`;
+      out.textContent = Number.isFinite(dsr) ? formatCalculatorNumber(dsr, 2) + '%' : '-';
+      detail.textContent = `현재 대출만 반영한 DSR: ${formatCalculatorNumber(income === 0 ? NaN : (readCalculatorNumber(root, 'debt') / income) * 100, 2)}%. 새 대출 포함: ${formatCalculatorNumber(dsr, 2)}%. 입력한 목표 기준: ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}%.`;
     };
 
     const reset = () => {
