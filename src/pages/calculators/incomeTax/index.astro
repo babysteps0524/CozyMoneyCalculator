@@ -1,6 +1,7 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import IncomeTaxCalculator from '../../../components/calculators/IncomeTaxCalculator.astro';
+import AdSlot from '../../../components/common/AdSlot.astro';
 import { calculatorDefinitions } from '../../../data/calculators';
 
 const definition = calculatorDefinitions.incomeTax;
@@ -8,6 +9,7 @@ const definition = calculatorDefinitions.incomeTax;
 
 <CalculatorPage definition={definition}>
   <IncomeTaxCalculator />
+  <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
   <div slot="after">
     <div mt="10 md:14" space-y="10 md:12">
       <section aria-labelledby="income-tax-overview">
