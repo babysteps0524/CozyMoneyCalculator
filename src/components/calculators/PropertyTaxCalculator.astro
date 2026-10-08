@@ -231,6 +231,7 @@
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
     bindNumberControls,
     parseNumber,
@@ -468,9 +469,7 @@
 
     root.querySelector('#add-property')?.addEventListener('click', addAsset);
     root.querySelector('#property-calculate')?.addEventListener('click', calc);
-    oneHouse.addEventListener('change', calc);
-    taxCap.addEventListener('change', calc);
-    root.querySelector('#property-year')?.addEventListener('change', calc);
+    bindLiveCalculation(root, calc, { change: true });
 
     list.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
@@ -481,8 +480,6 @@
       const article = remove.closest<HTMLElement>('[data-property-asset]');
       if (article) removeAsset(article);
     });
-
-    list.addEventListener('input', calc);
 
     root.querySelector('#property-reset')?.addEventListener('click', () => {
       list.innerHTML = assetHtml(1);
