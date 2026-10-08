@@ -325,11 +325,8 @@
 </section>
 
 <script>
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   import {
     calculateAgeAtSeparation,
     calculateEstimatedDailyAverageWage,
@@ -446,8 +443,7 @@
 
     separationDate.value = getToday();
     birthDate.value = '1990-01-01';
-    bindNumberControls(root);
-    bindLiveCalculation(root, calc, { change: true });
+    bindCalculatorInputs(root, calc, { change: true });
     calc();
   }
 </script>
