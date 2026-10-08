@@ -1,13 +1,25 @@
-import type { CalculatorGuidance } from '../../lib/calculators/guidance';
+import type { CalculatorDetailsContent, CalculatorGuidance } from '../../lib/calculators/guidance';
 
 export type CalculatorMode = 'standard' | 'custom';
 
-export interface CalculatorDefinition {
+export interface CalculatorDefinitionBase {
   slug: string;
   title: string;
   description: string;
   canonical: string;
   category: string;
-  mode: CalculatorMode;
-  guidance?: CalculatorGuidance;
 }
+
+export interface StandardCalculatorDefinition extends CalculatorDefinitionBase {
+  mode: 'standard';
+  guidance: CalculatorGuidance;
+}
+
+export interface CustomCalculatorDefinition extends CalculatorDefinitionBase {
+  mode: 'custom';
+  guidance?: CalculatorDetailsContent;
+}
+
+export type CalculatorDefinition =
+  | StandardCalculatorDefinition
+  | CustomCalculatorDefinition;
