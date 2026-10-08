@@ -361,6 +361,7 @@
     bindNumberControls,
     parseNumber,
   } from '../../lib/calculators/number-input';
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
 
   type FeeType =
     | 'ownership'
@@ -629,9 +630,7 @@
 
     bindNumberControls(root);
 
-    [taxableInput, statedInput].forEach((input) => {
-      input.addEventListener('input', calculate);
-    });
+    bindLiveCalculation(root, calculate, { change: true });
 
     root
       .querySelector<HTMLButtonElement>('#legal-add-fee')
