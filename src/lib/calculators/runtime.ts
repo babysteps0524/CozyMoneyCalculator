@@ -1,10 +1,7 @@
 import { bindNumberControls } from './number-input';
 
-export interface LiveCalculationOptions {
+export interface CalculatorInputOptions {
   change?: boolean;
-}
-
-export interface CalculatorInputOptions extends LiveCalculationOptions {
   numberControls?: boolean;
 }
 
