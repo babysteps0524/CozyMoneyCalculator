@@ -23,7 +23,7 @@
   </div>
 
   <div grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">거래 유형</span>
       <select id="transaction" class="cm-input">
         <option value="sale">매매·교환</option>
@@ -32,7 +32,7 @@
       </select>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">중개대상물</span>
       <select id="property" class="cm-input">
         <option value="house">주택</option>
@@ -53,7 +53,7 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p m="0" class="cm-help-text">
       계산 결과
     </p>
     <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
@@ -62,10 +62,9 @@
     <div
       id="result-detail"
       mt="3"
+      class="cm-help-text"
       text="sm"
       leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     ></div>
   </div>
 
@@ -237,7 +236,7 @@
       value: string,
       suffix = '원',
     ) => `
-      <label>
+      <label class="cm-field">
         <span class="cm-label">${label}</span>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
           <button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button>
@@ -260,7 +259,7 @@
       </label>`;
 
     const percentField = (id: string, label: string, value: string) => `
-      <label>
+      <label class="cm-field">
         <span class="cm-label">${label}</span>
         <div relative>
           <input id="${id}" class="cm-input pr-12" type="text" inputmode="decimal" value="${value}" data-default-value="${value}" data-number-input data-step="0.1" data-min="0" data-decimal="true" />
