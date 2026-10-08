@@ -1,6 +1,5 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
-import { bindLiveCalculation } from '../../lib/calculators/runtime';
 ---
 
 <section class="cm-card" data-income-tax-calculator p="5 md:7">
@@ -180,6 +179,7 @@ import { bindLiveCalculation } from '../../lib/calculators/runtime';
     calculateIncomeTax,
     type IncomeTaxInput,
   } from '../../lib/calculators/incomeTax';
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
     '[data-income-tax-calculator]',
