@@ -3,8 +3,8 @@
 
 <div data-calculator="dsr">
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
-    <label class="cm-field">
-      <span class="cm-label">연소득</span>
+    <div class="cm-field">
+      <label class="cm-label" for="income">연소득</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -48,9 +48,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">연간 원리금 상환액</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="debt">연간 원리금 상환액</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -94,9 +94,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">새 대출 연간 상환액</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="newdebt">새 대출 연간 상환액</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -140,9 +140,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">목표 DSR</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="rate">목표 DSR</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -186,7 +186,7 @@
           +
         </button>
       </div>
-    </label>
+    </div>
   </div>
   <div
     id="result"
