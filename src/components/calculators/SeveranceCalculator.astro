@@ -456,14 +456,16 @@
         months.innerHTML = period.periods
           .map(
             (item, index) =>
-              '<label class="cm-card cm-field" p="4">' +
-              '<span class="cm-label">' +
+              '<div class="cm-card cm-field" p="4">' +
+              '<label class="cm-label" for="severance-wage-' +
+              index +
+              '">' +
               (index + 1) +
               '개월차 · ' +
               item.start +
               ' ~ ' +
               item.end +
-              '</span>' +
+              '</label>' +
               '<div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">' +
               '<button type="button" data-step-direction="-1" aria-label="임금 감소" class="cm-step-button">−</button>' +
               '<div relative><input id="severance-wage-' +
@@ -473,7 +475,7 @@
               '<button type="button" data-step-direction="1" aria-label="임금 증가" class="cm-step-button">+</button>' +
               '</div><span mt="1.5" block text="xs" text-text-muted dark="text-dark-text-muted">' +
               item.days +
-              '일</span></label>',
+              '일</span></div>',
           )
           .join('');
         bindNumberControls(months);
