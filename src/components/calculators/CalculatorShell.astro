@@ -23,12 +23,17 @@ const isCustom = mode === 'custom';
 {isCustom ? (
   <slot />
 ) : guidance ? (
-  <section class="cm-card" w="full" p="5 md:7">
+  <section
+    class="cm-card"
+    w="full"
+    p="5 md:7"
+    aria-labelledby="calculator-shell-title"
+  >
   <header mb="6">
     <p m="0" text="sm" font="700" text-primary>
       CALCULATOR
     </p>
-    <h2 m="0" mt="1" text="xl md:2xl" font="800">
+    <h2 id="calculator-shell-title" m="0" mt="1" text="xl md:2xl" font="800">
       {title}
     </h2>
     <p
