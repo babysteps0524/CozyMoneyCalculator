@@ -16,9 +16,11 @@ const {
   guidance,
   mode = 'standard',
 } = Astro.props;
+
+const isCustom = mode === 'custom';
 ---
 
-{mode === 'custom' ? (
+{isCustom ? (
   <slot />
 ) : guidance ? (
   <section class="cm-card" w="full" p="5 md:7">
