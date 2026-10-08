@@ -5,14 +5,23 @@ import Footer from '../common/Footer.astro';
 import CalculatorShell from './CalculatorShell.astro';
 import type { CalculatorGuidance } from '../../lib/calculators/guidance';
 
-interface Props {
-  title: string;
-  description: string;
-  canonical: string;
-  category?: string;
-  guidance?: CalculatorGuidance;
-  mode?: 'standard' | 'custom';
-}
+type Props =
+  | {
+      mode: 'custom';
+      title: string;
+      description: string;
+      canonical: string;
+      category?: never;
+      guidance?: never;
+    }
+  | {
+      mode?: 'standard';
+      title: string;
+      description: string;
+      canonical: string;
+      category: string;
+      guidance: CalculatorGuidance;
+    };
 
 const {
   title,
