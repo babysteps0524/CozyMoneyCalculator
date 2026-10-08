@@ -219,6 +219,13 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    getCalculatorField,
+    readCalculatorNumber,
+    resetCalculatorFields,
+  } from '../../lib/calculators/dom';
   import { resetCalculatorFields } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>(
@@ -228,25 +235,13 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    const $ = (id: string) =>
-      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => {
-      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
-      return Number(value.replace(/,/g, '') || 0);
-    };
-    const fmt = (v: number, d = 0) =>
-      Number.isFinite(v)
-        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
-        : '-';
-    const won = (v: number) => fmt(v) + '원';
-
     bindNumberControls(fields);
 
     const calc = () => {
-      const gain = Math.max(0, n('sale') - n('buy') - n('cost'));
-      const value = (gain * n('rate')) / 100;
-      out.textContent = won(value);
-      detail.textContent = `양도차익: ${won(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
+      const gain = Math.max(0, readCalculatorNumber(root, 'sale') - readCalculatorNumber(root, 'buy') - readCalculatorNumber(root, 'cost'));
+      const value = (gain * readCalculatorNumber(root, 'rate')) / 100;
+      out.textContent = formatCalculatorWon(value);
+      detail.textContent = `양도차익: ${formatCalculatorWon(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
     };
 
     const reset = () => {
