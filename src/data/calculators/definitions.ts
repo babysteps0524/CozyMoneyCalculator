@@ -114,6 +114,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '종합소득과 공제 조건을 입력해 예상 종합소득세를 계산합니다.',
     canonical: `${site}/calculators/incomeTax/`,
     category: '세금',
+    guidance: calculatorGuidance.incomeTax,
   },
   loan: {
     slug: 'loan',
