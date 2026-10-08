@@ -411,6 +411,7 @@
 </section>
 
 <script>
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
   import {
     calculateSeverance,
     getSeverancePeriod,
@@ -628,17 +629,8 @@
     renderMonths();
     $('severance-calculate')?.addEventListener('click', calculate);
     $('severance-reset')?.addEventListener('click', reset);
-    retirement.addEventListener('change', () => {
-      renderMonths();
-      calculate();
-    });
-    start.addEventListener('change', calculate);
-    root.addEventListener('input', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
-    root.addEventListener('change', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
+    retirement.addEventListener('change', renderMonths);
+    bindLiveCalculation(root, calculate, { change: true });
     calculate();
   }
 </script>
