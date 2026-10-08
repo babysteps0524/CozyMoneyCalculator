@@ -501,7 +501,7 @@
     formatWon,
     type SavingsType,
   } from '../../lib/calculators/savings';
-  import { parseNumber } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const form = document.querySelector<HTMLFormElement>('#savings-form');
@@ -588,10 +588,10 @@
       const r = calculateSavings({
         type,
         method: interestMethod,
-        principal: parseNumber(principal!.value),
-        monthlyDeposit: parseNumber(monthly!.value),
-        annualRate: parseNumber(rate!.value),
-        months: parseNumber(months!.value),
+        principal: readCalculatorNumber(form, 'principal'),
+        monthlyDeposit: readCalculatorNumber(form, 'monthly'),
+        annualRate: readCalculatorNumber(form, 'rate'),
+        months: readCalculatorNumber(form, 'months'),
       });
       maturity!.textContent = formatWon(r.maturityAmount);
       paid!.textContent = formatWon(r.principal);
