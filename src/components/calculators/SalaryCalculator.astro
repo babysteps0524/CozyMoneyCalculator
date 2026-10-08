@@ -487,16 +487,16 @@
     error!.hidden = true;
     try {
       const result = calculateSalary({
-        salary: readCalculatorNumber(form, 'salary'),
+        salary: readCalculatorNumber(form!, 'salary'),
         salaryType: radio('#salary-type-monthly')?.checked
           ? 'monthly'
           : 'annual',
         retirementType: radio('#retirement-included')?.checked
           ? 'included'
           : 'separate',
-        taxFreeMonthly: readCalculatorNumber(form, 'tax-free'),
-        dependents: readCalculatorNumber(form, 'dependents'),
-        children8To20: readCalculatorNumber(form, 'children'),
+        taxFreeMonthly: readCalculatorNumber(form!, 'tax-free'),
+        dependents: readCalculatorNumber(form!, 'dependents'),
+        children8To20: readCalculatorNumber(form!, 'children'),
       });
 
       takeHome!.textContent = fmt(result.monthlyTakeHome);
