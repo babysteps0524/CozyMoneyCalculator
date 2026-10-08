@@ -127,6 +127,13 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    getCalculatorField,
+    readCalculatorNumber,
+    resetCalculatorFields,
+  } from '../../lib/calculators/dom';
   import { resetCalculatorFields } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>(
@@ -136,25 +143,13 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    const $ = (id: string) =>
-      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => {
-      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
-      return Number(value.replace(/,/g, '') || 0);
-    };
-    const fmt = (v: number, d = 0) =>
-      Number.isFinite(v)
-        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
-        : '-';
-    const won = (v: number) => fmt(v) + '원';
-
     bindNumberControls(fields);
 
     const calc = () => {
       const weeklyHoliday =
-        n('hours') >= 15 ? n('hourly') * Math.min(8, n('hours')) : 0;
-      const value = n('hourly') * n('hours') + weeklyHoliday;
-      out.textContent = won(value);
+        readCalculatorNumber(root, 'hours') >= 15 ? readCalculatorNumber(root, 'hourly') * Math.min(8, readCalculatorNumber(root, 'hours')) : 0;
+      const value = readCalculatorNumber(root, 'hourly') * readCalculatorNumber(root, 'hours') + weeklyHoliday;
+      out.textContent = formatCalculatorWon(value);
       detail.textContent =
         '입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.';
     };
