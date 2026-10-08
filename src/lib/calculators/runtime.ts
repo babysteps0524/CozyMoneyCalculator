@@ -18,11 +18,25 @@ export function bindCalculatorInputs(
   calculate: () => void,
   options: CalculatorInputOptions = {},
 ): () => void {
+  let observer: MutationObserver | undefined;
+
   if (options.numberControls !== false) {
     bindNumberControls(root);
+
+    if (root instanceof Element) {
+      observer = new MutationObserver(() => bindNumberControls(root));
+      observer.observe(root, { childList: true, subtree: true });
+    }
   }
 
-  return bindLiveCalculation(root, calculate, options);
+  const cleanup = bindLiveCalculation(root, calculate, options);
+
+  if (!observer) return cleanup;
+
+  return () => {
+    observer?.disconnect();
+    cleanup();
+  };
 }
 
 export function bindLiveCalculation(
