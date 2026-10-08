@@ -223,10 +223,10 @@
 
 <script>
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
-  import { parseNumber } from '../../lib/calculators/number-input';
   import {
     formatCalculatorNumber,
     formatCalculatorWon,
+    readCalculatorNumber,
   } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>('[data-vat-calculator]');
@@ -247,8 +247,6 @@
     const result = root.querySelector<HTMLElement>('#vat-result')!;
     const detail = root.querySelector<HTMLElement>('#vat-detail')!;
     const breakdown = root.querySelector<HTMLElement>('#vat-breakdown')!;
-
-    const number = (input: HTMLInputElement) => parseNumber(input.value);
 
     const money = (value: number) => formatCalculatorWon(value);
 
@@ -295,9 +293,9 @@
     };
 
     const calculate = () => {
-      const a = number(amount);
-      const taxRate = number(rate) / 100;
-      const inputTax = number(second);
+      const a = readCalculatorNumber(root, 'vat-amount');
+      const taxRate = readCalculatorNumber(root, 'vat-rate') / 100;
+      const inputTax = readCalculatorNumber(root, 'vat-second-value');
       const modeValue = mode.value;
 
       if (taxRate < 0 || taxRate >= 100 || !Number.isFinite(taxRate)) {
@@ -367,7 +365,7 @@
           '공급가액 ' +
           money(roundedSupply) +
           '에 ' +
-          decimal(number(rate)) +
+          decimal(readCalculatorNumber(root, 'vat-rate')) +
           '%를 적용했습니다.';
 
         breakdown.innerHTML =
