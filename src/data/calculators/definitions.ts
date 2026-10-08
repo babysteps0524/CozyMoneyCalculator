@@ -102,9 +102,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     canonical: `${site}/calculators/acquisition/`,
     category: '부동산·세금',
     mode: 'custom',
-    guidance: {
-      ...(supplementalCalculatorDetails.acquisition ?? {}),
-    },
   },
   brokerage: {
     slug: 'brokerage',
@@ -122,7 +119,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     canonical: `${site}/calculators/incomeTax/`,
     category: '세금',
     mode: 'custom',
-    guidance: supplementalCalculatorDetails.incomeTax,
   },
   loan: {
     slug: 'loan',
@@ -185,7 +181,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     canonical: `${site}/calculators/unemployment/`,
     category: '급여',
     mode: 'custom',
-    guidance: supplementalCalculatorDetails.unemployment,
   },
   vacation: {
     slug: 'vacation',
