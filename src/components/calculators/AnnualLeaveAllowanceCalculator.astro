@@ -1,27 +1,6 @@
 ---
 ---
 
-<section class="cm-card" data-annual-leave-calculator p="5 md:7">
-  <div mb="6">
-    <p m="0" text="sm" font="700" text-primary>
-      CALCULATOR
-    </p>
-    <h2 m="0" mt="1" text="xl md:2xl" font="800">
-      연차수당 상세 계산
-    </h2>
-    <p
-      m="0"
-      mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      연차 발생 기준과 근로시간, 통상임금에 포함되는 임금을 반영해 예상
-      연차수당을 계산합니다.
-    </p>
-  </div>
-
   <fieldset border="0" m="0" p="0">
     <legend class="cm-label">연차 계산 기준</legend>
     <div
@@ -373,17 +352,14 @@
     지급액은 출근율, 회사의 연차관리 기준, 취업규칙·단체협약, 통상임금 해당 여부
     및 연차 사용촉진 여부에 따라 달라질 수 있습니다.
   </p>
-</section>
 
 <script>
   import {
     calculateAnnualLeave,
     type AnnualLeaveBasis,
   } from '../../lib/calculators/annualLeave';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
     '[data-annual-leave-calculator]',
@@ -436,21 +412,21 @@
       error.hidden = true;
       try {
         const isDirect = mode.value === 'direct';
-        const dailyHours = isDirect ? 8 : parseNumber(daily.value);
+        const dailyHours = isDirect ? 8 : readCalculatorNumber(root, 'annual-daily-hours');
         const weekly = isDirect
-          ? parseNumber(weeklyInput.value)
-          : dailyHours * parseNumber(weeklyDays.value);
+          ? readCalculatorNumber(root, 'annual-weekly-hours')
+          : dailyHours * readCalculatorNumber(root, 'annual-weekly-days');
         const result = calculateAnnualLeave({
           basis,
           startDate: start.value,
           calculationDate: date.value,
-          usedDays: parseNumber(used.value),
+          usedDays: readCalculatorNumber(root, 'annual-used'),
           dailyHours,
-          weeklyDays: isDirect ? 5 : parseNumber(weeklyDays.value),
+          weeklyDays: isDirect ? 5 : readCalculatorNumber(root, 'annual-weekly-days'),
           weeklyHours: weekly,
-          monthlyBasePay: parseNumber(basePay.value),
-          monthlyFixedAllowance: parseNumber(fixed.value),
-          annualBonus: parseNumber(bonus.value),
+          monthlyBasePay: readCalculatorNumber(root, 'annual-base-pay'),
+          monthlyFixedAllowance: readCalculatorNumber(root, 'annual-fixed-allowance'),
+          annualBonus: readCalculatorNumber(root, 'annual-bonus'),
         });
 
         value.textContent = won(result.allowance);
@@ -500,11 +476,11 @@
           '시간</p>' +
           '<p m="2 0 0" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">' +
           '월 통상임금 = 기본급 ' +
-          won(parseNumber(basePay.value)) +
+          won(readCalculatorNumber(root, 'annual-base-pay')) +
           ' + 고정수당 ' +
-          won(parseNumber(fixed.value)) +
+          won(readCalculatorNumber(root, 'annual-fixed-allowance')) +
           ' + 연간 상여금 월할 ' +
-          won(parseNumber(bonus.value) / 12) +
+          won(readCalculatorNumber(root, 'annual-bonus') / 12) +
           '</p>' +
           '<p m="2 0 0" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">' +
           '1일 통상임금 = 시간당 통상임금 × 1일 근무시간 = ' +
@@ -549,7 +525,7 @@
       calculate();
     };
 
-    bindNumberControls(root);
+    bindCalculatorInputs(root, calculate, { change: true });
     updateMode();
     $('basis-hire')?.addEventListener('click', () => {
       setBasis('hire-date');
@@ -559,16 +535,8 @@
       setBasis('fiscal-year');
       calculate();
     });
-    mode.addEventListener('change', () => {
-      updateMode();
-      calculate();
-    });
-    root.addEventListener('input', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
-    root.addEventListener('change', (event) => {
-      if ((event.target as HTMLElement).matches('input, select')) calculate();
-    });
+    mode.addEventListener('change', updateMode);
+
     $('annual-calculate')?.addEventListener('click', calculate);
     $('annual-reset')?.addEventListener('click', reset);
     calculate();

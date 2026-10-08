@@ -32,6 +32,10 @@ export function formatNumberInputValue(
 }
 
 export function bindNumberInput(input: HTMLInputElement): void {
+  if (input.dataset.numberBound === 'true') return;
+
+  input.dataset.numberBound = 'true';
+
   const allowDecimal = input.dataset.decimal === 'true';
 
   const format = () => {
@@ -70,10 +74,19 @@ export function stepNumberInput(
   input: HTMLInputElement,
   direction: 1 | -1,
 ): void {
-  const current = parseNumber(input.value);
-  const step = Number(input.dataset.step || '1');
-  const min = Number(input.dataset.min || '0');
-  const max = input.dataset.max ? Number(input.dataset.max) : Infinity;
+  const parsedCurrent = parseNumber(input.value);
+  const parsedStep = Number(input.dataset.step || '1');
+  const parsedMin = Number(input.dataset.min || '0');
+  const parsedMax = input.dataset.max ? Number(input.dataset.max) : Infinity;
+
+  const step = Number.isFinite(parsedStep) && parsedStep > 0 ? parsedStep : 1;
+  const min = Number.isFinite(parsedMin) ? parsedMin : 0;
+  const max =
+    Number.isFinite(parsedMax) && parsedMax >= min ? parsedMax : Infinity;
+  const current =
+    Number.isFinite(parsedCurrent) && parsedCurrent >= min
+      ? parsedCurrent
+      : min;
   const next = Math.min(max, Math.max(min, current + direction * step));
   const precision = (String(step).split('.')[1] || '').length;
   const rounded = Number(next.toFixed(Math.max(precision, 0)));
@@ -91,6 +104,11 @@ export function bindNumberControls(root: ParentNode): void {
       bindNumberInput(input);
 
       const controls = input.parentElement?.parentElement;
+      if (!controls || controls.dataset.numberControlsBound === 'true') {
+        return;
+      }
+
+      controls.dataset.numberControlsBound = 'true';
       const decrease = controls?.querySelector<HTMLButtonElement>(
         '[data-step-direction="-1"]',
       );

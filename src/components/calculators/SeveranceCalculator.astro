@@ -1,23 +1,5 @@
-<section class="cm-card" data-severance-calculator p="5 md:7">
-  <div mb="6">
-    <p m="0" text="sm" font="700" text-primary>
-      CALCULATOR
-    </p>
-    <h2 m="0" mt="1" text="xl md:2xl" font="800">
-      퇴직금 상세 계산
-    </h2>
-    <p
-      m="0"
-      mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      입사일·퇴직일과 퇴직 전 3개월 임금, 상여금·연차수당을 반영해 평균임금을
-      계산합니다.
-    </p>
-  </div>
+---
+---
 
   <div grid="~ cols-1 md:cols-2" gap="4">
     <label>
@@ -408,17 +390,14 @@
     참고용 모의계산입니다. 실제 퇴직금은 평균임금 산정 제외기간, 임금 포함 여부,
     통상임금, 계속근로관계 등에 따라 달라질 수 있습니다.
   </p>
-</section>
 
 <script>
   import {
     calculateSeverance,
     getSeverancePeriod,
   } from '../../lib/calculators/severance';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
     '[data-severance-calculator]',
@@ -474,7 +453,6 @@
               '일</span></label>',
           )
           .join('');
-        bindNumberControls(months);
       } catch {
         months.innerHTML = '';
         periodText.textContent = '퇴직일을 확인하세요.';
@@ -485,39 +463,23 @@
       error.hidden = true;
       try {
         const monthlyWages: [number, number, number] = [
-          parseNumber(
-            ($('severance-wage-0') as HTMLInputElement | null)?.value ?? '0',
-          ),
-          parseNumber(
-            ($('severance-wage-1') as HTMLInputElement | null)?.value ?? '0',
-          ),
-          parseNumber(
-            ($('severance-wage-2') as HTMLInputElement | null)?.value ?? '0',
-          ),
+          readCalculatorNumber(root, 'severance-wage-0'),
+          readCalculatorNumber(root, 'severance-wage-1'),
+          readCalculatorNumber(root, 'severance-wage-2'),
         ];
 
         const result = calculateSeverance({
           startDate: start.value,
           retirementDate: retirement.value,
           monthlyWages,
-          annualBonus: parseNumber(
-            ($('severance-bonus') as HTMLInputElement).value,
-          ),
-          annualLeaveAllowance: parseNumber(
-            ($('severance-leave') as HTMLInputElement).value,
-          ),
+          annualBonus: readCalculatorNumber(root, 'severance-bonus'),
+          annualLeaveAllowance: readCalculatorNumber(root, 'severance-leave'),
           ordinaryDailyWage:
-            parseNumber(($('severance-ordinary') as HTMLInputElement).value) ||
+            readCalculatorNumber(root, 'severance-ordinary') ||
             undefined,
-          weeklyHours: parseNumber(
-            ($('severance-hours') as HTMLInputElement).value,
-          ),
-          excludedAverageWageDays: parseNumber(
-            ($('severance-excluded-days') as HTMLInputElement).value,
-          ),
-          excludedAverageWageAmount: parseNumber(
-            ($('severance-excluded-amount') as HTMLInputElement).value,
-          ),
+          weeklyHours: readCalculatorNumber(root, 'severance-hours'),
+          excludedAverageWageDays: readCalculatorNumber(root, 'severance-excluded-days'),
+          excludedAverageWageAmount: readCalculatorNumber(root, 'severance-excluded-amount'),
         });
 
         value.textContent = won(result.severancePay);
@@ -624,7 +586,6 @@
       calculate();
     };
 
-    bindNumberControls(root);
     renderMonths();
     $('severance-calculate')?.addEventListener('click', calculate);
     $('severance-reset')?.addEventListener('click', reset);
@@ -633,12 +594,7 @@
       calculate();
     });
     start.addEventListener('change', calculate);
-    root.addEventListener('input', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
-    root.addEventListener('change', (event) => {
-      if ((event.target as HTMLElement).matches('input')) calculate();
-    });
+    bindCalculatorInputs(root, calculate, { change: true });
     calculate();
   }
 </script>

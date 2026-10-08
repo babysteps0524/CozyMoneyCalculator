@@ -1,4 +1,4 @@
-<section data-vat-calculator class="cm-card" p="5 md:7">
+<div data-vat-calculator min-w="0" w="full">
   <div>
     <p m="0" text="sm" font="700" text-primary>
       VAT CALCULATOR
@@ -20,7 +20,7 @@
   </div>
 
   <div mt="6" grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">계산 유형</span>
       <select id="vat-mode" class="cm-input">
         <option value="supply">공급가액 → 부가세·합계금액</option>
@@ -30,7 +30,7 @@
       </select>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label" id="vat-amount-label">
         공급가액
       </span>
@@ -60,7 +60,7 @@
       </div>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label" id="vat-second-label">
         세율
       </span>
@@ -90,7 +90,7 @@
       </div>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label" id="vat-second-value-label">
         매입세액
       </span>
@@ -120,7 +120,7 @@
       </div>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">끝자리 처리 단위</span>
       <select id="vat-round-unit" class="cm-input">
         <option value="1">1원</option>
@@ -130,7 +130,7 @@
       </select>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">끝자리 처리 방법</span>
       <select id="vat-round-mode" class="cm-input">
         <option value="round">반올림</option>
@@ -168,7 +168,15 @@
     <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
       계산 결과
     </p>
-    <div id="vat-result" mt="2" text="2xl md:3xl" font="800" text-primary>
+    <div
+      id="vat-result"
+      aria-live="polite"
+      aria-atomic="true"
+      mt="2"
+      text="2xl md:3xl"
+      font="800"
+      text-primary
+    >
       -
     </div>
     <div
@@ -182,10 +190,10 @@
   </div>
 
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="vat-calculate" class="cm-button-primary" py="3">
+    <button id="vat-calculate" type="button" class="cm-button-primary" py="3">
       계산하기
     </button>
-    <button id="vat-reset" class="cm-button-secondary" py="3">
+    <button id="vat-reset" type="button" class="cm-button-secondary" py="3">
       초기화
     </button>
   </div>
@@ -211,10 +219,15 @@
       dark="text-dark-text-muted"
     ></div>
   </div>
-</section>
+</div>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    readCalculatorNumber,
+  } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>('[data-vat-calculator]');
 
@@ -235,18 +248,9 @@
     const detail = root.querySelector<HTMLElement>('#vat-detail')!;
     const breakdown = root.querySelector<HTMLElement>('#vat-breakdown')!;
 
-    const number = (input: HTMLInputElement) =>
-      Number(input.value.replace(/,/g, '') || 0);
+    const money = (value: number) => formatCalculatorWon(value);
 
-    const money = (value: number) =>
-      Number.isFinite(value)
-        ? value.toLocaleString('ko-KR', { maximumFractionDigits: 0 }) + '원'
-        : '-';
-
-    const decimal = (value: number) =>
-      Number.isFinite(value)
-        ? value.toLocaleString('ko-KR', { maximumFractionDigits: 2 })
-        : '-';
+    const decimal = (value: number) => formatCalculatorNumber(value, 2);
 
     const applyRounding = (value: number) => {
       const size = Number(unit.value);
@@ -286,13 +290,12 @@
         help.textContent =
           '일반과세자의 기본 구조인 매출세액에서 공제 가능한 매입세액을 차감해 납부·환급세액을 간편 추정합니다.';
       }
-      calculate();
     };
 
     const calculate = () => {
-      const a = number(amount);
-      const taxRate = number(rate) / 100;
-      const inputTax = number(second);
+      const a = readCalculatorNumber(root, 'vat-amount');
+      const taxRate = readCalculatorNumber(root, 'vat-rate') / 100;
+      const inputTax = readCalculatorNumber(root, 'vat-second-value');
       const modeValue = mode.value;
 
       if (taxRate < 0 || taxRate >= 100 || !Number.isFinite(taxRate)) {
@@ -362,7 +365,7 @@
           '공급가액 ' +
           money(roundedSupply) +
           '에 ' +
-          decimal(number(rate)) +
+          decimal(readCalculatorNumber(root, 'vat-rate')) +
           '%를 적용했습니다.';
 
         breakdown.innerHTML =
@@ -388,22 +391,18 @@
       second.value = '0';
       unit.value = '1';
       roundMode.value = 'round';
-      bindNumberControls(root);
       updateMode();
+      calculate();
     };
 
-    [amount, rate, second].forEach((input) => {
-      input.addEventListener('input', calculate);
-      input.addEventListener('change', calculate);
-    });
     [mode, unit, roundMode].forEach((input) => {
       input.addEventListener('change', updateMode);
     });
+    bindCalculatorInputs(root, calculate, { change: true });
 
     root.querySelector('#vat-calculate')?.addEventListener('click', calculate);
     root.querySelector('#vat-reset')?.addEventListener('click', reset);
 
-    bindNumberControls(root);
     updateMode();
   }
 </script>

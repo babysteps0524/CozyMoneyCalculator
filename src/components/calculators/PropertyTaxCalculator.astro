@@ -1,27 +1,6 @@
 ---
 ---
 
-<section class="cm-card" data-property-tax p="5 md:7">
-  <div mb="6">
-    <p m="0" text="sm" font="700" text-primary>
-      PROPERTY TAX
-    </p>
-    <h2 m="0" mt="1" text="xl md:2xl" font="800">
-      주택 재산세 계산
-    </h2>
-    <p
-      m="0"
-      mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      공시가격, 1세대 1주택 여부, 공동명의, 도시지역 여부와 전년도 세액을 반영해
-      재산세를 계산합니다.
-    </p>
-  </div>
-
   <div grid="~ cols-1 md:cols-2" gap="4">
     <label>
       <span class="cm-label">기준연도</span>
@@ -218,13 +197,11 @@
       </p>
     </section>
   </div>
-</section>
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
-
-  const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   const root = document.querySelector<HTMLElement>('[data-property-tax]');
 
   if (root) {
@@ -352,12 +329,9 @@
       </article>
     `;
 
-    const bindDynamicNumbers = () => bindNumberControls(list);
-
     const addAsset = () => {
       const id = nextId++;
       list.insertAdjacentHTML('beforeend', assetHtml(id));
-      bindDynamicNumbers();
       calc();
     };
 
@@ -372,22 +346,10 @@
         list.querySelectorAll<HTMLElement>('[data-property-asset]'),
       ).map((article, index) => ({
         id: article.dataset.propertyAsset || String(index + 1),
-        assessedValue: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.value ||
-            '',
-        ),
-        ownershipShare: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="share-"]')?.value ||
-            '100',
-        ),
-        previousPropertyTax: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')
-            ?.value || '',
-        ),
-        previousUrbanAreaTax: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="previous-urban-"]')
-            ?.value || '',
-        ),
+        assessedValue: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.id || ''),
+        ownershipShare: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="share-"]')?.id || ''),
+        previousPropertyTax: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')?.id || ''),
+        previousUrbanAreaTax: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="previous-urban-"]')?.id || ''),
         urbanArea:
           article.querySelector<HTMLInputElement>('[id^="urban-"]')?.checked ||
           false,
@@ -452,14 +414,9 @@
     };
 
     list.innerHTML = assetHtml(1);
-    bindDynamicNumbers();
 
     root.querySelector('#add-property')?.addEventListener('click', addAsset);
     root.querySelector('#property-calculate')?.addEventListener('click', calc);
-    oneHouse.addEventListener('change', calc);
-    taxCap.addEventListener('change', calc);
-    root.querySelector('#property-year')?.addEventListener('change', calc);
-
     list.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       const remove = target.closest<HTMLButtonElement>(
@@ -470,17 +427,15 @@
       if (article) removeAsset(article);
     });
 
-    list.addEventListener('input', calc);
-
     root.querySelector('#property-reset')?.addEventListener('click', () => {
       list.innerHTML = assetHtml(1);
       nextId = 2;
       oneHouse.checked = true;
       taxCap.checked = true;
-      bindDynamicNumbers();
       calc();
     });
 
+    bindCalculatorInputs(root, calc, { change: true });
     calc();
   }
 </script>

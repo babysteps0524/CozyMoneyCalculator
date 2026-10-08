@@ -37,6 +37,8 @@ import AdSlot from '../common/AdSlot.astro';
     </p>
     <div
       id="income-tax-result"
+      aria-live="polite"
+      aria-atomic="true"
       mt="2"
       text="2xl md:3xl"
       font="800"
@@ -48,20 +50,29 @@ import AdSlot from '../common/AdSlot.astro';
       id="income-tax-summary"
       m="0"
       mt="3"
+      class="cm-help-text"
       text="sm"
       leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     ></p>
   </div>
 
   <div id="income-tax-breakdown" mt="4" grid="~ cols-1 md:cols-2" gap="3"></div>
 
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button id="income-tax-calculate" class="cm-button-primary" py="3">
+    <button
+      id="income-tax-calculate"
+      type="button"
+      class="cm-button-primary"
+      py="3"
+    >
       계산하기
     </button>
-    <button id="income-tax-reset" class="cm-button-secondary" py="3">
+    <button
+      id="income-tax-reset"
+      type="button"
+      class="cm-button-secondary"
+      py="3"
+    >
       초기화
     </button>
   </div>
@@ -135,7 +146,7 @@ import AdSlot from '../common/AdSlot.astro';
     mt="4"
     rounded="2xl"
     border="1"
-    border="danger/20"
+    border="danger-text/20"
     bg="danger-surface"
     p="5"
     dark="border-dark-border bg-dark-danger-surface"
@@ -170,11 +181,12 @@ import AdSlot from '../common/AdSlot.astro';
 </section>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
   import {
     calculateIncomeTax,
     type IncomeTaxInput,
   } from '../../lib/calculators/incomeTax';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>(
     '[data-income-tax-calculator]',
@@ -187,10 +199,7 @@ import AdSlot from '../common/AdSlot.astro';
 
     const money = (value: number) =>
       Math.round(value).toLocaleString('ko-KR') + '원';
-    const number = (id: string) => {
-      const input = root.querySelector<HTMLInputElement>('#' + id);
-      return Number((input?.value ?? '').replace(/,/g, '') || 0);
-    };
+    const number = (id: string) => readCalculatorNumber(root, id);
 
     const field = (
       id: string,
@@ -199,15 +208,13 @@ import AdSlot from '../common/AdSlot.astro';
       suffix = '원',
       step = '10000',
     ) =>
-      `<label><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input ${suffix ? 'pr-12' : ''}" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="false" />${suffix ? `<span class="absolute right-4 top-1/2 -translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></label>`;
+      `<div class="cm-field"><label class="cm-label" for="${id}">${label}</label><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input ${suffix ? 'pr-12' : ''}" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="false" />${suffix ? `<span class="absolute right-4 top-1/2 -translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></div>`;
 
     fields.innerHTML =
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">① 소득 입력</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('businessIncome', '사업소득금액', '0')}${field('wageIncome', '총급여액', '50000000')}${field('pensionIncome', '총 연금액', '0')}${field('interestIncome', '이자소득금액', '0')}${field('dividendIncome', '배당소득금액', '0')}${field('otherIncome', '기타소득 총수입금액', '0')}${field('otherIncomeExpense', '기타소득 필요경비', '0')}</div></section>` +
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">② 소득공제</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('dependents', '기본공제 인원', '1', '명', '1')}${field('seniorDependents', '70세 이상 추가공제 인원', '0', '명', '1')}${field('disabledDependents', '장애인 추가공제 인원', '0', '명', '1')}${field('femaleAdditionalDeduction', '부녀자 추가공제', '0')}${field('singleParentDeduction', '한부모 추가공제', '0')}${field('pensionInsurance', '연금보험료 공제', '0')}${field('specialIncomeDeduction', '특별소득공제', '0')}${field('otherIncomeDeduction', '기타 소득공제', '0')}</div></section>` +
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">③ 세액공제</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('children', '자녀세액공제 대상 자녀 수', '0', '명', '1')}${field('birthFirst', '출산·입양 첫째', '0', '명', '1')}${field('birthSecond', '출산·입양 둘째', '0', '명', '1')}${field('birthThirdPlus', '출산·입양 셋째 이상', '0', '명', '1')}${field('pensionAccount', '연금저축·퇴직연금 납입액', '0')}${field('insurance', '일반 보장성보험료', '0')}${field('disabledInsurance', '장애인전용 보장성보험료', '0')}${field('medicalSelfEtc', '본인·65세 이상·6세 이하·장애인 의료비', '0')}${field('infertilityMedical', '난임시술비', '0')}${field('prematureMedical', '미숙아·선천성이상아 의료비', '0')}${field('otherMedical', '그 밖의 의료비', '0')}${field('actualReimbursement', '실손의료보험금', '0')}${field('educationSelf', '본인 교육비', '0')}${field('educationDisabled', '장애인 특수교육비', '0')}${field('educationPreschool', '취학전 아동 교육비', '0')}${field('educationSchool', '초·중·고 교육비', '0')}${field('educationUniversity', '대학생 교육비', '0')}${field('rentPayment', '연간 월세 지급액', '0')}${field('standardTaxCredit', '표준세액공제(기본 13만원)', '130000')}${field('otherTaxCredit', '기타 세액공제·감면', '0')}</div></section>` +
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">④ 기납부·가산세</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('withholdingTax', '원천징수세액', '0')}${field('prepaidTax', '기납부세액', '0')}${field('penaltyTax', '가산세', '0')}</div></section>`;
-
-    bindNumberControls(fields);
 
     const calculate = () => {
       const input: IncomeTaxInput = {
@@ -295,8 +302,7 @@ import AdSlot from '../common/AdSlot.astro';
       .querySelector('#income-tax-calculate')
       ?.addEventListener('click', calculate);
     root.querySelector('#income-tax-reset')?.addEventListener('click', reset);
-    fields.addEventListener('input', calculate);
-    fields.addEventListener('change', calculate);
+    bindCalculatorInputs(fields, calculate, { change: true });
     calculate();
   }
 </script>

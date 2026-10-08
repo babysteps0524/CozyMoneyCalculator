@@ -1,35 +1,18 @@
-<section class="cm-card" data-acquisition-tax p="5 md:7">
-  <header>
-    <p m="0" text="sm" font="700" text-primary>
-      CALCULATOR
-    </p>
-    <h2 m="0" mt="1" text="xl md:2xl" font="800">
-      취득세 계산기
-    </h2>
-    <p
-      m="0"
-      mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      취득원인·부동산 종류·주택 수·규제지역·생애최초 여부를 반영해 취득세와 주요
-      부가세목을 함께 추정합니다.
-    </p>
-  </header>
+<div data-acquisition-tax min-w="0" w="full">
 
   <div id="acquisition-fields" grid="~ cols-1 md:cols-2" gap="4" mt="6"></div>
 
   <div
     id="acquisition-result"
+    aria-live="polite"
+    aria-atomic="true"
     mt="6"
     rounded="2xl"
     bg="primary/10"
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p m="0" class="cm-help-text">
       예상 취득 관련 세금
     </p>
     <div
@@ -44,10 +27,9 @@
     <div
       id="acquisition-detail"
       mt="3"
+      class="cm-help-text"
       text="sm"
       leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     ></div>
   </div>
 
@@ -128,7 +110,7 @@
     mt="4"
     rounded="2xl"
     border="1"
-    border="danger/20"
+    border="danger-text/20"
     bg="danger-surface"
     p="5"
     dark="border-dark-border bg-dark-danger-surface"
@@ -163,10 +145,11 @@
       </li>
     </ul>
   </section>
-</section>
+</div>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import {
     calculateAcquisitionTax,
     type AcquisitionAsset,
@@ -180,16 +163,13 @@
     const detail = root.querySelector<HTMLElement>('#acquisition-detail')!;
     const $ = (id: string) =>
       root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) =>
-      Number(
-        (($('' + id) as HTMLInputElement)?.value ?? '').replace(/,/g, '') || 0,
-      );
+    const n = (id: string) => readCalculatorNumber(root, id);
     const won = (v: number) => Math.round(v).toLocaleString('ko-KR') + '원';
 
     const field = (id: string, label: string, value: string, suffix = '원') =>
-      `<label><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input pr-12" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="100000" data-min="0" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></label>`;
+      `<div class="cm-field"><label class="cm-label" for="${id}">${label}</label><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input pr-12" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="100000" data-min="0" />${suffix ? `<span absolute right-4 top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></div>`;
     const select = (id: string, label: string, options: string[]) =>
-      `<label><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map((x) => `<option>${x}</option>`).join('')}</select></label>`;
+      `<label class="cm-field"><span class="cm-label">${label}</span><select class="cm-input" id="${id}">${options.map((x) => `<option>${x}</option>`).join('')}</select></label>`;
     const checkbox = (id: string, label: string) =>
       `<label flex="~" items-center gap="3" rounded="xl" border="1" border-border p="4" dark="border-dark-border"><input id="${id}" type="checkbox" /><span text="sm">${label}</span></label>`;
 
@@ -213,8 +193,6 @@
       checkbox('corporation', '법인 취득') +
       checkbox('firstHome', '생애최초 주택 구입') +
       checkbox('populationDecline', '인구감소지역 생애최초');
-
-    bindNumberControls(fields);
 
     const calc = () => {
       const causeMap: Record<string, AcquisitionCause> = {
@@ -263,8 +241,7 @@
       .querySelector('#acquisition-calculate')
       ?.addEventListener('click', calc);
     root.querySelector('#acquisition-reset')?.addEventListener('click', reset);
-    fields.addEventListener('input', calc);
-    fields.addEventListener('change', calc);
+    bindCalculatorInputs(fields, calc, { change: true });
     calc();
   }
 </script>

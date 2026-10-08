@@ -1,29 +1,10 @@
 ---
 ---
 
-<section class="cm-card" p="5 md:7" data-unemployment-calculator>
-  <div>
-    <p m="0" text="sm" font="700" text-primary>
-      CALCULATOR
-    </p>
-    <h2 m="0" mt="1" text="xl md:2xl" font="800">
-      구직급여 예상액 계산
-    </h2>
-    <p
-      m="0"
-      mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      1일 평균임금과 이직 당시 연령을 직접 계산하지 않아도 됩니다. 생년월일과
-      이직일을 입력하면 만 나이를 자동으로 계산합니다.
-    </p>
-  </div>
+<div data-unemployment-calculator min-w="0" w="full">
 
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4" mt="6">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">이직일</span>
       <input
         id="separation-date"
@@ -44,7 +25,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">생년월일</span>
       <input
         id="birth-date"
@@ -65,7 +46,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">이직 전 3개월 임금총액</span>
       <div relative>
         <input
@@ -103,7 +84,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">1일 소정근로시간</span>
       <select id="hours" class="cm-input">
         <option value="8" selected>
@@ -129,7 +110,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">장애인 여부</span>
       <select id="disabled" class="cm-input">
         <option value="no" selected>
@@ -150,7 +131,7 @@
       </span>
     </label>
 
-    <label>
+    <label class="cm-field">
       <span class="cm-label">고용보험 가입기간</span>
       <select id="period" class="cm-input">
         <option value="under1" selected>
@@ -239,21 +220,13 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p class="cm-help-text" text="sm">
       총 예상 구직급여
     </p>
     <strong id="total" block mt="2" text="2xl md:3xl" font="800" text-primary>
       -
     </strong>
-    <p
-      id="headline"
-      m="0"
-      mt="2"
-      text="sm"
-      leading="6"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
+    <p id="headline" class="cm-help-text" mt="2">
       -
     </p>
   </section>
@@ -320,35 +293,21 @@
     <p m="0" text="sm" font="750">
       계산 결과 해석
     </p>
-    <p
-      id="status"
-      m="0"
-      mt="2"
-      text="sm"
-      leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
+    <p id="status" role="status" aria-live="polite" class="cm-help-text" mt="2">
       -
     </p>
   </div>
 
-  <p
-    m="0"
-    mt="4"
-    text="xs"
-    leading="6"
-    text-text-subtle
-    dark="text-dark-text-subtle"
-  >
+  <p class="cm-help-text" mt="4" text="xs">
     이 계산기는 수급자격을 판정하지 않으며, 실제 지급액은
     이직일·피보험기간·이직사유·근로시간·고용센터의 수급자격 인정 결과 등에 따라
     달라질 수 있습니다.
   </p>
-</section>
+</div>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   import {
     calculateAgeAtSeparation,
     calculateEstimatedDailyAverageWage,
@@ -372,7 +331,7 @@
 
     const fmt = (value: number) =>
       Math.round(value).toLocaleString('ko-KR') + '원';
-    const getWages = () => Number(wages.value.replace(/,/g, '') || 0);
+    const getWages = () => readCalculatorNumber(root, 'wages');
 
     const getToday = () => {
       const today = new Date();
@@ -450,9 +409,7 @@
       }
     };
 
-    root.querySelector('#calculate')?.addEventListener('click', calc);
-
-    root.querySelector('#reset')?.addEventListener('click', () => {
+    const reset = () => {
       separationDate.value = getToday();
       birthDate.value = '1990-01-01';
       wages.value = '9,000,000';
@@ -460,13 +417,14 @@
       disabled.value = 'no';
       period.value = 'under1';
       calc();
-    });
+    };
+
+    root.querySelector('#calculate')?.addEventListener('click', calc);
+    root.querySelector('#reset')?.addEventListener('click', reset);
 
     separationDate.value = getToday();
     birthDate.value = '1990-01-01';
-    bindNumberControls(root);
-    root.addEventListener('input', calc);
-    root.addEventListener('change', calc);
+    bindCalculatorInputs(root, calc, { change: true });
     calc();
   }
 </script>

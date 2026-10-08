@@ -11,7 +11,7 @@
     p="4 sm:6 md:7"
     border="0 b solid"
     border-border
-    dark:border-dark-border
+    dark="border-dark-border"
   >
     <div>
       <div
@@ -22,7 +22,7 @@
         bg="surface-subtle dark:dark-surface-subtle"
         border="1 solid"
         border-border
-        dark:border-dark-border
+        dark="border-dark-border"
       >
         <button
           type="button"
@@ -60,10 +60,10 @@
     </div>
 
     <div grid="~ cols-1 md:cols-2" gap="3 sm:4" mt="5">
-      <label flex="~ col" gap="2" class="cm-field">
-        <span text="sm" font="700">
+      <div flex="~ col" gap="2" class="cm-field">
+        <label text="sm" font="700" for="legal-taxable-base">
           과세표준
-        </span>
+        </label>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items="center" gap="2">
           <button
             type="button"
@@ -84,6 +84,10 @@
               class="cm-input"
               pr="14"
               aria-describedby="legal-taxable-help"
+              data-number-input
+              data-step="1000000"
+              data-min="0"
+              data-decimal="false"
             />
             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">
               원
@@ -108,12 +112,12 @@
         >
           법무사 기본보수 계산 기준
         </span>
-      </label>
+      </div>
 
-      <label flex="~ col" gap="2" class="cm-field">
-        <span text="sm" font="700">
+      <div flex="~ col" gap="2" class="cm-field">
+        <label text="sm" font="700" for="legal-stated-amount">
           기재금액
-        </span>
+        </label>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items="center" gap="2">
           <button
             type="button"
@@ -134,6 +138,10 @@
               class="cm-input"
               pr="14"
               aria-describedby="legal-stated-help"
+              data-number-input
+              data-step="1000000"
+              data-min="0"
+              data-decimal="false"
             />
             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">
               원
@@ -158,7 +166,7 @@
         >
           인지세 계산 기준 계약서 금액
         </span>
-      </label>
+      </div>
     </div>
   </div>
 
@@ -204,7 +212,7 @@
         rounded="xl"
         border="1 solid"
         border-border
-        dark:border-dark-border
+        dark="border-dark-border"
         bg="surface dark:dark-surface"
       >
         <input id="legal-public-costs" type="checkbox" checked />
@@ -349,6 +357,9 @@
 </div>
 
 <script>
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+
   type FeeType =
     | 'ownership'
     | 'preservation'
@@ -402,15 +413,7 @@
     const won = (value: number) =>
       new Intl.NumberFormat('ko-KR').format(Math.round(value)) + '원';
 
-    const numberValue = (input: HTMLInputElement) =>
-      Number(input.value.replace(/[^0-9]/g, '')) || 0;
-
-    const formatInput = (input: HTMLInputElement) => {
-      const value = input.value.replace(/[^0-9]/g, '');
-      input.value = value
-        ? new Intl.NumberFormat('ko-KR').format(Number(value))
-        : '';
-    };
+    const numberValue = (input: HTMLInputElement) => readCalculatorNumber(root, input.id);
 
     const progressive = (
       amount: number,
@@ -550,11 +553,6 @@
       });
     };
 
-    const setAmount = (input: HTMLInputElement, delta: number) => {
-      const next = Math.max(0, numberValue(input) + delta);
-      input.value = next > 0 ? new Intl.NumberFormat('ko-KR').format(next) : '';
-    };
-
     const calculate = () => {
       const taxableBase = numberValue(taxableInput);
       const statedAmount = numberValue(statedInput);
@@ -627,40 +625,7 @@
         });
       });
 
-    [taxableInput, statedInput].forEach((input) => {
-      input.addEventListener('input', () => {
-        formatInput(input);
-      });
-      formatInput(input);
-    });
-
-    const bindStepper = (
-      input: HTMLInputElement,
-      decreaseId: string,
-      increaseId: string,
-    ) => {
-      root
-        .querySelector<HTMLButtonElement>(decreaseId)
-        ?.addEventListener('click', () => {
-          setAmount(input, -1_000_000);
-        });
-      root
-        .querySelector<HTMLButtonElement>(increaseId)
-        ?.addEventListener('click', () => {
-          setAmount(input, 1_000_000);
-        });
-    };
-
-    bindStepper(
-      taxableInput,
-      '#legal-taxable-decrease',
-      '#legal-taxable-increase',
-    );
-    bindStepper(
-      statedInput,
-      '#legal-stated-decrease',
-      '#legal-stated-increase',
-    );
+    bindCalculatorInputs(root, calculate, { change: true });
 
     root
       .querySelector<HTMLButtonElement>('#legal-add-fee')
@@ -677,31 +642,33 @@
         showToast('계산되었습니다.');
       });
 
+    const reset = () => {
+      property = 'house';
+      items = [{ id: String(nextId), type: 'ownership' }];
+      nextId += 1;
+      taxableInput.value = '400,000,000';
+      statedInput.value = '600,000,000';
+      publicCostsInput.checked = true;
+      vatInput.checked = true;
+
+      root
+        .querySelectorAll<HTMLButtonElement>('[data-property]')
+        .forEach((button) => {
+          const active = button.dataset.property === property;
+          button.setAttribute('aria-pressed', String(active));
+          button.className = active
+            ? 'cm-button-primary p-3 text-sm sm:text-base'
+            : 'cm-button-secondary p-3 text-sm sm:text-base';
+        });
+
+      renderItems();
+      calculate();
+      showToast('초기화되었습니다.');
+    };
+
     root
       .querySelector<HTMLButtonElement>('#legal-reset')
-      ?.addEventListener('click', () => {
-        property = 'house';
-        items = [{ id: String(nextId), type: 'ownership' }];
-        nextId += 1;
-        taxableInput.value = '400,000,000';
-        statedInput.value = '600,000,000';
-        publicCostsInput.checked = true;
-        vatInput.checked = true;
-
-        root
-          .querySelectorAll<HTMLButtonElement>('[data-property]')
-          .forEach((button) => {
-            const active = button.dataset.property === property;
-            button.setAttribute('aria-pressed', String(active));
-            button.className = active
-              ? 'cm-button-primary p-3 text-sm sm:text-base'
-              : 'cm-button-secondary p-3 text-sm sm:text-base';
-          });
-
-        renderItems();
-        calculate();
-        showToast('초기화되었습니다.');
-      });
+      ?.addEventListener('click', reset);
 
     root
       .querySelector<HTMLButtonElement>('#legal-copy')
