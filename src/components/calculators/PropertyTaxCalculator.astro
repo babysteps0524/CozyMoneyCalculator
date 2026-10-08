@@ -200,7 +200,7 @@
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
   const root = document.querySelector<HTMLElement>('[data-property-tax]');
@@ -330,13 +330,11 @@
       </article>
     `;
 
-    const bindDynamicNumbers = () => bindNumberControls(list);
-
     const addAsset = () => {
       const id = nextId++;
       list.insertAdjacentHTML('beforeend', assetHtml(id));
-      bindDynamicNumbers();
-      calc();
+      bindCalculatorInputs(root, calc, { change: true });
+    calc();
     };
 
     const removeAsset = (article: HTMLElement) => {
@@ -430,14 +428,9 @@
     };
 
     list.innerHTML = assetHtml(1);
-    bindDynamicNumbers();
 
     root.querySelector('#add-property')?.addEventListener('click', addAsset);
     root.querySelector('#property-calculate')?.addEventListener('click', calc);
-    oneHouse.addEventListener('change', calc);
-    taxCap.addEventListener('change', calc);
-    root.querySelector('#property-year')?.addEventListener('change', calc);
-
     list.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       const remove = target.closest<HTMLButtonElement>(
@@ -448,14 +441,11 @@
       if (article) removeAsset(article);
     });
 
-    list.addEventListener('input', calc);
-
     root.querySelector('#property-reset')?.addEventListener('click', () => {
       list.innerHTML = assetHtml(1);
       nextId = 2;
       oneHouse.checked = true;
       taxCap.checked = true;
-      bindDynamicNumbers();
       calc();
     });
 
