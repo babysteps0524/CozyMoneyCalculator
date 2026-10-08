@@ -1,15 +1,17 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import HourlyWageCalculator from '../../../components/calculators/HourlyWageCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.hourlyWage;
 ---
 
 <CalculatorPage
-  title="시급 계산기"
-  description="시급·일급·주급·월급·연봉과 주휴수당, 연장수당, 세금, 수습을 반영해 예상 급여를 계산합니다."
-  canonical="https://cozymoney.kr/calculators/hourly-wage/"
-  category="급여·노동"
-  guidance={calculatorGuidance.hourlyWage}
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
+  category={definition.category}
+  guidance={definition.guidance!}
 >
   <HourlyWageCalculator />
 </CalculatorPage>
