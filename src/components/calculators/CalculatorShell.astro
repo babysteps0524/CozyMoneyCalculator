@@ -111,6 +111,6 @@ const isCustom = mode === 'custom';
       </p>
     </section>
 
-    <CalculatorDetails content={Astro.props.guidance} />
+    {Astro.props.guidance ? (\n      <CalculatorDetails content={Astro.props.guidance} />\n    ) : null}
   </>
 )}
