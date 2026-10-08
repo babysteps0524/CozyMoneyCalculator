@@ -569,12 +569,12 @@
     calculateLoan,
     formatWon,
     type LoanRepaymentType,
-  } from '../../../lib/calculators/loan';
+  } from '../../lib/calculators/loan';
   import {
     bindNumberControls,
     parseNumber,
-  } from '../../../lib/calculators/number-input';
-  import { bindLiveCalculation } from '../../../lib/calculators/runtime';
+  } from '../../lib/calculators/number-input';
+  import { bindLiveCalculation } from '../../lib/calculators/runtime';
 
   const form = document.querySelector<HTMLFormElement>('#loan-form');
   const principalInput = document.querySelector<HTMLInputElement>('#principal');
