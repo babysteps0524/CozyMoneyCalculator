@@ -179,6 +179,13 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    getCalculatorField,
+    readCalculatorNumber,
+    resetCalculatorFields,
+  } from '../../lib/calculators/dom';
   import { resetCalculatorFields } from '../../lib/calculators/dom';
 
   const root = document.querySelector<HTMLElement>(
@@ -188,25 +195,13 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    const $ = (id: string) =>
-      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => {
-      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
-      return Number(value.replace(/,/g, '') || 0);
-    };
-    const fmt = (v: number, d = 0) =>
-      Number.isFinite(v)
-        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
-        : '-';
-    const won = (v: number) => fmt(v) + '원';
-
     bindNumberControls(fields);
 
     const calc = () => {
-      const loan = (n('deposit') * n('loanRate')) / 100;
-      const value = (loan * n('rate')) / 100;
-      out.textContent = won(value);
-      detail.textContent = `예상 대출금: ${won(loan)} · 1년 단순 이자: ${won(value)}`;
+      const loan = (readCalculatorNumber(root, 'deposit') * readCalculatorNumber(root, 'loanRate')) / 100;
+      const value = (loan * readCalculatorNumber(root, 'rate')) / 100;
+      out.textContent = formatCalculatorWon(value);
+      detail.textContent = `예상 대출금: ${formatCalculatorWon(loan)} · 1년 단순 이자: ${formatCalculatorWon(value)}`;
     };
 
     const reset = () => {
