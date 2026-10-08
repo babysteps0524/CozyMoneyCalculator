@@ -48,10 +48,9 @@ import AdSlot from '../common/AdSlot.astro';
       id="income-tax-summary"
       m="0"
       mt="3"
+      class="cm-help-text"
       text="sm"
       leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     ></p>
   </div>
 
@@ -199,7 +198,7 @@ import AdSlot from '../common/AdSlot.astro';
       suffix = '원',
       step = '10000',
     ) =>
-      `<label><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input ${suffix ? 'pr-12' : ''}" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="false" />${suffix ? `<span class="absolute right-4 top-1/2 -translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></label>`;
+      `<label class="cm-field"><span class="cm-label">${label}</span><div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2"><button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button><div relative><input class="cm-input ${suffix ? 'pr-12' : ''}" id="${id}" type="text" inputmode="numeric" value="${value}" data-default-value="${value}" data-number-input data-step="${step}" data-min="0" data-decimal="false" />${suffix ? `<span class="absolute right-4 top-1/2 -translate-y-1/2" text="sm" text-text-muted dark="text-dark-text-muted">${suffix}</span>` : ''}</div><button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button></div></label>`;
 
     fields.innerHTML =
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">① 소득 입력</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('businessIncome', '사업소득금액', '0')}${field('wageIncome', '총급여액', '50000000')}${field('pensionIncome', '총 연금액', '0')}${field('interestIncome', '이자소득금액', '0')}${field('dividendIncome', '배당소득금액', '0')}${field('otherIncome', '기타소득 총수입금액', '0')}${field('otherIncomeExpense', '기타소득 필요경비', '0')}</div></section>` +
