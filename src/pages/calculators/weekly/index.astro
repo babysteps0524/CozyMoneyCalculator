@@ -4,12 +4,6 @@ import WeeklyCalculator from '../../../components/calculators/WeeklyCalculator.a
 import { calculatorGuidance } from '../../../lib/calculators/guidance';
 ---
 
-<CalculatorPage
-  title="주휴수당 계산기"
-  description="시급과 주 소정근로시간을 기준으로 주급과 주휴수당을 계산합니다."
-  canonical="https://cozymoney.kr/calculators/weekly/"
-  category="급여·노동"
-  guidance={calculatorGuidance.weekly}
->
+<CalculatorPage definition={definition}>
   <WeeklyCalculator />
 </CalculatorPage>
