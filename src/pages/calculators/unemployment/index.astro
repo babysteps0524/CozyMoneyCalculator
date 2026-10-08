@@ -1,52 +1,17 @@
 ---
+import AdSlot from '../../../components/common/AdSlot.astro';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import UnemploymentCalculator from '../../../components/calculators/UnemploymentCalculator.astro';
 import { calculatorDefinitions } from '../../../data/calculators';
 
 const definition = calculatorDefinitions.unemployment;
-import AdSlot from '../../../components/common/AdSlot.astro';
-import UnemploymentCalculator from '../../../components/calculators/UnemploymentCalculator.astro';
 ---
 
 <CalculatorPage definition={definition}>
-  <main class="cm-container" py="10 md:14 lg:18">
-    <div max-w="5xl" mx="auto">
-      <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
-        <a href="/" no-underline hover="text-primary">
-          홈
-        </a>
-        <span mx="2">/</span>
-        <a href="/calculators/" no-underline hover="text-primary">
-          계산기
-        </a>
-        <span mx="2">/</span>
-        <span>급여·노동</span>
-      </nav>
-
-      <header mb="8">
-        <p m="0" text="sm" font="700" text-primary>
-          급여·노동
-        </p>
-        <h1 m="0" mt="2" text="3xl md:4xl" font="800" tracking-tight>
-          실업급여 계산기
-        </h1>
-        <p
-          m="0"
-          mt="4"
-          text="base md:lg"
-          leading="7"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          이직일과 생년월일, 직전 3개월 임금총액, 소정근로시간, 고용보험
-          가입기간을 입력하면 이직일 기준 만 나이를 자동으로 계산하고 1일
-          구직급여액과 소정급여일수, 총 예상액을 확인할 수 있습니다.
-        </p>
-      </header>
-
-      <UnemploymentCalculator />
-      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
-
-      <section mt="10 md:14">
+  <UnemploymentCalculator />
+  <div slot="after">
+    <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
+<section mt="10 md:14">
         <h2 class="cm-section-title">실업급여 계산 방법</h2>
         <div grid="~ cols-1 md:cols-3" gap="4" mt="4">
           <div class="cm-card" p="5">
@@ -451,5 +416,5 @@ import UnemploymentCalculator from '../../../components/calculators/Unemployment
         </div>
       </section>
     </div>
-  </main>
+  </div>
 </CalculatorPage>
