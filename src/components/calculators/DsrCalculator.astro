@@ -236,7 +236,6 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    bindNumberControls(fields);
 
     const calc = () => {
       const income = readCalculatorNumber(root, 'income');
@@ -257,7 +256,7 @@
 
     root.querySelector('#calculate')?.addEventListener('click', calc);
     root.querySelector('#reset')?.addEventListener('click', reset);
-    bindLiveCalculation(fields, calc);
+    bindCalculatorInputs(fields, calc);
     calc();
   }
 </script>
