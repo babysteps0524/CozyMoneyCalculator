@@ -371,6 +371,13 @@
 <script>
   import { bindNumberControls } from '../../lib/calculators/number-input';
   import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import {
+    formatCalculatorNumber,
+    formatCalculatorWon,
+    getCalculatorField,
+    readCalculatorNumber,
+    resetCalculatorFields,
+  } from '../../lib/calculators/dom';
   import { resetCalculatorFields } from '../../lib/calculators/dom';
   import {
     calculateDti,
@@ -382,18 +389,6 @@
     const fields = root.querySelector<HTMLElement>('#fields')!;
     const out = root.querySelector<HTMLElement>('#result-value')!;
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
-    const $ = (id: string) =>
-      root.querySelector<HTMLInputElement | HTMLSelectElement>('#' + id);
-    const n = (id: string) => {
-      const value = ($(id) as HTMLInputElement | undefined)?.value ?? '';
-      return Number(value.replace(/,/g, '') || 0);
-    };
-    const fmt = (v: number, d = 0) =>
-      Number.isFinite(v)
-        ? v.toLocaleString('ko-KR', { maximumFractionDigits: d })
-        : '-';
-    const won = (v: number) => fmt(v) + '원';
-
     bindNumberControls(fields);
 
     const calc = () => {
@@ -402,22 +397,22 @@
         원금균등: 'equalPrincipal',
         만기일시: 'maturity',
       };
-      const methodLabel = $('mortgageMethod')?.value ?? '원리금균등';
+      const methodLabel = getCalculatorField(root, 'mortgageMethod')?.value ?? '원리금균등';
       const result = calculateDti({
-        annualIncome: n('income'),
-        mortgageAmount: n('mortgageAmount'),
-        mortgageRate: n('mortgageRate'),
-        mortgageYears: n('mortgageYears'),
+        annualIncome: readCalculatorNumber(root, 'income'),
+        mortgageAmount: readCalculatorNumber(root, 'mortgageAmount'),
+        mortgageRate: readCalculatorNumber(root, 'mortgageRate'),
+        mortgageYears: readCalculatorNumber(root, 'mortgageYears'),
         mortgageMethod: methodMap[methodLabel] ?? 'equalPayment',
-        otherDebtAmount: n('otherDebt'),
-        otherDebtRate: n('otherRate'),
-        targetDti: n('rate'),
+        otherDebtAmount: readCalculatorNumber(root, 'otherDebt'),
+        otherDebtRate: readCalculatorNumber(root, 'otherRate'),
+        targetDti: readCalculatorNumber(root, 'rate'),
       });
-      out.textContent = fmt(result.dti, 2) + '%';
+      out.textContent = formatCalculatorNumber(result.dti, 2) + '%';
       const status = result.withinTarget
-        ? `목표 DTI ${fmt(n('rate'), 2)}% 이내`
-        : `목표 DTI ${fmt(n('rate'), 2)}% 초과`;
-      detail.textContent = `주택담보대출 연간 원리금: ${won(result.annualMortgagePayment)} · 기타 대출 연간 이자: ${won(result.annualOtherInterest)} · 연간 상환부담: ${won(result.annualDebtService)} · 상환방식: ${methodLabel} · ${status} · 목표 DTI 기준 연간 여유액: ${won(result.headroom)}`;
+        ? `목표 DTI ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}% 이내`
+        : `목표 DTI ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}% 초과`;
+      detail.textContent = `주택담보대출 연간 원리금: ${formatCalculatorWon(result.annualMortgagePayment)} · 기타 대출 연간 이자: ${formatCalculatorWon(result.annualOtherInterest)} · 연간 상환부담: ${formatCalculatorWon(result.annualDebtService)} · 상환방식: ${methodLabel} · ${status} · 목표 DTI 기준 연간 여유액: ${formatCalculatorWon(result.headroom)}`;
     };
 
     const reset = () => {
