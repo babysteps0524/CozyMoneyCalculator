@@ -4,34 +4,15 @@ import Header from '../common/Header.astro';
 import Footer from '../common/Footer.astro';
 import CalculatorShell from './CalculatorShell.astro';
 import CalculatorContent from './CalculatorContent.astro';
-import type { CalculatorGuidance } from '../../lib/calculators/guidance';
+import type { CalculatorDefinition } from '../../data/calculators';
 
-type Props =
-  | {
-      mode: 'custom';
-      title: string;
-      description: string;
-      canonical: string;
-      category?: never;
-      guidance?: never;
-    }
-  | {
-      mode?: 'standard';
-      title: string;
-      description: string;
-      canonical: string;
-      category: string;
-      guidance: CalculatorGuidance;
-    };
+interface Props {
+  definition: CalculatorDefinition;
+}
 
-const {
-  title,
-  description,
-  canonical,
-  category = '',
-  guidance,
-  mode = 'standard',
-} = Astro.props;
+const { definition } = Astro.props;
+const { title, description, canonical, category, mode = 'standard', guidance } =
+  definition;
 
 const isCustom = mode === 'custom';
 const pageTitle = title.includes('CozyMoney') ? title : `${title} | CozyMoney 코지머니`;
