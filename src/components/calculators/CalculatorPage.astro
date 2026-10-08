@@ -11,21 +11,15 @@ interface Props {
 }
 
 const { definition } = Astro.props;
-const { title, description, canonical, category, mode = 'standard', guidance } =
-  definition;
-
-const isCustom = mode === 'custom';
+const { title, description, canonical, category, guidance } = definition;
 const pageTitle = title.includes('CozyMoney') ? title : `${title} | CozyMoney 코지머니`;
 ---
 
 <BaseLayout title={pageTitle} description={description} canonical={canonical}>
   <Header />
-  {isCustom ? (
-    <CalculatorShell mode="custom">
-      <slot />
-    </CalculatorShell>
-  ) : (
-    <main class="cm-container" w="full" py="10 md:14 lg:18">
+
+  <main class="cm-container" w="full" py="10 md:14 lg:18">
+    <div w="full" max-w="5xl" mx="auto">
       <nav
         aria-label="사이트 경로"
         mb="5"
@@ -70,16 +64,15 @@ const pageTitle = title.includes('CozyMoney') ? title : `${title} | CozyMoney �
         </p>
       </header>
 
-      <div w="full" max-w="4xl">
-        <CalculatorShell title={title} description={description}>
-          <slot />
-        </CalculatorShell>
+      <CalculatorShell title={title} description={description}>
+        <slot />
+      </CalculatorShell>
 
-        {guidance ? <CalculatorContent guidance={guidance} /> : null}
-      </div>
+      {guidance ? <CalculatorContent guidance={guidance} /> : null}
 
       <slot name="after" />
-    </main>
-  )}
+    </div>
+  </main>
+
   <Footer />
 </BaseLayout>
