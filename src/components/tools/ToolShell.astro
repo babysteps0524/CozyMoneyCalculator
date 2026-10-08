@@ -20,7 +20,8 @@ const { kind, title, description } = Astro.props;
 ---
 
 <section class="cm-tool-shell" data-tool={kind}>
-  <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
+  <div class="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
+    <div class="min-w-0">
     <div class="cm-card p-5 md:p-7">
       {kind === 'lotto' && (
         <div>
