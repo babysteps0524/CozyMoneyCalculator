@@ -333,8 +333,7 @@
     const addAsset = () => {
       const id = nextId++;
       list.insertAdjacentHTML('beforeend', assetHtml(id));
-      bindCalculatorInputs(root, calc, { change: true });
-    calc();
+      calc();
     };
 
     const removeAsset = (article: HTMLElement) => {
