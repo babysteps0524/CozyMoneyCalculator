@@ -1,8 +1,9 @@
+---
+---
 
-  
-
+<section class="cm-card" data-brokerage p="5 md:7">
   <div grid="~ cols-1 md:cols-2" gap="4">
-    <label class="cm-field">
+    <label>
       <span class="cm-label">거래 유형</span>
       <select id="transaction" class="cm-input">
         <option value="sale">매매·교환</option>
@@ -11,7 +12,7 @@
       </select>
     </label>
 
-    <label class="cm-field">
+    <label>
       <span class="cm-label">중개대상물</span>
       <select id="property" class="cm-input">
         <option value="house">주택</option>
@@ -32,26 +33,19 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" class="cm-help-text">
+    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
       계산 결과
     </p>
-    <div
-      id="result-value"
-      aria-live="polite"
-      aria-atomic="true"
-      mt="2"
-      text="2xl md:3xl"
-      font="800"
-      text-primary
-    >
+    <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
       -
     </div>
     <div
       id="result-detail"
       mt="3"
-      class="cm-help-text"
       text="sm"
       leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
     ></div>
   </div>
 
@@ -163,10 +157,10 @@
     mt="4"
     rounded="2xl"
     border="1"
-    border="danger-text/20"
+    border="danger/20"
     bg="danger-surface"
     p="5"
-    dark="border-dark-border bg-dark-danger-surface"
+    dark="border-dark-border dark:bg-dark-danger-surface"
   >
     <h3 m="0" text="sm" font="750">
       주의사항
@@ -195,18 +189,13 @@
       </li>
     </ul>
   </section>
-</section>
 
 <script>
   import {
     calculateBrokerage,
     getMonthlyLeaseAmount,
   } from '../../lib/calculators/brokerage';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import { bindNumberControls } from '../../lib/calculators/number-input';
 
   const root = document.querySelector<HTMLElement>('[data-brokerage]');
   if (root) {
@@ -226,8 +215,8 @@
       value: string,
       suffix = '원',
     ) => `
-      <div class="cm-field">
-        <label class="cm-label" for="${id}">${label}</label>
+      <label>
+        <span class="cm-label">${label}</span>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
           <button type="button" data-step-direction="-1" aria-label="${label} 감소" class="cm-step-button">−</button>
           <div relative>
@@ -246,10 +235,10 @@
           </div>
           <button type="button" data-step-direction="1" aria-label="${label} 증가" class="cm-step-button">+</button>
         </div>
-      </div>`;
+      </label>`;
 
     const percentField = (id: string, label: string, value: string) => `
-      <label class="cm-field">
+      <label>
         <span class="cm-label">${label}</span>
         <div relative>
           <input id="${id}" class="cm-input pr-12" type="text" inputmode="decimal" value="${value}" data-default-value="${value}" data-number-input data-step="0.1" data-min="0" data-decimal="true" />
@@ -310,7 +299,7 @@
 
     const valueOf = (id: string) => {
       const input = root.querySelector<HTMLInputElement>('#' + id);
-      return parseNumber(input?.value ?? '0');
+      return Number((input?.value ?? '').replace(/,/g, '') || 0);
     };
 
     const calculate = () => {
@@ -384,7 +373,6 @@
     });
     root.querySelector('#calculate')?.addEventListener('click', calculate);
     root.querySelector('#reset')?.addEventListener('click', reset);
-    bindLiveCalculation(root, calculate);
     renderFields();
     calculate();
   }
