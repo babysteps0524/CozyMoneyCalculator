@@ -3,8 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../common/Header.astro';
 import Footer from '../common/Footer.astro';
 import CalculatorShell from './CalculatorShell.astro';
-import CalculatorDetails from './CalculatorDetails.astro';
-import AdSlot from '../common/AdSlot.astro';
+import CalculatorContent from './CalculatorContent.astro';
 import type { CalculatorGuidance } from '../../lib/calculators/guidance';
 
 type Props =
@@ -95,9 +94,7 @@ const pageTitle = isCustom ? title : `${title} | CozyMoney 코지머니`;
           <slot />
         </CalculatorShell>
 
-        <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
-
-        {guidance ? <CalculatorDetails content={guidance} /> : null}
+        {guidance ? <CalculatorContent guidance={guidance} /> : null}
       </div>
 
       <slot name="after" />
