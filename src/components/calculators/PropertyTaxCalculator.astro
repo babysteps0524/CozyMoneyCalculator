@@ -23,7 +23,7 @@
   </div>
 
   <div grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">기준연도</span>
       <select id="property-year" class="cm-input">
         <option value="2026" selected>
@@ -137,7 +137,7 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p m="0" class="cm-help-text">
       예상 납부액
     </p>
     <div id="property-total" mt="2" text="3xl md:4xl" font="800" text-primary>
@@ -263,7 +263,7 @@
         </div>
 
         <div grid="~ cols-1 md:cols-2" gap="4">
-          <label>
+          <label class="cm-field">
             <span class="cm-label">공시가격</span>
             <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
               <button type="button" data-step-direction="-1" aria-label="공시가격 감소" class="cm-step-button">−</button>
@@ -284,7 +284,7 @@
             </div>
           </label>
 
-          <label>
+          <label class="cm-field">
             <span class="cm-label">소유지분</span>
             <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
               <button type="button" data-step-direction="-1" aria-label="소유지분 감소" class="cm-step-button">−</button>
@@ -306,7 +306,7 @@
             </div>
           </label>
 
-          <label>
+          <label class="cm-field">
             <span class="cm-label">전년도 재산세</span>
             <div relative>
               <input
@@ -323,7 +323,7 @@
             </div>
           </label>
 
-          <label>
+          <label class="cm-field">
             <span class="cm-label">전년도 도시지역분</span>
             <div relative>
               <input
