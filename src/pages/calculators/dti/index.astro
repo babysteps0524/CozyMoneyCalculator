@@ -1,8 +1,9 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import DtiCalculator from '../../../components/calculators/DtiCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
----
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.dti;
+import DtiCalculator from '../../../components/calculators/DtiCalculator.astro';---
 
 <CalculatorPage
   title="DTI 계산기"
