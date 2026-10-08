@@ -738,6 +738,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     bindNumberControls,
     parseNumber,
   } from '../../../lib/calculators/number-input';
+  import { bindLiveCalculation } from '../../../lib/calculators/runtime';
 
   const form = document.querySelector<HTMLFormElement>('#monthly-salary-form');
   const salary = document.querySelector<HTMLInputElement>('#salary');
@@ -822,10 +823,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     document
       .querySelectorAll<HTMLInputElement>('input[name="age60"]')
       .forEach((input) => {
-        input.addEventListener('change', () => {
-          setSelectedStyles();
-          render();
-        });
+        input.addEventListener('change', setSelectedStyles);
       });
 
     form.addEventListener('submit', (event) => {
@@ -861,7 +859,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
     });
 
     bindNumberControls(form);
-    form.addEventListener('input', render);
+    bindLiveCalculation(form, render, { change: true });
     setSelectedStyles();
     render();
   }
