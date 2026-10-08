@@ -60,10 +60,10 @@
     </div>
 
     <div grid="~ cols-1 md:cols-2" gap="3 sm:4" mt="5">
-      <label flex="~ col" gap="2" class="cm-field">
-        <span text="sm" font="700">
+      <div flex="~ col" gap="2" class="cm-field">
+        <label text="sm" font="700" for="legal-taxable-base">
           과세표준
-        </span>
+        </label>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items="center" gap="2">
           <button
             type="button"
@@ -112,12 +112,12 @@
         >
           법무사 기본보수 계산 기준
         </span>
-      </label>
+      </div>
 
-      <label flex="~ col" gap="2" class="cm-field">
-        <span text="sm" font="700">
+      <div flex="~ col" gap="2" class="cm-field">
+        <label text="sm" font="700" for="legal-stated-amount">
           기재금액
-        </span>
+        </label>
         <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items="center" gap="2">
           <button
             type="button"
@@ -166,7 +166,7 @@
         >
           인지세 계산 기준 계약서 금액
         </span>
-      </label>
+      </div>
     </div>
   </div>
 
