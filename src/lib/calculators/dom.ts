@@ -12,3 +12,37 @@ export function resetCalculatorFields(fields: ParentNode): void {
     select.dispatchEvent(new Event('change', { bubbles: true }));
   });
 }
+
+export function getCalculatorField(
+  root: ParentNode,
+  id: string,
+): HTMLInputElement | HTMLSelectElement | null {
+  return root.querySelector<HTMLInputElement | HTMLSelectElement>(
+    '#' + id,
+  );
+}
+
+export function readCalculatorNumber(
+  root: ParentNode,
+  id: string,
+): number {
+  const field = getCalculatorField(root, id);
+  const value = field instanceof HTMLInputElement ? field.value : '';
+  return Number(value.replace(/,/g, '') || 0);
+}
+
+export function formatCalculatorNumber(
+  value: number,
+  maximumFractionDigits = 0,
+): string {
+  return Number.isFinite(value)
+    ? value.toLocaleString('ko-KR', { maximumFractionDigits })
+    : '-';
+}
+
+export function formatCalculatorWon(
+  value: number,
+  maximumFractionDigits = 0,
+): string {
+  return formatCalculatorNumber(value, maximumFractionDigits) + '원';
+}
