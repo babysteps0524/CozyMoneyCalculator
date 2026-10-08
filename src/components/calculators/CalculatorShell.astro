@@ -1,5 +1,4 @@
 ---
-import AdSlot from '../common/AdSlot.astro';
 import CalculatorDetails from './CalculatorDetails.astro';
 import type { CalculatorGuidance } from '../../lib/calculators/guidance';
 
@@ -59,8 +58,6 @@ const isCustom = mode === 'custom';
 
       <slot />
 
-      <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_CALCULATOR || ''} />
-
       <div
         mt="6"
         rounded="2xl"
@@ -113,9 +110,5 @@ const isCustom = mode === 'custom';
         보장하지 않습니다.
       </p>
     </section>
-
-    {Astro.props.guidance ? (
-      <CalculatorDetails content={Astro.props.guidance} />
-    ) : null}
   </>
 )}
