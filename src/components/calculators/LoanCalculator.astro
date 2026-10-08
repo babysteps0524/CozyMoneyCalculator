@@ -570,7 +570,7 @@
     formatWon,
     type LoanRepaymentType,
   } from '../../lib/calculators/loan';
-  import { parseNumber } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const form = document.querySelector<HTMLFormElement>('#loan-form');
@@ -673,14 +673,14 @@
 
       try {
         const result = calculateLoan({
-          principal: parseNumber(principalInput.value),
-          annualRate: parseNumber(annualRateInput.value),
-          months: parseNumber(monthsInput.value),
+          principal: readCalculatorNumber(form, 'principal'),
+          annualRate: readCalculatorNumber(form, 'annual-rate'),
+          months: readCalculatorNumber(form, 'loan-months'),
           repaymentType: repaymentTypeInput.value as LoanRepaymentType,
-          graceMonths: parseNumber(graceMonthsInput.value),
-          prepaymentMonth: parseNumber(prepaymentMonthInput.value),
-          prepaymentAmount: parseNumber(prepaymentAmountInput.value),
-          prepaymentFeeRate: parseNumber(prepaymentFeeRateInput.value),
+          graceMonths: readCalculatorNumber(form, 'grace-months'),
+          prepaymentMonth: readCalculatorNumber(form, 'prepayment-month'),
+          prepaymentAmount: readCalculatorNumber(form, 'prepayment-amount'),
+          prepaymentFeeRate: readCalculatorNumber(form, 'prepayment-fee-rate'),
         });
 
         monthlyPaymentElement.textContent = formatWon(result.monthlyPayment);
