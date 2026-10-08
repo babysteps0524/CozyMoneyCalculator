@@ -398,7 +398,6 @@
   } from '../../lib/calculators/severance';
   import { parseNumber } from '../../lib/calculators/number-input';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
-  import { bindNumberControls } from '../../lib/calculators/number-input';
 
   const root = document.querySelector<HTMLElement>(
     '[data-severance-calculator]',
@@ -454,7 +453,6 @@
               '일</span></label>',
           )
           .join('');
-        bindNumberControls(months);
       } catch {
         months.innerHTML = '';
         periodText.textContent = '퇴직일을 확인하세요.';
