@@ -1,15 +1,17 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import CapitalGainCalculator from '../../../components/calculators/CapitalGainCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.capitalGain;
 ---
 
 <CalculatorPage
-  title="양도소득세 계산기"
-  description="양도가액, 취득가액, 필요경비와 가정 세율로 양도소득세를 단순 추정합니다."
-  canonical="https://cozymoney.kr/calculators/capitalGain/"
-  category="세금"
-  guidance={calculatorGuidance.capitalGain}
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
+  category={definition.category}
+  guidance={definition.guidance!}
 >
   <CapitalGainCalculator />
 </CalculatorPage>
