@@ -3,7 +3,7 @@
 
 <div data-calculator="dsr">
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
-    <label>
+    <label class="cm-field">
       <span class="cm-label">연소득</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -49,7 +49,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">연간 원리금 상환액</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -95,7 +95,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">새 대출 연간 상환액</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -141,7 +141,7 @@
         </button>
       </div>
     </label>
-    <label>
+    <label class="cm-field">
       <span class="cm-label">목표 DSR</span>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
@@ -196,7 +196,7 @@
     p="5"
     dark="bg-dark-primary-surface"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    <p m="0" class="cm-help-text">
       계산 결과
     </p>
     <div id="result-value" mt="2" text="2xl md:3xl" font="800" text-primary>
@@ -205,10 +205,9 @@
     <div
       id="result-detail"
       mt="3"
+      class="cm-help-text"
       text="sm"
       leading="7"
-      text-text-muted
-      dark="text-dark-text-muted"
     ></div>
   </div>
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
