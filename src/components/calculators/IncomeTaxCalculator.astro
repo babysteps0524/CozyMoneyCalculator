@@ -169,7 +169,10 @@ import AdSlot from '../common/AdSlot.astro';
 </section>
 
 <script>
-  import { bindNumberControls } from '../../lib/calculators/number-input';
+  import {
+    bindNumberControls,
+    parseNumber,
+  } from '../../lib/calculators/number-input';
   import {
     calculateIncomeTax,
     type IncomeTaxInput,
@@ -188,7 +191,7 @@ import AdSlot from '../common/AdSlot.astro';
       Math.round(value).toLocaleString('ko-KR') + '원';
     const number = (id: string) => {
       const input = root.querySelector<HTMLInputElement>('#' + id);
-      return Number((input?.value ?? '').replace(/,/g, '') || 0);
+      return parseNumber(input?.value ?? '0');
     };
 
     const field = (
