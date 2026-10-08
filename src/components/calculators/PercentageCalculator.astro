@@ -147,6 +147,7 @@
 
     const calc = () => {
       const mode = getCalculatorField(root, 'percentageMode')?.value ?? 'Y의 X% 계산';
+      const direction = getCalculatorField(root, 'percentageDirection')?.value ?? '증가';
       const a = readCalculatorNumber(root, 'valueA');
       const b = readCalculatorNumber(root, 'valueB');
 
@@ -178,7 +179,6 @@
       }
 
       if (mode === '기준값의 X% 증가·감소 후 값') {
-        const direction = getCalculatorField(root, 'percentageDirection')?.value ?? '증가';
         const value = a * (direction === '증가' ? 1 + b / 100 : 1 - b / 100);
         out.textContent = formatCalculatorWon(value);
         detail.textContent = `${formatCalculatorWon(a)}에 ${formatCalculatorNumber(b, 2)}% ${direction}를 적용한 결과입니다 · 공식: ${formatCalculatorNumber(a, 2)} × (1 ${direction === '증가' ? '+' : '-'} ${formatCalculatorNumber(b, 2)} ÷ 100)`;
