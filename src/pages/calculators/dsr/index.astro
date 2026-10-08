@@ -1,8 +1,9 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
-import DsrCalculator from '../../../components/calculators/DsrCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
----
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.dsr;
+import DsrCalculator from '../../../components/calculators/DsrCalculator.astro';---
 
 <CalculatorPage
   title="DSR 계산기"
