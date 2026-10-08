@@ -1,7 +1,9 @@
 ---
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
 import WeeklyCalculator from '../../../components/calculators/WeeklyCalculator.astro';
-import { calculatorGuidance } from '../../../lib/calculators/guidance';
+import { calculatorDefinitions } from '../../../data/calculators';
+
+const definition = calculatorDefinitions.weekly;
 ---
 
 <CalculatorPage definition={definition}>
