@@ -167,11 +167,8 @@
 </section>
 
 <script>
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
   import {
     calculateAcquisitionTax,
     type AcquisitionAsset,
@@ -216,8 +213,6 @@
       checkbox('corporation', '법인 취득') +
       checkbox('firstHome', '생애최초 주택 구입') +
       checkbox('populationDecline', '인구감소지역 생애최초');
-
-    bindNumberControls(fields);
 
     const calc = () => {
       const causeMap: Record<string, AcquisitionCause> = {
@@ -266,7 +261,7 @@
       .querySelector('#acquisition-calculate')
       ?.addEventListener('click', calc);
     root.querySelector('#acquisition-reset')?.addEventListener('click', reset);
-    bindLiveCalculation(fields, calc, { change: true });
+    bindCalculatorInputs(fields, calc, { change: true });
     calc();
   }
 </script>
