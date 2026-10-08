@@ -1,16 +1,18 @@
 ---
+const definition = calculatorDefinitions.property;
 import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
 import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import { calculatorDefinitions } from '../../../data/calculators';
 import AdSlot from '../../../components/common/AdSlot.astro';
 import PropertyTaxCalculator from '../../../components/calculators/PropertyTaxCalculator.astro';
 ---
 
 <CalculatorPage
   mode="custom"
-  title="재산세 계산기 | CozyMoney 코지머니"
-  description="과세표준과 가정 세율을 기준으로 재산세를 계산합니다."
-  canonical="https://cozymoney.kr/calculators/property/"
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
 >
   <main class="cm-container" py="10 md:14 lg:18">
     <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
