@@ -85,6 +85,14 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     guidance: calculatorGuidance.percentage,
   },
 
+  'legal-scrivener': {
+    slug: 'legal-scrivener',
+    title: '법무사 보수 계산기',
+    description: '부동산 등기 과세표준과 계약서 기재금액을 기준으로 법무사 기본보수와 인지·증지 비용을 계산합니다.',
+    canonical: `${site}/calculators/legal-scrivener/`,
+    category: '부동산',
+    guidance: supplementalCalculatorDetails['legal-scrivener'],
+  },
   acquisition: {
     slug: 'acquisition',
     title: '취득세 계산기',
