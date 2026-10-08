@@ -32,6 +32,10 @@ export function formatNumberInputValue(
 }
 
 export function bindNumberInput(input: HTMLInputElement): void {
+  if (input.dataset.numberBound === 'true') return;
+
+  input.dataset.numberBound = 'true';
+
   const allowDecimal = input.dataset.decimal === 'true';
 
   const format = () => {
