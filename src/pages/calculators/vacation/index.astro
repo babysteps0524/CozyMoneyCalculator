@@ -1,16 +1,18 @@
 ---
+const definition = calculatorDefinitions.vacation;
 import CalculatorDetails from '../../../components/calculators/CalculatorDetails.astro';
 import { supplementalCalculatorDetails } from '../../../lib/calculators/guidance';
 import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import { calculatorDefinitions } from '../../../data/calculators';
 import AdSlot from '../../../components/common/AdSlot.astro';
 import AnnualLeaveAllowanceCalculator from '../../../components/calculators/AnnualLeaveAllowanceCalculator.astro';
 ---
 
 <CalculatorPage
   mode="custom"
-  title="연차수당 계산기 | CozyMoney 코지머니"
-  description="입사일·회계연도 기준 연차일수와 근로시간·통상임금을 반영해 예상 연차수당을 계산합니다."
-  canonical="https://cozymoney.kr/calculators/vacation/"
+  title={definition.title}
+  description={definition.description}
+  canonical={definition.canonical}
 >
   <main class="cm-container" py="10 md:14 lg:18">
     <nav aria-label="사이트 경로" mb="5" text="xs sm:sm" text-text-muted dark="text-dark-text-muted">
