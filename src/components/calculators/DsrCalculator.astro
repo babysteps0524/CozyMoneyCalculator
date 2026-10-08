@@ -239,14 +239,17 @@
 
     const calc = () => {
       const income = readCalculatorNumber(root, 'income');
-      const total =
-        readCalculatorNumber(root, 'debt') +
-        readCalculatorNumber(root, 'newdebt');
+      const debt = readCalculatorNumber(root, 'debt');
+      const newDebt = readCalculatorNumber(root, 'newdebt');
+      const target = readCalculatorNumber(root, 'rate');
+      const total = debt + newDebt;
+      const currentDsr = income === 0 ? NaN : (debt / income) * 100;
       const dsr = income === 0 ? NaN : (total / income) * 100;
+
       out.textContent = Number.isFinite(dsr)
         ? formatCalculatorNumber(dsr, 2) + '%'
         : '-';
-      detail.textContent = `현재 대출만 반영한 DSR: ${formatCalculatorNumber(income === 0 ? NaN : (readCalculatorNumber(root, 'debt') / income) * 100, 2)}%. 새 대출 포함: ${formatCalculatorNumber(dsr, 2)}%. 입력한 목표 기준: ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}%.`;
+      detail.textContent = `현재 대출만 반영한 DSR: ${formatCalculatorNumber(currentDsr, 2)}%. 새 대출 포함: ${formatCalculatorNumber(dsr, 2)}%. 입력한 목표 기준: ${formatCalculatorNumber(target, 2)}%.`;
     };
 
     const reset = () => {
