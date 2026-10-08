@@ -501,11 +501,8 @@
     formatWon,
     type SavingsType,
   } from '../../lib/calculators/savings';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const form = document.querySelector<HTMLFormElement>('#savings-form');
   const depositTab = document.querySelector<HTMLButtonElement>('#deposit-tab');
@@ -669,8 +666,7 @@
         copy.textContent = '복사 실패';
       }
     });
-    bindNumberControls(form);
-    bindLiveCalculation(form, render);
+    bindCalculatorInputs(form, render);
     setType(type);
     setInterestMethod(interestMethod);
   }
