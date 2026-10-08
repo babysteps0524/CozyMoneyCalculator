@@ -3,8 +3,8 @@
 
 <div data-calculator="weekly">
   <div id="fields" grid="~ cols-1 md:cols-2" gap="4">
-    <label class="cm-field">
-      <span class="cm-label">시급</span>
+    <div class="cm-field">
+      <label class="cm-label" for="hourly">시급</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -48,9 +48,9 @@
           +
         </button>
       </div>
-    </label>
-    <label class="cm-field">
-      <span class="cm-label">주 소정근로시간</span>
+    </div>
+    <div class="cm-field">
+      <label class="cm-label" for="hours">주 소정근로시간</label>
       <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
         <button
           type="button"
@@ -94,7 +94,7 @@
           +
         </button>
       </div>
-    </label>
+    </div>
   </div>
   <div
     id="result"
