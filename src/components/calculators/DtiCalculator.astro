@@ -396,20 +396,27 @@
         만기일시: 'maturity',
       };
       const methodLabel = getCalculatorField(root, 'mortgageMethod')?.value ?? '원리금균등';
+      const annualIncome = readCalculatorNumber(root, 'income');
+      const mortgageAmount = readCalculatorNumber(root, 'mortgageAmount');
+      const mortgageRate = readCalculatorNumber(root, 'mortgageRate');
+      const mortgageYears = readCalculatorNumber(root, 'mortgageYears');
+      const otherDebtAmount = readCalculatorNumber(root, 'otherDebt');
+      const otherDebtRate = readCalculatorNumber(root, 'otherRate');
+      const targetDti = readCalculatorNumber(root, 'rate');
       const result = calculateDti({
-        annualIncome: readCalculatorNumber(root, 'income'),
-        mortgageAmount: readCalculatorNumber(root, 'mortgageAmount'),
-        mortgageRate: readCalculatorNumber(root, 'mortgageRate'),
-        mortgageYears: readCalculatorNumber(root, 'mortgageYears'),
+        annualIncome,
+        mortgageAmount,
+        mortgageRate,
+        mortgageYears,
         mortgageMethod: methodMap[methodLabel] ?? 'equalPayment',
-        otherDebtAmount: readCalculatorNumber(root, 'otherDebt'),
-        otherDebtRate: readCalculatorNumber(root, 'otherRate'),
-        targetDti: readCalculatorNumber(root, 'rate'),
+        otherDebtAmount,
+        otherDebtRate,
+        targetDti,
       });
       out.textContent = formatCalculatorNumber(result.dti, 2) + '%';
       const status = result.withinTarget
-        ? `목표 DTI ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}% 이내`
-        : `목표 DTI ${formatCalculatorNumber(readCalculatorNumber(root, 'rate'), 2)}% 초과`;
+        ? `목표 DTI ${formatCalculatorNumber(targetDti, 2)}% 이내`
+        : `목표 DTI ${formatCalculatorNumber(targetDti, 2)}% 초과`;
       detail.textContent = `주택담보대출 연간 원리금: ${formatCalculatorWon(result.annualMortgagePayment)} · 기타 대출 연간 이자: ${formatCalculatorWon(result.annualOtherInterest)} · 연간 상환부담: ${formatCalculatorWon(result.annualDebtService)} · 상환방식: ${methodLabel} · ${status} · 목표 DTI 기준 연간 여유액: ${formatCalculatorWon(result.headroom)}`;
     };
 
