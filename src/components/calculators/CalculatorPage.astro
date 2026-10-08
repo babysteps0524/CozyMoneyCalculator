@@ -92,7 +92,7 @@ const pageTitle = isCustom ? title : `${title} | CozyMoney 코지머니`;
         <CalculatorShell
           title={title}
           description={description}
-          guidance={guidance}
+          guidance={guidance!}
         >
           <slot />
         </CalculatorShell>
