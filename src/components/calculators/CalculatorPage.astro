@@ -34,7 +34,7 @@ const {
 } = Astro.props;
 
 const isCustom = mode === 'custom';
-const pageTitle = isCustom ? title : `${title} | CozyMoney 코지머니`;
+const pageTitle = title.includes('CozyMoney') ? title : `${title} | CozyMoney 코지머니`;
 ---
 
 <BaseLayout title={pageTitle} description={description} canonical={canonical}>
