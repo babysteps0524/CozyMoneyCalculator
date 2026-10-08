@@ -84,6 +84,10 @@
               class="cm-input"
               pr="14"
               aria-describedby="legal-taxable-help"
+              data-number-input
+              data-step="1000000"
+              data-min="0"
+              data-decimal="false"
             />
             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">
               원
@@ -134,6 +138,10 @@
               class="cm-input"
               pr="14"
               aria-describedby="legal-stated-help"
+              data-number-input
+              data-step="1000000"
+              data-min="0"
+              data-decimal="false"
             />
             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-muted dark:text-dark-text-muted">
               원
@@ -349,6 +357,8 @@
 </div>
 
 <script>
+  import { bindNumberControls, parseNumber } from '../../lib/calculators/number-input';
+
   type FeeType =
     | 'ownership'
     | 'preservation'
@@ -402,15 +412,7 @@
     const won = (value: number) =>
       new Intl.NumberFormat('ko-KR').format(Math.round(value)) + '원';
 
-    const numberValue = (input: HTMLInputElement) =>
-      Number(input.value.replace(/[^0-9]/g, '')) || 0;
-
-    const formatInput = (input: HTMLInputElement) => {
-      const value = input.value.replace(/[^0-9]/g, '');
-      input.value = value
-        ? new Intl.NumberFormat('ko-KR').format(Number(value))
-        : '';
-    };
+    const numberValue = (input: HTMLInputElement) => parseNumber(input.value);
 
     const progressive = (
       amount: number,
@@ -550,11 +552,6 @@
       });
     };
 
-    const setAmount = (input: HTMLInputElement, delta: number) => {
-      const next = Math.max(0, numberValue(input) + delta);
-      input.value = next > 0 ? new Intl.NumberFormat('ko-KR').format(next) : '';
-    };
-
     const calculate = () => {
       const taxableBase = numberValue(taxableInput);
       const statedAmount = numberValue(statedInput);
@@ -627,41 +624,11 @@
         });
       });
 
+    bindNumberControls(root);
+
     [taxableInput, statedInput].forEach((input) => {
-      input.addEventListener('input', () => {
-        formatInput(input);
-        calculate();
-      });
-      formatInput(input);
+      input.addEventListener('input', calculate);
     });
-
-    const bindStepper = (
-      input: HTMLInputElement,
-      decreaseId: string,
-      increaseId: string,
-    ) => {
-      root
-        .querySelector<HTMLButtonElement>(decreaseId)
-        ?.addEventListener('click', () => {
-          setAmount(input, -1_000_000);
-        });
-      root
-        .querySelector<HTMLButtonElement>(increaseId)
-        ?.addEventListener('click', () => {
-          setAmount(input, 1_000_000);
-        });
-    };
-
-    bindStepper(
-      taxableInput,
-      '#legal-taxable-decrease',
-      '#legal-taxable-increase',
-    );
-    bindStepper(
-      statedInput,
-      '#legal-stated-decrease',
-      '#legal-stated-increase',
-    );
 
     root
       .querySelector<HTMLButtonElement>('#legal-add-fee')
