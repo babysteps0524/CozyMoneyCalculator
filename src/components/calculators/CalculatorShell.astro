@@ -3,26 +3,27 @@ import AdSlot from '../common/AdSlot.astro';
 import CalculatorDetails from './CalculatorDetails.astro';
 import type { CalculatorGuidance } from '../../lib/calculators/guidance';
 
-interface Props {
-  title?: string;
-  description?: string;
-  guidance?: CalculatorGuidance;
-  mode?: 'standard' | 'custom';
-}
+type Props =
+  | {
+      mode: 'custom';
+      title?: never;
+      description?: never;
+      guidance?: never;
+    }
+  | {
+      mode?: 'standard';
+      title: string;
+      description: string;
+      guidance: CalculatorGuidance;
+    };
 
-const {
-  title = '',
-  description = '',
-  guidance,
-  mode = 'standard',
-} = Astro.props;
-
+const { mode = 'standard' } = Astro.props;
 const isCustom = mode === 'custom';
 ---
 
 {isCustom ? (
   <slot />
-) : guidance ? (
+) : (
   <>
     <section
       class="cm-card"
@@ -41,7 +42,7 @@ const isCustom = mode === 'custom';
           text="xl md:2xl"
           font="800"
         >
-          {title}
+          {Astro.props.title}
         </h2>
         <p
           m="0"
@@ -51,7 +52,7 @@ const isCustom = mode === 'custom';
           text-text-muted
           dark="text-dark-text-muted"
         >
-          {description}
+          {Astro.props.description}
         </p>
       </header>
 
@@ -112,6 +113,6 @@ const isCustom = mode === 'custom';
       </p>
     </section>
 
-    <CalculatorDetails content={guidance} />
+    <CalculatorDetails content={Astro.props.guidance} />
   </>
 ) : null}
