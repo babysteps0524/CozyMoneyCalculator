@@ -26,7 +26,7 @@ describe('number input utilities', () => {
   });
 
   test('stepNumberInput clamps values to min and max', () => {
-    const input = document.createElement('input');
+    const input = createNumberInput();
     input.value = '100';
     input.dataset.step = '50';
     input.dataset.min = '100';
@@ -46,7 +46,7 @@ describe('number input utilities', () => {
   });
 
   test('stepNumberInput falls back from invalid step settings', () => {
-    const input = document.createElement('input');
+    const input = createNumberInput();
     input.value = '100';
     input.dataset.step = 'invalid';
     input.dataset.min = '0';
@@ -55,4 +55,13 @@ describe('number input utilities', () => {
     stepNumberInput(input, 1);
     expect(input.value).toBe('101');
   });
+
+  function createNumberInput() {
+    const input = {
+      value: '',
+      dataset: {} as Record<string, string>,
+      dispatchEvent: () => true,
+    } as unknown as HTMLInputElement;
+    return input;
+  }
 });
