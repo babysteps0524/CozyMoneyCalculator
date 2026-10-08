@@ -177,8 +177,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
                 >
                   <button
                     type="button"
-                    data-control="dependents"
-                    data-step="-1"
+                    data-step-direction="-1"
                     aria-label="부양가족 감소"
                     class="cm-step-button"
                   >
@@ -198,8 +197,7 @@ import AdSlot from '../../../components/common/AdSlot.astro';
                   />
                   <button
                     type="button"
-                    data-control="dependents"
-                    data-step="1"
+                    data-step-direction="1"
                     aria-label="부양가족 증가"
                     class="cm-step-button"
                   >
@@ -830,26 +828,6 @@ import AdSlot from '../../../components/common/AdSlot.astro';
         });
       });
 
-    document
-      .querySelectorAll<HTMLButtonElement>('[data-control]')
-      .forEach((button) => {
-        button.addEventListener('click', () => {
-          const id = button.dataset.control!;
-          const step = Number(button.dataset.step ?? 1);
-          const input = document.querySelector<HTMLInputElement>(`#${id}`);
-          if (!input) return;
-
-          const current = parseNumber(input.value);
-          const min = Number(input.dataset.min ?? 0);
-          const max =
-            id === 'dependents'
-              ? 20
-              : Math.min(20, Math.max(0, current + step));
-          input.value = String(Math.min(max, Math.max(min, current + step)));
-          input.dispatchEvent(new Event('input', { bubbles: true }));
-          render();
-        });
-      });
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
