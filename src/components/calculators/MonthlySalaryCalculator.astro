@@ -469,12 +469,12 @@
 
     try {
       const result = calculateSalary({
-        salary: readCalculatorNumber(form, 'salary'),
+        salary: readCalculatorNumber(form!, 'salary'),
         salaryType: 'monthly',
         retirementType: 'separate',
-        taxFreeMonthly: readCalculatorNumber(form, 'tax-free'),
-        dependents: readCalculatorNumber(form, 'dependents'),
-        children8To20: readCalculatorNumber(form, 'children'),
+        taxFreeMonthly: readCalculatorNumber(form!, 'tax-free'),
+        dependents: readCalculatorNumber(form!, 'dependents'),
+        children8To20: readCalculatorNumber(form!, 'children'),
         age60OrOlder: radio('#age-60')?.checked ?? false,
       });
 
