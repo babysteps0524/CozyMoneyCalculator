@@ -453,11 +453,8 @@
 
 <script>
   import { calculateSalary, formatWon } from '../../lib/calculators/salary';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
 
   const form = document.querySelector<HTMLFormElement>('#salary-form');
   const salary = document.querySelector<HTMLInputElement>('#salary');
@@ -601,8 +598,7 @@
       }
     });
 
-    bindNumberControls(form);
-    bindLiveCalculation(form, render, { change: true });
+    bindCalculatorInputs(form, render, { change: true });
     setSelectedStyles();
     render();
   }
