@@ -570,11 +570,8 @@
     formatWon,
     type LoanRepaymentType,
   } from '../../lib/calculators/loan';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const form = document.querySelector<HTMLFormElement>('#loan-form');
   const principalInput = document.querySelector<HTMLInputElement>('#principal');
@@ -759,8 +756,7 @@
       }
     });
 
-    bindNumberControls(form);
-    bindLiveCalculation(form, renderResult);
+    bindCalculatorInputs(form, renderResult);
     renderResult();
   }
 </script>
