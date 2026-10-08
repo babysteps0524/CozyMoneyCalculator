@@ -8,7 +8,7 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<div min-w="0" w="full" max-w="4xl" mt="10 md:14">
+<div min-w="0" w="full">
   {content.intro ? (
     <section
       w="full"
@@ -120,6 +120,7 @@ const { content } = Astro.props;
       </div>
     </section>
   ) : null}
+
   {content.cautions?.length ? (
     <section
       w="full"
@@ -220,7 +221,7 @@ const { content } = Astro.props;
             text-text-muted
             dark="text-dark-text-muted"
           >
-            {content.sources?.map((source) => (
+            {content.sources.map((source) => (
               <li>
                 <a
                   href={source.href}
