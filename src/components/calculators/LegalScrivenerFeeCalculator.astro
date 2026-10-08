@@ -647,31 +647,33 @@
         showToast('계산되었습니다.');
       });
 
+    const reset = () => {
+      property = 'house';
+      items = [{ id: String(nextId), type: 'ownership' }];
+      nextId += 1;
+      taxableInput.value = '400,000,000';
+      statedInput.value = '600,000,000';
+      publicCostsInput.checked = true;
+      vatInput.checked = true;
+
+      root
+        .querySelectorAll<HTMLButtonElement>('[data-property]')
+        .forEach((button) => {
+          const active = button.dataset.property === property;
+          button.setAttribute('aria-pressed', String(active));
+          button.className = active
+            ? 'cm-button-primary p-3 text-sm sm:text-base'
+            : 'cm-button-secondary p-3 text-sm sm:text-base';
+        });
+
+      renderItems();
+      calculate();
+      showToast('초기화되었습니다.');
+    };
+
     root
       .querySelector<HTMLButtonElement>('#legal-reset')
-      ?.addEventListener('click', () => {
-        property = 'house';
-        items = [{ id: String(nextId), type: 'ownership' }];
-        nextId += 1;
-        taxableInput.value = '400,000,000';
-        statedInput.value = '600,000,000';
-        publicCostsInput.checked = true;
-        vatInput.checked = true;
-
-        root
-          .querySelectorAll<HTMLButtonElement>('[data-property]')
-          .forEach((button) => {
-            const active = button.dataset.property === property;
-            button.setAttribute('aria-pressed', String(active));
-            button.className = active
-              ? 'cm-button-primary p-3 text-sm sm:text-base'
-              : 'cm-button-secondary p-3 text-sm sm:text-base';
-          });
-
-        renderItems();
-        calculate();
-        showToast('초기화되었습니다.');
-      });
+      ?.addEventListener('click', reset);
 
     root
       .querySelector<HTMLButtonElement>('#legal-copy')
