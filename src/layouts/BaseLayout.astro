@@ -30,23 +30,6 @@ const { title, description, canonical = 'https://cozymoney.kr/' } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <link
-      rel="preload"
-      href="/fonts/PretendardVariable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <style is:global>
-      @font-face {
-        font-family: 'Pretendard Variable';
-        src: url('/fonts/PretendardVariable.woff2') format('woff2');
-        font-weight: 45 920;
-        font-style: normal;
-        font-display: swap;
-      }
-    </style>
-
     <title>{title}</title>
     {import.meta.env.PUBLIC_ADSENSE_CLIENT && (
       <meta
