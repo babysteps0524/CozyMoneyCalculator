@@ -396,7 +396,7 @@
     calculateSeverance,
     getSeverancePeriod,
   } from '../../lib/calculators/severance';
-  import { parseNumber } from '../../lib/calculators/number-input';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   const root = document.querySelector<HTMLElement>(
@@ -463,39 +463,23 @@
       error.hidden = true;
       try {
         const monthlyWages: [number, number, number] = [
-          parseNumber(
-            ($('severance-wage-0') as HTMLInputElement | null)?.value ?? '0',
-          ),
-          parseNumber(
-            ($('severance-wage-1') as HTMLInputElement | null)?.value ?? '0',
-          ),
-          parseNumber(
-            ($('severance-wage-2') as HTMLInputElement | null)?.value ?? '0',
-          ),
+          readCalculatorNumber(root, 'severance-wage-0'),
+          readCalculatorNumber(root, 'severance-wage-1'),
+          readCalculatorNumber(root, 'severance-wage-2'),
         ];
 
         const result = calculateSeverance({
           startDate: start.value,
           retirementDate: retirement.value,
           monthlyWages,
-          annualBonus: parseNumber(
-            ($('severance-bonus') as HTMLInputElement).value,
-          ),
-          annualLeaveAllowance: parseNumber(
-            ($('severance-leave') as HTMLInputElement).value,
-          ),
+          annualBonus: readCalculatorNumber(root, 'severance-bonus'),
+          annualLeaveAllowance: readCalculatorNumber(root, 'severance-leave'),
           ordinaryDailyWage:
-            parseNumber(($('severance-ordinary') as HTMLInputElement).value) ||
+            readCalculatorNumber(root, 'severance-ordinary') ||
             undefined,
-          weeklyHours: parseNumber(
-            ($('severance-hours') as HTMLInputElement).value,
-          ),
-          excludedAverageWageDays: parseNumber(
-            ($('severance-excluded-days') as HTMLInputElement).value,
-          ),
-          excludedAverageWageAmount: parseNumber(
-            ($('severance-excluded-amount') as HTMLInputElement).value,
-          ),
+          weeklyHours: readCalculatorNumber(root, 'severance-hours'),
+          excludedAverageWageDays: readCalculatorNumber(root, 'severance-excluded-days'),
+          excludedAverageWageAmount: readCalculatorNumber(root, 'severance-excluded-amount'),
         });
 
         value.textContent = won(result.severancePay);
