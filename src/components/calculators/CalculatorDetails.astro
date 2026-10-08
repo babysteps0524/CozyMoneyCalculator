@@ -8,7 +8,7 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<div w="full" max-w="4xl" mt="10 md:14">
+<div min-w="0" w="full" max-w="4xl" mt="10 md:14">
   {content.intro ? (
     <section
       w="full"
