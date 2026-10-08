@@ -1,4 +1,4 @@
-<section data-vat-calculator class="cm-card" p="5 md:7">
+<div data-vat-calculator min-w="0" w="full">
   <div>
     <p m="0" text="sm" font="700" text-primary>
       VAT CALCULATOR
@@ -219,14 +219,11 @@
       dark="text-dark-text-muted"
     ></div>
   </div>
-</section>
+</div>
 
 <script>
-  import { bindLiveCalculation } from '../../lib/calculators/runtime';
-  import {
-    bindNumberControls,
-    parseNumber,
-  } from '../../lib/calculators/number-input';
+  import { bindCalculatorInputs } from '../../lib/calculators/runtime';
+  import { parseNumber } from '../../lib/calculators/number-input';
 
   const root = document.querySelector<HTMLElement>('[data-vat-calculator]');
 
@@ -405,12 +402,11 @@
     [mode, unit, roundMode].forEach((input) => {
       input.addEventListener('change', updateMode);
     });
-    bindLiveCalculation(root, calculate, { change: true });
+    bindCalculatorInputs(root, calculate, { change: true });
 
     root.querySelector('#vat-calculate')?.addEventListener('click', calculate);
     root.querySelector('#vat-reset')?.addEventListener('click', reset);
 
-    bindNumberControls(root);
     updateMode();
   }
 </script>
