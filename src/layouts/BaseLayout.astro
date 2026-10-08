@@ -25,11 +25,15 @@ const { title, description, canonical = 'https://cozymoney.kr/' } = Astro.props;
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="robots" content="index, follow" />
+    <meta property="og:site_name" content="CozyMoney 코지머니" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <title>{title}</title>
     {import.meta.env.PUBLIC_ADSENSE_CLIENT && (
       <meta
