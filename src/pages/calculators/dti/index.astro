@@ -6,13 +6,7 @@ import { calculatorDefinitions } from '../../../data/calculators';
 const definition = calculatorDefinitions.dti;
 ---
 
-<CalculatorPage
-  title={definition.title}
-  description={definition.description}
-  canonical={definition.canonical}
-  category={definition.category}
-  guidance={definition.guidance!}
->
+<CalculatorPage definition={definition}>
   <DtiCalculator />
   <section slot="after" max-w="4xl" mt="10 md:14">
     <h2 class="cm-section-title">계산 결과를 확인하는 방법</h2>
