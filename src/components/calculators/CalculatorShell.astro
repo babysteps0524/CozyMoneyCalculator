@@ -1,18 +1,14 @@
 ---
-import type { CalculatorGuidance } from '../../lib/calculators/guidance';
-
 type Props =
   | {
       mode: 'custom';
       title?: never;
       description?: never;
-      guidance?: never;
     }
   | {
       mode?: 'standard';
       title: string;
       description: string;
-      guidance: CalculatorGuidance;
     };
 
 const { mode = 'standard' } = Astro.props;
