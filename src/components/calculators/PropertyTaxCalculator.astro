@@ -200,9 +200,8 @@
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
+  import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
-
-  const numberValue = (value: string) => Number(value.replace(/,/g, '') || 0);
   const root = document.querySelector<HTMLElement>('[data-property-tax]');
 
   if (root) {
@@ -347,14 +346,8 @@
         list.querySelectorAll<HTMLElement>('[data-property-asset]'),
       ).map((article, index) => ({
         id: article.dataset.propertyAsset || String(index + 1),
-        assessedValue: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.value ||
-            '',
-        ),
-        ownershipShare: numberValue(
-          article.querySelector<HTMLInputElement>('[id^="share-"]')?.value ||
-            '100',
-        ),
+        assessedValue: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.id || ''),
+        ownershipShare: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="share-"]')?.id || ''),
         previousPropertyTax: numberValue(
           article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')
             ?.value || '',
