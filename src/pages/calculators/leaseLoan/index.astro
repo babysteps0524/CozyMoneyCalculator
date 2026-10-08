@@ -6,12 +6,6 @@ import { calculatorDefinitions } from '../../../data/calculators';
 const definition = calculatorDefinitions.leaseLoan;
 ---
 
-<CalculatorPage
-  title={definition.title}
-  description={definition.description}
-  canonical={definition.canonical}
-  category={definition.category}
-  guidance={definition.guidance!}
->
+<CalculatorPage definition={definition}>
   <LeaseLoanCalculator />
 </CalculatorPage>
