@@ -21,7 +21,9 @@ const { mode = 'standard' } = Astro.props;
 const isCustom = mode === 'custom';
 ---
 
-{isCustom ? <slot /> : (
+{isCustom ? (
+  <slot />
+) : (
   <>
     <section
       class="cm-card"
@@ -111,6 +113,8 @@ const isCustom = mode === 'custom';
       </p>
     </section>
 
-    {Astro.props.guidance ? (\n      <CalculatorDetails content={Astro.props.guidance} />\n    ) : null}
+    {Astro.props.guidance ? (
+      <CalculatorDetails content={Astro.props.guidance} />
+    ) : null}
   </>
 )}
