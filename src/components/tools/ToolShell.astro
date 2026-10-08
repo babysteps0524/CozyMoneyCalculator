@@ -451,6 +451,7 @@ const { kind, title, description } = Astro.props;
         </div>
       )}
     </div>
+    </div>
 
     <aside class="cm-card" min-w="0" p="5 md:p-6" h="fit">
       <p m="0" text="sm" font="700" text-primary>
@@ -582,7 +583,7 @@ const { kind, title, description } = Astro.props;
             (6 - odd) +
             ' · 합 ' +
             nums.reduce((a, b) => a + b, 0) +
-            '</span></div><div flex="~" wrap gap="2" mt="3">' +
+            '</span></div><div flex="~ wrap" gap="2" mt="3">' +
             nums
               .map((n) => '<span class="cm-number-ball">' + n + '</span>')
               .join('') +
