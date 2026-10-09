@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountPercentCalculatorTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
+  const { $, value, number, format, listen } = helpers;
   const calc = () => {
           const a = number('percent-a'),
             b = number('percent-b'),
@@ -19,6 +19,6 @@ export function mountPercentCalculatorTool(root: HTMLElement, helpers: ToolHelpe
           if (type === 'increase') text = format(a * (1 + b / 100), 2);
           out.textContent = text;
         };
-        $('percent-calc')?.addEventListener('click', calc);
+        listen('percent-calc', 'click', calc);
         calc();
 }
