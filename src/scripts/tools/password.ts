@@ -7,7 +7,7 @@ const CHARACTER_SETS = {
   symbol: '!@#$%^&*()-_=+[]{}?',
 } as const;
 
-export function mountPasswordTool(root: HTMLElement, helpers: ToolHelpers): void {
+export function mountPasswordTool(_root: HTMLElement, helpers: ToolHelpers): void {
   const { $, number, copy, secureRandom, listen } = helpers;
 
   const generate = () => {
