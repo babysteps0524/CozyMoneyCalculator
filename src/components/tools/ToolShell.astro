@@ -22,435 +22,461 @@ const { kind, title, description } = Astro.props;
 <section class="cm-tool-shell" data-tool={kind}>
   <div class="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
     <div min-w="0">
-    <div class="cm-card p-5 md:p-7">
-      {kind === 'lotto' && (
-        <div>
-          <div flex="~ wrap" items-center justify-between gap="3" mb="5">
-            <div>
-              <p m="0" text="sm" font="700" text-primary>
-                RANDOM TOOL
-              </p>
-              <h2 m="0" mt="1" text="xl md:2xl" font="800">
-                로또 번호 생성
-              </h2>
+      <div class="cm-card p-5 md:p-7">
+        {kind === 'lotto' && (
+          <div>
+            <div flex="~ wrap" items-center justify-between gap="3" mb="5">
+              <div>
+                <p m="0" text="sm" font="700" text-primary>
+                  RANDOM TOOL
+                </p>
+                <h2 m="0" mt="1" text="xl md:2xl" font="800">
+                  로또 번호 생성
+                </h2>
+              </div>
+              <select
+                id="lotto-count"
+                class="cm-input"
+                w="auto"
+                min-w="32"
+                aria-label="게임 수"
+              >
+                <option value="1">1게임</option>
+                <option value="3">3게임</option>
+                <option value="5">5게임</option>
+                <option value="10">10게임</option>
+              </select>
             </div>
-            <select
-              id="lotto-count"
-              class="cm-input"
-              w="auto"
-              min-w="32"
-              aria-label="게임 수"
+            <div id="lotto-results" grid="~ cols-1 md:cols-2" gap="3"></div>
+            <div flex="~ wrap" gap="2" mt="5">
+              <button
+                id="lotto-generate"
+                class="cm-button-primary"
+                px="5"
+                py="3"
+              >
+                새 번호 생성
+              </button>
+              <button id="lotto-copy" class="cm-button-secondary" px="5" py="3">
+                결과 복사
+              </button>
+            </div>
+            <p
+              id="lotto-note"
+              m="0"
+              mt="4"
+              text="sm"
+              text-text-muted
+              dark="text-dark-text-muted"
             >
-              <option value="1">1게임</option>
-              <option value="3">3게임</option>
-              <option value="5">5게임</option>
-              <option value="10">10게임</option>
-            </select>
+              무작위로 1~45에서 6개를 선택합니다. 당첨 확률을 높이는 기능은
+              아닙니다.
+            </p>
           </div>
-          <div id="lotto-results" grid="~ cols-1 md:cols-2" gap="3"></div>
-          <div flex="~ wrap" gap="2" mt="5">
-            <button id="lotto-generate" class="cm-button-primary" px="5" py="3">
-              새 번호 생성
-            </button>
-            <button id="lotto-copy" class="cm-button-secondary" px="5" py="3">
-              결과 복사
-            </button>
-          </div>
-          <p
-            id="lotto-note"
-            m="0"
-            mt="4"
-            text="sm"
-            text-text-muted
-            dark="text-dark-text-muted"
-          >
-            무작위로 1~45에서 6개를 선택합니다. 당첨 확률을 높이는 기능은
-            아닙니다.
-          </p>
-        </div>
-      )}
+        )}
 
-      {kind === 'random' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            RANDOM NUMBER
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            랜덤 숫자 생성기
-          </h2>
-          <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label>
-              <span class="cm-label">최솟값</span>
-              <input id="random-min" class="cm-input" type="number" value="1" />
-            </label>
-            <label>
-              <span class="cm-label">최댓값</span>
-              <input
-                id="random-max"
+        {kind === 'random' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              RANDOM NUMBER
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              랜덤 숫자 생성기
+            </h2>
+            <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
+              <label>
+                <span class="cm-label">최솟값</span>
+                <input
+                  id="random-min"
+                  class="cm-input"
+                  type="number"
+                  value="1"
+                />
+              </label>
+              <label>
+                <span class="cm-label">최댓값</span>
+                <input
+                  id="random-max"
+                  class="cm-input"
+                  type="number"
+                  value="100"
+                />
+              </label>
+            </div>
+            <div
+              id="random-result"
+              mt="6"
+              rounded="2xl"
+              bg="surface-muted"
+              p="6"
+              text="center"
+              dark="bg-dark-surface-subtle"
+            >
+              <span text="4xl md:5xl" font="800">
+                -
+              </span>
+            </div>
+            <button
+              id="random-generate"
+              class="cm-button-primary"
+              w="full"
+              mt="4"
+              py="3"
+            >
+              랜덤 숫자 생성
+            </button>
+          </div>
+        )}
+
+        {kind === 'picker' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              RANDOM PICKER
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              랜덤 추첨기
+            </h2>
+            <label block mt="6">
+              <span class="cm-label">추첨할 항목</span>
+              <textarea
+                id="picker-items"
                 class="cm-input"
-                type="number"
-                value="100"
-              />
+                rows="8"
+                placeholder="한 줄에 하나씩 입력하세요.&#10;김철수&#10;이영희&#10;박민수"
+              ></textarea>
             </label>
+            <div
+              id="picker-result"
+              mt="5"
+              rounded="2xl"
+              bg="surface-muted"
+              p="6"
+              text="center"
+              dark="bg-dark-surface-subtle"
+            >
+              <span text="2xl" font="800">
+                추첨 결과가 여기에 표시됩니다.
+              </span>
+            </div>
+            <div grid="~ cols-2" gap="2" mt="4">
+              <button id="picker-draw" class="cm-button-primary" py="3">
+                1명 추첨
+              </button>
+              <button id="picker-copy" class="cm-button-secondary" py="3">
+                결과 복사
+              </button>
+            </div>
           </div>
-          <div
-            id="random-result"
-            mt="6"
-            rounded="2xl"
-            bg="surface-muted"
-            p="6"
-            text="center"
-            dark="bg-dark-surface-subtle"
-          >
-            <span text="4xl md:5xl" font="800">
-              -
-            </span>
-          </div>
-          <button
-            id="random-generate"
-            class="cm-button-primary"
-            w="full"
-            mt="4"
-            py="3"
-          >
-            랜덤 숫자 생성
-          </button>
-        </div>
-      )}
+        )}
 
-      {kind === 'picker' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            RANDOM PICKER
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            랜덤 추첨기
-          </h2>
-          <label block mt="6">
-            <span class="cm-label">추첨할 항목</span>
-            <textarea
-              id="picker-items"
-              class="cm-input"
-              rows="8"
-              placeholder="한 줄에 하나씩 입력하세요.&#10;김철수&#10;이영희&#10;박민수"
-            ></textarea>
-          </label>
-          <div
-            id="picker-result"
-            mt="5"
-            rounded="2xl"
-            bg="surface-muted"
-            p="6"
-            text="center"
-            dark="bg-dark-surface-subtle"
-          >
-            <span text="2xl" font="800">
-              추첨 결과가 여기에 표시됩니다.
-            </span>
-          </div>
-          <div grid="~ cols-2" gap="2" mt="4">
-            <button id="picker-draw" class="cm-button-primary" py="3">
-              1명 추첨
-            </button>
-            <button id="picker-copy" class="cm-button-secondary" py="3">
-              결과 복사
-            </button>
-          </div>
-        </div>
-      )}
-
-      {kind === 'password' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            PASSWORD TOOL
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            비밀번호 생성기
-          </h2>
-          <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label>
-              <span class="cm-label">길이</span>
-              <input
-                id="password-length"
-                class="cm-input"
-                type="number"
-                min="4"
-                max="128"
-                value="16"
-              />
-            </label>
-            <div>
-              <span class="cm-label">문자 구성</span>
-              <div flex="~ wrap" gap="3" text="sm">
-                <label flex="~" items-center gap="2">
-                  <input id="pw-upper" type="checkbox" checked /> 대문자
-                </label>
-                <label flex="~" items-center gap="2">
-                  <input id="pw-lower" type="checkbox" checked /> 소문자
-                </label>
-                <label flex="~" items-center gap="2">
-                  <input id="pw-number" type="checkbox" checked /> 숫자
-                </label>
-                <label flex="~" items-center gap="2">
-                  <input id="pw-symbol" type="checkbox" checked /> 기호
-                </label>
+        {kind === 'password' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              PASSWORD TOOL
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              비밀번호 생성기
+            </h2>
+            <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
+              <label>
+                <span class="cm-label">길이</span>
+                <input
+                  id="password-length"
+                  class="cm-input"
+                  type="number"
+                  min="4"
+                  max="128"
+                  value="16"
+                />
+              </label>
+              <div>
+                <span class="cm-label">문자 구성</span>
+                <div flex="~ wrap" gap="3" text="sm">
+                  <label flex="~" items-center gap="2">
+                    <input id="pw-upper" type="checkbox" checked /> 대문자
+                  </label>
+                  <label flex="~" items-center gap="2">
+                    <input id="pw-lower" type="checkbox" checked /> 소문자
+                  </label>
+                  <label flex="~" items-center gap="2">
+                    <input id="pw-number" type="checkbox" checked /> 숫자
+                  </label>
+                  <label flex="~" items-center gap="2">
+                    <input id="pw-symbol" type="checkbox" checked /> 기호
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
-          <div flex="~" gap="2" mt="5">
-            <input
-              id="password-result"
-              class="cm-input"
-              min-w="0"
-              flex="1"
-              readonly
-              value=""
-              aria-label="생성된 비밀번호"
-            />
+            <div flex="~" gap="2" mt="5">
+              <input
+                id="password-result"
+                class="cm-input"
+                min-w="0"
+                flex="1"
+                readonly
+                value=""
+                aria-label="생성된 비밀번호"
+              />
+              <button
+                id="password-copy"
+                class="cm-button-secondary"
+                whitespace="nowrap"
+                px="4"
+              >
+                복사
+              </button>
+            </div>
             <button
-              id="password-copy"
-              class="cm-button-secondary"
-              whitespace="nowrap"
-              px="4"
+              id="password-generate"
+              class="cm-button-primary"
+              w="full"
+              mt="3"
+              py="3"
             >
-              복사
+              비밀번호 생성
+            </button>
+            <p
+              m="0"
+              mt="4"
+              text="sm"
+              text-text-muted
+              dark="text-dark-text-muted"
+            >
+              민감한 비밀번호는 웹사이트에 입력한 뒤 저장하지 않는 것을
+              권장합니다.
+            </p>
+          </div>
+        )}
+
+        {kind === 'date' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              DATE CALCULATOR
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              날짜 계산기
+            </h2>
+            <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
+              <label>
+                <span class="cm-label">시작일</span>
+                <input id="date-start" class="cm-input" type="date" />
+              </label>
+              <label>
+                <span class="cm-label">종료일</span>
+                <input id="date-end" class="cm-input" type="date" />
+              </label>
+            </div>
+            <div
+              id="date-result"
+              mt="5"
+              rounded="2xl"
+              bg="surface-muted"
+              p="5"
+              dark="bg-dark-surface-subtle"
+            >
+              두 날짜를 선택하면 차이를 계산합니다.
+            </div>
+            <button
+              id="date-calc"
+              class="cm-button-primary"
+              w="full"
+              mt="4"
+              py="3"
+            >
+              계산하기
             </button>
           </div>
-          <button
-            id="password-generate"
-            class="cm-button-primary"
-            w="full"
-            mt="3"
-            py="3"
-          >
-            비밀번호 생성
-          </button>
-          <p m="0" mt="4" text="sm" text-text-muted dark="text-dark-text-muted">
-            민감한 비밀번호는 웹사이트에 입력한 뒤 저장하지 않는 것을
-            권장합니다.
-          </p>
-        </div>
-      )}
+        )}
 
-      {kind === 'date' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            DATE CALCULATOR
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            날짜 계산기
-          </h2>
-          <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label>
-              <span class="cm-label">시작일</span>
-              <input id="date-start" class="cm-input" type="date" />
+        {kind === 'dday' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              D-DAY
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              D-Day 계산기
+            </h2>
+            <label block mt="6">
+              <span class="cm-label">목표 날짜</span>
+              <input id="dday-date" class="cm-input" type="date" />
             </label>
-            <label>
-              <span class="cm-label">종료일</span>
-              <input id="date-end" class="cm-input" type="date" />
-            </label>
-          </div>
-          <div
-            id="date-result"
-            mt="5"
-            rounded="2xl"
-            bg="surface-muted"
-            p="5"
-            dark="bg-dark-surface-subtle"
-          >
-            두 날짜를 선택하면 차이를 계산합니다.
-          </div>
-          <button
-            id="date-calc"
-            class="cm-button-primary"
-            w="full"
-            mt="4"
-            py="3"
-          >
-            계산하기
-          </button>
-        </div>
-      )}
-
-      {kind === 'dday' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            D-DAY
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            D-Day 계산기
-          </h2>
-          <label block mt="6">
-            <span class="cm-label">목표 날짜</span>
-            <input id="dday-date" class="cm-input" type="date" />
-          </label>
-          <label block mt="4">
-            <span class="cm-label">목표 이름 (선택)</span>
-            <input
-              id="dday-name"
-              class="cm-input"
-              placeholder="시험, 여행, 기념일 등"
-            />
-          </label>
-          <div
-            id="dday-result"
-            mt="5"
-            rounded="2xl"
-            bg="surface-muted"
-            p="6"
-            text="center"
-            dark="bg-dark-surface-subtle"
-          >
-            목표 날짜를 선택하세요.
-          </div>
-          <button
-            id="dday-calc"
-            class="cm-button-primary"
-            w="full"
-            mt="4"
-            py="3"
-          >
-            D-Day 계산
-          </button>
-        </div>
-      )}
-
-      {kind === 'age' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            AGE CALCULATOR
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            나이 계산기
-          </h2>
-          <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
-            <label>
-              <span class="cm-label">생년월일</span>
-              <input id="age-birth" class="cm-input" type="date" />
-            </label>
-            <label>
-              <span class="cm-label">기준일</span>
-              <input id="age-asof" class="cm-input" type="date" />
-            </label>
-          </div>
-          <div
-            id="age-result"
-            mt="5"
-            rounded="2xl"
-            bg="surface-muted"
-            p="5"
-            dark="bg-dark-surface-subtle"
-          >
-            생년월일을 입력하세요.
-          </div>
-          <button
-            id="age-calc"
-            class="cm-button-primary"
-            w="full"
-            mt="4"
-            py="3"
-          >
-            나이 계산
-          </button>
-        </div>
-      )}
-
-      {kind === 'unit' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            UNIT CONVERTER
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            단위 변환기
-          </h2>
-          <div grid="~ cols-1 md:cols-3" gap="4" mt="6">
-            <label>
-              <span class="cm-label">분류</span>
-              <select id="unit-type" class="cm-input">
-                <option value="length">길이</option>
-                <option value="weight">무게</option>
-                <option value="temperature">온도</option>
-                <option value="area">넓이</option>
-                <option value="data">데이터</option>
-              </select>
-            </label>
-            <label>
-              <span class="cm-label">값</span>
-              <input id="unit-value" class="cm-input" type="number" value="1" />
-            </label>
-            <label>
-              <span class="cm-label">변환 방향</span>
-              <select id="unit-direction" class="cm-input"></select>
-            </label>
-          </div>
-          <div
-            id="unit-result"
-            mt="5"
-            rounded="2xl"
-            bg="surface-muted"
-            p="5"
-            text="center"
-            dark="bg-dark-surface-subtle"
-          >
-            변환 결과
-          </div>
-        </div>
-      )}
-
-      {kind === 'percent' && (
-        <div>
-          <p m="0" text="sm" font="700" text-primary>
-            PERCENT CALCULATOR
-          </p>
-          <h2 m="0" mt="1" text="xl md:2xl" font="800">
-            퍼센트 계산기
-          </h2>
-          <label block mt="6">
-            <span class="cm-label">계산 종류</span>
-            <select id="percent-type" class="cm-input">
-              <option value="of">A의 B%는 얼마인가요?</option>
-              <option value="change">A에서 B로 바뀌면 몇 % 변했나요?</option>
-              <option value="discount">A에서 B% 할인하면 얼마인가요?</option>
-              <option value="increase">A에 B%를 더하면 얼마인가요?</option>
-            </select>
-          </label>
-          <div grid="~ cols-1 md:cols-2" gap="4" mt="4">
-            <label>
-              <span class="cm-label">A</span>
+            <label block mt="4">
+              <span class="cm-label">목표 이름 (선택)</span>
               <input
-                id="percent-a"
+                id="dday-name"
                 class="cm-input"
-                type="number"
-                value="100"
+                placeholder="시험, 여행, 기념일 등"
               />
             </label>
-            <label>
-              <span class="cm-label">B (%) 또는 값</span>
-              <input id="percent-b" class="cm-input" type="number" value="20" />
+            <div
+              id="dday-result"
+              mt="5"
+              rounded="2xl"
+              bg="surface-muted"
+              p="6"
+              text="center"
+              dark="bg-dark-surface-subtle"
+            >
+              목표 날짜를 선택하세요.
+            </div>
+            <button
+              id="dday-calc"
+              class="cm-button-primary"
+              w="full"
+              mt="4"
+              py="3"
+            >
+              D-Day 계산
+            </button>
+          </div>
+        )}
+
+        {kind === 'age' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              AGE CALCULATOR
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              나이 계산기
+            </h2>
+            <div grid="~ cols-1 md:cols-2" gap="4" mt="6">
+              <label>
+                <span class="cm-label">생년월일</span>
+                <input id="age-birth" class="cm-input" type="date" />
+              </label>
+              <label>
+                <span class="cm-label">기준일</span>
+                <input id="age-asof" class="cm-input" type="date" />
+              </label>
+            </div>
+            <div
+              id="age-result"
+              mt="5"
+              rounded="2xl"
+              bg="surface-muted"
+              p="5"
+              dark="bg-dark-surface-subtle"
+            >
+              생년월일을 입력하세요.
+            </div>
+            <button
+              id="age-calc"
+              class="cm-button-primary"
+              w="full"
+              mt="4"
+              py="3"
+            >
+              나이 계산
+            </button>
+          </div>
+        )}
+
+        {kind === 'unit' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              UNIT CONVERTER
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              단위 변환기
+            </h2>
+            <div grid="~ cols-1 md:cols-3" gap="4" mt="6">
+              <label>
+                <span class="cm-label">분류</span>
+                <select id="unit-type" class="cm-input">
+                  <option value="length">길이</option>
+                  <option value="weight">무게</option>
+                  <option value="temperature">온도</option>
+                  <option value="area">넓이</option>
+                  <option value="data">데이터</option>
+                </select>
+              </label>
+              <label>
+                <span class="cm-label">값</span>
+                <input
+                  id="unit-value"
+                  class="cm-input"
+                  type="number"
+                  value="1"
+                />
+              </label>
+              <label>
+                <span class="cm-label">변환 방향</span>
+                <select id="unit-direction" class="cm-input"></select>
+              </label>
+            </div>
+            <div
+              id="unit-result"
+              mt="5"
+              rounded="2xl"
+              bg="surface-muted"
+              p="5"
+              text="center"
+              dark="bg-dark-surface-subtle"
+            >
+              변환 결과
+            </div>
+          </div>
+        )}
+
+        {kind === 'percent' && (
+          <div>
+            <p m="0" text="sm" font="700" text-primary>
+              PERCENT CALCULATOR
+            </p>
+            <h2 m="0" mt="1" text="xl md:2xl" font="800">
+              퍼센트 계산기
+            </h2>
+            <label block mt="6">
+              <span class="cm-label">계산 종류</span>
+              <select id="percent-type" class="cm-input">
+                <option value="of">A의 B%는 얼마인가요?</option>
+                <option value="change">A에서 B로 바뀌면 몇 % 변했나요?</option>
+                <option value="discount">A에서 B% 할인하면 얼마인가요?</option>
+                <option value="increase">A에 B%를 더하면 얼마인가요?</option>
+              </select>
             </label>
+            <div grid="~ cols-1 md:cols-2" gap="4" mt="4">
+              <label>
+                <span class="cm-label">A</span>
+                <input
+                  id="percent-a"
+                  class="cm-input"
+                  type="number"
+                  value="100"
+                />
+              </label>
+              <label>
+                <span class="cm-label">B (%) 또는 값</span>
+                <input
+                  id="percent-b"
+                  class="cm-input"
+                  type="number"
+                  value="20"
+                />
+              </label>
+            </div>
+            <div
+              id="percent-result"
+              mt="5"
+              rounded="2xl"
+              bg="surface-muted"
+              p="5"
+              dark="bg-dark-surface-subtle"
+            >
+              결과가 여기에 표시됩니다.
+            </div>
+            <button
+              id="percent-calc"
+              class="cm-button-primary"
+              w="full"
+              mt="4"
+              py="3"
+            >
+              계산하기
+            </button>
           </div>
-          <div
-            id="percent-result"
-            mt="5"
-            rounded="2xl"
-            bg="surface-muted"
-            p="5"
-            dark="bg-dark-surface-subtle"
-          >
-            결과가 여기에 표시됩니다.
-          </div>
-          <button
-            id="percent-calc"
-            class="cm-button-primary"
-            w="full"
-            mt="4"
-            py="3"
-          >
-            계산하기
-          </button>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </div>
 
     <aside class="cm-card" min-w="0" p="5 md:p-6" h="fit">

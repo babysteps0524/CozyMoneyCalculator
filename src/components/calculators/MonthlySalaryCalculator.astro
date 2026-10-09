@@ -2,436 +2,418 @@
 ---
 
 <div grid="~ cols-1 lg:cols-2" gap="4 md:6" items-start>
-        <section class="cm-card" p="5 md:7">
-          <h2 m="0" text="lg md:xl" font="750">
-            월급 입력
-          </h2>
-          <p
-            m="0"
-            mt="1"
+  <section class="cm-card" p="5 md:7">
+    <h2 m="0" text="lg md:xl" font="750">
+      월급 입력
+    </h2>
+    <p
+      m="0"
+      mt="1"
+      text="sm"
+      leading="6"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      급여명세서의 월 세전 급여와 비과세 항목을 기준으로 입력하면 됩니다.
+    </p>
+
+    <form id="monthly-salary-form" mt="6">
+      <label class="cm-label" for="salary">
+        월급(세전)
+      </label>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="월급 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
+        <div relative>
+          <input
+            class="cm-input"
+            id="salary"
+            type="text"
+            inputmode="numeric"
+            value="3,333,333"
+            data-number-input
+            data-step="10000"
+            data-min="1"
+            data-decimal="false"
+            pr="12"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
             text="sm"
-            leading="6"
             text-text-muted
             dark="text-dark-text-muted"
           >
-            급여명세서의 월 세전 급여와 비과세 항목을 기준으로 입력하면 됩니다.
-          </p>
+            원
+          </span>
+        </div>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="월급 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
+      </div>
 
-          <form id="monthly-salary-form" mt="6">
-            <label class="cm-label" for="salary">
-              월급(세전)
-            </label>
-            <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-              <button
-                type="button"
-                data-step-direction="-1"
-                aria-label="월급 감소"
-                class="cm-step-button"
-              >
-                −
-              </button>
-              <div relative>
-                <input
-                  class="cm-input"
-                  id="salary"
-                  type="text"
-                  inputmode="numeric"
-                  value="3,333,333"
-                  data-number-input
-                  data-step="10000"
-                  data-min="1"
-                  data-decimal="false"
-                  pr="12"
-                />
-                <span
-                  absolute
-                  right-4
-                  top="[50%]"
-                  translate-y="[-50%]"
-                  text="sm"
-                  text-text-muted
-                  dark="text-dark-text-muted"
-                >
-                  원
-                </span>
-              </div>
-              <button
-                type="button"
-                data-step-direction="1"
-                aria-label="월급 증가"
-                class="cm-step-button"
-              >
-                +
-              </button>
-            </div>
+      <label class="cm-label" for="tax-free" mt="5">
+        비과세액(월, 식대 포함)
+      </label>
+      <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+        <button
+          type="button"
+          data-step-direction="-1"
+          aria-label="비과세액 감소"
+          class="cm-step-button"
+        >
+          −
+        </button>
+        <div relative>
+          <input
+            class="cm-input"
+            id="tax-free"
+            type="text"
+            inputmode="numeric"
+            value="200,000"
+            data-number-input
+            data-step="10000"
+            data-min="0"
+            data-decimal="false"
+            pr="12"
+          />
+          <span
+            absolute
+            right-4
+            top="[50%]"
+            translate-y="[-50%]"
+            text="sm"
+            text-text-muted
+            dark="text-dark-text-muted"
+          >
+            원
+          </span>
+        </div>
+        <button
+          type="button"
+          data-step-direction="1"
+          aria-label="비과세액 증가"
+          class="cm-step-button"
+        >
+          +
+        </button>
+      </div>
+      <p
+        m="0"
+        mt="2"
+        text="xs"
+        leading="6"
+        text-text-subtle
+        dark="text-dark-text-subtle"
+      >
+        비과세액은 과세 대상 월급에서 제외되는 금액입니다. 식대 등 항목별 비과세
+        요건과 한도는 실제 급여조건을 확인하세요.
+      </p>
 
-            <label class="cm-label" for="tax-free" mt="5">
-              비과세액(월, 식대 포함)
-            </label>
-            <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
-              <button
-                type="button"
-                data-step-direction="-1"
-                aria-label="비과세액 감소"
-                class="cm-step-button"
-              >
-                −
-              </button>
-              <div relative>
-                <input
-                  class="cm-input"
-                  id="tax-free"
-                  type="text"
-                  inputmode="numeric"
-                  value="200,000"
-                  data-number-input
-                  data-step="10000"
-                  data-min="0"
-                  data-decimal="false"
-                  pr="12"
-                />
-                <span
-                  absolute
-                  right-4
-                  top="[50%]"
-                  translate-y="[-50%]"
-                  text="sm"
-                  text-text-muted
-                  dark="text-dark-text-muted"
-                >
-                  원
-                </span>
-              </div>
-              <button
-                type="button"
-                data-step-direction="1"
-                aria-label="비과세액 증가"
-                class="cm-step-button"
-              >
-                +
-              </button>
-            </div>
-            <p
-              m="0"
-              mt="2"
-              text="xs"
-              leading="6"
-              text-text-subtle
-              dark="text-dark-text-subtle"
-            >
-              비과세액은 과세 대상 월급에서 제외되는 금액입니다. 식대 등 항목별
-              비과세 요건과 한도는 실제 급여조건을 확인하세요.
-            </p>
-
-            <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-              <div>
-                <label class="cm-label" for="dependents">
-                  부양가족 수(본인 포함)
-                </label>
-                <div
-                  grid="~ cols-[auto_minmax(0,1fr)_auto]"
-                  items-center
-                  gap="2"
-                >
-                  <button
-                    type="button"
-                    data-step-direction="-1"
-                    aria-label="부양가족 감소"
-                    class="cm-step-button"
-                  >
-                    −
-                  </button>
-                  <input
-                    class="cm-input"
-                    id="dependents"
-                    type="text"
-                    inputmode="numeric"
-                    value="1"
-                    data-number-input
-                    data-step="1"
-                    data-min="1"
-                    data-decimal="false"
-                    text="center"
-                  />
-                  <button
-                    type="button"
-                    data-step-direction="1"
-                    aria-label="부양가족 증가"
-                    class="cm-step-button"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label class="cm-label" for="children">
-                  20세 이하 자녀 수
-                </label>
-                <div
-                  grid="~ cols-[auto_minmax(0,1fr)_auto]"
-                  items-center
-                  gap="2"
-                >
-                  <button
-                    type="button"
-                    data-control="children"
-                    data-step="-1"
-                    aria-label="자녀 수 감소"
-                    class="cm-step-button"
-                  >
-                    −
-                  </button>
-                  <input
-                    class="cm-input"
-                    id="children"
-                    type="text"
-                    inputmode="numeric"
-                    value="0"
-                    data-number-input
-                    data-step="1"
-                    data-min="0"
-                    data-decimal="false"
-                    text="center"
-                  />
-                  <button
-                    type="button"
-                    data-control="children"
-                    data-step="1"
-                    aria-label="자녀 수 증가"
-                    class="cm-step-button"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <fieldset mt="5" border="0" p="0">
-              <legend class="cm-label">만 60세 이상 근로자</legend>
-              <div grid="~ cols-2" gap="2">
-                <label>
-                  <input
-                    id="under-60"
-                    type="radio"
-                    name="age60"
-                    value="no"
-                    checked
-                    sr-only
-                  />
-                  <span
-                    id="under-60-label"
-                    class="cm-button-secondary"
-                    block
-                    py="2.5"
-                    text="center sm"
-                  >
-                    아니오
-                  </span>
-                </label>
-                <label>
-                  <input
-                    id="age-60"
-                    type="radio"
-                    name="age60"
-                    value="yes"
-                    sr-only
-                  />
-                  <span
-                    id="age-60-label"
-                    class="cm-button-secondary"
-                    block
-                    py="2.5"
-                    text="center sm"
-                  >
-                    예
-                  </span>
-                </label>
-              </div>
-              <p
-                m="0"
-                mt="2"
-                text="xs"
-                leading="6"
-                text-text-subtle
-                dark="text-dark-text-subtle"
-              >
-                만 60세 이상을 선택하면 국민연금 근로자 부담액을 0원으로
-                계산합니다.
-              </p>
-            </fieldset>
-
-            <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
-              <button type="submit" class="cm-button-primary" py="3.5">
-                계산하기
-              </button>
-              <button
-                id="reset"
-                type="button"
-                class="cm-button-secondary"
-                py="3.5"
-              >
-                초기화
-              </button>
-            </div>
-            <p
-              id="error"
-              hidden
-              m="0"
-              mt="4"
-              rounded="xl"
-              bg="danger-surface"
-              dark="bg-dark-danger-surface"
-              px="4"
-              py="3"
-              text="sm"
-              text-danger-text
-              dark="text-dark-danger-text"
-            ></p>
-          </form>
-        </section>
-
-        <section id="result" class="cm-card" aria-live="polite" aria-atomic="true" p="5 md:7" lg="sticky top-24">
-          <div flex="~" items-center justify-between gap="3" mb="5">
-            <div>
-              <p m="0" text="xs" font="700" text-primary>
-                RESULT
-              </p>
-              <h2 m="0" mt="1" text="lg md:xl" font="750">
-                예상 실수령액
-              </h2>
-            </div>
+      <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
+        <div>
+          <label class="cm-label" for="dependents">
+            부양가족 수(본인 포함)
+          </label>
+          <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
             <button
-              id="copy"
               type="button"
-              class="cm-button-secondary"
-              px="3"
-              py="2"
-              text="xs sm:sm"
+              data-step-direction="-1"
+              aria-label="부양가족 감소"
+              class="cm-step-button"
             >
-              결과 복사
+              −
+            </button>
+            <input
+              class="cm-input"
+              id="dependents"
+              type="text"
+              inputmode="numeric"
+              value="1"
+              data-number-input
+              data-step="1"
+              data-min="1"
+              data-decimal="false"
+              text="center"
+            />
+            <button
+              type="button"
+              data-step-direction="1"
+              aria-label="부양가족 증가"
+              class="cm-step-button"
+            >
+              +
             </button>
           </div>
-
-          <div
-            rounded="2xl"
-            bg="primary/10"
-            p="5"
-            dark="bg-dark-primary-surface"
-          >
-            <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
-              월 예상 실수령액
-            </p>
-            <strong
-              id="take-home"
-              block
-              mt="2"
-              text="2xl md:3xl"
-              font="800"
-              text-primary
+        </div>
+        <div>
+          <label class="cm-label" for="children">
+            20세 이하 자녀 수
+          </label>
+          <div grid="~ cols-[auto_minmax(0,1fr)_auto]" items-center gap="2">
+            <button
+              type="button"
+              data-control="children"
+              data-step="-1"
+              aria-label="자녀 수 감소"
+              class="cm-step-button"
             >
-              -
-            </strong>
-          </div>
-
-          <div grid="~ cols-2" gap="3" mt="3">
-            <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
-                세전 월급
-              </p>
-              <strong id="gross" block mt="2" text="lg">
-                -
-              </strong>
-            </div>
-            <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
-                과세 대상 월급
-              </p>
-              <strong id="taxable" block mt="2" text="lg">
-                -
-              </strong>
-            </div>
-          </div>
-
-          <div grid="~ cols-2" gap="3" mt="3">
-            <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
-                1일 8시간 기준 일급
-              </p>
-              <strong id="daily-wage" block mt="2" text="lg">
-                -
-              </strong>
-            </div>
-            <div class="cm-result">
-              <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
-                예상 시급
-              </p>
-              <strong id="hourly-wage" block mt="2" text="lg">
-                -
-              </strong>
-            </div>
-          </div>
-
-          <div
-            mt="3"
-            rounded="xl"
-            border="1"
-            border-border
-            p="4"
-            dark="border-dark-border"
-          >
-            <div flex="~" justify-between gap="3" text="sm">
-              <span>국민연금</span>
-              <strong id="pension">-</strong>
-            </div>
-            <div flex="~" justify-between gap="3" mt="2" text="sm">
-              <span>건강보험</span>
-              <strong id="health">-</strong>
-            </div>
-            <div flex="~" justify-between gap="3" mt="2" text="sm">
-              <span>장기요양</span>
-              <strong id="care">-</strong>
-            </div>
-            <div flex="~" justify-between gap="3" mt="2" text="sm">
-              <span>고용보험</span>
-              <strong id="employment">-</strong>
-            </div>
-            <div flex="~" justify-between gap="3" mt="2" text="sm">
-              <span>소득세(추정)</span>
-              <strong id="income-tax">-</strong>
-            </div>
-            <div flex="~" justify-between gap="3" mt="2" text="sm">
-              <span>지방소득세</span>
-              <strong id="local-tax">-</strong>
-            </div>
-            <div
-              flex="~"
-              justify-between
-              gap="3"
-              mt="3"
-              pt="3"
-              border-t="1"
-              border-border
-              font="750"
-              dark="border-dark-border"
+              −
+            </button>
+            <input
+              class="cm-input"
+              id="children"
+              type="text"
+              inputmode="numeric"
+              value="0"
+              data-number-input
+              data-step="1"
+              data-min="0"
+              data-decimal="false"
+              text="center"
+            />
+            <button
+              type="button"
+              data-control="children"
+              data-step="1"
+              aria-label="자녀 수 증가"
+              class="cm-step-button"
             >
-              <span>공제액 합계</span>
-              <strong id="total-deductions">-</strong>
-            </div>
+              +
+            </button>
           </div>
-
-          <p
-            m="0"
-            mt="4"
-            text="xs"
-            leading="6"
-            text-text-subtle
-            dark="text-dark-text-subtle"
-          >
-            실제 급여명세서와 세법·보험료 산정기준에 따라 결과가 달라질 수 있는
-            참고용 계산입니다.
-          </p>
-        </section>
+        </div>
       </div>
+
+      <fieldset mt="5" border="0" p="0">
+        <legend class="cm-label">만 60세 이상 근로자</legend>
+        <div grid="~ cols-2" gap="2">
+          <label>
+            <input
+              id="under-60"
+              type="radio"
+              name="age60"
+              value="no"
+              checked
+              sr-only
+            />
+            <span
+              id="under-60-label"
+              class="cm-button-secondary"
+              block
+              py="2.5"
+              text="center sm"
+            >
+              아니오
+            </span>
+          </label>
+          <label>
+            <input id="age-60" type="radio" name="age60" value="yes" sr-only />
+            <span
+              id="age-60-label"
+              class="cm-button-secondary"
+              block
+              py="2.5"
+              text="center sm"
+            >
+              예
+            </span>
+          </label>
+        </div>
+        <p
+          m="0"
+          mt="2"
+          text="xs"
+          leading="6"
+          text-text-subtle
+          dark="text-dark-text-subtle"
+        >
+          만 60세 이상을 선택하면 국민연금 근로자 부담액을 0원으로 계산합니다.
+        </p>
+      </fieldset>
+
+      <div grid="~ cols-1 sm:cols-2" gap="3" mt="6">
+        <button type="submit" class="cm-button-primary" py="3.5">
+          계산하기
+        </button>
+        <button id="reset" type="button" class="cm-button-secondary" py="3.5">
+          초기화
+        </button>
+      </div>
+      <p
+        id="error"
+        hidden
+        m="0"
+        mt="4"
+        rounded="xl"
+        bg="danger-surface"
+        dark="bg-dark-danger-surface"
+        px="4"
+        py="3"
+        text="sm"
+        text-danger-text
+        dark="text-dark-danger-text"
+      ></p>
+    </form>
+  </section>
+
+  <section
+    id="result"
+    class="cm-card"
+    aria-live="polite"
+    aria-atomic="true"
+    p="5 md:7"
+    lg="sticky top-24"
+  >
+    <div flex="~" items-center justify-between gap="3" mb="5">
+      <div>
+        <p m="0" text="xs" font="700" text-primary>
+          RESULT
+        </p>
+        <h2 m="0" mt="1" text="lg md:xl" font="750">
+          예상 실수령액
+        </h2>
+      </div>
+      <button
+        id="copy"
+        type="button"
+        class="cm-button-secondary"
+        px="3"
+        py="2"
+        text="xs sm:sm"
+      >
+        결과 복사
+      </button>
+    </div>
+
+    <div rounded="2xl" bg="primary/10" p="5" dark="bg-dark-primary-surface">
+      <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+        월 예상 실수령액
+      </p>
+      <strong
+        id="take-home"
+        block
+        mt="2"
+        text="2xl md:3xl"
+        font="800"
+        text-primary
+      >
+        -
+      </strong>
+    </div>
+
+    <div grid="~ cols-2" gap="3" mt="3">
+      <div class="cm-result">
+        <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+          세전 월급
+        </p>
+        <strong id="gross" block mt="2" text="lg">
+          -
+        </strong>
+      </div>
+      <div class="cm-result">
+        <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+          과세 대상 월급
+        </p>
+        <strong id="taxable" block mt="2" text="lg">
+          -
+        </strong>
+      </div>
+    </div>
+
+    <div grid="~ cols-2" gap="3" mt="3">
+      <div class="cm-result">
+        <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+          1일 8시간 기준 일급
+        </p>
+        <strong id="daily-wage" block mt="2" text="lg">
+          -
+        </strong>
+      </div>
+      <div class="cm-result">
+        <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+          예상 시급
+        </p>
+        <strong id="hourly-wage" block mt="2" text="lg">
+          -
+        </strong>
+      </div>
+    </div>
+
+    <div
+      mt="3"
+      rounded="xl"
+      border="1"
+      border-border
+      p="4"
+      dark="border-dark-border"
+    >
+      <div flex="~" justify-between gap="3" text="sm">
+        <span>국민연금</span>
+        <strong id="pension">-</strong>
+      </div>
+      <div flex="~" justify-between gap="3" mt="2" text="sm">
+        <span>건강보험</span>
+        <strong id="health">-</strong>
+      </div>
+      <div flex="~" justify-between gap="3" mt="2" text="sm">
+        <span>장기요양</span>
+        <strong id="care">-</strong>
+      </div>
+      <div flex="~" justify-between gap="3" mt="2" text="sm">
+        <span>고용보험</span>
+        <strong id="employment">-</strong>
+      </div>
+      <div flex="~" justify-between gap="3" mt="2" text="sm">
+        <span>소득세(추정)</span>
+        <strong id="income-tax">-</strong>
+      </div>
+      <div flex="~" justify-between gap="3" mt="2" text="sm">
+        <span>지방소득세</span>
+        <strong id="local-tax">-</strong>
+      </div>
+      <div
+        flex="~"
+        justify-between
+        gap="3"
+        mt="3"
+        pt="3"
+        border-t="1"
+        border-border
+        font="750"
+        dark="border-dark-border"
+      >
+        <span>공제액 합계</span>
+        <strong id="total-deductions">-</strong>
+      </div>
+    </div>
+
+    <p
+      m="0"
+      mt="4"
+      text="xs"
+      leading="6"
+      text-text-subtle
+      dark="text-dark-text-subtle"
+    >
+      실제 급여명세서와 세법·보험료 산정기준에 따라 결과가 달라질 수 있는 참고용
+      계산입니다.
+    </p>
+  </section>
+</div>
 
 <script>
   import { calculateSalary, formatWon } from '../../lib/calculators/salary';

@@ -413,7 +413,8 @@
     const won = (value: number) =>
       new Intl.NumberFormat('ko-KR').format(Math.round(value)) + '원';
 
-    const numberValue = (input: HTMLInputElement) => readCalculatorNumber(root, input.id);
+    const numberValue = (input: HTMLInputElement) =>
+      readCalculatorNumber(root, input.id);
 
     const progressive = (
       amount: number,

@@ -1,202 +1,197 @@
 ---
 ---
 
-  <div grid="~ cols-1 md:cols-2" gap="4">
-    <label>
-      <span class="cm-label">기준연도</span>
-      <select id="property-year" class="cm-input">
-        <option value="2026" selected>
-          2026년
-        </option>
-      </select>
-    </label>
-    <div
-      rounded="xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="4"
-      dark="border-dark-border bg-dark-surface-muted"
-    >
-      <p m="0" text="sm" font="700">
-        계산 기준
-      </p>
-      <p
-        m="0"
-        mt="1"
-        text="xs"
-        leading="6"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        현재는 2026년 주택 재산세 기준을 제공합니다.
-      </p>
-    </div>
-  </div>
-
-  <div grid="~ cols-1 md:cols-2" gap="3" mt="4">
-    <label
-      flex="~"
-      items-center
-      gap="3"
-      rounded="xl"
-      border="1"
-      border-border
-      bg="surface"
-      p="4"
-      cursor-pointer
-      dark="border-dark-border bg-dark-surface"
-    >
-      <input id="one-house" type="checkbox" checked class="accent-primary" />
-      <span text="sm" font="700">
-        1세대 1주택
-      </span>
-    </label>
-    <label
-      flex="~"
-      items-center
-      gap="3"
-      rounded="xl"
-      border="1"
-      border-border
-      bg="surface"
-      p="4"
-      cursor-pointer
-      dark="border-dark-border bg-dark-surface"
-    >
-      <input id="tax-cap" type="checkbox" checked class="accent-primary" />
-      <span text="sm" font="700">
-        세부담상한 적용
-      </span>
-    </label>
-  </div>
-
-  <div mt="6">
-    <div flex="~" items-center justify-between gap="3" mb="3">
-      <div>
-        <h3 m="0" text="lg" font="800">
-          주택 정보
-        </h3>
-        <p m="0" mt="1" text="xs" text-text-muted dark="text-dark-text-muted">
-          주택별로 공시가격과 조건을 입력할 수 있습니다.
-        </p>
-      </div>
-      <button
-        id="add-property"
-        type="button"
-        class="cm-button-secondary"
-        px="4"
-        py="2.5"
-      >
-        + 주택 추가
-      </button>
-    </div>
-    <div id="property-list" grid="~ cols-1" gap="4"></div>
-  </div>
-
+<div grid="~ cols-1 md:cols-2" gap="4">
+  <label>
+    <span class="cm-label">기준연도</span>
+    <select id="property-year" class="cm-input">
+      <option value="2026" selected>
+        2026년
+      </option>
+    </select>
+  </label>
   <div
-    id="property-error"
-    hidden
-    mt="4"
     rounded="xl"
-    border="1 danger/20"
-    bg-danger-surface
+    border="1"
+    border-border
+    bg="surface-muted"
     p="4"
-    text="sm"
-    text-danger-text
-    dark="border-dark-border dark:bg-dark-danger-surface dark:text-dark-danger-text"
-  ></div>
-
-  <div
-    id="property-result"
-    mt="6"
-    rounded="2xl"
-    bg="primary/10"
-    p="5"
-    dark="bg-dark-primary-surface"
+    dark="border-dark-border bg-dark-surface-muted"
   >
-    <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
-      예상 납부액
+    <p m="0" text="sm" font="700">
+      계산 기준
     </p>
-    <div id="property-total" mt="2" text="3xl md:4xl" font="800" text-primary>
-      0원
-    </div>
-    <div id="property-detail" mt="4" grid="~ cols-1 sm:cols-2" gap="3"></div>
-    <div id="property-breakdown" mt="4" grid="~ cols-1" gap="2"></div>
-  </div>
-
-  <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
-    <button
-      id="property-calculate"
-      type="button"
-      class="cm-button-primary"
-      py="3"
+    <p
+      m="0"
+      mt="1"
+      text="xs"
+      leading="6"
+      text-text-muted
+      dark="text-dark-text-muted"
     >
-      계산하기
-    </button>
+      현재는 2026년 주택 재산세 기준을 제공합니다.
+    </p>
+  </div>
+</div>
+
+<div grid="~ cols-1 md:cols-2" gap="3" mt="4">
+  <label
+    flex="~"
+    items-center
+    gap="3"
+    rounded="xl"
+    border="1"
+    border-border
+    bg="surface"
+    p="4"
+    cursor-pointer
+    dark="border-dark-border bg-dark-surface"
+  >
+    <input id="one-house" type="checkbox" checked class="accent-primary" />
+    <span text="sm" font="700">
+      1세대 1주택
+    </span>
+  </label>
+  <label
+    flex="~"
+    items-center
+    gap="3"
+    rounded="xl"
+    border="1"
+    border-border
+    bg="surface"
+    p="4"
+    cursor-pointer
+    dark="border-dark-border bg-dark-surface"
+  >
+    <input id="tax-cap" type="checkbox" checked class="accent-primary" />
+    <span text="sm" font="700">
+      세부담상한 적용
+    </span>
+  </label>
+</div>
+
+<div mt="6">
+  <div flex="~" items-center justify-between gap="3" mb="3">
+    <div>
+      <h3 m="0" text="lg" font="800">
+        주택 정보
+      </h3>
+      <p m="0" mt="1" text="xs" text-text-muted dark="text-dark-text-muted">
+        주택별로 공시가격과 조건을 입력할 수 있습니다.
+      </p>
+    </div>
     <button
-      id="property-reset"
+      id="add-property"
       type="button"
       class="cm-button-secondary"
-      py="3"
+      px="4"
+      py="2.5"
     >
-      초기화
+      + 주택 추가
     </button>
   </div>
+  <div id="property-list" grid="~ cols-1" gap="4"></div>
+</div>
 
-  <div mt="8" grid="~ cols-1 lg:cols-2" gap="4">
-    <section
-      rounded="2xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="5"
-      dark="border-dark-border dark:bg-dark-surface-muted"
-    >
-      <h3 m="0" text="sm" font="750">
-        이번 계산에 반영한 항목
-      </h3>
-      <ul
-        m="0"
-        mt="3"
-        pl="5"
-        text="sm"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        <li>주택 공시가격을 기준으로 공정시장가액비율을 적용합니다.</li>
-        <li>1세대 1주택이면 2026년 특례 비율과 세율을 적용합니다.</li>
-        <li>도시지역으로 선택한 주택은 도시지역분을 계산합니다.</li>
-        <li>전년도 재산세를 입력하면 세부담상한을 선택적으로 적용합니다.</li>
-        <li>공동명의는 입력한 소유지분을 반영합니다.</li>
-      </ul>
-    </section>
-    <section
-      rounded="2xl"
-      border="1"
-      border-border
-      bg="surface-muted"
-      p="5"
-      dark="border-dark-border dark:bg-dark-surface-muted"
-    >
-      <h3 m="0" text="sm" font="750">
-        주의사항
-      </h3>
-      <p
-        m="0"
-        mt="3"
-        text="sm"
-        leading="7"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        실제 고지세액에는 감면, 지방자치단체 조례, 개별 주택의 법적 요건 등이
-        영향을 줄 수 있습니다. 이 계산기는 주택 재산세를 빠르게 추정하기 위한
-        참고용 도구입니다.
-      </p>
-    </section>
+<div
+  id="property-error"
+  hidden
+  mt="4"
+  rounded="xl"
+  border="1 danger/20"
+  bg-danger-surface
+  p="4"
+  text="sm"
+  text-danger-text
+  dark="border-dark-border dark:bg-dark-danger-surface dark:text-dark-danger-text"
+></div>
+
+<div
+  id="property-result"
+  mt="6"
+  rounded="2xl"
+  bg="primary/10"
+  p="5"
+  dark="bg-dark-primary-surface"
+>
+  <p m="0" text="sm" text-text-muted dark="text-dark-text-muted">
+    예상 납부액
+  </p>
+  <div id="property-total" mt="2" text="3xl md:4xl" font="800" text-primary>
+    0원
   </div>
+  <div id="property-detail" mt="4" grid="~ cols-1 sm:cols-2" gap="3"></div>
+  <div id="property-breakdown" mt="4" grid="~ cols-1" gap="2"></div>
+</div>
+
+<div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
+  <button
+    id="property-calculate"
+    type="button"
+    class="cm-button-primary"
+    py="3"
+  >
+    계산하기
+  </button>
+  <button id="property-reset" type="button" class="cm-button-secondary" py="3">
+    초기화
+  </button>
+</div>
+
+<div mt="8" grid="~ cols-1 lg:cols-2" gap="4">
+  <section
+    rounded="2xl"
+    border="1"
+    border-border
+    bg="surface-muted"
+    p="5"
+    dark="border-dark-border dark:bg-dark-surface-muted"
+  >
+    <h3 m="0" text="sm" font="750">
+      이번 계산에 반영한 항목
+    </h3>
+    <ul
+      m="0"
+      mt="3"
+      pl="5"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      <li>주택 공시가격을 기준으로 공정시장가액비율을 적용합니다.</li>
+      <li>1세대 1주택이면 2026년 특례 비율과 세율을 적용합니다.</li>
+      <li>도시지역으로 선택한 주택은 도시지역분을 계산합니다.</li>
+      <li>전년도 재산세를 입력하면 세부담상한을 선택적으로 적용합니다.</li>
+      <li>공동명의는 입력한 소유지분을 반영합니다.</li>
+    </ul>
+  </section>
+  <section
+    rounded="2xl"
+    border="1"
+    border-border
+    bg="surface-muted"
+    p="5"
+    dark="border-dark-border dark:bg-dark-surface-muted"
+  >
+    <h3 m="0" text="sm" font="750">
+      주의사항
+    </h3>
+    <p
+      m="0"
+      mt="3"
+      text="sm"
+      leading="7"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      실제 고지세액에는 감면, 지방자치단체 조례, 개별 주택의 법적 요건 등이
+      영향을 줄 수 있습니다. 이 계산기는 주택 재산세를 빠르게 추정하기 위한
+      참고용 도구입니다.
+    </p>
+  </section>
+</div>
 
 <script>
   import { calculatePropertyTax } from '../../lib/calculators/property';
@@ -346,10 +341,25 @@
         list.querySelectorAll<HTMLElement>('[data-property-asset]'),
       ).map((article, index) => ({
         id: article.dataset.propertyAsset || String(index + 1),
-        assessedValue: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.id || ''),
-        ownershipShare: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="share-"]')?.id || ''),
-        previousPropertyTax: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')?.id || ''),
-        previousUrbanAreaTax: readCalculatorNumber(article, article.querySelector<HTMLInputElement>('[id^="previous-urban-"]')?.id || ''),
+        assessedValue: readCalculatorNumber(
+          article,
+          article.querySelector<HTMLInputElement>('[id^="assessed-"]')?.id ||
+            '',
+        ),
+        ownershipShare: readCalculatorNumber(
+          article,
+          article.querySelector<HTMLInputElement>('[id^="share-"]')?.id || '',
+        ),
+        previousPropertyTax: readCalculatorNumber(
+          article,
+          article.querySelector<HTMLInputElement>('[id^="previous-tax-"]')
+            ?.id || '',
+        ),
+        previousUrbanAreaTax: readCalculatorNumber(
+          article,
+          article.querySelector<HTMLInputElement>('[id^="previous-urban-"]')
+            ?.id || '',
+        ),
         urbanArea:
           article.querySelector<HTMLInputElement>('[id^="urban-"]')?.checked ||
           false,
