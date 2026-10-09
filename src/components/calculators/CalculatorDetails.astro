@@ -8,6 +8,7 @@ interface Props {
 const { content } = Astro.props;
 ---
 
+<div w="full" data-calculator-details>
   {content.intro ? (
     <section
       w="full"
@@ -278,3 +279,4 @@ const { content } = Astro.props;
       </div>
     </section>
   ) : null}
+</div>

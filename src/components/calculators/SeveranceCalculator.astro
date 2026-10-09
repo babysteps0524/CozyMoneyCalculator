@@ -1,395 +1,383 @@
 ---
 ---
 
-  <div grid="~ cols-1 md:cols-2" gap="4">
-    <label>
-      <span class="cm-label">입사일</span>
-      <input
-        id="severance-start"
-        class="cm-input"
-        type="date"
-        value="2021-10-01"
-      />
-    </label>
-    <label>
-      <span class="cm-label">퇴직일</span>
-      <input
-        id="severance-retirement"
-        class="cm-input"
-        type="date"
-        value="2026-10-01"
-      />
-      <span
-        mt="1.5"
-        block
-        text="xs"
-        leading="5"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        마지막 근무일의 다음 날을 입력하세요.
-      </span>
-    </label>
-  </div>
-
-  <div mt="5">
-    <h3 m="0" text="base" font="800">
-      퇴직 전 3개월 임금
-    </h3>
-    <p
-      id="severance-period"
-      m="0"
-      mt="1"
-      text="xs"
-      text-text-muted
-      dark="text-dark-text-muted"
-    >
-      퇴직일을 입력하면 산정기간이 표시됩니다.
-    </p>
-    <div id="severance-months" grid="~ cols-1 md:cols-2" gap="4" mt="3"></div>
-    <p
-      m="0"
-      mt="2"
+<div grid="~ cols-1 md:cols-2" gap="4">
+  <label>
+    <span class="cm-label">입사일</span>
+    <input
+      id="severance-start"
+      class="cm-input"
+      type="date"
+      value="2021-10-01"
+    />
+  </label>
+  <label>
+    <span class="cm-label">퇴직일</span>
+    <input
+      id="severance-retirement"
+      class="cm-input"
+      type="date"
+      value="2026-10-01"
+    />
+    <span
+      mt="1.5"
+      block
       text="xs"
       leading="5"
       text-text-muted
       dark="text-dark-text-muted"
     >
-      세전 임금 합계입니다. 기본급과 임금에 해당하는 수당 등 실제 지급액을
-      합산하세요.
-    </p>
-  </div>
+      마지막 근무일의 다음 날을 입력하세요.
+    </span>
+  </label>
+</div>
 
-  <div grid="~ cols-1 md:cols-2" gap="4" mt="5">
-    <label>
-      <span class="cm-label">최근 1년 상여금 총액</span>
-      <div relative>
-        <input
-          id="severance-bonus"
-          class="cm-input pr-12"
-          type="text"
-          inputmode="numeric"
-          value="0"
-          data-number-input
-          data-step="10000"
-          data-min="0"
-          data-decimal="false"
-        />
-        <span
-          absolute
-          right="4"
-          top="[50%]"
-          translate-y="[-50%]"
-          text="sm"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          원
-        </span>
-      </div>
-      <span
-        mt="1.5"
-        block
-        text="xs"
-        leading="5"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        평균임금 산입 대상 금액의 3/12만 반영합니다.
-      </span>
-    </label>
-    <label>
-      <span class="cm-label">최근 1년 연차수당</span>
-      <div relative>
-        <input
-          id="severance-leave"
-          class="cm-input pr-12"
-          type="text"
-          inputmode="numeric"
-          value="0"
-          data-number-input
-          data-step="10000"
-          data-min="0"
-          data-decimal="false"
-        />
-        <span
-          absolute
-          right="4"
-          top="[50%]"
-          translate-y="[-50%]"
-          text="sm"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          원
-        </span>
-      </div>
-      <span
-        mt="1.5"
-        block
-        text="xs"
-        leading="5"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        이미 지급받은 산입 대상 연차수당을 입력하세요.
-      </span>
-    </label>
-  </div>
-
-  <div grid="~ cols-1 md:cols-2" gap="4" mt="5">
-    <label>
-      <span class="cm-label">
-        1일 통상임금{' '}
-        <span font="400" text-text-muted dark="text-dark-text-muted">
-          (선택)
-        </span>
-      </span>
-      <div relative>
-        <input
-          id="severance-ordinary"
-          class="cm-input pr-12"
-          type="text"
-          inputmode="numeric"
-          value="0"
-          data-number-input
-          data-step="1000"
-          data-min="0"
-          data-decimal="false"
-        />
-        <span
-          absolute
-          right="4"
-          top="[50%]"
-          translate-y="[-50%]"
-          text="sm"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          원
-        </span>
-      </div>
-      <span
-        mt="1.5"
-        block
-        text="xs"
-        leading="5"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        평균임금보다 높으면 더 높은 통상임금을 적용합니다.
-      </span>
-    </label>
-    <label>
-      <span class="cm-label">주 소정근로시간</span>
-      <div relative>
-        <input
-          id="severance-hours"
-          class="cm-input pr-14"
-          type="text"
-          inputmode="decimal"
-          value="40"
-          data-number-input
-          data-step="1"
-          data-min="0"
-          data-decimal="true"
-        />
-        <span
-          absolute
-          right="4"
-          top="[50%]"
-          translate-y="[-50%]"
-          text="sm"
-          text-text-muted
-          dark="text-dark-text-muted"
-        >
-          시간
-        </span>
-      </div>
-      <span
-        mt="1.5"
-        block
-        text="xs"
-        leading="5"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        15시간 미만이면 퇴직금 대상에서 제외될 수 있습니다.
-      </span>
-    </label>
-  </div>
-
-  <details mt="5" rounded-xl border="1" border-border dark="border-dark-border">
-    <summary cursor-pointer p="4" font="700" text-sm>
-      평균임금 제외기간 고급 설정
-    </summary>
-    <div p="4" pt="0" grid="~ cols-1 md:cols-2" gap="4">
-      <label>
-        <span class="cm-label">제외일수</span>
-        <div relative>
-          <input
-            id="severance-excluded-days"
-            class="cm-input pr-12"
-            type="text"
-            inputmode="numeric"
-            value="0"
-            data-number-input
-            data-step="1"
-            data-min="0"
-            data-decimal="false"
-          />
-          <span
-            absolute
-            right="4"
-            top="[50%]"
-            translate-y="[-50%]"
-            text="sm"
-            text-text-muted
-            dark="text-dark-text-muted"
-          >
-            일
-          </span>
-        </div>
-      </label>
-      <label>
-        <span class="cm-label">제외기간 임금</span>
-        <div relative>
-          <input
-            id="severance-excluded-amount"
-            class="cm-input pr-12"
-            type="text"
-            inputmode="numeric"
-            value="0"
-            data-number-input
-            data-step="10000"
-            data-min="0"
-            data-decimal="false"
-          />
-          <span
-            absolute
-            right="4"
-            top="[50%]"
-            translate-y="[-50%]"
-            text="sm"
-            text-text-muted
-            dark="text-dark-text-muted"
-          >
-            원
-          </span>
-        </div>
-      </label>
-      <p
-        m="0"
-        md="col-span-2"
-        text="xs"
-        leading="5"
-        text-text-muted
-        dark="text-dark-text-muted"
-      >
-        법정 평균임금 산정 제외기간에 해당하는 경우에만 사용하세요.
-      </p>
-    </div>
-  </details>
-
-  <div flex="~ col sm:row" gap="3" mt="6">
-    <button
-      id="severance-calculate"
-      type="button"
-      class="cm-button-primary"
-      px="5"
-      py="3"
-    >
-      퇴직금 계산하기
-    </button>
-    <button
-      id="severance-reset"
-      type="button"
-      class="cm-button-secondary"
-      px="5"
-      py="3"
-    >
-      초기화
-    </button>
-  </div>
-
-  <div
-    id="severance-error"
-    hidden
-    mt="4"
-    rounded="xl"
-    border="1"
-    border="danger/30"
-    bg="danger-surface"
-    p="4"
-    text="sm"
-    text="danger-text"
-    dark="border-dark-danger-text/30 bg-dark-danger-surface text-dark-danger-text"
-  ></div>
-
-  <section
-    mt="6"
-    rounded-2xl
-    border="1"
-    border-border
-    bg-surface-muted
-    p="5"
-    dark="border-dark-border bg-dark-surface-subtle"
-    aria-live="polite"
-  >
-    <p m="0" text="sm" font="700" text-primary>
-      예상 퇴직금 · 세전
-    </p>
-    <p
-      id="severance-value"
-      m="1 0 0"
-      text="3xl md:4xl"
-      font="800"
-      tracking-tight
-    >
-      0원
-    </p>
-    <div
-      id="severance-eligibility"
-      mt="3"
-      inline-flex
-      rounded-full
-      bg-surface
-      px="3"
-      py="1.5"
-      text="xs"
-      font="700"
-      dark="bg-dark-surface"
-    >
-      계산 전
-    </div>
-    <div
-      id="severance-summary"
-      grid="~ cols-1 sm:cols-2 lg:cols-3"
-      gap="3"
-      mt="5"
-    ></div>
-    <div
-      id="severance-breakdown"
-      mt="5"
-      rounded-xl
-      border="1"
-      border-border
-      bg-surface
-      p="4"
-      dark="border-dark-border bg-dark-surface"
-    ></div>
-  </section>
-
+<div mt="5">
+  <h3 m="0" text="base" font="800">
+    퇴직 전 3개월 임금
+  </h3>
   <p
-    m="4 0 0"
+    id="severance-period"
+    m="0"
+    mt="1"
+    text="xs"
+    text-text-muted
+    dark="text-dark-text-muted"
+  >
+    퇴직일을 입력하면 산정기간이 표시됩니다.
+  </p>
+  <div id="severance-months" grid="~ cols-1 md:cols-2" gap="4" mt="3"></div>
+  <p
+    m="0"
+    mt="2"
     text="xs"
     leading="5"
     text-text-muted
     dark="text-dark-text-muted"
   >
-    참고용 모의계산입니다. 실제 퇴직금은 평균임금 산정 제외기간, 임금 포함 여부,
-    통상임금, 계속근로관계 등에 따라 달라질 수 있습니다.
+    세전 임금 합계입니다. 기본급과 임금에 해당하는 수당 등 실제 지급액을
+    합산하세요.
   </p>
+</div>
+
+<div grid="~ cols-1 md:cols-2" gap="4" mt="5">
+  <label>
+    <span class="cm-label">최근 1년 상여금 총액</span>
+    <div relative>
+      <input
+        id="severance-bonus"
+        class="cm-input pr-12"
+        type="text"
+        inputmode="numeric"
+        value="0"
+        data-number-input
+        data-step="10000"
+        data-min="0"
+        data-decimal="false"
+      />
+      <span
+        absolute
+        right="4"
+        top="[50%]"
+        translate-y="[-50%]"
+        text="sm"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        원
+      </span>
+    </div>
+    <span
+      mt="1.5"
+      block
+      text="xs"
+      leading="5"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      평균임금 산입 대상 금액의 3/12만 반영합니다.
+    </span>
+  </label>
+  <label>
+    <span class="cm-label">최근 1년 연차수당</span>
+    <div relative>
+      <input
+        id="severance-leave"
+        class="cm-input pr-12"
+        type="text"
+        inputmode="numeric"
+        value="0"
+        data-number-input
+        data-step="10000"
+        data-min="0"
+        data-decimal="false"
+      />
+      <span
+        absolute
+        right="4"
+        top="[50%]"
+        translate-y="[-50%]"
+        text="sm"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        원
+      </span>
+    </div>
+    <span
+      mt="1.5"
+      block
+      text="xs"
+      leading="5"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      이미 지급받은 산입 대상 연차수당을 입력하세요.
+    </span>
+  </label>
+</div>
+
+<div grid="~ cols-1 md:cols-2" gap="4" mt="5">
+  <label>
+    <span class="cm-label">
+      1일 통상임금{' '}
+      <span font="400" text-text-muted dark="text-dark-text-muted">
+        (선택)
+      </span>
+    </span>
+    <div relative>
+      <input
+        id="severance-ordinary"
+        class="cm-input pr-12"
+        type="text"
+        inputmode="numeric"
+        value="0"
+        data-number-input
+        data-step="1000"
+        data-min="0"
+        data-decimal="false"
+      />
+      <span
+        absolute
+        right="4"
+        top="[50%]"
+        translate-y="[-50%]"
+        text="sm"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        원
+      </span>
+    </div>
+    <span
+      mt="1.5"
+      block
+      text="xs"
+      leading="5"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      평균임금보다 높으면 더 높은 통상임금을 적용합니다.
+    </span>
+  </label>
+  <label>
+    <span class="cm-label">주 소정근로시간</span>
+    <div relative>
+      <input
+        id="severance-hours"
+        class="cm-input pr-14"
+        type="text"
+        inputmode="decimal"
+        value="40"
+        data-number-input
+        data-step="1"
+        data-min="0"
+        data-decimal="true"
+      />
+      <span
+        absolute
+        right="4"
+        top="[50%]"
+        translate-y="[-50%]"
+        text="sm"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        시간
+      </span>
+    </div>
+    <span
+      mt="1.5"
+      block
+      text="xs"
+      leading="5"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      15시간 미만이면 퇴직금 대상에서 제외될 수 있습니다.
+    </span>
+  </label>
+</div>
+
+<details mt="5" rounded-xl border="1" border-border dark="border-dark-border">
+  <summary cursor-pointer p="4" font="700" text-sm>
+    평균임금 제외기간 고급 설정
+  </summary>
+  <div p="4" pt="0" grid="~ cols-1 md:cols-2" gap="4">
+    <label>
+      <span class="cm-label">제외일수</span>
+      <div relative>
+        <input
+          id="severance-excluded-days"
+          class="cm-input pr-12"
+          type="text"
+          inputmode="numeric"
+          value="0"
+          data-number-input
+          data-step="1"
+          data-min="0"
+          data-decimal="false"
+        />
+        <span
+          absolute
+          right="4"
+          top="[50%]"
+          translate-y="[-50%]"
+          text="sm"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          일
+        </span>
+      </div>
+    </label>
+    <label>
+      <span class="cm-label">제외기간 임금</span>
+      <div relative>
+        <input
+          id="severance-excluded-amount"
+          class="cm-input pr-12"
+          type="text"
+          inputmode="numeric"
+          value="0"
+          data-number-input
+          data-step="10000"
+          data-min="0"
+          data-decimal="false"
+        />
+        <span
+          absolute
+          right="4"
+          top="[50%]"
+          translate-y="[-50%]"
+          text="sm"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          원
+        </span>
+      </div>
+    </label>
+    <p
+      m="0"
+      md="col-span-2"
+      text="xs"
+      leading="5"
+      text-text-muted
+      dark="text-dark-text-muted"
+    >
+      법정 평균임금 산정 제외기간에 해당하는 경우에만 사용하세요.
+    </p>
+  </div>
+</details>
+
+<div flex="~ col sm:row" gap="3" mt="6">
+  <button
+    id="severance-calculate"
+    type="button"
+    class="cm-button-primary"
+    px="5"
+    py="3"
+  >
+    퇴직금 계산하기
+  </button>
+  <button
+    id="severance-reset"
+    type="button"
+    class="cm-button-secondary"
+    px="5"
+    py="3"
+  >
+    초기화
+  </button>
+</div>
+
+<div
+  id="severance-error"
+  hidden
+  mt="4"
+  rounded="xl"
+  border="1"
+  border="danger/30"
+  bg="danger-surface"
+  p="4"
+  text="sm"
+  text="danger-text"
+  dark="border-dark-danger-text/30 bg-dark-danger-surface text-dark-danger-text"
+></div>
+
+<section
+  mt="6"
+  rounded-2xl
+  border="1"
+  border-border
+  bg-surface-muted
+  p="5"
+  dark="border-dark-border bg-dark-surface-subtle"
+  aria-live="polite"
+>
+  <p m="0" text="sm" font="700" text-primary>
+    예상 퇴직금 · 세전
+  </p>
+  <p id="severance-value" m="1 0 0" text="3xl md:4xl" font="800" tracking-tight>
+    0원
+  </p>
+  <div
+    id="severance-eligibility"
+    mt="3"
+    inline-flex
+    rounded-full
+    bg-surface
+    px="3"
+    py="1.5"
+    text="xs"
+    font="700"
+    dark="bg-dark-surface"
+  >
+    계산 전
+  </div>
+  <div
+    id="severance-summary"
+    grid="~ cols-1 sm:cols-2 lg:cols-3"
+    gap="3"
+    mt="5"
+  ></div>
+  <div
+    id="severance-breakdown"
+    mt="5"
+    rounded-xl
+    border="1"
+    border-border
+    bg-surface
+    p="4"
+    dark="border-dark-border bg-dark-surface"
+  ></div>
+</section>
+
+<p m="4 0 0" text="xs" leading="5" text-text-muted dark="text-dark-text-muted">
+  참고용 모의계산입니다. 실제 퇴직금은 평균임금 산정 제외기간, 임금 포함 여부,
+  통상임금, 계속근로관계 등에 따라 달라질 수 있습니다.
+</p>
 
 <script>
   import {
@@ -475,11 +463,16 @@
           annualBonus: readCalculatorNumber(root, 'severance-bonus'),
           annualLeaveAllowance: readCalculatorNumber(root, 'severance-leave'),
           ordinaryDailyWage:
-            readCalculatorNumber(root, 'severance-ordinary') ||
-            undefined,
+            readCalculatorNumber(root, 'severance-ordinary') || undefined,
           weeklyHours: readCalculatorNumber(root, 'severance-hours'),
-          excludedAverageWageDays: readCalculatorNumber(root, 'severance-excluded-days'),
-          excludedAverageWageAmount: readCalculatorNumber(root, 'severance-excluded-amount'),
+          excludedAverageWageDays: readCalculatorNumber(
+            root,
+            'severance-excluded-days',
+          ),
+          excludedAverageWageAmount: readCalculatorNumber(
+            root,
+            'severance-excluded-amount',
+          ),
         });
 
         value.textContent = won(result.severancePay);
