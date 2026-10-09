@@ -25,3 +25,468 @@ const { kind, title, description } = Astro.props;
       {kind === 'lotto' && <LottoTool />}
 
 
+      {kind === 'random' && <RandomNumberTool />}
+
+
+      {kind === 'picker' && <RandomPickerTool />}
+
+
+      {kind === 'password' && <PasswordTool />}
+
+
+      {kind === 'date' && <DateCalculatorTool />}
+
+
+      {kind === 'dday' && <DdayTool />}
+
+
+      {kind === 'age' && <AgeCalculatorTool />}
+
+
+      {kind === 'unit' && <UnitConverterTool />}
+
+
+      {kind === 'percent' && <PercentCalculatorTool />}
+
+    </div>
+    </div>
+
+    <aside class="cm-card" min-w="0" p="5 md:p-6" h="fit">
+      <p m="0" text="sm" font="700" text-primary>
+        ABOUT THIS TOOL
+      </p>
+      <h2 m="0" mt="2" text="lg" font="750">
+        {title}
+      </h2>
+      <p
+        m="0"
+        mt="2"
+        text="sm"
+        leading="6"
+        text-text-muted
+        dark="text-dark-text-muted"
+      >
+        {description}
+      </p>
+      <div mt="5" pt="5" border="t" border-border dark="border-dark-border">
+        <p m="0" text="sm" font="700">
+          이용 안내
+        </p>
+        <ul
+          m="0"
+          mt="2"
+          pl="5"
+          text="sm"
+          leading="6"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          <li>
+            입력값과 생성 결과는 기본적으로 이 페이지의 브라우저에서 처리합니다.
+          </li>
+          <li>도구 결과는 편의를 위한 참고용이며 결과를 보장하지 않습니다.</li>
+          <li>
+            비밀번호 생성 결과처럼 민감할 수 있는 값은 다른 사람과 공유하지
+            마세요.
+          </li>
+          <li>
+            로또 번호와 랜덤 추첨 결과는 무작위 결과일 뿐 당첨이나 특정 결과를
+            보장하지 않습니다.
+          </li>
+        </ul>
+      </div>
+      <div
+        mt="5"
+        rounded="2xl"
+        border="1"
+        border-border
+        bg="surface-muted"
+        p="4"
+        dark="border-dark-border bg-dark-surface-muted"
+      >
+        <p m="0" text="xs" font="700" text-primary>
+          개인정보 안내
+        </p>
+        <p
+          m="0"
+          mt="2"
+          text="xs sm"
+          leading="6"
+          text-text-muted
+          dark="text-dark-text-muted"
+        >
+          주민등록번호, 계좌번호, 카드번호, 비밀번호 등 개인정보나 금융정보를
+          입력하지 마세요. CozyMoney는 생활도구 이용에 불필요한 개인정보를
+          요구하지 않습니다.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <AdSlot slot={import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL || ''} />
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tool]');
+  if (root) {
+    const kind = root.dataset.tool;
+    const $ = (id: string) => root.querySelector<HTMLElement>('#' + id);
+    const value = (id: string) =>
+      (
+        ($(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)
+          ?.value ?? ''
+      ).trim();
+    const number = (id: string) => Number(value(id));
+    const format = (n: number, digits = 0) =>
+      Number.isFinite(n)
+        ? n.toLocaleString('ko-KR', { maximumFractionDigits: digits })
+        : '-';
+    const copy = async (text: string) => {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {}
+    };
+
+    const secureRandom = (max: number) => {
+      if (max <= 0) return 0;
+      const cryptoObj = globalThis.crypto;
+      if (!cryptoObj?.getRandomValues) return Math.floor(Math.random() * max);
+      const buf = new Uint32Array(1);
+      const limit = Math.floor(0x100000000 / max) * max;
+      do {
+        cryptoObj.getRandomValues(buf);
+      } while (buf[0] >= limit);
+      return buf[0] % max;
+    };
+
+    if (kind === 'lotto') {
+      const render = () => {
+        const count = Number(value('lotto-count')) || 1;
+        const target = $('lotto-results');
+        if (!target) return;
+        target.innerHTML = Array.from({ length: count }, (_, i) => {
+          const nums: number[] = [];
+          while (nums.length < 6) {
+            const n = secureRandom(45) + 1;
+            if (!nums.includes(n)) nums.push(n);
+          }
+          nums.sort((a, b) => a - b);
+          const odd = nums.filter((n) => n % 2).length;
+          return (
+            '<div class="cm-result"><div flex="~" items-center justify-between gap="2"><span text="xs" font="700" text-text-subtle dark="text-dark-text-subtle">' +
+            (i + 1) +
+            '게임</span><span text="xs" text-text-muted dark="text-dark-text-muted">홀 ' +
+            odd +
+            ' · 짝 ' +
+            (6 - odd) +
+            ' · 합 ' +
+            nums.reduce((a, b) => a + b, 0) +
+            '</span></div><div flex="~ wrap" gap="2" mt="3">' +
+            nums
+              .map((n) => '<span class="cm-number-ball">' + n + '</span>')
+              .join('') +
+            '</div></div>'
+          );
+        }).join('');
+      };
+      $('lotto-generate')?.addEventListener('click', render);
+      $('lotto-count')?.addEventListener('change', render);
+      $('lotto-copy')?.addEventListener('click', () => {
+        const cards = Array.from(root.querySelectorAll('.cm-result'));
+        copy(
+          cards
+            .map(
+              (card, i) =>
+                i +
+                1 +
+                '게임: ' +
+                Array.from(card.querySelectorAll('.cm-number-ball'))
+                  .map((x) => x.textContent)
+                  .join(', '),
+            )
+            .join('\n'),
+        );
+      });
+      render();
+    }
+
+    if (kind === 'random') {
+      const render = () => {
+        const min = Math.ceil(number('random-min')),
+          max = Math.floor(number('random-max'));
+        const out = $('random-result');
+        if (!out) return;
+        out.textContent =
+          min <= max
+            ? String(min + secureRandom(max - min + 1))
+            : '최솟값과 최댓값을 확인하세요.';
+      };
+      $('random-generate')?.addEventListener('click', render);
+      render();
+    }
+
+    if (kind === 'picker') {
+      $('picker-draw')?.addEventListener('click', () => {
+        const items = value('picker-items')
+          .split(/\n/)
+          .map((x) => x.trim())
+          .filter(Boolean);
+        const out = $('picker-result');
+        if (!out) return;
+        out.textContent = items.length
+          ? items[secureRandom(items.length)]
+          : '추첨할 항목을 입력하세요.';
+      });
+      $('picker-copy')?.addEventListener('click', () =>
+        copy(value('picker-result')),
+      );
+    }
+
+    if (kind === 'password') {
+      const generate = () => {
+        const len = Math.min(
+          128,
+          Math.max(4, Math.floor(number('password-length')) || 16),
+        );
+        const sets = [
+          value('pw-upper') === '' ? '' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+          value('pw-lower') === '' ? '' : 'abcdefghijklmnopqrstuvwxyz',
+          value('pw-number') === '' ? '' : '0123456789',
+          value('pw-symbol') === '' ? '' : '!@#$%^&*()-_=+[]{}?',
+        ];
+        const enabled = ['pw-upper', 'pw-lower', 'pw-number', 'pw-symbol']
+          .map((id) =>
+            ($(id) as HTMLInputElement)?.checked
+              ? sets[
+                  ['pw-upper', 'pw-lower', 'pw-number', 'pw-symbol'].indexOf(id)
+                ]
+              : '',
+          )
+          .filter(Boolean);
+        const out = $('password-result') as HTMLInputElement | null;
+        if (!out) return;
+        if (!enabled.length) {
+          out.value = '문자 구성을 하나 이상 선택하세요.';
+          return;
+        }
+        let result = '';
+        const all = enabled.join('');
+        enabled.forEach((set) => {
+          result += set[secureRandom(set.length)];
+        });
+        while (result.length < len) result += all[secureRandom(all.length)];
+        const chars = result.split('');
+        for (let i = chars.length - 1; i > 0; i--) {
+          const j = secureRandom(i + 1);
+          [chars[i], chars[j]] = [chars[j], chars[i]];
+        }
+        out.value = chars.join('');
+      };
+      $('password-generate')?.addEventListener('click', generate);
+      $('password-copy')?.addEventListener('click', () =>
+        copy(value('password-result')),
+      );
+      generate();
+    }
+
+    if (kind === 'date') {
+      $('date-calc')?.addEventListener('click', () => {
+        const a = new Date(value('date-start') + 'T00:00:00'),
+          b = new Date(value('date-end') + 'T00:00:00');
+        const out = $('date-result');
+        if (!out || Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) {
+          if (out) out.textContent = '두 날짜를 모두 선택하세요.';
+          return;
+        }
+        const days = Math.round(Math.abs(b.getTime() - a.getTime()) / 86400000);
+        const inclusive = days + 1;
+        out.innerHTML =
+          '<strong text="xl">' +
+          format(days) +
+          '일</strong><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">시작일과 종료일을 모두 포함하면 ' +
+          format(inclusive) +
+          '일입니다.</p>';
+      });
+    }
+
+    if (kind === 'dday') {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const input = $('dday-date') as HTMLInputElement | null;
+      if (input)
+        input.value = new Date(
+          Date.now() - new Date().getTimezoneOffset() * 60000,
+        )
+          .toISOString()
+          .slice(0, 10);
+      const calc = () => {
+        const target = new Date(value('dday-date') + 'T00:00:00');
+        const out = $('dday-result');
+        if (!out || Number.isNaN(target.getTime())) return;
+        const diff = Math.round(
+          (target.getTime() - today.getTime()) / 86400000,
+        );
+        const name = value('dday-name') || '목표 날짜';
+        out.innerHTML =
+          '<div text="sm" text-text-muted dark="text-dark-text-muted">' +
+          name +
+          '</div><div mt="1" text="4xl md:5xl" font="800">' +
+          (diff > 0
+            ? 'D-' + diff
+            : diff < 0
+              ? 'D+' + Math.abs(diff)
+              : 'D-DAY') +
+          '</div>';
+      };
+      $('dday-calc')?.addEventListener('click', calc);
+      calc();
+    }
+
+    if (kind === 'age') {
+      const asof = $('age-asof') as HTMLInputElement | null;
+      if (asof)
+        asof.value = new Date(
+          Date.now() - new Date().getTimezoneOffset() * 60000,
+        )
+          .toISOString()
+          .slice(0, 10);
+      $('age-calc')?.addEventListener('click', () => {
+        const birth = new Date(value('age-birth') + 'T00:00:00'),
+          date = new Date(value('age-asof') + 'T00:00:00'),
+          out = $('age-result');
+        if (
+          !out ||
+          Number.isNaN(birth.getTime()) ||
+          Number.isNaN(date.getTime()) ||
+          birth > date
+        ) {
+          if (out) out.textContent = '생년월일과 기준일을 확인하세요.';
+          return;
+        }
+        let years = date.getFullYear() - birth.getFullYear(),
+          months = date.getMonth() - birth.getMonth(),
+          days = date.getDate() - birth.getDate();
+        if (days < 0) {
+          months--;
+          days += new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+        out.innerHTML =
+          '<div text="2xl" font="800">' +
+          years +
+          '세</div><p m="0" mt="2" text="sm" text-text-muted dark="text-dark-text-muted">만 ' +
+          years +
+          '년 ' +
+          months +
+          '개월 ' +
+          days +
+          '일입니다.</p>';
+      });
+    }
+
+    if (kind === 'unit') {
+      const units: Record<
+        string,
+        { labels: string[]; convert: (v: number, dir: string) => number }
+      > = {
+        length: {
+          labels: ['m → km', 'km → m', 'cm → m', 'm → cm'],
+          convert: (v, d) =>
+            d === 'm → km'
+              ? v / 1000
+              : d === 'km → m'
+                ? v * 1000
+                : d === 'cm → m'
+                  ? v / 100
+                  : v * 100,
+        },
+        weight: {
+          labels: ['kg → g', 'g → kg', 'kg → lb', 'lb → kg'],
+          convert: (v, d) =>
+            d === 'kg → g'
+              ? v * 1000
+              : d === 'g → kg'
+                ? v / 1000
+                : d === 'kg → lb'
+                  ? v * 2.2046226218
+                  : v / 2.2046226218,
+        },
+        temperature: {
+          labels: ['℃ → ℉', '℉ → ℃'],
+          convert: (v, d) =>
+            d === '℃ → ℉' ? (v * 9) / 5 + 32 : ((v - 32) * 5) / 9,
+        },
+        area: {
+          labels: ['㎡ → 평', '평 → ㎡'],
+          convert: (v, d) => (d === '㎡ → 평' ? v / 3.305785 : v * 3.305785),
+        },
+        data: {
+          labels: ['MB → GB', 'GB → MB', 'GB → TB', 'TB → GB'],
+          convert: (v, d) =>
+            d === 'MB → GB'
+              ? v / 1024
+              : d === 'GB → MB'
+                ? v * 1024
+                : d === 'GB → TB'
+                  ? v / 1024
+                  : v * 1024,
+        },
+      };
+      const update = () => {
+        const type = value('unit-type'),
+          def = units[type];
+        const select = $('unit-direction') as HTMLSelectElement | null;
+        if (!select) return;
+        select.innerHTML = def.labels
+          .map((x) => '<option>' + x + '</option>')
+          .join('');
+        const out = $('unit-result');
+        if (out)
+          out.textContent = format(
+            def.convert(number('unit-value'), def.labels[0]),
+            6,
+          );
+      };
+      const calc = () => {
+        const type = value('unit-type'),
+          def = units[type],
+          dir = value('unit-direction'),
+          out = $('unit-result');
+        if (out)
+          out.textContent = format(def.convert(number('unit-value'), dir), 6);
+      };
+      $('unit-type')?.addEventListener('change', () => {
+        update();
+        calc();
+      });
+      $('unit-direction')?.addEventListener('change', calc);
+      $('unit-value')?.addEventListener('input', calc);
+      update();
+    }
+
+    if (kind === 'percent') {
+      const calc = () => {
+        const a = number('percent-a'),
+          b = number('percent-b'),
+          type = value('percent-type'),
+          out = $('percent-result');
+        if (!out) return;
+        let text = '';
+        if (type === 'of') text = format((a * b) / 100, 2);
+        if (type === 'change')
+          text =
+            a !== 0
+              ? format(((b - a) / a) * 100, 2) + '% 변화'
+              : '계산할 수 없습니다.';
+        if (type === 'discount') text = format(a * (1 - b / 100), 2);
+        if (type === 'increase') text = format(a * (1 + b / 100), 2);
+        out.textContent = text;
+      };
+      $('percent-calc')?.addEventListener('click', calc);
+      calc();
+    }
+  }
+</script>
