@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountRandomPickerTool(
-  root: HTMLElement,
+  _root: HTMLElement,
   helpers: ToolHelpers,
 ): void {
   const { $, value, copy, secureRandom, listen } = helpers;
