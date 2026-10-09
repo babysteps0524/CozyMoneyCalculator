@@ -6,12 +6,10 @@ export function mountLottoTool(root: HTMLElement, helpers: ToolHelpers): void {
   const render = () => {
     const count = Number(value('lotto-count')) || 1;
     const target = $('lotto-results');
-
     if (!target) return;
 
     target.innerHTML = Array.from({ length: count }, (_, index) => {
       const numbers: number[] = [];
-
       while (numbers.length < 6) {
         const number = secureRandom(45) + 1;
         if (!numbers.includes(number)) numbers.push(number);
@@ -32,9 +30,7 @@ export function mountLottoTool(root: HTMLElement, helpers: ToolHelpers): void {
         ' · 합 ' +
         sum +
         '</span></div><div flex="~ wrap" gap="2" mt="3">' +
-        numbers
-          .map((number) => '<span class="cm-number-ball">' + number + '</span>')
-          .join('') +
+        numbers.map((number) => '<span class="cm-number-ball">' + number + '</span>').join('') +
         '</div></div>'
       );
     }).join('');
@@ -44,7 +40,6 @@ export function mountLottoTool(root: HTMLElement, helpers: ToolHelpers): void {
   listen('lotto-count', 'change', render);
   listen('lotto-copy', 'click', () => {
     const cards = Array.from(root.querySelectorAll('.cm-result'));
-
     void copy(
       cards
         .map(
