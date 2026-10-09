@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountPasswordTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
+  const { $, value, number, copy, secureRandom, listen } = helpers;
   const generate = () => {
           const len = Math.min(
             128,
@@ -41,8 +41,8 @@ export function mountPasswordTool(root: HTMLElement, helpers: ToolHelpers): void
           }
           out.value = chars.join('');
         };
-        $('password-generate')?.addEventListener('click', generate);
-        $('password-copy')?.addEventListener('click', () =>
+        listen('password-generate', 'click', generate);
+        listen('password-copy', 'click', () =>
           copy(value('password-result')),
         );
         generate();
