@@ -22,7 +22,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   },
   rent: {
     slug: 'rent',
-    title: '월세 계산기',
+    title: '전월세 계산기',
     description: '보증금과 월세를 같은 기준으로 환산해 주거비를 비교합니다.',
     canonical: `${site}/calculators/rent/`,
     category: '부동산',
@@ -38,7 +38,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   },
   weekly: {
     slug: 'weekly',
-    title: '주급 계산기',
+    title: '주휴수당 계산기',
     description: '시급과 주 소정근로시간을 이용해 주급과 주휴수당을 단순 추정합니다.',
     canonical: `${site}/calculators/weekly/`,
     category: '급여',
@@ -54,7 +54,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   },
   leaseLoan: {
     slug: 'leaseLoan',
-    title: '전세대출 계산기',
+    title: '전세대출 이자 계산기',
     description: '임차보증금과 대출비율, 금리를 기준으로 예상 대출금과 이자를 계산합니다.',
     canonical: `${site}/calculators/leaseLoan/`,
     category: '금융',

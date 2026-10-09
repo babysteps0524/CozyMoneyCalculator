@@ -268,7 +268,7 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
     ],
     relatedCalculators: [
       {
-        title: '전세대출 계산기',
+        title: '전세대출 이자 계산기',
         href: '/calculators/leaseLoan/',
         description: '보증금 기준 예상 대출금과 단순 이자를 계산합니다.',
       },
@@ -367,7 +367,7 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
         description: '상환 방식과 기간별 월 납입액을 계산합니다.',
       },
       {
-        title: '월세 계산기',
+        title: '전월세 계산기',
         href: '/calculators/rent/',
         description: '보증금과 월세를 같은 기준으로 비교합니다.',
       },
@@ -509,7 +509,7 @@ export const calculatorGuidance: Record<string, CalculatorGuidance> = {
     ],
     relatedCalculators: [
       {
-        title: '주급 계산기',
+        title: '주휴수당 계산기',
         href: '/calculators/weekly/',
         description: '주 소정근로시간과 주휴수당을 반영해 주급을 계산합니다.',
       },
@@ -573,7 +573,7 @@ export const supplementalCalculatorDetails: Record<
     ],
     relatedCalculators: [
       {
-        title: '주급 계산기',
+        title: '주휴수당 계산기',
         href: '/calculators/weekly/',
         description: '시급과 소정근로시간을 이용해 주급을 계산합니다.',
       },
@@ -803,7 +803,7 @@ export const supplementalCalculatorDetails: Record<
         description: '주택담보대출 상환액과 연소득을 비교합니다.',
       },
       {
-        title: '전세대출 계산기',
+        title: '전세대출 이자 계산기',
         href: '/calculators/leaseLoan/',
         description: '임차보증금 기준 예상 대출금과 연이자를 계산합니다.',
       },
