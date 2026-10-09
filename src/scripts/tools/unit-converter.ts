@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountUnitConverterTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
+  const { $, value, number, format, listen } = helpers;
   const units: Record<
           string,
           { labels: string[]; convert: (v: number, dir: string) => number }
@@ -72,11 +72,11 @@ export function mountUnitConverterTool(root: HTMLElement, helpers: ToolHelpers):
           if (out)
             out.textContent = format(def.convert(number('unit-value'), dir), 6);
         };
-        $('unit-type')?.addEventListener('change', () => {
+        listen('unit-type', 'change', () => {
           update();
           calc();
         });
-        $('unit-direction')?.addEventListener('change', calc);
-        $('unit-value')?.addEventListener('input', calc);
+        listen('unit-direction', 'change', calc);
+        listen('unit-value', 'input', calc);
         update();
 }
