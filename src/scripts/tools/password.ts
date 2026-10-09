@@ -43,7 +43,7 @@ export function mountPasswordTool(root: HTMLElement, helpers: ToolHelpers): void
         };
         listen('password-generate', 'click', generate);
         listen('password-copy', 'click', () =>
-          copy(value('password-result')),
+          copy(value('password-result'), 'password-copy'),
         );
         generate();
 }
