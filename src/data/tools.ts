@@ -1,14 +1,7 @@
+import type { ToolKind } from '../scripts/tools/types';
+
 export interface ToolDefinition {
-  readonly kind:
-    | 'lotto'
-    | 'random'
-    | 'picker'
-    | 'password'
-    | 'date'
-    | 'dday'
-    | 'age'
-    | 'unit'
-    | 'percent';
+  readonly kind: ToolKind;
   readonly title: string;
   readonly description: string;
   readonly href: `/tools/${string}/`;
