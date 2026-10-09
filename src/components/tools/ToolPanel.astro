@@ -1,0 +1,46 @@
+---
+import type { ToolDefinition } from '../../data/tools';
+import LottoTool from './panels/LottoTool.astro';
+import RandomNumberTool from './panels/RandomNumberTool.astro';
+import RandomPickerTool from './panels/RandomPickerTool.astro';
+import PasswordTool from './panels/PasswordTool.astro';
+import DateCalculatorTool from './panels/DateCalculatorTool.astro';
+import DdayTool from './panels/DdayTool.astro';
+import AgeCalculatorTool from './panels/AgeCalculatorTool.astro';
+import UnitConverterTool from './panels/UnitConverterTool.astro';
+import PercentCalculatorTool from './panels/PercentCalculatorTool.astro';
+
+interface Props {
+  kind: ToolDefinition['kind'];
+}
+
+const { kind } = Astro.props;
+---
+
+{
+  kind === 'lotto' && <LottoTool />
+}
+{
+  kind === 'random' && <RandomNumberTool />
+}
+{
+  kind === 'picker' && <RandomPickerTool />
+}
+{
+  kind === 'password' && <PasswordTool />
+}
+{
+  kind === 'date' && <DateCalculatorTool />
+}
+{
+  kind === 'dday' && <DdayTool />
+}
+{
+  kind === 'age' && <AgeCalculatorTool />
+}
+{
+  kind === 'unit' && <UnitConverterTool />
+}
+{
+  kind === 'percent' && <PercentCalculatorTool />
+}
