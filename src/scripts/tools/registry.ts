@@ -1,42 +1,46 @@
 import type { ToolHelpers } from './shared';
 import type { ToolKind } from './types';
 
+type ToolLoader = (root: HTMLElement, helpers: ToolHelpers) => Promise<void>;
+
 /**
- * Load only the active tool module.
- * Each dynamic import lets the bundler create a separate chunk per tool.
+ * Each loader imports only its own tool module when selected.
+ * Record keeps the script registry exhaustive for every ToolKind.
  */
+const toolLoaders: Record<ToolKind, ToolLoader> = {
+  lotto: async (root, helpers) => {
+    (await import('./lotto')).mountLottoTool(root, helpers);
+  },
+  random: async (root, helpers) => {
+    (await import('./random-number')).mountRandomNumberTool(root, helpers);
+  },
+  picker: async (root, helpers) => {
+    (await import('./random-picker')).mountRandomPickerTool(root, helpers);
+  },
+  password: async (root, helpers) => {
+    (await import('./password')).mountPasswordTool(root, helpers);
+  },
+  date: async (root, helpers) => {
+    (await import('./date-calculator')).mountDateCalculatorTool(root, helpers);
+  },
+  dday: async (root, helpers) => {
+    (await import('./dday')).mountDdayTool(root, helpers);
+  },
+  age: async (root, helpers) => {
+    (await import('./age-calculator')).mountAgeCalculatorTool(root, helpers);
+  },
+  unit: async (root, helpers) => {
+    (await import('./unit-converter')).mountUnitConverterTool(root, helpers);
+  },
+  percent: async (root, helpers) => {
+    (await import('./percent-calculator')).mountPercentCalculatorTool(root, helpers);
+  },
+};
+
 export async function mountTool(
   root: HTMLElement,
   helpers: ToolHelpers,
-  kind: ToolKind | undefined,
+  kind: ToolKind,
 ): Promise<void> {
-  switch (kind) {
-    case 'lotto':
-      (await import('./lotto')).mountLottoTool(root, helpers);
-      break;
-    case 'random':
-      (await import('./random-number')).mountRandomNumberTool(root, helpers);
-      break;
-    case 'picker':
-      (await import('./random-picker')).mountRandomPickerTool(root, helpers);
-      break;
-    case 'password':
-      (await import('./password')).mountPasswordTool(root, helpers);
-      break;
-    case 'date':
-      (await import('./date-calculator')).mountDateCalculatorTool(root, helpers);
-      break;
-    case 'dday':
-      (await import('./dday')).mountDdayTool(root, helpers);
-      break;
-    case 'age':
-      (await import('./age-calculator')).mountAgeCalculatorTool(root, helpers);
-      break;
-    case 'unit':
-      (await import('./unit-converter')).mountUnitConverterTool(root, helpers);
-      break;
-    case 'percent':
-      (await import('./percent-calculator')).mountPercentCalculatorTool(root, helpers);
-      break;
-  }
+  await toolLoaders[kind](root, helpers);
 }
