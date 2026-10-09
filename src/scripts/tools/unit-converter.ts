@@ -1,82 +1,100 @@
 import type { ToolHelpers } from './shared';
 
-export function mountUnitConverterTool(root: HTMLElement, helpers: ToolHelpers): void {
+interface UnitDefinition {
+  labels: string[];
+  convert: (value: number, direction: string) => number;
+}
+
+const UNITS: Record<string, UnitDefinition> = {
+  length: {
+    labels: ['m → km', 'km → m', 'cm → m', 'm → cm'],
+    convert: (value, direction) =>
+      direction === 'm → km'
+        ? value / 1000
+        : direction === 'km → m'
+          ? value * 1000
+          : direction === 'cm → m'
+            ? value / 100
+            : value * 100,
+  },
+  weight: {
+    labels: ['kg → g', 'g → kg', 'kg → lb', 'lb → kg'],
+    convert: (value, direction) =>
+      direction === 'kg → g'
+        ? value * 1000
+        : direction === 'g → kg'
+          ? value / 1000
+          : direction === 'kg → lb'
+            ? value * 2.2046226218
+            : value / 2.2046226218,
+  },
+  temperature: {
+    labels: ['℃ → ℉', '℉ → ℃'],
+    convert: (value, direction) =>
+      direction === '℃ → ℉' ? (value * 9) / 5 + 32 : ((value - 32) * 5) / 9,
+  },
+  area: {
+    labels: ['㎡ → 평', '평 → ㎡'],
+    convert: (value, direction) =>
+      direction === '㎡ → 평' ? value / 3.305785 : value * 3.305785,
+  },
+  data: {
+    labels: ['MB → GB', 'GB → MB', 'GB → TB', 'TB → GB'],
+    convert: (value, direction) =>
+      direction === 'MB → GB'
+        ? value / 1024
+        : direction === 'GB → MB'
+          ? value * 1024
+          : direction === 'GB → TB'
+            ? value / 1024
+            : value * 1024,
+  },
+};
+
+export function mountUnitConverterTool(
+  _root: HTMLElement,
+  helpers: ToolHelpers,
+): void {
   const { $, value, number, format, listen } = helpers;
-  const units: Record<
-          string,
-          { labels: string[]; convert: (v: number, dir: string) => number }
-        > = {
-          length: {
-            labels: ['m → km', 'km → m', 'cm → m', 'm → cm'],
-            convert: (v, d) =>
-              d === 'm → km'
-                ? v / 1000
-                : d === 'km → m'
-                  ? v * 1000
-                  : d === 'cm → m'
-                    ? v / 100
-                    : v * 100,
-          },
-          weight: {
-            labels: ['kg → g', 'g → kg', 'kg → lb', 'lb → kg'],
-            convert: (v, d) =>
-              d === 'kg → g'
-                ? v * 1000
-                : d === 'g → kg'
-                  ? v / 1000
-                  : d === 'kg → lb'
-                    ? v * 2.2046226218
-                    : v / 2.2046226218,
-          },
-          temperature: {
-            labels: ['℃ → ℉', '℉ → ℃'],
-            convert: (v, d) =>
-              d === '℃ → ℉' ? (v * 9) / 5 + 32 : ((v - 32) * 5) / 9,
-          },
-          area: {
-            labels: ['㎡ → 평', '평 → ㎡'],
-            convert: (v, d) => (d === '㎡ → 평' ? v / 3.305785 : v * 3.305785),
-          },
-          data: {
-            labels: ['MB → GB', 'GB → MB', 'GB → TB', 'TB → GB'],
-            convert: (v, d) =>
-              d === 'MB → GB'
-                ? v / 1024
-                : d === 'GB → MB'
-                  ? v * 1024
-                  : d === 'GB → TB'
-                    ? v / 1024
-                    : v * 1024,
-          },
-        };
-        const update = () => {
-          const type = value('unit-type'),
-            def = units[type];
-          const select = $('unit-direction') as HTMLSelectElement | null;
-          if (!select) return;
-          select.innerHTML = def.labels
-            .map((x) => '<option>' + x + '</option>')
-            .join('');
-          const out = $('unit-result');
-          if (out)
-            out.textContent = format(
-              def.convert(number('unit-value'), def.labels[0]),
-              6,
-            );
-        };
-        const calc = () => {
-          const type = value('unit-type'),
-            def = units[type],
-            dir = value('unit-direction'),
-            out = $('unit-result');
-          if (out)
-            out.textContent = format(def.convert(number('unit-value'), dir), 6);
-        };
-        listen('unit-type', 'change', () => {
-          update();
-          calc();
-        });
-        listen('unit-direction', 'change', calc);
-        listen('unit-value', 'input', calc);
-        update();
+
+  const calculate = () => {
+    const definition = UNITS[value('unit-type')];
+    const output = $('unit-result');
+
+    if (!definition || !output) return;
+
+    const inputValue = number('unit-value');
+    const direction = value('unit-direction');
+
+    if (!Number.isFinite(inputValue) || !definition.labels.includes(direction)) {
+      output.textContent = '값과 변환 방향을 확인하세요.';
+      return;
+    }
+
+    output.textContent = format(definition.convert(inputValue, direction), 6);
+  };
+
+  const updateDirections = () => {
+    const definition = UNITS[value('unit-type')];
+    const directionSelect = $('unit-direction') as HTMLSelectElement | null;
+
+    if (!definition || !directionSelect) return;
+
+    directionSelect.replaceChildren(
+      ...definition.labels.map((label) => {
+        const option = document.createElement('option');
+        option.value = label;
+        option.textContent = label;
+        return option;
+      }),
+    );
+
+    calculate();
+  };
+
+  listen('unit-type', 'change', updateDirections);
+  listen('unit-direction', 'change', calculate);
+  listen('unit-value', 'input', calculate);
+
+  updateDirections();
 }
