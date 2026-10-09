@@ -29,7 +29,13 @@ export function readCalculatorNumber(
   id: string,
 ): number {
   const field = getCalculatorField(root, id);
-  return field instanceof HTMLInputElement ? parseNumber(field.value) : 0;
+  if (field instanceof HTMLInputElement) {
+    return parseNumber(field.value);
+  }
+  if (field instanceof HTMLSelectElement) {
+    return parseNumber(field.value);
+  }
+  return 0;
 }
 
 export function formatCalculatorNumber(
