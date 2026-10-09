@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountAgeCalculatorTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
+  const { $, value, listen } = helpers;
   const asof = $('age-asof') as HTMLInputElement | null;
         if (asof)
           asof.value = new Date(
@@ -9,7 +9,7 @@ export function mountAgeCalculatorTool(root: HTMLElement, helpers: ToolHelpers):
           )
             .toISOString()
             .slice(0, 10);
-        $('age-calc')?.addEventListener('click', () => {
+        listen('age-calc', 'click', () => {
           const birth = new Date(value('age-birth') + 'T00:00:00'),
             date = new Date(value('age-asof') + 'T00:00:00'),
             out = $('age-result');
