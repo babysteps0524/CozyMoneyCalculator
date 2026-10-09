@@ -1,49 +1,65 @@
 import type { ToolHelpers } from './shared';
 
+const CHARACTER_SETS = {
+  upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  lower: 'abcdefghijklmnopqrstuvwxyz',
+  number: '0123456789',
+  symbol: '!@#$%^&*()-_=+[]{}?',
+} as const;
+
 export function mountPasswordTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, copy, secureRandom, listen } = helpers;
+  const { $, number, copy, secureRandom, listen } = helpers;
+
   const generate = () => {
-          const len = Math.min(
-            128,
-            Math.max(4, Math.floor(number('password-length')) || 16),
-          );
-          const sets = [
-            value('pw-upper') === '' ? '' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-            value('pw-lower') === '' ? '' : 'abcdefghijklmnopqrstuvwxyz',
-            value('pw-number') === '' ? '' : '0123456789',
-            value('pw-symbol') === '' ? '' : '!@#$%^&*()-_=+[]{}?',
-          ];
-          const enabled = ['pw-upper', 'pw-lower', 'pw-number', 'pw-symbol']
-            .map((id) =>
-              ($(id) as HTMLInputElement)?.checked
-                ? sets[
-                    ['pw-upper', 'pw-lower', 'pw-number', 'pw-symbol'].indexOf(id)
-                  ]
-                : '',
-            )
-            .filter(Boolean);
-          const out = $('password-result') as HTMLInputElement | null;
-          if (!out) return;
-          if (!enabled.length) {
-            out.value = '문자 구성을 하나 이상 선택하세요.';
-            return;
-          }
-          let result = '';
-          const all = enabled.join('');
-          enabled.forEach((set) => {
-            result += set[secureRandom(set.length)];
-          });
-          while (result.length < len) result += all[secureRandom(all.length)];
-          const chars = result.split('');
-          for (let i = chars.length - 1; i > 0; i--) {
-            const j = secureRandom(i + 1);
-            [chars[i], chars[j]] = [chars[j], chars[i]];
-          }
-          out.value = chars.join('');
-        };
-        listen('password-generate', 'click', generate);
-        listen('password-copy', 'click', () =>
-          copy(value('password-result'), 'password-copy'),
-        );
-        generate();
+    const length = Math.min(
+      128,
+      Math.max(4, Math.floor(number('password-length')) || 16),
+    );
+    const options = [
+      { id: 'pw-upper', characters: CHARACTER_SETS.upper },
+      { id: 'pw-lower', characters: CHARACTER_SETS.lower },
+      { id: 'pw-number', characters: CHARACTER_SETS.number },
+      { id: 'pw-symbol', characters: CHARACTER_SETS.symbol },
+    ];
+    const enabled = options.filter(
+      ({ id }) => ($(id) as HTMLInputElement | null)?.checked,
+    );
+    const output = $('password-result') as HTMLInputElement | null;
+
+    if (!output) return;
+
+    if (!enabled.length) {
+      output.value = '문자 구성을 하나 이상 선택하세요.';
+      return;
+    }
+
+    const allCharacters = enabled
+      .map(({ characters }) => characters)
+      .join('');
+    const characters = enabled.map(
+      ({ characters: set }) => set[secureRandom(set.length)],
+    );
+
+    while (characters.length < length) {
+      characters.push(allCharacters[secureRandom(allCharacters.length)]);
+    }
+
+    for (let index = characters.length - 1; index > 0; index--) {
+      const swapIndex = secureRandom(index + 1);
+      [characters[index], characters[swapIndex]] = [
+        characters[swapIndex],
+        characters[index],
+      ];
+    }
+
+    output.value = characters.join('');
+  };
+
+  listen('password-generate', 'click', generate);
+  listen('password-copy', 'click', () => {
+    const output = $('password-result') as HTMLInputElement | null;
+    void copy(output?.value ?? '', 'password-copy');
+  });
+
+  generate();
 }
