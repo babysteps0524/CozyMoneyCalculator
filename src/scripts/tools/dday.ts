@@ -1,6 +1,6 @@
 import type { ToolHelpers } from './shared';
 
-export function mountDdayTool(root: HTMLElement, helpers: ToolHelpers): void {
+export function mountDdayTool(_root: HTMLElement, helpers: ToolHelpers): void {
   const { $, value, listen } = helpers;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
