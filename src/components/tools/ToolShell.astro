@@ -130,30 +130,12 @@ const { kind, title, description } = Astro.props;
 
 <script>
 import { createToolHelpers } from '../../scripts/tools/shared';
-import { mountLottoTool } from '../../scripts/tools/lotto';
-import { mountRandomNumberTool } from '../../scripts/tools/random-number';
-import { mountRandomPickerTool } from '../../scripts/tools/random-picker';
-import { mountPasswordTool } from '../../scripts/tools/password';
-import { mountDateCalculatorTool } from '../../scripts/tools/date-calculator';
-import { mountDdayTool } from '../../scripts/tools/dday';
-import { mountAgeCalculatorTool } from '../../scripts/tools/age-calculator';
-import { mountUnitConverterTool } from '../../scripts/tools/unit-converter';
-import { mountPercentCalculatorTool } from '../../scripts/tools/percent-calculator';
+import { mountTool } from '../../scripts/tools/registry';
+import type { ToolKind } from '../../scripts/tools/types';
 
 const root = document.querySelector<HTMLElement>('[data-tool]');
 if (root) {
   const helpers = createToolHelpers(root);
-  const mounts: Record<string, (root: HTMLElement, helpers: ReturnType<typeof createToolHelpers>) => void> = {
-    lotto: mountLottoTool,
-    random: mountRandomNumberTool,
-    picker: mountRandomPickerTool,
-    password: mountPasswordTool,
-    date: mountDateCalculatorTool,
-    dday: mountDdayTool,
-    age: mountAgeCalculatorTool,
-    unit: mountUnitConverterTool,
-    percent: mountPercentCalculatorTool,
-  };
-  mounts[root.dataset.tool ?? '']?.(root, helpers);
+  void mountTool(root, helpers, root.dataset.tool as ToolKind | undefined);
 }
 </script>
