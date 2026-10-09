@@ -1,8 +1,8 @@
 import type { ToolHelpers } from './shared';
 
 export function mountDateCalculatorTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
-  $('date-calc')?.addEventListener('click', () => {
+  const { $, value, format, listen } = helpers;
+  listen('date-calc', 'click', () => {
           const a = new Date(value('date-start') + 'T00:00:00'),
             b = new Date(value('date-end') + 'T00:00:00');
           const out = $('date-result');
