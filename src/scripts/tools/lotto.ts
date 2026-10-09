@@ -47,6 +47,7 @@ export function mountLottoTool(root: HTMLElement, helpers: ToolHelpers): void {
                     .join(', '),
               )
               .join('\n'),
+            'lotto-copy',
           );
         });
         render();
