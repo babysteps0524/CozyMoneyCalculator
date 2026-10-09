@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountLottoTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
+  const { $, value, copy, secureRandom, listen } = helpers;
   const render = () => {
           const count = Number(value('lotto-count')) || 1;
           const target = $('lotto-results');
@@ -31,9 +31,9 @@ export function mountLottoTool(root: HTMLElement, helpers: ToolHelpers): void {
             );
           }).join('');
         };
-        $('lotto-generate')?.addEventListener('click', render);
-        $('lotto-count')?.addEventListener('change', render);
-        $('lotto-copy')?.addEventListener('click', () => {
+        listen('lotto-generate', 'click', render);
+        listen('lotto-count', 'change', render);
+        listen('lotto-copy', 'click', () => {
           const cards = Array.from(root.querySelectorAll('.cm-result'));
           copy(
             cards
