@@ -14,6 +14,6 @@ export function mountRandomPickerTool(root: HTMLElement, helpers: ToolHelpers): 
             : '추첨할 항목을 입력하세요.';
         });
         listen('picker-copy', 'click', () =>
-          copy(value('picker-result')),
+          copy(value('picker-result'), 'picker-copy'),
         );
 }
