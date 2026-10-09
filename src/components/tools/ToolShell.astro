@@ -29,11 +29,11 @@ const { kind, title, description } = Astro.props;
 <script>
 import { createToolHelpers } from '../../scripts/tools/shared';
 import { mountTool } from '../../scripts/tools/registry';
-import type { ToolKind } from '../../scripts/tools/types';
+import { isToolKind } from '../../scripts/tools/types';
 
 const root = document.querySelector<HTMLElement>('[data-tool]');
-if (root) {
+if (root && isToolKind(root.dataset.tool)) {
   const helpers = createToolHelpers(root);
-  void mountTool(root, helpers, root.dataset.tool as ToolKind | undefined);
+  void mountTool(root, helpers, root.dataset.tool);
 }
 </script>
