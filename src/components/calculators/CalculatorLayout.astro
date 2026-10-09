@@ -1,0 +1,29 @@
+---
+import CalculatorBreadcrumb from './CalculatorBreadcrumb.astro';
+import CalculatorPageHeading from './CalculatorPageHeading.astro';
+import CalculatorShell from './CalculatorShell.astro';
+import CalculatorContent from './CalculatorContent.astro';
+import type { CalculatorDefinition } from '../../data/calculators';
+
+interface Props {
+  definition: CalculatorDefinition;
+}
+
+const { definition } = Astro.props;
+const { title, description, category, guidance } = definition;
+---
+
+<main class="cm-container" w="full" py="10 md:14 lg:18">
+  <div w="full" max-w="5xl" mx="auto">
+    <CalculatorBreadcrumb category={category} />
+    <CalculatorPageHeading title={title} description={description} category={category} />
+
+    <CalculatorShell>
+      <slot />
+    </CalculatorShell>
+
+    {guidance ? <CalculatorContent guidance={guidance} /> : null}
+
+    <slot name="after" />
+  </div>
+</main>
