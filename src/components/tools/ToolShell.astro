@@ -1,24 +1,14 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
+import type { ToolDefinition } from '../../data/tools';
 
 interface Props {
-  kind:
-    | 'lotto'
-    | 'random'
-    | 'picker'
-    | 'password'
-    | 'date'
-    | 'dday'
-    | 'age'
-    | 'unit'
-    | 'percent';
+  kind: ToolDefinition['kind'];
   title: string;
   description: string;
 }
 
 const { kind, title, description } = Astro.props;
----
-
 <section class="cm-tool-shell" data-tool={kind}>
   <div class="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
     <div min-w="0">
