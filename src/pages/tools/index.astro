@@ -2,18 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/common/Header.astro';
 import Footer from '../../components/common/Footer.astro';
-
-const tools = [
-  ['로또 번호 생성기', '1~45 사이 6개 번호를 무작위로 생성', '/tools/lotto/'],
-  ['랜덤 숫자 생성기', '원하는 범위의 랜덤 숫자 생성', '/tools/random/'],
-  ['랜덤 추첨기', '목록에서 무작위 항목 추첨', '/tools/picker/'],
-  ['비밀번호 생성기', '조건에 맞는 무작위 비밀번호 생성', '/tools/password/'],
-  ['날짜 계산기', '두 날짜 사이의 기간 계산', '/tools/date/'],
-  ['D-Day 계산기', '목표 날짜까지 남은 기간 계산', '/tools/dday/'],
-  ['나이 계산기', '생년월일 기준 만 나이 계산', '/tools/age/'],
-  ['단위 변환기', '길이·무게·온도·넓이·데이터 변환', '/tools/unit/'],
-  ['퍼센트 계산기', '비율·증감률·할인율·증가율 계산', '/tools/percent/'],
-];
+import { tools } from '../../data/tools';
 ---
 
 <BaseLayout
@@ -43,7 +32,7 @@ const tools = [
       </p>
     </header>
     <div grid="~ cols-1 sm:cols-2 lg:cols-3" gap="3 md:4">
-      {tools.map(([title, description, href]) => (
+      {tools.map(({ title, description, href }) => (
         <a href={href} class="cm-card-interactive" p="5 md:6" no-underline>
           <div flex="~" items-center justify-between>
             <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
