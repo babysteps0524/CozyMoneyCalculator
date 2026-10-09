@@ -1,7 +1,7 @@
 import type { ToolHelpers } from './shared';
 
 export function mountDdayTool(root: HTMLElement, helpers: ToolHelpers): void {
-  const { $, value, number, format, copy, secureRandom } = helpers;
+  const { $, value, listen } = helpers;
   const today = new Date();
         today.setHours(0, 0, 0, 0);
         const input = $('dday-date') as HTMLInputElement | null;
@@ -30,6 +30,6 @@ export function mountDdayTool(root: HTMLElement, helpers: ToolHelpers): void {
                 : 'D-DAY') +
             '</div>';
         };
-        $('dday-calc')?.addEventListener('click', calc);
+        listen('dday-calc', 'click', calc);
         calc();
 }
