@@ -30,15 +30,11 @@ export function mountDdayTool(root: HTMLElement, helpers: ToolHelpers): void {
     );
     const name = value('dday-name') || '목표 날짜';
     const nameElement = document.createElement('div');
-    nameElement.setAttribute('text', 'sm');
-    nameElement.setAttribute('text-text-muted', '');
-    nameElement.setAttribute('dark', 'text-dark-text-muted');
+    nameElement.className = 'text-sm text-text-muted dark:text-dark-text-muted';
     nameElement.textContent = name;
 
     const resultElement = document.createElement('div');
-    resultElement.setAttribute('mt', '1');
-    resultElement.setAttribute('text', '4xl md:5xl');
-    resultElement.setAttribute('font', '800');
+    resultElement.className = 'mt-1 text-4xl md:text-5xl font-800';
     resultElement.textContent =
       diff > 0 ? 'D-' + diff : diff < 0 ? 'D+' + Math.abs(diff) : 'D-DAY';
 
