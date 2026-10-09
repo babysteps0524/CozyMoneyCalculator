@@ -34,6 +34,13 @@ import { isToolKind } from '../../scripts/tools/types';
 const root = document.querySelector<HTMLElement>('[data-tool]');
 if (root && isToolKind(root.dataset.tool)) {
   const helpers = createToolHelpers(root);
-  void mountTool(root, helpers, root.dataset.tool);
+
+  void mountTool(root, helpers, root.dataset.tool).catch(() => {
+    const message = document.createElement('p');
+    message.className = 'cm-result';
+    message.setAttribute('role', 'alert');
+    message.textContent = '도구를 불러오지 못했습니다. 페이지를 새로고침해 주세요.';
+    root.append(message);
+  });
 }
 </script>
