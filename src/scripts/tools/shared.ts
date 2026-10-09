@@ -1,3 +1,5 @@
+export type ToolEventName = 'click' | 'change' | 'input';
+
 export interface ToolHelpers {
   $: (id: string) => HTMLElement | null;
   value: (id: string) => string;
@@ -5,6 +7,7 @@ export interface ToolHelpers {
   format: (n: number, digits?: number) => string;
   copy: (text: string) => Promise<void>;
   secureRandom: (max: number) => number;
+  listen: (id: string, event: ToolEventName, handler: EventListener) => void;
 }
 
 export function createToolHelpers(root: HTMLElement): ToolHelpers {
@@ -30,5 +33,8 @@ export function createToolHelpers(root: HTMLElement): ToolHelpers {
     } while (buf[0] >= limit);
     return buf[0] % max;
   };
-  return { $, value, number, format, copy, secureRandom };
+  const listen = (id: string, event: ToolEventName, handler: EventListener) => {
+    $(id)?.addEventListener(event, handler);
+  };
+  return { $, value, number, format, copy, secureRandom, listen };
 }
