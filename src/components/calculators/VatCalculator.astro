@@ -1,3 +1,7 @@
+---
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
+---
+
 <div data-vat-calculator min-w="0" w="full">
   <div>
     <p m="0" text="sm" font="700" text-primary>
@@ -219,6 +223,7 @@
       dark="text-dark-text-muted"
     ></div>
   </div>
+  <CalculatorResultCopy targets="#vat-result, #vat-detail, #vat-breakdown" />
 </div>
 
 <script>

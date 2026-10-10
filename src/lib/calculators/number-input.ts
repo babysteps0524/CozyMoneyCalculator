@@ -116,8 +116,7 @@ export function bindNumberControls(root: ParentNode): void {
         '[data-step-direction="1"]',
       );
 
-      const prepareStep = (event: PointerEvent) => {
-        event.preventDefault();
+      const prepareStep = () => {
         if (document.activeElement === input) {
           input.blur();
         }

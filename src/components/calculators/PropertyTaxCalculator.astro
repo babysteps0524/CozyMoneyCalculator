@@ -1,4 +1,5 @@
 ---
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
 ---
 
 <div data-property-tax>
@@ -125,6 +126,7 @@
   </div>
   <div id="property-detail" mt="4" grid="~ cols-1 sm:cols-2" gap="3"></div>
   <div id="property-breakdown" mt="4" grid="~ cols-1" gap="2"></div>
+  <CalculatorResultCopy targets="#property-total, #property-detail, #property-breakdown" />
 </div>
 
 <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">

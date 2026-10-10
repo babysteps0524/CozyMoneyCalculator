@@ -123,7 +123,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '대출금액, 금리, 기간과 상환방식을 입력해 월 상환액과 총 이자를 계산합니다.',
     canonical: `${site}/calculators/loan/`,
     category: '금융',
-    guidance: calculatorGuidance.loan,
+    guidance: supplementalCalculatorDetails.loan,
   },
   'monthly-salary': {
     slug: 'monthly-salary',
