@@ -6,7 +6,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 <section class="cm-card" data-income-tax-calculator p="5 md:7">
   <div mb="6">
     <p m="0" text="sm" font="700" text-primary>
-      2026 TAX CALCULATOR
+      2025 TAX YEAR · 2026 신고 참고
     </p>
     <h2 m="0" mt="1" text="xl md:2xl" font="800">
       종합소득세 계산
@@ -19,8 +19,9 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
       text-text-muted
       dark="text-dark-text-muted"
     >
-      사업·근로·연금·이자·배당·기타소득과 주요 소득공제·세액공제·기납부세액을
-      입력해 예상 납부세액을 계산합니다.
+      2025년 귀속 소득을 기준으로 사업·근로·연금·이자·배당·기타소득과 주요
+      공제·기납부세액을 입력해 예상 납부세액을 계산합니다. 기본세율은
+      2023~2025년 귀속 국세청 공개 세율표를 적용합니다.
     </p>
   </div>
 
@@ -58,9 +59,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
   </div>
 
   <div id="income-tax-breakdown" mt="4" grid="~ cols-1 md:cols-2" gap="3"></div>
-  <CalculatorResultCopy
-    targets="#income-tax-result, #income-tax-summary, #income-tax-breakdown"
-  />
+  <CalculatorResultCopy targets="#income-tax-result, #income-tax-summary, #income-tax-breakdown" />
 
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
     <button
@@ -217,7 +216,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     fields.innerHTML =
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">① 소득 입력</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('businessIncome', '사업소득금액', '0')}${field('wageIncome', '총급여액', '50000000')}${field('pensionIncome', '총 연금액', '0')}${field('interestIncome', '이자소득금액', '0')}${field('dividendIncome', '배당소득금액', '0')}${field('otherIncome', '기타소득 총수입금액', '0')}${field('otherIncomeExpense', '기타소득 필요경비', '0')}</div></section>` +
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">② 소득공제</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('dependents', '기본공제 인원', '1', '명', '1')}${field('seniorDependents', '70세 이상 추가공제 인원', '0', '명', '1')}${field('disabledDependents', '장애인 추가공제 인원', '0', '명', '1')}${field('femaleAdditionalDeduction', '부녀자 추가공제', '0')}${field('singleParentDeduction', '한부모 추가공제', '0')}${field('pensionInsurance', '연금보험료 공제', '0')}${field('specialIncomeDeduction', '특별소득공제', '0')}${field('otherIncomeDeduction', '기타 소득공제', '0')}</div></section>` +
-      `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">③ 세액공제</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('children', '자녀세액공제 대상 자녀 수', '0', '명', '1')}${field('birthFirst', '출산·입양 첫째', '0', '명', '1')}${field('birthSecond', '출산·입양 둘째', '0', '명', '1')}${field('birthThirdPlus', '출산·입양 셋째 이상', '0', '명', '1')}${field('pensionAccount', '연금저축·퇴직연금 납입액', '0')}${field('insurance', '일반 보장성보험료', '0')}${field('disabledInsurance', '장애인전용 보장성보험료', '0')}${field('medicalSelfEtc', '본인·65세 이상·6세 이하·장애인 의료비', '0')}${field('infertilityMedical', '난임시술비', '0')}${field('prematureMedical', '미숙아·선천성이상아 의료비', '0')}${field('otherMedical', '그 밖의 의료비', '0')}${field('actualReimbursement', '실손의료보험금', '0')}${field('educationSelf', '본인 교육비', '0')}${field('educationDisabled', '장애인 특수교육비', '0')}${field('educationPreschool', '취학전 아동 교육비', '0')}${field('educationSchool', '초·중·고 교육비', '0')}${field('educationUniversity', '대학생 교육비', '0')}${field('rentPayment', '연간 월세 지급액', '0')}${field('standardTaxCredit', '표준세액공제(기본 13만원)', '130000')}${field('otherTaxCredit', '기타 세액공제·감면', '0')}</div></section>` +
+      `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">③ 세액공제</h3><p m="0" mt="2" text="sm" leading="6" text-text-muted dark="text-dark-text-muted">실손의료보험금은 해당 의료비 유형에 맞춰 입력하세요. 의료비 세액공제는 법정 유형별 순서와 3% 기준, 일반 의료비 한도를 반영합니다.</p><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('children', '자녀세액공제 대상 자녀 수', '0', '명', '1')}${field('birthFirst', '출산·입양 첫째', '0', '명', '1')}${field('birthSecond', '출산·입양 둘째', '0', '명', '1')}${field('birthThirdPlus', '출산·입양 셋째 이상', '0', '명', '1')}${field('pensionAccount', '연금저축·퇴직연금 납입액', '0')}${field('insurance', '일반 보장성보험료', '0')}${field('disabledInsurance', '장애인전용 보장성보험료', '0')}${field('medicalSelfEtc', '본인·65세 이상·6세 이하·장애인 의료비', '0')}${field('selfEtcMedicalReimbursement', '해당 의료비 실손보험금', '0')}${field('infertilityMedical', '난임시술비', '0')}${field('infertilityMedicalReimbursement', '난임시술비 실손보험금', '0')}${field('prematureMedical', '미숙아·선천성이상아 의료비', '0')}${field('prematureMedicalReimbursement', '미숙아·선천성이상아 실손보험금', '0')}${field('otherMedical', '그 밖의 의료비', '0')}${field('otherMedicalReimbursement', '그 밖의 의료비 실손보험금', '0')}${field('educationSelf', '본인 교육비', '0')}${field('educationDisabled', '장애인 특수교육비', '0')}${field('educationPreschool', '취학전 아동 교육비', '0')}${field('educationSchool', '초·중·고 교육비', '0')}${field('educationUniversity', '대학생 교육비', '0')}${field('rentPayment', '연간 월세 지급액', '0')}${field('standardTaxCredit', '표준세액공제(기본 13만원)', '130000')}${field('otherTaxCredit', '기타 세액공제·감면', '0')}</div></section>` +
       `<section class="lg:col-span-2" rounded="2xl" border="1" border-border p="4 md:5" dark="border-dark-border"><h3 m="0" text="base" font="750">④ 기납부·가산세</h3><div grid="~ cols-1 md:cols-2" gap="4" mt="4">${field('withholdingTax', '원천징수세액', '0')}${field('prepaidTax', '기납부세액', '0')}${field('penaltyTax', '가산세', '0')}</div></section>`;
 
     const calculate = () => {
@@ -248,7 +247,11 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
         infertilityMedical: number('infertilityMedical'),
         prematureMedical: number('prematureMedical'),
         otherMedical: number('otherMedical'),
-        actualReimbursement: number('actualReimbursement'),
+        actualReimbursement: 0,
+        selfEtcMedicalReimbursement: number('selfEtcMedicalReimbursement'),
+        infertilityMedicalReimbursement: number('infertilityMedicalReimbursement'),
+        prematureMedicalReimbursement: number('prematureMedicalReimbursement'),
+        otherMedicalReimbursement: number('otherMedicalReimbursement'),
         educationSelf: number('educationSelf'),
         educationDisabled: number('educationDisabled'),
         educationPreschool: number('educationPreschool'),

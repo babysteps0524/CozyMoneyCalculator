@@ -211,6 +211,19 @@ const { content } = Astro.props;
             {content.basis}
           </p>
         ) : null}
+        {content.sourceReview ? (
+          <p
+            class="cm-help-text"
+            m="0"
+            mt="3"
+            text="xs sm"
+            leading="6"
+            aria-label="공식 기준 적용 기간과 출처 확인일"
+          >
+            적용 기준: {content.sourceReview.effectivePeriod} · 출처 확인일:{' '}
+            {content.sourceReview.checkedAt}
+          </p>
+        ) : null}
         {content.sources?.length ? (
           <ul
             m="0"

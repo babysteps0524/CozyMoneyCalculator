@@ -33,6 +33,16 @@ export const calculatorGuidance = {
           '차량 종류, 차령 경감, 지방교육세, 과세 기간과 납부 시점 등이 실제 고지액에 반영될 수 있습니다.',
       },
     ],
+    sources: [
+      {
+        title: '지방세법 제127조(자동차세 과세표준과 세율)',
+        href: 'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lsJoLnkSeq=1021848893',
+      },
+    ],
+    sourceReview: {
+      effectivePeriod: '2026-07-01 시행 지방세법',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '취득세 계산기',
@@ -112,17 +122,17 @@ export const supplementalCalculatorDetails = {
       '종합소득세는 소득세법과 시행령·시행규칙, 조세특례제한법 및 국세청 안내를 기준으로 합니다. 계산기는 주요 입력 항목을 바탕으로 한 참고용 모의계산이며 신고 시점의 최신 법령과 국세청 안내를 우선해야 합니다.',
     cautions: [
       '사업소득 입력값은 매출액이 아니라 필요경비 등을 반영한 사업소득금액을 기준으로 합니다.',
+      '의료비 세액공제는 공제 유형별 의료비와 해당 실손보험금, 총급여액의 3% 기준 및 일반 의료비 한도를 반영합니다. 공제 대상 여부와 보험금의 귀속 유형을 확인해 입력하세요.',
       '금융소득의 종합·분리과세 판정, 배당가산, 각종 조세특례와 감면, 사업소득 경비 계산 등 모든 신고 상황을 자동 판정하지 않습니다.',
       '지방소득세는 종합소득세 결과에 별도로 포함되지 않습니다.',
       '세법과 공제요건은 귀속연도에 따라 달라질 수 있으므로 신고 시점의 최신 기준을 확인해야 합니다.',
     ],
     examples: [
       {
-        title: '종합소득금액 5,725만원, 소득공제 600만원',
-        inputs:
-          '종합소득금액 57,250,000원에서 소득공제 6,000,000원을 차감합니다.',
+        title: '과세표준 30,000,000원',
+        inputs: '2025년 귀속 기본세율표로 산출세액을 확인합니다.',
         result:
-          '과세표준은 51,250,000원입니다. 예시의 산출세액은 51,250,000원 × 24% − 5,760,000원 = 6,540,000원이며, 실제 신고에서는 이후 세액공제·감면과 기납부세액 등을 추가 반영합니다.',
+          '산출세액은 30,000,000원 × 15% − 1,260,000원 = 3,240,000원입니다. 실제 납부세액은 세액공제·감면과 기납부세액 등을 반영해 달라집니다.',
       },
     ],
     faqs: [
@@ -160,13 +170,21 @@ export const supplementalCalculatorDetails = {
     sources: [
       {
         title: '국세청 종합소득세 안내',
-        href: 'https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7666&mi=2224',
+        href: 'https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7667&mi=2224',
+      },
+      {
+        title: '국세청 2025년 귀속 연말정산 안내',
+        href: 'https://www.nts.go.kr/nts/na/ntt/selectNttInfo.do?nttSn=1348212',
       },
       {
         title: '국세법령정보시스템',
         href: 'https://taxlaw.nts.go.kr/',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2025년 귀속 세율·주요 공제 기준',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '월급 계산기',
@@ -252,6 +270,10 @@ export const supplementalCalculatorDetails = {
         href: 'https://www.wetax.go.kr/',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '취득일 현재 시행 법령',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '재산세 계산기',
@@ -309,6 +331,10 @@ export const supplementalCalculatorDetails = {
         href: 'https://www.law.go.kr/LSW/lsInfoP.do?ancYnChk=0&chrClsCd=010202&efYd=20260102&joNo=011000&lsiSeq=276349&urlMode=lsInfoP',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2026년 재산세 과세 기준',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '취득세 계산기',
@@ -382,6 +408,10 @@ export const supplementalCalculatorDetails = {
         href: 'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1031738823',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2026-01-02 시행 부가가치세법',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '부동산 중개보수 계산기',

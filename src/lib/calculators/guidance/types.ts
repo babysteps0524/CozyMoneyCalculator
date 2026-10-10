@@ -20,6 +20,11 @@ export interface CalculatorSource {
   href: string;
 }
 
+export interface CalculatorSourceReview {
+  effectivePeriod: string;
+  checkedAt: string;
+}
+
 export interface CalculatorDetailsContent {
   intro?: string;
   steps?: string[];
@@ -29,6 +34,7 @@ export interface CalculatorDetailsContent {
   faqs?: CalculatorFaq[];
   basis?: string;
   sources?: CalculatorSource[];
+  sourceReview?: CalculatorSourceReview;
   relatedCalculators?: RelatedCalculator[];
 }
 

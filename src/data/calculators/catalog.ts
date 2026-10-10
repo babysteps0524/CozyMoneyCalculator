@@ -1,140 +1,15 @@
-import type { CalculatorId } from './definitions';
+import { calculatorDefinitions, type CalculatorId } from './definitions';
+import type { CalculatorDefinition } from './types';
+import type {
+  CalculatorDirectoryGroupId,
+  CalculatorHomeGroupId,
+} from './types';
 
-type DirectoryGroupId = 'finance' | 'payroll' | 'daily' | 'tax' | 'property';
-type HomeGroupId = 'finance' | 'payroll' | 'taxProperty' | 'daily';
+type DirectoryGroupId = CalculatorDirectoryGroupId;
+type HomeGroupId = CalculatorHomeGroupId;
 
-interface CalculatorCatalogEntry {
-  directoryGroup: DirectoryGroupId;
-  directoryOrder: number;
-  homeGroup?: HomeGroupId;
-  homeOrder?: number;
-}
-
-const calculatorCatalog: Record<CalculatorId, CalculatorCatalogEntry> = {
-  loan: {
-    directoryGroup: 'finance',
-    directoryOrder: 0,
-    homeGroup: 'finance',
-    homeOrder: 0,
-  },
-  savings: {
-    directoryGroup: 'finance',
-    directoryOrder: 1,
-    homeGroup: 'finance',
-    homeOrder: 1,
-  },
-  compound: {
-    directoryGroup: 'finance',
-    directoryOrder: 2,
-    homeGroup: 'finance',
-    homeOrder: 2,
-  },
-  dsr: {
-    directoryGroup: 'finance',
-    directoryOrder: 3,
-    homeGroup: 'finance',
-    homeOrder: 3,
-  },
-  dti: {
-    directoryGroup: 'finance',
-    directoryOrder: 4,
-    homeGroup: 'finance',
-    homeOrder: 4,
-  },
-  salary: {
-    directoryGroup: 'payroll',
-    directoryOrder: 0,
-    homeGroup: 'payroll',
-    homeOrder: 0,
-  },
-  'monthly-salary': {
-    directoryGroup: 'payroll',
-    directoryOrder: 1,
-    homeGroup: 'payroll',
-    homeOrder: 1,
-  },
-  'hourly-wage': {
-    directoryGroup: 'payroll',
-    directoryOrder: 2,
-    homeGroup: 'payroll',
-    homeOrder: 2,
-  },
-  severance: {
-    directoryGroup: 'payroll',
-    directoryOrder: 3,
-    homeGroup: 'payroll',
-    homeOrder: 3,
-  },
-  weekly: {
-    directoryGroup: 'payroll',
-    directoryOrder: 4,
-    homeGroup: 'payroll',
-    homeOrder: 4,
-  },
-  vacation: {
-    directoryGroup: 'payroll',
-    directoryOrder: 5,
-    homeGroup: 'payroll',
-    homeOrder: 5,
-  },
-  unemployment: { directoryGroup: 'payroll', directoryOrder: 6 },
-  percentage: {
-    directoryGroup: 'daily',
-    directoryOrder: 0,
-    homeGroup: 'daily',
-    homeOrder: 0,
-  },
-  vat: {
-    directoryGroup: 'tax',
-    directoryOrder: 0,
-    homeGroup: 'taxProperty',
-    homeOrder: 0,
-  },
-  incomeTax: {
-    directoryGroup: 'tax',
-    directoryOrder: 1,
-    homeGroup: 'taxProperty',
-    homeOrder: 1,
-  },
-  acquisition: {
-    directoryGroup: 'tax',
-    directoryOrder: 2,
-    homeGroup: 'taxProperty',
-    homeOrder: 2,
-  },
-  property: {
-    directoryGroup: 'tax',
-    directoryOrder: 3,
-    homeGroup: 'taxProperty',
-    homeOrder: 3,
-  },
-  capitalGain: {
-    directoryGroup: 'tax',
-    directoryOrder: 4,
-    homeGroup: 'taxProperty',
-    homeOrder: 4,
-  },
-  carTax: {
-    directoryGroup: 'tax',
-    directoryOrder: 5,
-    homeGroup: 'daily',
-    homeOrder: 1,
-  },
-  rent: {
-    directoryGroup: 'property',
-    directoryOrder: 0,
-    homeGroup: 'taxProperty',
-    homeOrder: 5,
-  },
-  brokerage: {
-    directoryGroup: 'property',
-    directoryOrder: 1,
-    homeGroup: 'daily',
-    homeOrder: 2,
-  },
-  leaseLoan: { directoryGroup: 'property', directoryOrder: 2 },
-  'legal-scrivener': { directoryGroup: 'property', directoryOrder: 3 },
-};
+const calculatorCatalog: Record<CalculatorId, CalculatorDefinition> =
+  calculatorDefinitions;
 
 const directoryGroups = {
   finance: {

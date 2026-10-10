@@ -94,14 +94,14 @@ describe('income tax calculator', () => {
     expect(result.pensionAccountTaxCredit).toBe(720_000);
     expect(result.insuranceTaxCredit).toBe(120_000);
     expect(result.educationTaxCredit).toBe(150_000);
-    expect(result.medicalTaxCredit).toBe(300_000);
+    expect(result.medicalTaxCredit).toBe(225_000);
     expect(result.rentTaxCredit).toBe(900_000);
-    expect(result.determinedTax).toBe(2_840_000);
+    expect(result.determinedTax).toBe(2_915_000);
     expect(result.finalTax).toBe(result.determinedTax - 1_500_000);
-    expect(result.finalTax).toBe(1_340_000);
+    expect(result.finalTax).toBe(1_415_000);
   });
 
-  test('applies the 3% threshold only to general medical expenses', () => {
+  test('applies the 3% threshold in statutory medical-expense order', () => {
     const result = calculateIncomeTax({
       businessIncome: 0,
       wageIncome: 50_000_000,
@@ -143,7 +143,7 @@ describe('income tax calculator', () => {
       penaltyTax: 0,
     });
 
-    expect(result.medicalTaxCredit).toBe(300_000);
+    expect(result.medicalTaxCredit).toBe(225_000);
   });
 
   test('caps pension account and insurance tax credits', () => {

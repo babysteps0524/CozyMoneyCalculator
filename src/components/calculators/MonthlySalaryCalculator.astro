@@ -414,7 +414,11 @@
 </div>
 
 <script>
-  import { calculateSalary, formatWon } from '../../lib/calculators/salary';
+  import {
+    calculateSalary,
+    calculateStandardWageEquivalents,
+    formatWon,
+  } from '../../lib/calculators/salary';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   import { readCalculatorNumber } from '../../lib/calculators/dom';
 
@@ -462,9 +466,9 @@
       gross!.textContent = fmt(result.monthlyGross);
       taxable!.textContent = fmt(result.taxableMonthly);
 
-      const estimatedHourlyWage = result.monthlyGross / 209;
-      hourlyWage!.textContent = fmt(estimatedHourlyWage);
-      dailyWage!.textContent = fmt(estimatedHourlyWage * 8);
+      const equivalents = calculateStandardWageEquivalents(result.monthlyGross);
+      hourlyWage!.textContent = fmt(equivalents.hourlyWage);
+      dailyWage!.textContent = fmt(equivalents.dailyWage);
 
       pension!.textContent = fmt(result.nationalPension);
       health!.textContent = fmt(result.healthInsurance);

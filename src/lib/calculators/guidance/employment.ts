@@ -136,6 +136,24 @@ export const supplementalCalculatorDetails = {
     ],
     basis:
       '이 계산기는 입력한 급여와 비과세액, 가족 조건에 따라 2026년 기준의 보험료와 소득세를 추정합니다. 소득세는 국세청 근로소득 간이세액표의 실제 원천징수액과 다를 수 있으므로 급여 담당자와 최신 기준을 확인하세요.',
+    sources: [
+      {
+        title: '국민연금공단 2026년 기준소득월액·보험료율',
+        href: 'https://www.nps.or.kr/pnsinfo/ntpsklg/getOHAF0016M0.do?menuId=MN24001108',
+      },
+      {
+        title: '국민건강보험공단 2026년도 보험료율 안내',
+        href: 'https://edi.nhis.or.kr/portal/images/popup/20251204_pop01longdesc.html',
+      },
+      {
+        title: '고용노동부 고용보험료 안내',
+        href: 'https://www.moel.go.kr/info/astmgmt/employ/employList.do',
+      },
+    ],
+    sourceReview: {
+      effectivePeriod: '2026년 급여 및 사회보험료 기준',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '월급 계산기',
@@ -178,6 +196,10 @@ export const supplementalCalculatorDetails = {
         href: 'https://law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1029727971',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2026-10-02 시행 근로기준법',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '주휴수당 계산기',
@@ -220,6 +242,10 @@ export const supplementalCalculatorDetails = {
         href: 'https://law.go.kr/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1023689743',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2026-09-18 시행 근로자퇴직급여 보장법',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '연봉 계산기',
@@ -291,6 +317,14 @@ export const supplementalCalculatorDetails = {
     ],
     sources: [
       {
+        title: '고용보험법 제46조(구직급여일액)',
+        href: 'https://law.go.kr/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1024725807',
+      },
+      {
+        title: '최저임금위원회 2026년 적용 최저임금',
+        href: 'https://www.minimumwage.go.kr/minWage/policy/decisionMain.do',
+      },
+      {
         title: '고용보험',
         href: 'https://www.ei.go.kr/',
       },
@@ -299,6 +333,10 @@ export const supplementalCalculatorDetails = {
         href: 'https://www.work24.go.kr/',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2026년 이직자 기준',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '연봉 계산기',

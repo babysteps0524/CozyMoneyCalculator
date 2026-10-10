@@ -26,6 +26,10 @@ export interface IncomeTaxInput {
   prematureMedical: number;
   otherMedical: number;
   actualReimbursement: number;
+  selfEtcMedicalReimbursement?: number;
+  infertilityMedicalReimbursement?: number;
+  prematureMedicalReimbursement?: number;
+  otherMedicalReimbursement?: number;
   educationSelf: number;
   educationDisabled: number;
   educationPreschool: number;
@@ -167,34 +171,60 @@ function calculateMedicalTaxCredit(
   infertility: number,
   premature: number,
   other: number,
-  reimbursement: number,
+  selfEtcReimbursement: number,
+  infertilityReimbursement: number,
+  prematureReimbursement: number,
+  otherReimbursement: number,
 ): number {
   const wage = clampNonNegative(totalWage);
-  const general = Math.max(0, Math.min(clampNonNegative(other), 7_000_000));
-  const special = Math.max(
+  const eligibleInfertility = Math.max(
     0,
-    clampNonNegative(selfEtc) +
-      clampNonNegative(infertility) +
-      clampNonNegative(premature),
+    clampNonNegative(infertility) - clampNonNegative(infertilityReimbursement),
   );
-  const reimbursed = clampNonNegative(reimbursement);
-  if (general + special <= reimbursed) return 0;
+  const eligiblePremature = Math.max(
+    0,
+    clampNonNegative(premature) - clampNonNegative(prematureReimbursement),
+  );
+  const eligibleSelfEtc = Math.max(
+    0,
+    clampNonNegative(selfEtc) - clampNonNegative(selfEtcReimbursement),
+  );
+  const eligibleOther = Math.max(
+    0,
+    clampNonNegative(other) - clampNonNegative(otherReimbursement),
+  );
 
-  // 일반 의료비에만 총급여액의 3% 기준을 적용한다.
-  // 본인·6세 이하·65세 이상·장애인 의료비와 난임·미숙아/선천성이상아
-  // 관련 의료비는 3% 기준을 적용하지 않는다.
-  const threshold = wage * 0.03;
-  const generalEligible = Math.max(0, general - threshold);
+  // 법정 계산 순서대로 3% 기준을 난임, 미숙아·선천성이상아,
+  // 본인 등, 그 밖의 부양가족 의료비에서 차례로 차감한다.
+  let remainingThreshold = wage * 0.03;
+  const deductibleInfertility = Math.max(
+    0,
+    eligibleInfertility - remainingThreshold,
+  );
+  remainingThreshold = Math.max(0, remainingThreshold - eligibleInfertility);
 
-  const self = clampNonNegative(selfEtc);
-  const infertilityAmount = clampNonNegative(infertility);
-  const prematureAmount = clampNonNegative(premature);
+  const deductiblePremature = Math.max(
+    0,
+    eligiblePremature - remainingThreshold,
+  );
+  remainingThreshold = Math.max(0, remainingThreshold - eligiblePremature);
+
+  const deductibleSelfEtc = Math.max(
+    0,
+    eligibleSelfEtc - remainingThreshold,
+  );
+  remainingThreshold = Math.max(0, remainingThreshold - eligibleSelfEtc);
+
+  const deductibleOther = Math.min(
+    Math.max(0, eligibleOther - remainingThreshold),
+    7_000_000,
+  );
 
   return (
-    generalEligible * 0.15 +
-    self * 0.15 +
-    infertilityAmount * 0.3 +
-    prematureAmount * 0.2
+    deductibleInfertility * 0.3 +
+    deductiblePremature * 0.2 +
+    deductibleSelfEtc * 0.15 +
+    deductibleOther * 0.15
   );
 }
 
@@ -265,13 +295,23 @@ export function calculateIncomeTax(input: IncomeTaxInput): IncomeTaxResult {
   const insuranceTaxCredit =
     Math.min(clampNonNegative(input.insurance), 1_000_000) * 0.12 +
     Math.min(clampNonNegative(input.disabledInsurance), 1_000_000) * 0.15;
+  const legacyReimbursement = clampNonNegative(input.actualReimbursement);
+  const hasCategoryReimbursements =
+    input.selfEtcMedicalReimbursement !== undefined ||
+    input.infertilityMedicalReimbursement !== undefined ||
+    input.prematureMedicalReimbursement !== undefined ||
+    input.otherMedicalReimbursement !== undefined;
   const medicalTaxCredit = calculateMedicalTaxCredit(
     wageGross,
     input.medicalSelfEtc,
     input.infertilityMedical,
     input.prematureMedical,
     input.otherMedical,
-    input.actualReimbursement,
+    input.selfEtcMedicalReimbursement ?? 0,
+    input.infertilityMedicalReimbursement ?? 0,
+    input.prematureMedicalReimbursement ?? 0,
+    input.otherMedicalReimbursement ??
+      (hasCategoryReimbursements ? 0 : legacyReimbursement),
   );
   const educationEligible =
     clampNonNegative(input.educationSelf) +

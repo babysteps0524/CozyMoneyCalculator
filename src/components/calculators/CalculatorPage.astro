@@ -10,7 +10,8 @@ interface Props {
 }
 
 const { definition } = Astro.props;
-const { title, description, canonical } = definition;
+const { title, description, slug } = definition;
+const canonical = `https://cozymoney.kr/calculators/${slug}/`;
 const pageTitle = title.includes('CozyMoney')
   ? title
   : `${title} | CozyMoney 코지머니`;

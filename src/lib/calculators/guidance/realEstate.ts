@@ -34,6 +34,16 @@ export const calculatorGuidance = {
           '이 계산기는 입력한 환산율을 기준으로 부담액을 비교합니다. 대출이자, 관리비, 계약 기간과 보증금 회수 위험도 함께 고려하세요.',
       },
     ],
+    sources: [
+      {
+        title: '주택임대차보호법 시행령 제9조(월차임 전환 시 산정률)',
+        href: 'https://law.go.kr/lsLinkCommonInfo.do?lspttninfSeq=130111',
+      },
+    ],
+    sourceReview: {
+      effectivePeriod: '2026-07-01 시행 주택임대차보호법 시행령',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '전세대출 이자 계산기',
@@ -82,9 +92,13 @@ export const supplementalCalculatorDetails = {
       },
       {
         title: '공인중개사법 시행규칙 개정문(2026년 8월 28일 시행)',
-        href: 'https://law.go.kr/LSW/lsRvsDocListP.do?lsId=007292&lsRvsGubun=all',
+        href: 'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lsJoLnkSeq=1013419503',
       },
     ],
+    sourceReview: {
+      effectivePeriod: '2026-08-28 시행 공인중개사법 시행규칙',
+      checkedAt: '2026-10-11',
+    },
     relatedCalculators: [
       {
         title: '전월세 계산기',

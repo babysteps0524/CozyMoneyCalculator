@@ -26,6 +26,18 @@ export interface SalaryResult {
   annualTakeHome: number;
 }
 
+export interface StandardWageEquivalents {
+  hourlyWage: number;
+  dailyWage: number;
+}
+
+export function calculateStandardWageEquivalents(
+  monthlyGross: number,
+): StandardWageEquivalents {
+  const hourlyWage = monthlyGross / 209;
+  return { hourlyWage, dailyWage: hourlyWage * 8 };
+}
+
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
@@ -79,7 +91,7 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
 
   // 2026년 기준 근로자 부담률을 적용한 참고용 추정.
   // 만 60세 이상은 국민연금 의무가입 대상이 아니라는 안내를 반영합니다.
-  const pensionBase = clamp(taxableMonthly, 400_000, 6_370_000);
+  const pensionBase = clamp(taxableMonthly, 410_000, 6_590_000);
   const nationalPension = input.age60OrOlder ? 0 : pensionBase * 0.0475;
   const healthBase = Math.min(taxableMonthly, 127_725_730);
   const healthInsurance = healthBase * 0.03595;
