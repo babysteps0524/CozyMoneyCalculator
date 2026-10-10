@@ -233,6 +233,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import { calculateDsr } from '../../lib/calculators/dsr';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   import {
@@ -248,18 +249,17 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const income = readCalculatorNumber(root, 'income');
-      const debt = readCalculatorNumber(root, 'debt');
-      const newDebt = readCalculatorNumber(root, 'newdebt');
-      const target = readCalculatorNumber(root, 'rate');
-      const total = debt + newDebt;
-      const currentDsr = income === 0 ? NaN : (debt / income) * 100;
-      const dsr = income === 0 ? NaN : (total / income) * 100;
+      const result = calculateDsr({
+        annualIncome: readCalculatorNumber(root, 'income'),
+        existingAnnualDebt: readCalculatorNumber(root, 'debt'),
+        additionalAnnualDebt: readCalculatorNumber(root, 'newdebt'),
+        targetRate: readCalculatorNumber(root, 'rate'),
+      });
 
-      out.textContent = Number.isFinite(dsr)
-        ? formatCalculatorNumber(dsr, 2) + '%'
+      out.textContent = Number.isFinite(result.projectedRate)
+        ? formatCalculatorNumber(result.projectedRate, 2) + '%'
         : '-';
-      detail.textContent = `현재 대출만 반영한 DSR: ${formatCalculatorNumber(currentDsr, 2)}%. 새 대출 포함: ${formatCalculatorNumber(dsr, 2)}%. 입력한 목표 기준: ${formatCalculatorNumber(target, 2)}%.`;
+      detail.textContent = `현재 대출만 반영한 DSR: ${formatCalculatorNumber(result.currentRate, 2)}%. 새 대출 포함: ${formatCalculatorNumber(result.projectedRate, 2)}%. 입력한 목표 기준: ${formatCalculatorNumber(result.targetRate, 2)}%.`;
     };
 
     const reset = () => {

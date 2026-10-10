@@ -15,32 +15,18 @@ interface Props {
 }
 
 const { kind } = Astro.props;
+const toolPanels = {
+  lotto: LottoTool,
+  random: RandomNumberTool,
+  picker: RandomPickerTool,
+  password: PasswordTool,
+  date: DateCalculatorTool,
+  dday: DdayTool,
+  age: AgeCalculatorTool,
+  unit: UnitConverterTool,
+  percent: PercentCalculatorTool,
+} satisfies Record<ToolDefinition['kind'], typeof LottoTool>;
+const Panel = toolPanels[kind];
 ---
 
-{
-  kind === 'lotto' && <LottoTool />
-}
-{
-  kind === 'random' && <RandomNumberTool />
-}
-{
-  kind === 'picker' && <RandomPickerTool />
-}
-{
-  kind === 'password' && <PasswordTool />
-}
-{
-  kind === 'date' && <DateCalculatorTool />
-}
-{
-  kind === 'dday' && <DdayTool />
-}
-{
-  kind === 'age' && <AgeCalculatorTool />
-}
-{
-  kind === 'unit' && <UnitConverterTool />
-}
-{
-  kind === 'percent' && <PercentCalculatorTool />
-}
+<Panel />

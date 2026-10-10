@@ -227,6 +227,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import { calculateCompound } from '../../lib/calculators/compound';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   import {
@@ -244,14 +245,14 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const p = readCalculatorNumber(root, 'principal');
-      const r = readCalculatorNumber(root, 'rate') / 100;
-      const y = readCalculatorNumber(root, 'years');
-      const m = readCalculatorNumber(root, 'deposit');
-      const final =
-        r === 0 ? p + m * y : p * (1 + r) ** y + (m * ((1 + r) ** y - 1)) / r;
-      out.textContent = formatCalculatorWon(final);
-      detail.textContent = `원금과 추가납입을 연복리로 단순 계산한 결과입니다. 이자: ${formatCalculatorWon(final - p - m * y)}`;
+      const result = calculateCompound({
+        principal: readCalculatorNumber(root, 'principal'),
+        annualRate: readCalculatorNumber(root, 'rate'),
+        years: readCalculatorNumber(root, 'years'),
+        annualContribution: readCalculatorNumber(root, 'deposit'),
+      });
+      out.textContent = formatCalculatorWon(result.futureValue);
+      detail.textContent = `원금과 추가납입을 연복리로 단순 계산한 결과입니다. 이자: ${formatCalculatorWon(result.interest)}`;
     };
 
     const reset = () => {

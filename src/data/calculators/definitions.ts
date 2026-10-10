@@ -1,13 +1,17 @@
 import type { CalculatorDefinition } from './types';
-import { calculatorGuidance, supplementalCalculatorDetails } from '../../lib/calculators/guidance';
+import {
+  calculatorGuidance,
+  supplementalCalculatorDetails,
+} from '../../lib/calculators/guidance';
 
 const site = 'https://cozymoney.kr';
 
-export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
+export const calculatorDefinitions = {
   dti: {
     slug: 'dti',
     title: 'DTI 계산기',
-    description: '연소득과 주택담보대출 원리금, 기타 이자상환액을 기준으로 DTI를 계산합니다.',
+    description:
+      '연소득과 주택담보대출 원리금, 기타 이자상환액을 기준으로 DTI를 계산합니다.',
     canonical: `${site}/calculators/dti/`,
     category: '금융',
     guidance: calculatorGuidance.dti,
@@ -39,7 +43,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   weekly: {
     slug: 'weekly',
     title: '주휴수당 계산기',
-    description: '시급과 주 소정근로시간을 이용해 주급과 주휴수당을 단순 추정합니다.',
+    description:
+      '시급과 주 소정근로시간을 이용해 주급과 주휴수당을 단순 추정합니다.',
     canonical: `${site}/calculators/weekly/`,
     category: '급여',
     guidance: calculatorGuidance.weekly,
@@ -55,7 +60,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   leaseLoan: {
     slug: 'leaseLoan',
     title: '전세대출 이자 계산기',
-    description: '임차보증금과 대출비율, 금리를 기준으로 예상 대출금과 이자를 계산합니다.',
+    description:
+      '임차보증금과 대출비율, 금리를 기준으로 예상 대출금과 이자를 계산합니다.',
     canonical: `${site}/calculators/leaseLoan/`,
     category: '금융',
     guidance: calculatorGuidance.leaseLoan,
@@ -71,7 +77,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   capitalGain: {
     slug: 'capitalGain',
     title: '양도소득세 계산기',
-    description: '양도가액과 취득가액, 필요경비를 기준으로 양도차익을 추정합니다.',
+    description:
+      '양도가액과 취득가액, 필요경비를 기준으로 양도차익을 추정합니다.',
     canonical: `${site}/calculators/capitalGain/`,
     category: '부동산·세금',
     guidance: calculatorGuidance.capitalGain,
@@ -79,7 +86,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   percentage: {
     slug: 'percentage',
     title: '퍼센트 계산기',
-    description: '비율, 증감률, 퍼센트에 해당하는 값을 다양한 방식으로 계산합니다.',
+    description:
+      '비율, 증감률, 퍼센트에 해당하는 값을 다양한 방식으로 계산합니다.',
     canonical: `${site}/calculators/percentage/`,
     category: '일반 계산',
     guidance: calculatorGuidance.percentage,
@@ -88,7 +96,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   'legal-scrivener': {
     slug: 'legal-scrivener',
     title: '법무사 보수 계산기',
-    description: '부동산 등기 과세표준과 계약서 기재금액을 기준으로 법무사 기본보수와 인지·증지 비용을 계산합니다.',
+    description:
+      '부동산 등기 과세표준과 계약서 기재금액을 기준으로 법무사 기본보수와 인지·증지 비용을 계산합니다.',
     canonical: `${site}/calculators/legal-scrivener/`,
     category: '부동산',
     guidance: supplementalCalculatorDetails['legal-scrivener'],
@@ -96,7 +105,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   acquisition: {
     slug: 'acquisition',
     title: '취득세 계산기',
-    description: '취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 주요 부가세목을 추정합니다.',
+    description:
+      '취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 주요 부가세목을 추정합니다.',
     canonical: `${site}/calculators/acquisition/`,
     category: '부동산·세금',
     guidance: supplementalCalculatorDetails.acquisition,
@@ -104,7 +114,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   brokerage: {
     slug: 'brokerage',
     title: '부동산 중개보수 계산기',
-    description: '부동산 거래금액과 거래 유형을 기준으로 중개보수와 부가가치세를 계산합니다.',
+    description:
+      '부동산 거래금액과 거래 유형을 기준으로 중개보수와 부가가치세를 계산합니다.',
     canonical: `${site}/calculators/brokerage/`,
     category: '부동산',
     guidance: supplementalCalculatorDetails.brokerage,
@@ -120,7 +131,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   loan: {
     slug: 'loan',
     title: '대출 계산기',
-    description: '대출금액, 금리, 기간과 상환방식을 입력해 월 상환액과 총 이자를 계산합니다.',
+    description:
+      '대출금액, 금리, 기간과 상환방식을 입력해 월 상환액과 총 이자를 계산합니다.',
     canonical: `${site}/calculators/loan/`,
     category: '금융',
     guidance: supplementalCalculatorDetails.loan,
@@ -152,7 +164,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   savings: {
     slug: 'savings',
     title: '예적금 계산기',
-    description: '예금과 적금의 금리, 기간, 납입 조건을 기준으로 예상 만기금액을 계산합니다.',
+    description:
+      '예금과 적금의 금리, 기간, 납입 조건을 기준으로 예상 만기금액을 계산합니다.',
     canonical: `${site}/calculators/savings/`,
     category: '금융',
     guidance: supplementalCalculatorDetails.savings,
@@ -168,7 +181,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   unemployment: {
     slug: 'unemployment',
     title: '실업급여 계산기',
-    description: '평균임금과 고용보험 가입기간 등을 기준으로 실업급여를 추정합니다.',
+    description:
+      '평균임금과 고용보험 가입기간 등을 기준으로 실업급여를 추정합니다.',
     canonical: `${site}/calculators/unemployment/`,
     category: '급여',
     guidance: supplementalCalculatorDetails.unemployment,
@@ -176,7 +190,8 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
   vacation: {
     slug: 'vacation',
     title: '연차수당 계산기',
-    description: '미사용 연차일수와 통상임금을 기준으로 예상 연차수당을 계산합니다.',
+    description:
+      '미사용 연차일수와 통상임금을 기준으로 예상 연차수당을 계산합니다.',
     canonical: `${site}/calculators/vacation/`,
     category: '급여',
     guidance: supplementalCalculatorDetails.vacation,
@@ -189,4 +204,6 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     category: '세금',
     guidance: supplementalCalculatorDetails.vat,
   },
-};
+} satisfies Record<string, CalculatorDefinition>;
+
+export type CalculatorId = keyof typeof calculatorDefinitions;

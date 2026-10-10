@@ -131,6 +131,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import { calculateWeeklyWage } from '../../lib/calculators/weekly';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   import {
@@ -148,16 +149,11 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const weeklyHoliday =
-        readCalculatorNumber(root, 'hours') >= 15
-          ? readCalculatorNumber(root, 'hourly') *
-            Math.min(8, readCalculatorNumber(root, 'hours'))
-          : 0;
-      const value =
-        readCalculatorNumber(root, 'hourly') *
-          readCalculatorNumber(root, 'hours') +
-        weeklyHoliday;
-      out.textContent = formatCalculatorWon(value);
+      const result = calculateWeeklyWage({
+        hourlyWage: readCalculatorNumber(root, 'hourly'),
+        weeklyHours: readCalculatorNumber(root, 'hours'),
+      });
+      out.textContent = formatCalculatorWon(result.weeklyTotal);
       detail.textContent =
         '입력한 소정근로시간을 기준으로 주급과 주휴수당을 단순 합산했습니다.';
     };

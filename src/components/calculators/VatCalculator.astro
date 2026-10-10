@@ -227,6 +227,11 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import {
+    calculateVat,
+    type VatCalculationMode,
+    type VatRoundingMode,
+  } from '../../lib/calculators/vat';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
   import {
     formatCalculatorNumber,
@@ -256,14 +261,6 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const money = (value: number) => formatCalculatorWon(value);
 
     const decimal = (value: number) => formatCalculatorNumber(value, 2);
-
-    const applyRounding = (value: number) => {
-      const size = Number(unit.value);
-      if (!size) return value;
-      if (roundMode.value === 'floor') return Math.floor(value / size) * size;
-      if (roundMode.value === 'ceil') return Math.ceil(value / size) * size;
-      return Math.round(value / size) * size;
-    };
 
     const updateMode = () => {
       if (mode.value === 'supply') {
@@ -298,54 +295,33 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     };
 
     const calculate = () => {
-      const a = readCalculatorNumber(root, 'vat-amount');
-      const taxRate = readCalculatorNumber(root, 'vat-rate') / 100;
+      const amountValue = readCalculatorNumber(root, 'vat-amount');
+      const rateValue = readCalculatorNumber(root, 'vat-rate');
       const inputTax = readCalculatorNumber(root, 'vat-second-value');
-      const modeValue = mode.value;
+      const modeValue = mode.value as VatCalculationMode;
+      const calculation = calculateVat({
+        amount: amountValue,
+        rate: rateValue,
+        inputTax,
+        mode: modeValue,
+        roundingUnit: Number(unit.value),
+        roundingMode: roundMode.value as VatRoundingMode,
+      });
 
-      if (taxRate < 0 || taxRate >= 100 || !Number.isFinite(taxRate)) {
+      if ('error' in calculation) {
         result.textContent = '-';
-        detail.textContent = '세율은 0 이상 100 미만으로 입력하세요.';
+        detail.textContent = calculation.error;
         breakdown.textContent = '';
         return;
       }
 
-      let supply = 0;
-      let tax = 0;
-      let total = 0;
-      let payable = 0;
-
-      if (modeValue === 'supply') {
-        supply = a;
-        tax = supply * taxRate;
-        total = supply + tax;
-      } else if (modeValue === 'total') {
-        total = a;
-        supply = total / (1 + taxRate);
-        tax = total - supply;
-      } else if (modeValue === 'tax') {
-        tax = a;
-        supply = taxRate === 0 ? NaN : tax / taxRate;
-        total = supply + tax;
-      } else {
-        supply = a;
-        tax = supply * taxRate;
-        total = supply + tax;
-        payable = tax - inputTax;
-      }
-
-      if (![supply, tax, total].every(Number.isFinite)) {
-        result.textContent = '-';
-        detail.textContent =
-          '세율이 0%인 경우 부가세액으로부터 공급가액을 역산할 수 없습니다.';
-        breakdown.textContent = '';
-        return;
-      }
-
-      const roundedSupply = applyRounding(supply);
-      const roundedTax = applyRounding(tax);
-      const roundedTotal = applyRounding(total);
-      const roundedPayable = applyRounding(payable);
+      const {
+        roundedSupply,
+        roundedTax,
+        roundedTotal,
+        roundedPayable,
+        roundedInputTax,
+      } = calculation;
 
       if (modeValue === 'payable') {
         result.textContent =
@@ -362,7 +338,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
           '</strong><br />매출세액: <strong>' +
           money(roundedTax) +
           '</strong><br />공제할 매입세액: <strong>' +
-          money(applyRounding(inputTax)) +
+          money(roundedInputTax) +
           '</strong><br />납부(환급)세액 = 매출세액 − 매입세액';
       } else {
         result.textContent = money(roundedTax);
@@ -370,7 +346,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
           '공급가액 ' +
           money(roundedSupply) +
           '에 ' +
-          decimal(readCalculatorNumber(root, 'vat-rate')) +
+          decimal(rateValue) +
           '%를 적용했습니다.';
 
         breakdown.innerHTML =

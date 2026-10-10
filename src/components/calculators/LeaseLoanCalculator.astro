@@ -185,6 +185,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import { calculateLeaseLoan } from '../../lib/calculators/leaseLoan';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   import {
@@ -202,13 +203,13 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const loan =
-        (readCalculatorNumber(root, 'deposit') *
-          readCalculatorNumber(root, 'loanRate')) /
-        100;
-      const value = (loan * readCalculatorNumber(root, 'rate')) / 100;
-      out.textContent = formatCalculatorWon(value);
-      detail.textContent = `예상 대출금: ${formatCalculatorWon(loan)} · 1년 단순 이자: ${formatCalculatorWon(value)}`;
+      const result = calculateLeaseLoan({
+        deposit: readCalculatorNumber(root, 'deposit'),
+        loanRate: readCalculatorNumber(root, 'loanRate'),
+        annualRate: readCalculatorNumber(root, 'rate'),
+      });
+      out.textContent = formatCalculatorWon(result.annualInterest);
+      detail.textContent = `예상 대출금: ${formatCalculatorWon(result.loanAmount)} · 1년 단순 이자: ${formatCalculatorWon(result.annualInterest)}`;
     };
 
     const reset = () => {

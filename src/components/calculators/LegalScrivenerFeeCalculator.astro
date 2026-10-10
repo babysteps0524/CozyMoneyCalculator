@@ -359,19 +359,11 @@
 <script>
   import { readCalculatorNumber } from '../../lib/calculators/dom';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
-
-  type FeeType =
-    | 'ownership'
-    | 'preservation'
-    | 'collateral'
-    | 'additionalCollateral'
-    | 'change'
-    | 'nameChange'
-    | 'cancellation'
-    | 'trust'
-    | 'trustCancellation';
-
-  type PropertyType = 'house' | 'building';
+  import {
+    calculateLegalScrivenerFee,
+    type LegalScrivenerFeeType as FeeType,
+    type LegalScrivenerProperty as PropertyType,
+  } from '../../lib/calculators/legal-scrivener';
 
   const root = document.querySelector<HTMLElement>('[data-calculator]');
 
@@ -415,83 +407,6 @@
 
     const numberValue = (input: HTMLInputElement) =>
       readCalculatorNumber(root, input.id);
-
-    const progressive = (
-      amount: number,
-      brackets: Array<{ limit: number; base: number; rate: number }>,
-      lastRate: number,
-    ) => {
-      const value = Math.max(0, amount);
-      for (let index = 0; index < brackets.length; index += 1) {
-        const bracket = brackets[index];
-        const previous = index === 0 ? 0 : brackets[index - 1].limit;
-        if (value <= bracket.limit) {
-          return Math.round(
-            bracket.base + Math.max(0, value - previous) * bracket.rate,
-          );
-        }
-      }
-      const last = brackets[brackets.length - 1];
-      return Math.round(last.base + (value - last.limit) * lastRate);
-    };
-
-    const calculateBasicFee = (type: FeeType, amount: number) => {
-      if (
-        type === 'ownership' ||
-        type === 'preservation' ||
-        type === 'collateral'
-      ) {
-        return progressive(
-          amount,
-          [
-            { limit: 50_000_000, base: 210_000, rate: 0 },
-            { limit: 100_000_000, base: 210_000, rate: 0.001 },
-            { limit: 300_000_000, base: 260_000, rate: 0.0009 },
-            { limit: 500_000_000, base: 440_000, rate: 0.0008 },
-            { limit: 1_000_000_000, base: 600_000, rate: 0.0007 },
-            { limit: 2_000_000_000, base: 950_000, rate: 0.0005 },
-            { limit: 20_000_000_000, base: 1_450_000, rate: 0.0004 },
-          ],
-          0.0001,
-        );
-      }
-
-      if (type === 'additionalCollateral') {
-        return progressive(
-          amount,
-          [
-            { limit: 50_000_000, base: 105_000, rate: 0 },
-            { limit: 200_000_000, base: 105_000, rate: 0.0005 },
-            { limit: 1_000_000_000, base: 180_000, rate: 0.0002 },
-            { limit: 10_000_000_000, base: 340_000, rate: 0.0001 },
-          ],
-          0.00005,
-        );
-      }
-
-      const fixed: Record<FeeType, number> = {
-        ownership: 0,
-        preservation: 0,
-        collateral: 0,
-        additionalCollateral: 0,
-        change: 120_000,
-        nameChange: 40_000,
-        cancellation: 80_000,
-        trust: 150_000,
-        trustCancellation: 50_000,
-      };
-      return fixed[type];
-    };
-
-    const stampTax = (amount: number) => {
-      if (property === 'house' && amount <= 100_000_000) return 0;
-      if (amount <= 10_000_000) return 0;
-      if (amount <= 30_000_000) return 20_000;
-      if (amount <= 50_000_000) return 40_000;
-      if (amount <= 100_000_000) return 70_000;
-      if (amount <= 1_000_000_000) return 150_000;
-      return 350_000;
-    };
 
     const showToast = (message: string) => {
       toastEl.textContent = message;
@@ -555,22 +470,26 @@
     };
 
     const calculate = () => {
-      const taxableBase = numberValue(taxableInput);
-      const statedAmount = numberValue(statedInput);
-      const feeLines = items.map((item) => ({
-        label: options.find(([value]) => value === item.type)?.[1] ?? '',
-        fee: calculateBasicFee(item.type, taxableBase),
+      const result = calculateLegalScrivenerFee({
+        property,
+        fees: items.map((item) => ({
+          id: item.id,
+          type: item.type,
+          taxableBase: numberValue(taxableInput),
+        })),
+        statedAmount: numberValue(statedInput),
+        includePublicCosts: publicCostsInput.checked,
+        includeVat: vatInput.checked,
+      });
+      const feeLines = result.feeLines.map((line) => ({
+        label: line.label,
+        fee: line.baseFee,
       }));
-
-      const baseFee = feeLines.reduce((sum, line) => sum + line.fee, 0);
-      const vat = vatInput.checked ? Math.round(baseFee * 0.1) : 0;
-      const stamp = publicCostsInput.checked ? stampTax(statedAmount) : 0;
-      const hasRegistration = items.some(
-        (item) => item.type !== 'trust' && item.type !== 'trustCancellation',
-      );
-      const registration =
-        publicCostsInput.checked && hasRegistration ? 18_000 : 0;
-      const total = baseFee + vat + stamp + registration;
+      const baseFee = result.baseFee;
+      const vat = result.vat;
+      const stamp = result.stampTax;
+      const registration = result.registrationFee;
+      const total = result.total;
 
       linesEl.replaceChildren();
 
@@ -604,8 +523,7 @@
       });
 
       totalEl.textContent = won(total);
-      explanationEl.textContent =
-        '2024년 9월 12일 시행 법무사 보수기준의 부동산등기 기본보수 상한을 기준으로 계산했습니다. 실제 견적은 사건의 난이도, 가산보수, 대행료와 교통비·일당 등에 따라 달라질 수 있습니다.';
+      explanationEl.textContent = result.explanation;
     };
 
     root

@@ -227,6 +227,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import { calculateCapitalGain } from '../../lib/calculators/capitalGain';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   import {
@@ -244,14 +245,14 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const sale = readCalculatorNumber(root, 'sale');
-      const buy = readCalculatorNumber(root, 'buy');
-      const cost = readCalculatorNumber(root, 'cost');
-      const rate = readCalculatorNumber(root, 'rate');
-      const gain = Math.max(0, sale - buy - cost);
-      const value = (gain * rate) / 100;
-      out.textContent = formatCalculatorWon(value);
-      detail.textContent = `양도차익: ${formatCalculatorWon(gain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
+      const result = calculateCapitalGain({
+        salePrice: readCalculatorNumber(root, 'sale'),
+        purchasePrice: readCalculatorNumber(root, 'buy'),
+        expenses: readCalculatorNumber(root, 'cost'),
+        assumedRate: readCalculatorNumber(root, 'rate'),
+      });
+      out.textContent = formatCalculatorWon(result.estimatedTax);
+      detail.textContent = `양도차익: ${formatCalculatorWon(result.taxableGain)} · 입력한 가정 세율을 적용했습니다. 장기보유특별공제와 기본공제 등은 제외했습니다.`;
     };
 
     const reset = () => {

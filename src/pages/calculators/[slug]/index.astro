@@ -1,0 +1,70 @@
+---
+import CalculatorPage from '../../../components/calculators/CalculatorPage.astro';
+import AcquisitionTaxCalculator from '../../../components/calculators/AcquisitionTaxCalculator.astro';
+import AnnualLeaveAllowanceCalculator from '../../../components/calculators/AnnualLeaveAllowanceCalculator.astro';
+import BrokerageCalculator from '../../../components/calculators/BrokerageCalculator.astro';
+import CapitalGainCalculator from '../../../components/calculators/CapitalGainCalculator.astro';
+import CarTaxCalculator from '../../../components/calculators/CarTaxCalculator.astro';
+import CompoundCalculator from '../../../components/calculators/CompoundCalculator.astro';
+import DsrCalculator from '../../../components/calculators/DsrCalculator.astro';
+import DtiCalculator from '../../../components/calculators/DtiCalculator.astro';
+import HourlyWageCalculator from '../../../components/calculators/HourlyWageCalculator.astro';
+import IncomeTaxCalculator from '../../../components/calculators/IncomeTaxCalculator.astro';
+import LeaseLoanCalculator from '../../../components/calculators/LeaseLoanCalculator.astro';
+import LegalScrivenerFeeCalculator from '../../../components/calculators/LegalScrivenerFeeCalculator.astro';
+import LoanCalculator from '../../../components/calculators/LoanCalculator.astro';
+import MonthlySalaryCalculator from '../../../components/calculators/MonthlySalaryCalculator.astro';
+import PercentageCalculator from '../../../components/calculators/PercentageCalculator.astro';
+import PropertyTaxCalculator from '../../../components/calculators/PropertyTaxCalculator.astro';
+import RentCalculator from '../../../components/calculators/RentCalculator.astro';
+import SalaryCalculator from '../../../components/calculators/SalaryCalculator.astro';
+import SavingsCalculator from '../../../components/calculators/SavingsCalculator.astro';
+import SeveranceCalculator from '../../../components/calculators/SeveranceCalculator.astro';
+import UnemploymentCalculator from '../../../components/calculators/UnemploymentCalculator.astro';
+import VatCalculator from '../../../components/calculators/VatCalculator.astro';
+import WeeklyCalculator from '../../../components/calculators/WeeklyCalculator.astro';
+import {
+  calculatorDefinitions,
+  type CalculatorId,
+} from '../../../data/calculators';
+
+const calculatorComponents = {
+  acquisition: AcquisitionTaxCalculator,
+  vacation: AnnualLeaveAllowanceCalculator,
+  brokerage: BrokerageCalculator,
+  capitalGain: CapitalGainCalculator,
+  carTax: CarTaxCalculator,
+  compound: CompoundCalculator,
+  dsr: DsrCalculator,
+  dti: DtiCalculator,
+  'hourly-wage': HourlyWageCalculator,
+  incomeTax: IncomeTaxCalculator,
+  leaseLoan: LeaseLoanCalculator,
+  'legal-scrivener': LegalScrivenerFeeCalculator,
+  loan: LoanCalculator,
+  'monthly-salary': MonthlySalaryCalculator,
+  percentage: PercentageCalculator,
+  property: PropertyTaxCalculator,
+  rent: RentCalculator,
+  salary: SalaryCalculator,
+  savings: SavingsCalculator,
+  severance: SeveranceCalculator,
+  unemployment: UnemploymentCalculator,
+  vat: VatCalculator,
+  weekly: WeeklyCalculator,
+} satisfies Record<CalculatorId, typeof AcquisitionTaxCalculator>;
+
+export function getStaticPaths() {
+  return Object.entries(calculatorDefinitions).map(([id, definition]) => ({
+    params: { slug: definition.slug },
+    props: { id: id as CalculatorId, definition },
+  }));
+}
+
+const { id, definition } = Astro.props;
+const Calculator = calculatorComponents[id];
+---
+
+<CalculatorPage definition={definition}>
+  <Calculator />
+</CalculatorPage>

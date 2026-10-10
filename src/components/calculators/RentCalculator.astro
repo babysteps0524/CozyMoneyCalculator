@@ -179,6 +179,7 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
 </div>
 
 <script>
+  import { calculateRentComparison } from '../../lib/calculators/rent';
   import { bindCalculatorInputs } from '../../lib/calculators/runtime';
 
   import {
@@ -194,14 +195,13 @@ import CalculatorResultCopy from './CalculatorResultCopy.astro';
     const detail = root.querySelector<HTMLElement>('#result-detail')!;
 
     const calc = () => {
-      const annual =
-        (readCalculatorNumber(root, 'deposit') *
-          readCalculatorNumber(root, 'rate')) /
-        100;
-      const monthlyAnnual = readCalculatorNumber(root, 'monthly') * 12;
-      const value = monthlyAnnual + annual;
-      out.textContent = formatCalculatorWon(value);
-      detail.textContent = `연간 월세: ${formatCalculatorWon(monthlyAnnual)} · 보증금 환산액: ${formatCalculatorWon(annual)} · 합계: ${formatCalculatorWon(value)}`;
+      const result = calculateRentComparison({
+        deposit: readCalculatorNumber(root, 'deposit'),
+        monthlyRent: readCalculatorNumber(root, 'monthly'),
+        conversionRate: readCalculatorNumber(root, 'rate'),
+      });
+      out.textContent = formatCalculatorWon(result.annualCost);
+      detail.textContent = `연간 월세: ${formatCalculatorWon(result.annualRent)} · 보증금 환산액: ${formatCalculatorWon(result.convertedDeposit)} · 합계: ${formatCalculatorWon(result.annualCost)}`;
     };
 
     const reset = () => {

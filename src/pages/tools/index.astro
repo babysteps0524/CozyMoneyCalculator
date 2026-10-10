@@ -32,8 +32,13 @@ import { tools } from '../../data/tools';
       </p>
     </header>
     <div grid="~ cols-1 sm:cols-2 lg:cols-3" gap="3 md:4">
-      {tools.map(({ title, description, href }) => (
-        <a href={href} class="cm-card-interactive" p="5 md:6" no-underline>
+      {tools.map(({ kind, title, description }) => (
+        <a
+          href={`/tools/${kind}/`}
+          class="cm-card-interactive"
+          p="5 md:6"
+          no-underline
+        >
           <div flex="~" items-center justify-between>
             <h2 m="0" text="lg" font="750" text-text dark="text-dark-text">
               {title}
