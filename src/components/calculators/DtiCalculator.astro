@@ -1,4 +1,5 @@
 ---
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
 ---
 
 <div data-calculator="dti">
@@ -372,6 +373,7 @@
       leading="7"
     ></div>
   </div>
+  <CalculatorResultCopy targets="#result" />
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
     <button id="calculate" type="button" class="cm-button-primary" py="3">
       계산하기

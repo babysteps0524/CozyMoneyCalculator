@@ -1,4 +1,5 @@
 ---
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
 ---
 
 <div data-severance-calculator>
@@ -374,6 +375,9 @@
     p="4"
     dark="border-dark-border bg-dark-surface"
   ></div>
+  <CalculatorResultCopy
+    targets="#severance-value, #severance-eligibility, #severance-summary, #severance-breakdown"
+  />
 </section>
 
 <p m="4 0 0" text="xs" leading="5" text-text-muted dark="text-dark-text-muted">
@@ -424,7 +428,7 @@
         months.innerHTML = period.periods
           .map(
             (item, index) =>
-              '<label class="cm-card" p="4">' +
+              '<div class="cm-card" p="4">' +
               '<span class="cm-label">' +
               (index + 1) +
               '개월차 · ' +
@@ -436,12 +440,12 @@
               '<button type="button" data-step-direction="-1" aria-label="임금 감소" class="cm-step-button">−</button>' +
               '<div relative><input id="severance-wage-' +
               index +
-              '" class="cm-input pr-12" type="text" inputmode="numeric" value="0" data-number-input data-step="10000" data-min="0" data-decimal="false" />' +
+              '" aria-label="퇴직 전 월별 임금" class="cm-input pr-12" type="text" inputmode="numeric" value="0" data-number-input data-step="10000" data-min="0" data-decimal="false" />' +
               '<span absolute right="4" top="[50%]" translate-y="[-50%]" text="sm" text-text-muted dark="text-dark-text-muted">원</span></div>' +
               '<button type="button" data-step-direction="1" aria-label="임금 증가" class="cm-step-button">+</button>' +
               '</div><span mt="1.5" block text="xs" text-text-muted dark="text-dark-text-muted">' +
               item.days +
-              '일</span></label>',
+              '일</span></div>',
           )
           .join('');
       } catch {

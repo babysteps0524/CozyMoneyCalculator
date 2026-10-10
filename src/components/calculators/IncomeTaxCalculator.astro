@@ -1,5 +1,6 @@
 ---
 import AdSlot from '../common/AdSlot.astro';
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
 ---
 
 <section class="cm-card" data-income-tax-calculator p="5 md:7">
@@ -57,6 +58,9 @@ import AdSlot from '../common/AdSlot.astro';
   </div>
 
   <div id="income-tax-breakdown" mt="4" grid="~ cols-1 md:cols-2" gap="3"></div>
+  <CalculatorResultCopy
+    targets="#income-tax-result, #income-tax-summary, #income-tax-breakdown"
+  />
 
   <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
     <button

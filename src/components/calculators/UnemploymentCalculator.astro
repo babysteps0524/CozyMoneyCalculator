@@ -1,4 +1,5 @@
 ---
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
 ---
 
 <div data-unemployment-calculator min-w="0" w="full">
@@ -296,6 +297,9 @@
       -
     </p>
   </div>
+  <CalculatorResultCopy
+    targets="#total, #headline, #wages-result, #period-days, #average, #base, #daily-benefit, #days, #status"
+  />
 
   <p class="cm-help-text" mt="4" text="xs">
     이 계산기는 수급자격을 판정하지 않으며, 실제 지급액은

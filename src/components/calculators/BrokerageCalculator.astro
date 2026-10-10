@@ -1,4 +1,5 @@
 ---
+import CalculatorResultCopy from './CalculatorResultCopy.astro';
 ---
 
 <div data-brokerage>
@@ -43,6 +44,7 @@
     dark="text-dark-text-muted"
   ></div>
 </div>
+<CalculatorResultCopy targets="#result-value, #result-detail" />
 
 <div grid="~ cols-1 sm:cols-2" gap="3" mt="5">
   <button id="calculate" type="button" class="cm-button-primary" py="3">
