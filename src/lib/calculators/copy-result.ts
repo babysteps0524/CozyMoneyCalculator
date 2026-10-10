@@ -34,26 +34,11 @@ export function bindCalculatorResultCopy(root: ParentNode): void {
         button.disabled = true;
 
         try {
-          if (navigator.clipboard?.writeText) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            const temporaryInput = document.createElement('textarea');
-            temporaryInput.value = text;
-            temporaryInput.setAttribute('readonly', '');
-            temporaryInput.style.position = 'fixed';
-            temporaryInput.style.opacity = '0';
-            document.body.append(temporaryInput);
-            let copied = false;
-
-            try {
-              temporaryInput.select();
-              copied = document.execCommand('copy');
-            } finally {
-              temporaryInput.remove();
-            }
-
-            if (!copied) throw new Error('Clipboard copy failed.');
+          if (!navigator.clipboard?.writeText) {
+            throw new Error('Clipboard API is unavailable.');
           }
+
+          await navigator.clipboard.writeText(text);
 
           button.textContent = '복사되었습니다.';
         } catch {
