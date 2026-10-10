@@ -99,6 +99,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '취득원인, 주택 수, 조정대상지역, 생애최초 여부를 반영해 취득세와 주요 부가세목을 추정합니다.',
     canonical: `${site}/calculators/acquisition/`,
     category: '부동산·세금',
+    guidance: supplementalCalculatorDetails.acquisition,
   },
   brokerage: {
     slug: 'brokerage',
@@ -114,7 +115,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '종합소득과 공제 조건을 입력해 예상 종합소득세를 계산합니다.',
     canonical: `${site}/calculators/incomeTax/`,
     category: '세금',
-    guidance: calculatorGuidance.incomeTax,
+    guidance: supplementalCalculatorDetails.incomeTax,
   },
   loan: {
     slug: 'loan',
@@ -170,6 +171,7 @@ export const calculatorDefinitions: Record<string, CalculatorDefinition> = {
     description: '평균임금과 고용보험 가입기간 등을 기준으로 실업급여를 추정합니다.',
     canonical: `${site}/calculators/unemployment/`,
     category: '급여',
+    guidance: supplementalCalculatorDetails.unemployment,
   },
   vacation: {
     slug: 'vacation',
